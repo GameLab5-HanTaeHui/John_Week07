@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d584b8141546e1542b4ffb7b33a80e73, type: 3}
+  m_Name: RoleData_Fanatic
+  m_EditorClassIdentifier: Assembly-CSharp::RoleData
+  roleType: 2
+  roleName: Fanatic
+  description: 
+  roleIcon: {fileID: 0}
+  abilityConfig: {fileID: 11400000, guid: ba9eebfc1f13c7140b035e8605b1c907, type: 2}

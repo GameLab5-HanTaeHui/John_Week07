@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f4571b09e5e8f949ba82771c4a93aa2, type: 3}
+  m_Name: Tuto_Start
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueSO
+  lines:
+  - "\uACB0\uB9D0\uC744 \uAE30\uB2E4\uB9AC\uACE0 \uC788\uB294 \uC6D0\uACE0\uB4E4\uB85C
+    \uAC00\uB4DD\uC774\uAD70."
+  - "\uC0AC\uAC74\uC740 \uC911\uBC18\uBD80 \uCBE4\uBD80\uD130 \uB04A\uACA8\uC788\uC5B4.\n\uC5D0\uB4DC\uBA3C\uB4DC\uB294
+    \uC774\uBBF8 \uB4F1\uC7A5\uC778\uBB3C\uC5D0\uAC8C \uC774\uC57C\uAE30 \uC18D \uC5ED\uD560\uC744
+    \uC0C1\uC815\uD574 \uB450\uC5C8\uACA0\uC9C0."
+  - "\uB4F1\uC7A5\uC778\uBB3C\uC758 \uCEE8\uC149\uC740 \uBAA8\uB450 \uC644\uC131\uB418\uC5B4
+    \uC788\uB294 \uC0C1\uD0DC\uB2E4.\r\n\uC774\uC57C\uAE30\uB97C \uC804\uAC1C\uD574\uBCF4\uBA74
+    \uC5B4\uB5A4 \uC0AC\uAC74\uC774 \uC77C\uC5B4\uB0A0\uC9C0 \uC54C \uC218 \uC788\uC744
+    \uAC70\uC57C."
+  - "\uC774\uC81C, \uC5ED\uD560\uC744 \uCD94\uB9AC\uD574\uBCF4\uC790."

@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0e960cfedbf2004c85a52f346db53f7, type: 3}
+  m_Name: StageSetupConfig
+  m_EditorClassIdentifier: Assembly-CSharp::StageSetupConfig
+  _characterRegistry: {fileID: 11400000, guid: dcdbf53e1737d8942bf440fd67969e0b, type: 2}
+  _stageRoleConfig: {fileID: 11400000, guid: f536feeb255a1c3459efb3a912ac6cba, type: 2}
+  _useRandomSeed: 1
+  _seed: 79282243
+  _previewSetup:
+  - characterId: 1
+    roleIndex: 6
+    zoneId: 3
+  - characterId: 2
+    roleIndex: 4
+    zoneId: 0
+  - characterId: 3
+    roleIndex: 1
+    zoneId: 0
+  - characterId: 4
+    roleIndex: 3
+    zoneId: 1
+  - characterId: 5
+    roleIndex: 2
+    zoneId: 0
+  - characterId: 6
+    roleIndex: 5
+    zoneId: 0
+  - characterId: 7
+    roleIndex: 0
+    zoneId: 0

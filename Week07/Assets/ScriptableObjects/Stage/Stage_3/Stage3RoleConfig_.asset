@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36f49a3c9b8ae7e4aa1e0c8b42ff4383, type: 3}
+  m_Name: Stage3RoleConfig_
+  m_EditorClassIdentifier: Assembly-CSharp::StageRoleConfig
+  _stageId: 
+  roles:
+  - {fileID: 11400000, guid: 0b6ea9b90041a1c4da64b9bbf0480283, type: 2}
+  - {fileID: 11400000, guid: fb53c0cd385e54247bcef97e44905a21, type: 2}
+  - {fileID: 11400000, guid: f038699cb723aab4f8979673e711c5b2, type: 2}
+  - {fileID: 11400000, guid: 9dd2432e903230842b392b934bd05f46, type: 2}
+  - {fileID: 11400000, guid: 3191a0b6c3495644c9835d2c376886b3, type: 2}
+  - {fileID: 11400000, guid: d7ff040d2f02c02468a5e1637830dff2, type: 2}
+  - {fileID: 11400000, guid: 4f5ab247c72badf41a982c37e03cb8ba, type: 2}
+  _loopCondition: {fileID: 11400000, guid: d74ac4e312b19ff42aeaea39ea0acbfc, type: 2}
