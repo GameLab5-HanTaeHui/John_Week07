@@ -87,6 +87,22 @@ public class RoleActivationState : IState
 
         // ── 단계 N+2~N+3: 루프 종료 조건 확인 후 커밋 ──────────────────────
         bool isLoopCondition = CheckLoopEndCondition(gameState);
+
+        // ★ [HTH추가] 강제 퇴고 이벤트 (3명 이상 사망 등 루프 조건 달성 시)
+        if (isLoopCondition)
+        {
+            var gfc = GameFlowController.Instance;
+            GameLogger.Instance?.LogEvent("forced_loop_reset", new Dictionary<string, object>
+            {
+                { "day",          gfc?.CurrentDay ?? 0 },
+                { "time_of_day",  gfc?.CurrentTimeOfDay ?? "" },
+                { "loop",         _getLoopIndex() + 1 },
+                { "turn",         _getTurnIndex() + 1 },
+                { "death_count",  gameState.DeathsThisTurn },
+                { "reason",       "loop_condition" },
+            });
+        }
+
         var  record          = BuildRecord(gameState, beforeAction, afterAction);
         record.IsLoopConditionTurn = isLoopCondition;
         _historyRepo.Commit(record, isLoopCondition, finalStates);

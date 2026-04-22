@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 /// <summary>
 /// 게임 전체 루프 흐름을 관리하는 최상위 상태머신입니다.
 /// TurnStateMachine을 소유하며, RunningTurnState를 통해 턴 실행을 위임합니다.
@@ -234,6 +236,19 @@ public class LoopStateMachine : StateMachine
         bool fromAwaiting     = CurrentState == LoopStateType.AwaitingFinalDecision;
 
         if (!fromPlayerAction && !fromAwaiting) return;
+
+        // ★ [HTH추가] 추리 진입 타이밍 로그 (지표 #5)
+        var gfc = GameFlowController.Instance;
+        GameLogger.Instance?.LogEvent("final_decision_enter", new Dictionary<string, object>
+        {
+            { "from",                fromPlayerAction ? "early" : "awaiting" },
+            { "loop",               LoopCount + 1 },
+            { "turn",               TurnCount + 1 },
+            { "day",                gfc?.CurrentDay ?? 0 },
+            { "time_of_day",        gfc?.CurrentTimeOfDay ?? "" },
+            { "seed",               CurrentSeed },
+            { "session_elapsed_sec", GameLogger.Instance?.SessionElapsedSec ?? 0 },
+        });
 
         CurrentState = LoopStateType.FinalDecision;
         ChangeState(_finalDecision);

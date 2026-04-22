@@ -21,11 +21,11 @@ using UnityEngine.SceneManagement;
 public class GameFlowController : SingletonMonobehaviour<GameFlowController>
 {
     [SerializeField] private RoleActivationOrderConfig _orderConfig;
-    [SerializeField] private CharacterRegistry         _characterRegistry;
-    [SerializeField] private StageRoleConfig           _stageRoleConfig;
-    [SerializeField] private StageSetupConfig          _setupConfig;
-    [SerializeField] private CharacterSpawner          _characterSpawner;
-    [SerializeField] private string                    _lobbySceneName = "LobbyScene";
+    [SerializeField] private CharacterRegistry _characterRegistry;
+    [SerializeField] private StageRoleConfig _stageRoleConfig;
+    [SerializeField] private StageSetupConfig _setupConfig;
+    [SerializeField] private CharacterSpawner _characterSpawner;
+    [SerializeField] private string _lobbySceneName = "LobbyScene";
 
     /// <summary>이 씬의 스테이지 식별자입니다. 클리어 기록 저장 및 다음 스테이지 해금에 사용됩니다.</summary>
     [SerializeField] private string _stageId;
@@ -33,54 +33,46 @@ public class GameFlowController : SingletonMonobehaviour<GameFlowController>
     [Tooltip("이 스테이지를 클리어하면 로비에서 엔딩 다이얼로그를 재생합니다.")]
     [SerializeField] private bool _triggerEndingDialogueOnWin;
 
-    private LoopStateMachine            _loopSM;
+    private LoopStateMachine _loopSM;
     private Dictionary<int, CharacterView> _characterViews;
 
     /// <summary>characterId → CharacterView. SpawnAll 이후 유효합니다.</summary>
     public IReadOnlyDictionary<int, CharacterView> CharacterViews => _characterViews;
 
-    /// <summary>
-    /// 루프 리셋(GameState 재생성 완료) 시 발생합니다.
-    /// PlayerTurnInputHandler 등 외부 컴포넌트가 구독해 내부 상태를 동기화할 수 있습니다.
-    /// </summary>
     public event System.Action OnLoopReset
     {
-        add    => _loopSM.OnLoopReset += value;
+        add => _loopSM.OnLoopReset += value;
         remove => _loopSM.OnLoopReset -= value;
     }
 
     public event System.Action OnGameStarted
     {
-        add    => _loopSM.OnGameStarted += value;
+        add => _loopSM.OnGameStarted += value;
         remove => _loopSM.OnGameStarted -= value;
     }
 
     public event System.Action OnFinalDecisionEntered
     {
-        add    => _loopSM.OnFinalDecisionEntered += value;
+        add => _loopSM.OnFinalDecisionEntered += value;
         remove => _loopSM.OnFinalDecisionEntered -= value;
     }
 
     public event System.Action OnFinalDecisionExited
     {
-        add    => _loopSM.OnFinalDecisionExited += value;
+        add => _loopSM.OnFinalDecisionExited += value;
         remove => _loopSM.OnFinalDecisionExited -= value;
     }
 
     /// <summary>게임 종료(승/패) 시 발생합니다. isWin = true 이면 클리어, false 이면 실패.</summary>
     public event System.Action<bool> OnGameEnded
     {
-        add    => _loopSM.OnGameEnded += value;
+        add => _loopSM.OnGameEnded += value;
         remove => _loopSM.OnGameEnded -= value;
     }
 
-    /// <summary>
-    /// 최종 결정 제출 직후 발생합니다. DialogueManager에서 구독해 승/패 다이얼로그를 재생하세요.
-    /// 다이얼로그 완료 후 FinishGameEndDialogue()를 호출해야 WinState/LoseState로 전환됩니다.
-    /// </summary>
     public event System.Action<bool> OnGameEndDialogueRequested
     {
-        add    => _loopSM.OnGameEndDialogueRequested += value;
+        add => _loopSM.OnGameEndDialogueRequested += value;
         remove => _loopSM.OnGameEndDialogueRequested -= value;
     }
 
@@ -101,6 +93,15 @@ public class GameFlowController : SingletonMonobehaviour<GameFlowController>
 
     private void Start()
     {
+        // ★ [HTH추가] 스테이지 로깅 시작
+        // _stageId가 비어있으면 씬 이름으로 폴백
+        string loggingStageId = !string.IsNullOrEmpty(_stageId)
+            ? _stageId
+            : SceneManager.GetActiveScene().name;
+
+        GameLogger.Instance?.StartStageLogging(loggingStageId);
+        Debug.Log($"[GameFlowController] StartStageLogging — stageId={loggingStageId}");
+
         // StartGame()은 동기 실행 — 완료 시점에 GameState가 준비되어 있습니다.
         _loopSM.StartGame();
         SpawnCharacters();
@@ -110,8 +111,7 @@ public class GameFlowController : SingletonMonobehaviour<GameFlowController>
         var turnSM = GetTurnSM();
         if (turnSM != null)
         {
-            turnSM.OnTurnEndEntered    += (_, __) => RefreshAllCharacterViews();
-            // 파도 구역 효과가 PlayerActionState.Enter()에서 적용된 뒤 뷰를 재동기화합니다.
+            turnSM.OnTurnEndEntered += (_, __) => RefreshAllCharacterViews();
             turnSM.OnPlayerActionStarted += SyncViewsAfterZoneEffects;
         }
     }
@@ -121,19 +121,12 @@ public class GameFlowController : SingletonMonobehaviour<GameFlowController>
         _loopSM.Tick();
     }
 
-    /// <summary>
-    /// HoldToEnterFinalDecision이 완료됐을 때 호출합니다.
-    /// PlayerAction 단계 또는 AwaitingFinalDecision 상태에서만 유효합니다.
-    /// </summary>
     public void EnterFinalDecision() => _loopSM?.EnterFinalDecision();
 
-    /// <summary>FinalDecisionUI 판정 완료 후 호출합니다.</summary>
     public void SubmitFinalDecision(bool isWin) => _loopSM?.GetFinalDecisionState()?.SubmitDecision(isWin);
 
-    /// <summary>현재 GameState의 특정 캐릭터 실제 역할을 반환합니다.</summary>
     public RoleType GetActualRole(int characterId) => _loopSM?.GameState?.GetRole(characterId) ?? default;
 
-    /// <summary>HoldToEnterFinalDecision 활성화 가능 여부입니다.</summary>
     public bool CanEnterFinalDecision
     {
         get
@@ -144,60 +137,49 @@ public class GameFlowController : SingletonMonobehaviour<GameFlowController>
         }
     }
 
-    // ── HUD 정보 노출 ─────────────────────────────────────────────────────────
-
-    /// <summary>현재 GameState입니다. PlayerTurnInputHandler에서 구역 조회에 사용합니다.</summary>
-    public IGameState    GameState        => _loopSM?.GameState;
-
-    /// <summary>현재 루프 번호 (1-based). GameHUD 표시용.</summary>
-    public int           LoopCount        => (_loopSM?.LoopCount ?? 0) + 1;
-    /// <summary>현재 턴 번호 (1-based). GameHUD 표시용.</summary>
-    public int           TurnCount        => (_loopSM?.TurnCount ?? 0) + 1;
+    public IGameState GameState => _loopSM?.GameState;
+    public int LoopCount => (_loopSM?.LoopCount ?? 0) + 1;
+    public int TurnCount => (_loopSM?.TurnCount ?? 0) + 1;
     public LoopStateType CurrentLoopState => _loopSM?.CurrentState ?? default;
     public TurnStateType CurrentTurnState => _loopSM?.TurnSM?.CurrentState ?? default;
 
-    /// <summary>GameHUD에서 TurnSM 이벤트 구독에 사용합니다.</summary>
+    //[HTH추가]
+    /// <summary>현재 일차 (1~5, 루프 번호 기반)</summary>
+    public int CurrentDay => (_loopSM?.LoopCount ?? 0) + 1;
+
+    /// <summary>현재 시간대 문자열 (턴 번호 기반)</summary>
+    public string CurrentTimeOfDay => (_loopSM?.TurnCount ?? 0) switch
+    {
+        0 => "morning",
+        1 => "lunch",
+        2 => "evening",
+        _ => "unknown"
+    };
+
     public TurnStateMachine GetTurnSM() => _loopSM?.TurnSM;
-
-    /// <summary>DialogueManager가 다이어로그 재생을 마친 후 호출합니다.</summary>
     public void FinishTurnEnd() => _loopSM?.TurnSM?.FinishTurnEnd();
-
-    /// <summary>DialogueManager가 승/패 다이얼로그를 완료한 후 호출합니다.</summary>
     public void FinishGameEndDialogue() => _loopSM?.FinishGameEndDialogue();
 
-    /// <summary>턴 종료 버튼에서 호출합니다. 미확정 캐릭터는 현 위치 유지, 특수능력 정상 발동.</summary>
     public void ForceEndTurn()
     {
         if (CurrentLoopState != LoopStateType.RunningTurn) return;
         _loopSM?.ForceEndPlayerAction();
     }
 
-    // ── 입력 라우팅 (PlayerTurnInputHandler → 여기 → LoopSM → TurnSM → PlayerActionState) ──
-
-    /// <summary>PlayerTurnInputHandler에서 캐릭터 클릭 시 호출합니다.</summary>
     public void NotifyCharacterClicked(int characterId)
     {
         if (CurrentLoopState != LoopStateType.RunningTurn) return;
         _loopSM?.NotifyCharacterClicked(characterId);
     }
 
-    /// <summary>PlayerTurnInputHandler에서 구역 클릭 시 호출합니다.</summary>
     public void NotifyZoneClicked(int zoneId)
     {
         if (CurrentLoopState != LoopStateType.RunningTurn) return;
         _loopSM?.NotifyZoneClicked(zoneId);
     }
 
-    /// <summary>
-    /// 드래그 시작/취소 시 호출합니다. 재클릭=대기 로직을 우회해 강제 선택합니다.
-    /// characterId=-1이면 선택 해제.
-    /// </summary>
     public void BeginDragSelect(int characterId) => _loopSM?.BeginDragSelect(characterId);
 
-    /// <summary>
-    /// PlayerTurnInputHandler에서 이벤트 구독 대상인 PlayerActionState를 가져옵니다.
-    /// GameFlowController.Start() 이후에 호출하세요.
-    /// </summary>
     public PlayerActionState GetPlayerActionState() => _loopSM?.GetPlayerActionState();
 
     // ── Private ──────────────────────────────────────────────────────────────
@@ -217,16 +199,38 @@ public class GameFlowController : SingletonMonobehaviour<GameFlowController>
 
     private void HandleGameEnded(bool isWin)
     {
+        // ★ [HTH추가] 게임 결과 로그
+        GameLogger.Instance?.LogEvent("game_end", new Dictionary<string, object>
+        {
+            { "result",      isWin ? "win" : "lose" },
+            { "total_loops", _loopSM?.LoopCount ?? 0 },
+            { "total_turns", _loopSM?.TurnCount ?? 0 },
+        });
+
         if (isWin)
         {
-            string idToRecord = !string.IsNullOrEmpty(NewGameConfig.StageId) ? NewGameConfig.StageId : _stageId;
+            string idToRecord = !string.IsNullOrEmpty(NewGameConfig.StageId)
+                ? NewGameConfig.StageId
+                : _stageId;
             if (!string.IsNullOrEmpty(idToRecord))
                 StageClearRepository.Instance.RecordClear(idToRecord);
 
             if (_triggerEndingDialogueOnWin)
                 LobbyDialogueManager.PendingEndingDialogue = true;
         }
-        SceneManager.LoadScene(_lobbySceneName);
+
+        // ★ [HTH추가] 업로드 진행 중이면 완료 후 씬 전환, 아니면 즉시 전환
+        // SceneManager.LoadScene은 여기서 딱 한 번만 호출됩니다.
+        if (LogUploader.Instance != null && LogUploader.Instance.IsUploadInProgress)
+        {
+            Debug.Log("[GameFlowController] 업로드 완료 대기 중 — 완료 후 씬 전환");
+            LogUploader.Instance.SetOnUploadComplete(() =>
+                SceneManager.LoadScene(_lobbySceneName));
+        }
+        else
+        {
+            SceneManager.LoadScene(_lobbySceneName);
+        }
     }
 
     private void HandleLoopReset()

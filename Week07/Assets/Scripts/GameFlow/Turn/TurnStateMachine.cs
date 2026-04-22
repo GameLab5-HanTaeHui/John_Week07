@@ -79,6 +79,16 @@ public class TurnStateMachine : StateMachine
         CurrentState = TurnStateType.PlayerAction;
         ChangeState(_playerAction);
         OnPlayerActionStarted?.Invoke();
+
+        // ★ [HTH추가] 턴 시작 타임스탬프 (지표 #10: 의사결정 시간 분석용)
+        var gfc = GameFlowController.Instance;
+        GameLogger.Instance?.LogEvent("turn_start", new Dictionary<string, object>
+        {
+            { "day",         gfc?.CurrentDay ?? 0 },
+            { "time_of_day", gfc?.CurrentTimeOfDay ?? "" },
+            { "loop",        gfc?.LoopCount ?? 0 },
+            { "turn",        gfc?.TurnCount ?? 0 },
+        });
     }
 
     /// <summary>PlayerActionState 완료 후 호출합니다.</summary>

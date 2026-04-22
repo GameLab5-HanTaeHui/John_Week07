@@ -2207,7 +2207,7 @@ GameObject:
   - component: {fileID: 155018634}
   - component: {fileID: 155018636}
   m_Layer: 5
-  m_Name: Sequence
+  m_Name: QueuePanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8331,7 +8331,7 @@ GameObject:
   - component: {fileID: 599471876}
   - component: {fileID: 599471878}
   m_Layer: 5
-  m_Name: Role
+  m_Name: RolePanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13148,7 +13148,7 @@ GameObject:
   - component: {fileID: 931349648}
   - component: {fileID: 931349650}
   m_Layer: 5
-  m_Name: DeductionPanel
+  m_Name: MemoPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -20141,6 +20141,8 @@ MonoBehaviour:
   _submitButton: {fileID: 412150635}
   _fadeInDuration: 0.6
   _continueDelay: 2
+  _wrongAnswerBlockDuration: 2
+  _wrongTextColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1 &1424682372
 GameObject:
   m_ObjectHideFlags: 0

@@ -32,6 +32,7 @@ public class PlayerActionState : IState
 
     private int                  _selectedId    = -1;
     private Dictionary<int, int> _pendingMoves  = new();
+    private System.DateTime      _turnStartTime;
 
     /// <summary>
     /// 턴 시작 위치(PreviousZone)와 예약 목적지가 다른 캐릭터가 한 명 이상 있으면 true.
@@ -62,6 +63,7 @@ public class PlayerActionState : IState
     {
         _selectedId = -1;
         _pendingMoves.Clear();
+        _turnStartTime = System.DateTime.UtcNow;
 
         var gameState = _getGameState();
 
@@ -93,6 +95,33 @@ public class PlayerActionState : IState
     {
         _selectedId = -1;
         OnCharacterSelected?.Invoke(-1);
+
+        // ★ [HTH추가] 턴 종료 시 이동/대기 요약 (지표 #8)
+        var gsForSummary = _getGameState();
+        int moveCount = 0, waitCount = 0;
+        if (gsForSummary != null)
+            {
+            foreach (var kv in _pendingMoves)
+                {
+                if (kv.Value != gsForSummary.GetPreviousZone(kv.Key)) moveCount++;
+                else waitCount++;
+                }
+            // _pendingMoves에 없는 캐릭터는 미확정 → 대기로 간주
+            waitCount += gsForSummary.CharacterCount - _pendingMoves.Count;
+            }
+        var gfc = GameFlowController.Instance;
+        int durationSec = (int)(System.DateTime.UtcNow - _turnStartTime).TotalSeconds;
+        GameLogger.Instance?.LogEvent("turn_action_summary", new Dictionary<string, object>
+        {
+            { "day",          gfc?.CurrentDay ?? 0 },
+            { "time_of_day",  gfc?.CurrentTimeOfDay ?? "" },
+            { "loop",         gfc?.LoopCount ?? 0 },
+            { "turn",         gfc?.TurnCount ?? 0 },
+            { "moves",        moveCount },
+            { "waits",        waitCount },
+            { "duration_sec", durationSec },
+        });
+
         CommitPendingMoves();
         _turnSM.EnterRoleActivation();
     }
@@ -163,6 +192,23 @@ public class PlayerActionState : IState
             return;
         }
         Debug.Log($"[PlayerActionState] Zone {zoneId} 이동 예약 — ID:{_selectedId}");
+
+        // ★ 추가 이동 예약 로그 (캐릭터/구역 빈도 분석용)
+        var gsForLog = _getGameState();
+        var gfc = GameFlowController.Instance;
+        string charName = gsForLog?.GetCharacter(_selectedId)?.CharacterName ?? "";
+        GameLogger.Instance?.LogEvent("player_move", new Dictionary<string, object>
+        {
+            { "char_id",      _selectedId },
+            { "char_name",    charName },
+            { "from_zone",    gsForLog != null ? gsForLog.GetZone(_selectedId) : -1 },
+            { "to_zone",      zoneId },
+            { "day",          gfc?.CurrentDay ?? 0 },
+            { "time_of_day",  gfc?.CurrentTimeOfDay ?? "" },
+            { "loop",         gfc?.LoopCount ?? 0 },
+            { "turn",         gfc?.TurnCount ?? 0 },
+        });
+
         _pendingMoves[_selectedId] = zoneId;
 
         int movedId = _selectedId;

@@ -14,6 +14,7 @@ public class WaterGhostAbility : AbilityConfig
         if (gameState.GetZone(ownerId) != gameState.GetPreviousZone(ownerId)) return;
 
         int zone = gameState.GetZone(ownerId);
+        var victims = gameState.GetCharactersInZone(zone);
         foreach (var c in gameState.GetCharactersInZone(zone))
             gameState.MarkForDeath(c.CharacterId, RoleType.WaterGhost, ownerId);
     }

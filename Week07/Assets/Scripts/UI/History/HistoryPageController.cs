@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -68,6 +69,9 @@ public class HistoryPageController : MonoBehaviour
 
     /// <summary>현재 펼쳐진 패널 (없으면 null)</summary>
     private HistoryPagePanel _expandedPanel;
+
+    /// <summary>이번 세션에서 히스토리 패널을 열람한 총 횟수</summary>
+    private int _historyOpenCount;
 
     // ── Unity ─────────────────────────────────────────────────────────────────
 
@@ -154,6 +158,31 @@ public class HistoryPageController : MonoBehaviour
     private void HandlePanelHeaderClicked(HistoryPagePanel clicked)
     {
         if (clicked == _expandedPanel) return;
+
+        // ★ [HTH추가] 히스토리 열람 로그 (지표 #12)
+        _historyOpenCount++;
+        var gfc = GameFlowController.Instance;
+
+        // 클릭한 히스토리 패널의 시간대 계산
+        string historyTimeOfDay = clicked.TurnIndex switch
+        {
+            0 => "morning",
+            1 => "lunch",
+            2 => "evening",
+            _ => "unknown"
+        };
+
+        GameLogger.Instance?.LogEvent("history_open", new Dictionary<string, object>
+        {
+            { "target_loop",             clicked.LoopIndex + 1 },
+            { "target_turn",             clicked.TurnIndex + 1 },
+            { "target_day",              clicked.LoopIndex + 1 },
+            { "target_time_of_day",      historyTimeOfDay },
+            { "current_day",             gfc?.CurrentDay ?? 0 },
+            { "current_time_of_day",     gfc?.CurrentTimeOfDay ?? "" },
+            { "click_count_this_session", _historyOpenCount },
+        });
+
         OnAnyPanelHeaderClicked?.Invoke();
         ExpandPanel(clicked, instant: false);
     }

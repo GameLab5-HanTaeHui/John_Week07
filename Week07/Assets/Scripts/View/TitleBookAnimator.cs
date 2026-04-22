@@ -113,6 +113,12 @@ public class TitleBookAnimator : MonoBehaviour
             _uiManager?.ShowPreviousChapter();
         });
     }
+    /// <summary>게임 종료.</summary>
+    public void GameQuit()
+    {
+        Application.Quit();
+    }
+
 
     // ── Private ───────────────────────────────────────────────────────────────
 

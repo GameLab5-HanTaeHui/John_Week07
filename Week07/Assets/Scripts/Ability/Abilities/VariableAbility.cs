@@ -14,7 +14,6 @@ public class VariableAbility : AbilityConfig
         if (murderer == null || !murderer.IsAlive) return;
 
         if (gameState.GetZone(ownerId) != gameState.GetZone(murderer.CharacterId)) return;
-
         gameState.MarkForDeath(murderer.CharacterId, RoleType.Variable, ownerId);
     }
 }

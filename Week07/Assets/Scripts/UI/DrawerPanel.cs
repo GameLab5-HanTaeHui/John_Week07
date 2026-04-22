@@ -1,5 +1,6 @@
-using System;
 using DG.Tweening;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -27,7 +28,7 @@ public class DrawerPanel : MonoBehaviour,
     IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     // ── Inspector ────────────────────────────────────────────────────────────
-
+    
     [Header("위치 설정")]
     [Tooltip("완전히 꺼낸 상태의 anchoredPosition X.\n" +
              "숨김 위치는 Awake에서 초기 anchoredPosition.x로 자동 캡처됩니다.")]
@@ -75,6 +76,9 @@ public class DrawerPanel : MonoBehaviour,
     private Tweener _moveTween;
     private Tweener _rotateTween;
 
+    /// <summary>이번 세션에서 이 패널을 열람한 횟수</summary>
+    private int _openCount;
+
     /// <summary>드래그 중 계산한 X 속도 (px/s, 오른쪽 양수)</summary>
     private float _dragVelocityX;
 
@@ -91,7 +95,10 @@ public class DrawerPanel : MonoBehaviour,
         if (_drawerButtons != null)
             foreach (var btn in _drawerButtons)
                 if (btn != null)
-                    btn.onClick.AddListener(() => Hide());
+                    btn.onClick.AddListener(() =>
+                    {
+                        Hide();
+                    });
     }
 
     private void OnDestroy()
@@ -144,6 +151,15 @@ public class DrawerPanel : MonoBehaviour,
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        // [HTH추가] FinalDecision 상태에서는 드래그로 닫기 차단
+        // 토글은 버튼 클릭으로만 가능
+        if (GameFlowController.Instance?.CurrentLoopState == LoopStateType.FinalDecision)
+        {
+            if (IsShown)
+                TransitionTo(isShowing: true, instant: false);
+            return;
+        }
+
         // 현재 상태에 따라 반대 방향으로 충분히 이동했는지 판단
         bool shouldShow = IsShown ? !ShouldHideOnRelease() : ShouldShowOnRelease();
         TransitionTo(isShowing: shouldShow, instant: false);
@@ -214,6 +230,26 @@ public class DrawerPanel : MonoBehaviour,
         SetButtonsActive(isShowing);
         if (isShowing) OnShown?.Invoke();
         else           OnHidden?.Invoke();
+
+        // [HTH추가]
+        if (isShowing)
+        {
+            OnShown?.Invoke();
+            // ★ 패널 열람 로그 (지표 #13)
+            _openCount++;
+            var gfc = GameFlowController.Instance;
+            GameLogger.Instance?.LogEvent("panel_open", new Dictionary<string, object>
+            {
+                { "panel_name",            gameObject.name },
+                { "day",                   gfc?.CurrentDay ?? 0 },
+                { "time_of_day",           gfc?.CurrentTimeOfDay ?? "" },
+                { "open_count_this_session", _openCount },
+            });
+        }
+        else
+        {
+            OnHidden?.Invoke();
+        }
     }
 
     private void SetButtonsActive(bool active)

@@ -47,6 +47,7 @@ public class FinalDecisionUI : MonoBehaviour
     private CanvasGroup _canvasGroup;
     private bool        _awaitingContinueClick;
     private bool        _awaitingWrongAnswerClick;
+    private bool        _blockContinueUntilUpload; // [HTH추가]
     private Coroutine   _wrongAnswerCo;
 
     // ── Unity ────────────────────────────────────────────────────────────────
@@ -99,6 +100,15 @@ public class FinalDecisionUI : MonoBehaviour
         }
 
         if (!_awaitingContinueClick) return;
+
+        // [HTH추가] 업로드 완료 전까지 클릭 차단
+        if (_blockContinueUntilUpload)
+        {
+            if (LogUploader.Instance != null && LogUploader.Instance.IsUploadInProgress)
+                return;
+            _blockContinueUntilUpload = false;
+        }
+
         if (Input.GetMouseButtonDown(0))
         {
             _awaitingContinueClick = false;
@@ -112,6 +122,7 @@ public class FinalDecisionUI : MonoBehaviour
     {
         gameObject.SetActive(true);
         _awaitingContinueClick = false;
+        _blockContinueUntilUpload = false;
         if (_preDialogueObject != null) _preDialogueObject.SetActive(false);
         HideText(_winText);
         HideText(_loseText);
@@ -153,16 +164,40 @@ public class FinalDecisionUI : MonoBehaviour
         foreach (var slot in _roleSlots)
             if (slot != null && slot.AssignedCard == null) return;
 
+        // ★ [HTH추가] 각 슬롯의 정답 여부 로그 (지표 #4)
         var wrongSlots = new List<RoleSlot>();
+        int correctCount = 0;
         foreach (var slot in _roleSlots)
         {
             if (slot == null || slot.AssignedCard == null) continue;
-            var actual   = gfc.GetActualRole(slot.CharacterId);
+            var actual = gfc.GetActualRole(slot.CharacterId);
             var assigned = slot.AssignedCard.RoleType;
             bool correct = assigned == actual;
+
+            GameLogger.Instance?.LogEvent("final_answer", new Dictionary<string, object>
+        {
+            { "char_id", slot.CharacterId },
+            { "guessed", assigned.ToString() },
+            { "actual",  actual.ToString() },
+            { "correct", correct },
+        });
+
             Debug.Log($"[FinalDecision] CharId={slot.CharacterId}  배정={assigned}  정답={actual}  → {(correct ? "O" : "X")}");
             if (!correct) wrongSlots.Add(slot);
+            else correctCount++;
         }
+
+        // ★ 전체 판정 요약
+        bool isWin = wrongSlots.Count == 0;
+        GameLogger.Instance?.LogEvent("final_decision_submit", new Dictionary<string, object>
+        {
+            { "correct_count", correctCount },
+            { "wrong_count",   wrongSlots.Count },
+            { "is_win",        isWin },
+        });
+
+        // ★ 로깅 종료 + 업로드
+        FinalizeAndUploadLog(isWin);
 
         _submitButton.interactable = false;
 
@@ -176,6 +211,26 @@ public class FinalDecisionUI : MonoBehaviour
         {
             if (_preDialogueObject != null) _preDialogueObject.SetActive(true);
             gfc.SubmitFinalDecision(true);
+        }
+    }
+    private void FinalizeAndUploadLog(bool isWin)
+    {
+        if (GameLogger.Instance == null) return;
+
+        string fileName = GameLogger.Instance.BuildUploadFileName();
+        // [HTH추가]
+        string stageId = GameLogger.Instance.CurrentStageId;
+
+        // session_end 기록 후 로깅 종료
+        GameLogger.Instance.StopStageLogging();
+
+        if (LogUploader.Instance != null)
+        {
+            // 업로드 완료 전까지 Press Any Key 차단
+            _blockContinueUntilUpload = true;
+
+            // 전체 누적 파일을 UUID 파일명으로 업로드 (bytes, fileName은 내부에서 처리)
+            LogUploader.Instance.UploadSessionBytes(null, null, isWin, stageId);
         }
     }
 
