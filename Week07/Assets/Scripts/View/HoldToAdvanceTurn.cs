@@ -1,41 +1,56 @@
 using System.Collections;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
-
+using HTH;
 /// <summary>
-/// 꾹 누르면 _fillObject가 활성화되며 점점 커지고, 가득 차면 턴을 넘깁니다.
-/// 손을 떼면 게이지가 서서히 감소합니다.
-/// 이번 턴에 한 명도 이동하지 않은 경우 홀드가 차단되고 _blockText가 위로 떠오릅니다.
+/// 턴 넘기기 버튼 컴포넌트입니다.
 ///
-/// Inspector 필수 연결:
-///   FillObject    → 홀드 진행도를 표현할 GameObject (Scale 0→1로 커짐)
-///   HoldDuration  → 가득 차는 데 걸리는 시간(초)
-///   DrainSpeed    → 손을 뗐을 때 감소 배율 (2 = 채울 때의 2배 속도로 감소)
-///   BlockText     → 이동 없을 때 표시할 World Space TextMeshPro
+/// ─── 동작 흐름 ────────────────────────────────────────────────────────────
+///   1. 플레이어가 버튼을 클릭합니다.
+///   2. _fillDuration 동안 Fill 오브젝트가 애니메이션으로 올라갑니다.
+///   3. Fill이 가득 차면 공유 확인 패널(ConfirmPanel)이 표시됩니다.
+///   4. 확인 → GameFlowController.ForceEndTurn() 호출, 다음 턴으로 이동합니다.
+///      취소 → Fill이 초기화되고 현재 상태를 유지합니다.
+///
+/// ─── 차단 조건 ────────────────────────────────────────────────────────────
+///   - 이번 턴에 한 명도 이동하지 않은 경우 (HasAnyMove = false)
+///     → Fill 애니메이션 없이 _blockText가 떠오르는 피드백만 표시합니다.
+///   - 튜토리얼 진행 중 AdvanceTurn 권한이 없는 경우
+///     → 입력 자체를 무시합니다.
+///
+/// ─── Inspector 설정 ───────────────────────────────────────────────────────
+///   FillObject      → Fill 연출용 GameObject (DOScale 0 → fullScale)
+///   FillDuration    → Fill이 올라가는 시간(초). 기본값 0.5초.
+///   BlockText       → 이동 없을 때 표시할 World Space TextMeshPro
+///   ConfirmMessage  → 확인 패널에 표시할 메시지 텍스트
+///
+/// ─── 외부 연결 ────────────────────────────────────────────────────────────
+///   MapObjectInputHandler → 클릭 시 BeginHold() 호출
+///   ConfirmPanel          → 공유 확인 패널 (싱글톤)
+///   GameFlowController    → ForceEndTurn() 호출
+///   TutorialManager       → 입력 권한 체크
 /// </summary>
 [DisallowMultipleComponent]
 [RequireComponent(typeof(Collider))]
 public class HoldToAdvanceTurn : MonoBehaviour
 {
-    [SerializeField] private GameObject  _fillObject;
-    [SerializeField] private float       _holdDuration = 1.5f;
-    [SerializeField] private float       _drainSpeed   = 2f;
+    [SerializeField] private GameObject _fillObject;
+    [SerializeField] private float _fillDuration = 0.5f;
 
     [Header("이동 없음 차단 피드백")]
     [SerializeField] private TextMeshPro _blockText;
-    [SerializeField] private float       _blockTextFloatHeight = 1f;
-    [SerializeField] private float       _blockTextDuration    = 1f;
+    [SerializeField] private float _blockTextFloatHeight = 1f;
+    [SerializeField] private float _blockTextDuration = 1f;
+
+    [Header("확인 패널 메시지")]
+    [SerializeField] private string _confirmMessage = "다음날로 넘어가시겠습니까?";
 
     private Vector3 _fullScale;
-    private float   _holdTimer;
-    private bool    _isHolding;
-    private bool    _isDraining;
-    private bool    _triggered;
-
-    private Vector3   _blockTextOriginLocal;
+    private bool _triggered;
+    private Tween _fillTween;
+    private Vector3 _blockTextOriginLocal;
     private Coroutine _blockTextCoroutine;
-
-    // ── Unity ────────────────────────────────────────────────────────────────
 
     private void Awake()
     {
@@ -52,38 +67,19 @@ public class HoldToAdvanceTurn : MonoBehaviour
         }
     }
 
-    private void Update()
+    private void OnDestroy()
     {
-        if (_triggered) return;
-
-        if (_isHolding)
-        {
-            _holdTimer += Time.deltaTime;
-            float t = Mathf.Clamp01(_holdTimer / _holdDuration);
-            SetFill(t);
-            if (t >= 1f) Trigger();
-        }
-        else if (_isDraining)
-        {
-            _holdTimer -= Time.deltaTime * _drainSpeed;
-            if (_holdTimer <= 0f)
-            {
-                _holdTimer  = 0f;
-                _isDraining = false;
-                HideFill();
-            }
-            else
-            {
-                SetFill(_holdTimer / _holdDuration);
-            }
-        }
+        _fillTween?.Kill();
     }
 
     // ── 외부 API (MapObjectInputHandler에서 호출) ─────────────────────────────
 
     public void BeginHold()
     {
-        if (TutorialManager.IsActive && !TutorialManager.Instance.IsInputAllowed(TutorialInputPermission.AdvanceTurn))
+        if (_triggered) return;
+
+        if (TutorialManager.IsActive &&
+            !TutorialManager.Instance.IsInputAllowed(TutorialInputPermission.AdvanceTurn))
             return;
 
         var playerAction = GameFlowController.Instance?.GetPlayerActionState();
@@ -93,54 +89,64 @@ public class HoldToAdvanceTurn : MonoBehaviour
             return;
         }
 
-        _isDraining = false;
-        _isHolding  = true;
-        _triggered  = false;
+        PlayFillAnimation();
     }
 
-    public void EndHold()
-    {
-        if (_triggered) return;
-        _isHolding = false;
-
-        if (_holdTimer > 0f)
-            _isDraining = true;
-        else
-            HideFill();
-    }
+    public void EndHold() { }
 
     // ── Private ──────────────────────────────────────────────────────────────
 
-    private void Trigger()
+    private void PlayFillAnimation()
     {
-        _triggered  = true;
-        _isHolding  = false;
-        _isDraining = false;
-        SetFill(1f);
-        GameFlowController.Instance?.ForceEndTurn();
-        Invoke(nameof(HideFill), 0.15f);
+        if (_fillObject == null) return;
+
+        _fillTween?.Kill();
+        _fillObject.transform.localScale = Vector3.zero;
+
+        _fillTween = _fillObject.transform
+            .DOScale(_fullScale, _fillDuration)
+            .SetEase(Ease.OutQuad)
+            .OnComplete(OnFillComplete);
+    }
+
+    private void OnFillComplete()
+    {
+        _triggered = true;
+
+        ConfirmPanel.Instance?.Show(
+            _confirmMessage,
+            onConfirm: () =>
+            {
+                _triggered = false;
+                HideFill();
+                GameFlowController.Instance?.ForceEndTurn();
+            },
+            onCancel: () =>
+            {
+                _triggered = false;
+                HideFill();
+            });
     }
 
     private void HideFill()
     {
-        _holdTimer = 0f;
-        if (_fillObject != null)
-            _fillObject.transform.localScale = Vector3.zero;
-    }
-
-    private void SetFill(float t)
-    {
+        _fillTween?.Kill();
         if (_fillObject == null) return;
-        _fillObject.transform.localScale = _fullScale * t;
+
+        _fillTween = _fillObject.transform
+            .DOScale(Vector3.zero, _fillDuration)
+            .SetEase(Ease.InBack)
+            .OnComplete(() =>
+            {
+                if (_fillObject != null)
+                    _fillObject.transform.localScale = Vector3.zero;
+            });
     }
 
     private void ShowBlockText()
     {
         if (_blockText == null) return;
-
-        if (_blockTextCoroutine != null)
-            StopCoroutine(_blockTextCoroutine);
-
+        if (_blockTextCoroutine != null) StopCoroutine(_blockTextCoroutine);
         _blockTextCoroutine = StartCoroutine(FloatBlockText());
     }
 
@@ -154,7 +160,7 @@ public class HoldToAdvanceTurn : MonoBehaviour
         _blockText.gameObject.SetActive(true);
 
         Vector3 startLocal = _blockTextOriginLocal;
-        Vector3 endLocal   = startLocal + Vector3.up * _blockTextFloatHeight;
+        Vector3 endLocal = startLocal + Vector3.up * _blockTextFloatHeight;
         float elapsed = 0f;
 
         while (elapsed < _blockTextDuration)

@@ -136,9 +136,14 @@ public class GameState : IGameState
         var  martyrStatusCheck   = GetCharacterByRole(RoleType.Martyr);
         if (martyrStatusCheck != null && IsMarkedForDeath(martyrStatusCheck.CharacterId))
         {
-            martyrDeferredId    = martyrStatusCheck.CharacterId;
-            martyrDeathDeferred = true;
-            ClearDeathMark(martyrDeferredId); // Phase 1에서 즉시 사망 방지
+            // 능력 봉인 구역에 있는 순교자는 패시브 발동 안 됨
+            int martyrZone = GetZone(martyrStatusCheck.CharacterId);
+            if (!IsAbilityDisabledInZone(martyrZone))
+            {
+                martyrDeferredId = martyrStatusCheck.CharacterId;
+                martyrDeathDeferred = true;
+                ClearDeathMark(martyrDeferredId); // Phase 1에서 즉시 사망 방지
+            }
         }
 
         // Phase 1: 마크된 사망 확정, 연쇄·대리 대상 수집
@@ -256,6 +261,9 @@ public class GameState : IGameState
         if (martyr == null || !martyr.IsAlive) return false;
         if (martyr.CharacterId == target.CharacterId) return false;
         if (martyr.CurrentZone != target.CurrentZone) return false;
+
+        // 능력 봉인 구역에 있는 순교자는 체인 대리 불가
+        if (IsAbilityDisabledInZone(martyr.CurrentZone)) return false;
 
         martyrId = martyr.CharacterId;
         return true;

@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-
 /// <summary>
 /// 맵 오브젝트 클릭을 레이캐스트로 감지해 ClickScaleBounce에 위임합니다.
 ///

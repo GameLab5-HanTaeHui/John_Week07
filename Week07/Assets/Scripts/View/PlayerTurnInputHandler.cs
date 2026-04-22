@@ -25,6 +25,12 @@ public class PlayerTurnInputHandler : MonoBehaviour
     // 드래그 판정 픽셀 임계값
     private const float DragThreshold = 8f;
 
+    [Header("캐릭터 클릭 쿨타임")]
+    [Tooltip("캐릭터 클릭 후 다음 클릭까지 대기 시간(초)")]
+    [SerializeField] private float _clickCooldown = 0.7f;
+
+    private float _lastClickTime = -999f;
+
     private PlayerActionState              _playerAction;
     private Dictionary<int, CharacterView> _characterViews;
 
@@ -120,6 +126,14 @@ public class PlayerTurnInputHandler : MonoBehaviour
 
         var view = RaycastCharacter();
         if (view == null) return;
+
+        // 클릭 쿨타임 체크
+        if (Time.time - _lastClickTime < _clickCooldown)
+        {
+            Debug.Log($"[PlayerTurnInputHandler] 클릭 쿨타임 중 — 남은 시간: {(_clickCooldown - (Time.time - _lastClickTime)):F2}초");
+            return;
+        }
+        _lastClickTime = Time.time;
 
         _isPressing      = true;
         _draggingId      = view.CharacterId;

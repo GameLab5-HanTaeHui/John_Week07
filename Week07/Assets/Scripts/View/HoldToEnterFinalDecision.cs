@@ -1,29 +1,49 @@
+using DG.Tweening;
 using UnityEngine;
-
+using HTH;
 /// <summary>
-/// 꾹 누르면 최종 결정(FinalDecision) 단계로 진입합니다.
-/// 손을 떼면 게이지가 서서히 감소합니다.
+/// 최종 추리 진입 버튼 컴포넌트입니다.
 ///
-/// Inspector 필수 연결:
-///   FillObject    → 홀드 진행도를 표현할 GameObject (Scale 0→1로 커짐)
-///   HoldDuration  → 가득 차는 데 걸리는 시간(초)
-///   DrainSpeed    → 손을 뗐을 때 감소 배율 (2 = 채울 때의 2배 속도로 감소)
+/// ─── 동작 흐름 ────────────────────────────────────────────────────────────
+///   1. 플레이어가 버튼을 클릭합니다.
+///   2. _fillDuration 동안 Fill 오브젝트가 애니메이션으로 올라갑니다.
+///   3. Fill이 가득 차면 공유 확인 패널(ConfirmPanel)이 표시됩니다.
+///   4. 확인 → GameFlowController.EnterFinalDecision() 호출, 최종 추리로 진입합니다.
+///      취소 → Fill이 초기화되고 현재 상태를 유지합니다.
+///
+/// ─── 진입 가능 조건 (CanActivate) ─────────────────────────────────────────
+///   - LoopState가 AwaitingFinalDecision 상태이거나
+///   - LoopState가 RunningTurn이고 TurnState가 PlayerAction 상태일 때만 유효합니다.
+///   - 그 외 상태에서의 클릭은 무시됩니다.
+///
+/// ─── 차단 조건 ────────────────────────────────────────────────────────────
+///   - 튜토리얼 진행 중 EnterFinalDecision 권한이 없는 경우
+///     → 입력 자체를 무시합니다.
+///
+/// ─── Inspector 설정 ───────────────────────────────────────────────────────
+///   FillObject      → Fill 연출용 GameObject (DOScale 0 → fullScale)
+///   FillDuration    → Fill이 올라가는 시간(초). 기본값 0.5초.
+///   ConfirmMessage  → 확인 패널에 표시할 메시지 텍스트
+///
+/// ─── 외부 연결 ────────────────────────────────────────────────────────────
+///   MapObjectInputHandler → 클릭 시 BeginHold() 호출
+///   ConfirmPanel          → 공유 확인 패널 (싱글톤)
+///   GameFlowController    → EnterFinalDecision() / CanEnterFinalDecision 체크
+///   TutorialManager       → 입력 권한 체크
 /// </summary>
 [DisallowMultipleComponent]
 [RequireComponent(typeof(Collider))]
 public class HoldToEnterFinalDecision : MonoBehaviour
 {
     [SerializeField] private GameObject _fillObject;
-    [SerializeField] private float      _holdDuration = 1.5f;
-    [SerializeField] private float      _drainSpeed   = 2f;
+    [SerializeField] private float _fillDuration = 0.5f;
+
+    [Header("확인 패널 메시지")]
+    [SerializeField] private string _confirmMessage = "최종 추리를 시작하시겠습니까?";
 
     private Vector3 _fullScale;
-    private float   _holdTimer;
-    private bool    _isHolding;
-    private bool    _isDraining;
-    private bool    _triggered;
-
-    // ── Unity ────────────────────────────────────────────────────────────────
+    private bool _triggered;
+    private Tween _fillTween;
 
     private void Awake()
     {
@@ -34,85 +54,79 @@ public class HoldToEnterFinalDecision : MonoBehaviour
         }
     }
 
-    private void Update()
+    private void OnDestroy()
     {
-        if (_triggered) return;
-
-        if (_isHolding)
-        {
-            _holdTimer += Time.deltaTime;
-            float t = Mathf.Clamp01(_holdTimer / _holdDuration);
-            SetFill(t);
-            if (t >= 1f) Trigger();
-        }
-        else if (_isDraining)
-        {
-            _holdTimer -= Time.deltaTime * _drainSpeed;
-            if (_holdTimer <= 0f)
-            {
-                _holdTimer  = 0f;
-                _isDraining = false;
-                HideFill();
-            }
-            else
-            {
-                SetFill(_holdTimer / _holdDuration);
-            }
-        }
+        _fillTween?.Kill();
     }
 
     // ── 외부 API (MapObjectInputHandler에서 호출) ─────────────────────────────
 
     public void BeginHold()
     {
-        if (!CanActivate()) return;
-        if (TutorialManager.IsActive && !TutorialManager.Instance.IsInputAllowed(TutorialInputPermission.EnterFinalDecision))
-            return;
-        _isDraining = false;
-        _isHolding  = true;
-        _triggered  = false;
-    }
-
-    public void EndHold()
-    {
         if (_triggered) return;
-        _isHolding = false;
+        if (!CanActivate()) return;
 
-        if (_holdTimer > 0f)
-            _isDraining = true;
-        else
-            HideFill();
+        if (TutorialManager.IsActive &&
+            !TutorialManager.Instance.IsInputAllowed(TutorialInputPermission.EnterFinalDecision))
+            return;
+
+        PlayFillAnimation();
     }
+
+    public void EndHold() { }
 
     // ── Private ──────────────────────────────────────────────────────────────
 
-    private void Trigger()
+    private void PlayFillAnimation()
     {
-        _triggered  = true;
-        _isHolding  = false;
-        _isDraining = false;
-        SetFill(1f);
-        GameFlowController.Instance?.EnterFinalDecision();
-        Invoke(nameof(HideFill), 0.15f);
+        if (_fillObject == null) return;
+
+        _fillTween?.Kill();
+        _fillObject.transform.localScale = Vector3.zero;
+
+        _fillTween = _fillObject.transform
+            .DOScale(_fullScale, _fillDuration)
+            .SetEase(Ease.OutQuad)
+            .OnComplete(OnFillComplete);
+    }
+
+    private void OnFillComplete()
+    {
+        _triggered = true;
+
+        ConfirmPanel.Instance?.Show(
+            _confirmMessage,
+            onConfirm: () =>
+            {
+                _triggered = false;
+                HideFill();
+                GameFlowController.Instance?.EnterFinalDecision();
+            },
+            onCancel: () =>
+            {
+                _triggered = false;
+                HideFill();
+            });
+    }
+
+    private void HideFill()
+    {
+        _fillTween?.Kill();
+        if (_fillObject == null) return;
+
+        _fillTween = _fillObject.transform
+            .DOScale(Vector3.zero, _fillDuration)
+            .SetEase(Ease.InBack)
+            .OnComplete(() =>
+            {
+                if (_fillObject != null)
+                    _fillObject.transform.localScale = Vector3.zero;
+            });
     }
 
     private bool CanActivate()
     {
         var gfc = GameFlowController.Instance;
         return gfc != null && gfc.CanEnterFinalDecision;
-    }
-
-    private void HideFill()
-    {
-        _holdTimer = 0f;
-        _triggered = false;
-        if (_fillObject != null)
-            _fillObject.transform.localScale = Vector3.zero;
-    }
-
-    private void SetFill(float t)
-    {
-        if (_fillObject == null) return;
-        _fillObject.transform.localScale = _fullScale * t;
     }
 }
