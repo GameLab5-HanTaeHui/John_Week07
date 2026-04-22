@@ -29,7 +29,8 @@ public class PlayerTurnInputHandler : MonoBehaviour
     [Tooltip("캐릭터 클릭 후 다음 클릭까지 대기 시간(초)")]
     [SerializeField] private float _clickCooldown = 0.7f;
 
-    private float _lastClickTime = -999f;
+    // 캐릭터 ID별 마지막 클릭 시간
+    private readonly Dictionary<int, float> _lastClickTimePerCharacter = new();
 
     private PlayerActionState              _playerAction;
     private Dictionary<int, CharacterView> _characterViews;
@@ -127,13 +128,15 @@ public class PlayerTurnInputHandler : MonoBehaviour
         var view = RaycastCharacter();
         if (view == null) return;
 
-        // 클릭 쿨타임 체크
-        if (Time.time - _lastClickTime < _clickCooldown)
+        // 캐릭터별 클릭 쿨타임 체크
+        int charId = view.CharacterId;
+        if (_lastClickTimePerCharacter.TryGetValue(charId, out float lastTime)
+            && Time.time - lastTime < _clickCooldown)
         {
-            Debug.Log($"[PlayerTurnInputHandler] 클릭 쿨타임 중 — 남은 시간: {(_clickCooldown - (Time.time - _lastClickTime)):F2}초");
+            Debug.Log($"[PlayerTurnInputHandler] 클릭 쿨타임 중 — ID:{charId} 남은 시간: {(_clickCooldown - (Time.time - lastTime)):F2}초");
             return;
         }
-        _lastClickTime = Time.time;
+        _lastClickTimePerCharacter[charId] = Time.time;
 
         _isPressing      = true;
         _draggingId      = view.CharacterId;
@@ -305,6 +308,9 @@ public class PlayerTurnInputHandler : MonoBehaviour
 
         if (_zoneLayout != null)
             _zoneLayout.InitSlots(_assignedZones);
+
+        // 루프 리셋 시 캐릭터별 쿨타임 초기화
+        _lastClickTimePerCharacter.Clear();
     }
 
     /// <summary>
