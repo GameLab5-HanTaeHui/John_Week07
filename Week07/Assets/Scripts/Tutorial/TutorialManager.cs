@@ -1,5 +1,6 @@
 using DG.Tweening;
 using System.Collections;
+using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -162,12 +163,22 @@ public class TutorialManager : SingletonMonobehaviour<TutorialManager>
         if (_playerAction != null)
             _playerAction.OnActionConfirmed += HandleActionConfirmed;
 
-        if (_roleDocDrawer != null)        _roleDocDrawer.OnShown        += HandleRoleDocShown;
-        //if (_narrativeOrderDrawer != null) _narrativeOrderDrawer.OnShown += HandleNarrativeOrderShown;
-        if (_memoBookDrawer != null)       _memoBookDrawer.OnShown       += HandleMemoBookShown;
+        if (_roleDocDrawer != null)
+        {
+            _roleDocDrawer.OnShown += HandleRoleDocShown;
+            _roleDocDrawer.OnHidden += HandleRoleDocHidden;
+        }
+        if (_memoBookDrawer != null)
+        {
+            _memoBookDrawer.OnShown += HandleMemoBookShown;
+            _memoBookDrawer.OnHidden += HandleMemoBookClose;
+        }
 
         if (_historyController != null)
+        {
             _historyController.OnAnyPanelHeaderClicked += HandleEventRecordClicked;
+            _historyController.OnAnyPanelCollapsed += HandleEventRecordClosed;
+        }
 
         if (_uiManager != null)
             _uiManager.OnGuideAdvanced += HandleGuideAdvanced;
@@ -193,11 +204,22 @@ public class TutorialManager : SingletonMonobehaviour<TutorialManager>
         if (_playerAction != null)
             _playerAction.OnActionConfirmed -= HandleActionConfirmed;
 
-        if (_roleDocDrawer != null)        _roleDocDrawer.OnShown        -= HandleRoleDocShown;
-        if (_memoBookDrawer != null)       _memoBookDrawer.OnShown       -= HandleMemoBookShown;
+        if (_roleDocDrawer != null)
+        {
+            _roleDocDrawer.OnShown -= HandleRoleDocShown;
+            _roleDocDrawer.OnHidden -= HandleRoleDocHidden;
+        }
+        if (_memoBookDrawer != null)
+        {
+            _memoBookDrawer.OnShown -= HandleMemoBookShown;
+            _memoBookDrawer.OnHidden -= HandleMemoBookClose;
+        }
 
         if (_historyController != null)
+        {
             _historyController.OnAnyPanelHeaderClicked -= HandleEventRecordClicked;
+            _historyController.OnAnyPanelCollapsed -= HandleEventRecordClosed;
+        }
 
         if (_uiManager != null)
             _uiManager.OnGuideAdvanced -= HandleGuideAdvanced;
@@ -221,8 +243,8 @@ public class TutorialManager : SingletonMonobehaviour<TutorialManager>
                 StartCoroutine(TransitionAfterDelay(TutorialPhase.RestrictedMove, 0.5f));
                 break;
 
-            case TutorialPhase.RestrictedMove:
-                Debug.Log("2");
+            case TutorialPhase.RestrictedMove: // 캐릭터 옮기기
+                Debug.Log("캐릭터 옮기기");
                 SetInputPermission(TutorialInputPermission.CharacterMove);
                 _uiManager?.SetClickAdvance(false);
                 if (_murdererCharacterTransform != null)
@@ -232,8 +254,8 @@ public class TutorialManager : SingletonMonobehaviour<TutorialManager>
                 ShowPhaseGuide(phase);
                 break;
 
-            case TutorialPhase.QuillPenUnlocked:
-                Debug.Log("3");
+            case TutorialPhase.QuillPenUnlocked:// 깃털 다음날
+                Debug.Log("깃털");
 
                 if (!_TutoArrow.gameObject.activeSelf)
                 {
@@ -261,7 +283,7 @@ public class TutorialManager : SingletonMonobehaviour<TutorialManager>
                 ShowPhaseGuide(phase);
                 break;
 
-            case TutorialPhase.RoleDocGuide:
+            case TutorialPhase.RoleDocGuide: // 왼쪽 역할 패널
                 Debug.Log("왼쪽 역할");
 
                 _TutoArrow.localPosition = new Vector3(-680f, 220f, 0f);
@@ -276,14 +298,26 @@ public class TutorialManager : SingletonMonobehaviour<TutorialManager>
                 ShowPhaseGuide(phase);
                 break;
 
+            case TutorialPhase.RoleDocCloseGuide: // 왼쪽 역할 패널 닫기
+                Debug.Log("왼쪽 역할 닫기");
+                _TutoArrow.gameObject.SetActive(false);
+                SetInputPermission(TutorialInputPermission.RoleDocUI);
+                _uiManager?.SetClickAdvance(false);
+                if (_roleDocHighlightRect != null) _uiManager?.SetUIHighlight(_roleDocHighlightRect);
+                ShowPhaseGuide(phase);
+                break;
+
             // ── 순서: MemoBook → MemoWrite → EventRecord ──────────────────────
 
-            case TutorialPhase.MemoBookGuide:
+            case TutorialPhase.MemoBookGuide: // 오른쪽 하단 메모
                 Debug.Log("오른쪽 하단 메모");
-
-                _TutoArrow.localPosition = new Vector3(580f, -300f, 0f);
-                _TutoArrow.localRotation = Quaternion.Euler(0f, 0f, 270f);
-                _uiManager?.SetSecondaryBounce(_TutoArrow);
+                if(!_TutoArrow.gameObject.activeSelf)
+                {
+                    _TutoArrow.gameObject.SetActive(true);
+                    _TutoArrow.localPosition = new Vector3(580f, -300f, 0f);
+                    _TutoArrow.localRotation = Quaternion.Euler(0f, 0f, 270f);
+                    _uiManager?.SetSecondaryBounce(_TutoArrow);
+                }
 
                 SetInputPermission(TutorialInputPermission.RoleDocUI
                                  | TutorialInputPermission.MemoOpen);
@@ -295,8 +329,8 @@ public class TutorialManager : SingletonMonobehaviour<TutorialManager>
                 ShowPhaseGuide(phase);
                 break;
 
-            case TutorialPhase.MemoWriteGuide:
-                Debug.Log("9");
+            case TutorialPhase.MemoWriteGuide: // 오른쪽 하단 메모 작성
+                Debug.Log("메모 기록");
                 SetInputPermission(TutorialInputPermission.RoleDocUI
                                  | TutorialInputPermission.MemoOpen
                                  | TutorialInputPermission.MemoWrite);
@@ -307,12 +341,25 @@ public class TutorialManager : SingletonMonobehaviour<TutorialManager>
                     _notepadToggleManager.OnAnyToggleChanged += HandleMemoWriteToggled;
                 break;
 
-            case TutorialPhase.EventRecordGuide:
-                Debug.Log("왼쪽 하단 파일");
+            case TutorialPhase.MemoBookCloseGuide: // 오른쪽 하단 메모 닫기
+                Debug.Log("메모북 닫기");
+                _TutoArrow.gameObject.SetActive(false);
 
-                _TutoArrow.localPosition = new Vector3(-725f, -300f, 0f);
-                _TutoArrow.localRotation = Quaternion.Euler(0f, 0f, 270);
-                _uiManager?.SetSecondaryBounce(_TutoArrow);
+                SetInputPermission(TutorialInputPermission.RoleDocUI | TutorialInputPermission.MemoOpen);
+                _uiManager?.SetClickAdvance(false);
+                if (_memoBookHighlightRect != null) _uiManager?.SetUIHighlight(_memoBookHighlightRect);
+                ShowPhaseGuide(phase);
+                break;
+
+            case TutorialPhase.EventRecordGuide: // 왼쪽 하단 파일
+                Debug.Log("왼쪽 하단 파일");
+                if(!_TutoArrow.gameObject.activeSelf)
+                {
+                    _TutoArrow.gameObject.SetActive(true);
+                    _TutoArrow.localPosition = new Vector3(-725f, -250f, 0f);
+                    _TutoArrow.localRotation = Quaternion.Euler(0f, 0f, 270);
+                    _uiManager?.SetSecondaryBounce(_TutoArrow);
+                }
 
                 SetInputPermission(TutorialInputPermission.RoleDocUI
                                  | TutorialInputPermission.MemoOpen
@@ -325,8 +372,28 @@ public class TutorialManager : SingletonMonobehaviour<TutorialManager>
                 ShowPhaseGuide(phase);
                 break;
 
+            // 히스토리 닫기
+            case TutorialPhase.EventRecordCloseGuide: // 왼쪽 하단 파일 닫기
+                Debug.Log("히스토리 닫기");
+                _TutoArrow.gameObject.SetActive(false);
+
+                SetInputPermission(TutorialInputPermission.RoleDocUI | TutorialInputPermission.MemoOpen | TutorialInputPermission.EventRecord);
+                _uiManager?.SetClickAdvance(false);
+                if (_eventRecordHighlightRect != null) _uiManager?.SetUIHighlight(_eventRecordHighlightRect);
+                ShowPhaseGuide(phase);
+                break;
+
             case TutorialPhase.FinalDecisionBookGuide:
                 Debug.Log("11");
+
+                if (!_TutoArrow.gameObject.activeSelf)
+                {
+                    _TutoArrow.gameObject.SetActive(true);
+                    _TutoArrow.localPosition = new Vector3(500f, 70f, 0f);
+                    _TutoArrow.localRotation = Quaternion.Euler(0f, 0f, 0f);
+                    _uiManager?.SetSecondaryBounce(_TutoArrow);
+                }
+
                 SetInputPermission(TutorialInputPermission.RoleDocUI
                                  | TutorialInputPermission.MemoOpen
                                  | TutorialInputPermission.MemoWrite
@@ -340,6 +407,8 @@ public class TutorialManager : SingletonMonobehaviour<TutorialManager>
 
             case TutorialPhase.DateUIGuide:
                 Debug.Log("12");
+                _TutoArrow.gameObject.SetActive(false);
+
                 SetInputPermission(TutorialInputPermission.All);
                 _uiManager?.SetClickAdvance(true);
                 _uiManager?.ClearWorldHighlight();
@@ -434,19 +503,18 @@ public class TutorialManager : SingletonMonobehaviour<TutorialManager>
     private void HandleRoleDocShown()
     {
         if (_currentPhase != TutorialPhase.RoleDocGuide) return;
-        EnterPhase(TutorialPhase.MemoBookGuide);
+        EnterPhase(TutorialPhase.RoleDocCloseGuide);
+    }
+    private void HandleRoleDocHidden()
+    {
+        if (_currentPhase != TutorialPhase.RoleDocCloseGuide) return;
+        EnterPhase(TutorialPhase.MemoBookGuide); // 닫히면 -> 메모북 열기로 넘어감
     }
 
     private void HandleMemoBookShown()
     {
         if (_currentPhase != TutorialPhase.MemoBookGuide) return;
-        EnterPhase(TutorialPhase.EventRecordGuide);
-    }
-
-    private void HandleEventRecordClicked()
-    {
-        if (_currentPhase != TutorialPhase.EventRecordGuide) return;
-        EnterPhase(TutorialPhase.FinalDecisionBookGuide);
+        EnterPhase(TutorialPhase.MemoWriteGuide);
     }
 
     private void HandleMemoWriteToggled()
@@ -454,7 +522,23 @@ public class TutorialManager : SingletonMonobehaviour<TutorialManager>
         if (_currentPhase != TutorialPhase.MemoWriteGuide) return;
         if (_notepadToggleManager != null)
             _notepadToggleManager.OnAnyToggleChanged -= HandleMemoWriteToggled;
+        EnterPhase(TutorialPhase.MemoBookCloseGuide);
+    }
+    private void HandleMemoBookClose()
+    {
+        if (_currentPhase != TutorialPhase.MemoBookCloseGuide) return;
         EnterPhase(TutorialPhase.EventRecordGuide);
+    }
+
+    private void HandleEventRecordClicked()
+    {
+        if (_currentPhase != TutorialPhase.EventRecordGuide) return;
+        EnterPhase(TutorialPhase.EventRecordCloseGuide);
+    }
+    private void HandleEventRecordClosed()
+    {
+        if (_currentPhase != TutorialPhase.EventRecordCloseGuide) return;
+        EnterPhase(TutorialPhase.FinalDecisionBookGuide);
     }
 
     /// <summary>

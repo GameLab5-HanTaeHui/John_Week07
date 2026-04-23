@@ -62,6 +62,9 @@ public class HistoryPageController : MonoBehaviour
     /// <summary>어떤 패널의 헤더(포스트잇)가 클릭되었을 때 발생합니다. TutorialManager에서 구독합니다.</summary>
     public event Action OnAnyPanelHeaderClicked;
 
+    /// <summary> 패널이 닫힐 때 발생하는 이벤트
+    public event Action OnAnyPanelCollapsed;
+
     // ── 내부 상태 ─────────────────────────────────────────────────────────────
 
     /// <summary>[loopIndex][turnIndex] 형태의 런타임 2D 참조 — Awake에서 구성됩니다.</summary>
@@ -128,9 +131,9 @@ public class HistoryPageController : MonoBehaviour
                     Debug.LogWarning($"[HistoryPageController] 패널 미연결 — L{loop} T{turn}");
                     continue;
                 }
-                panel.Init(loop, turn, _expandOffset);
+                panel.Init(loop, turn);
+
                 panel.OnHeaderClicked      += HandlePanelHeaderClicked;
-                panel.OnCollapseRequested  += HandlePanelCollapseRequested;
                 panel.gameObject.SetActive(false);
             }
         }
@@ -157,7 +160,11 @@ public class HistoryPageController : MonoBehaviour
 
     private void HandlePanelHeaderClicked(HistoryPagePanel clicked)
     {
-        if (clicked == _expandedPanel) return;
+        if (clicked == _expandedPanel)
+        {
+            CollapseExpanded();
+            return;
+        }
 
         // ★ [HTH추가] 히스토리 열람 로그 (지표 #12)
         _historyOpenCount++;
@@ -209,17 +216,8 @@ public class HistoryPageController : MonoBehaviour
         _expandedPanel.Collapse();
         _expandedPanel = null;
         SetBackdropActive(false);
-    }
 
-    /// <summary>
-    /// 패널이 드래그로 스스로 내려갈 때 호출됩니다.
-    /// 패널 자체는 이미 Collapse()를 호출했으므로 상태만 정리합니다.
-    /// </summary>
-    private void HandlePanelCollapseRequested(HistoryPagePanel panel)
-    {
-        if (_expandedPanel != panel) return;
-        _expandedPanel = null;
-        SetBackdropActive(false);
+        OnAnyPanelCollapsed?.Invoke();
     }
 
     private void SetBackdropActive(bool active)

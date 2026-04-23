@@ -28,8 +28,7 @@ using UnityEngine.UI;
 /// </summary>
 [DisallowMultipleComponent]
 [RequireComponent(typeof(RectTransform))]
-public class DrawerPanel : MonoBehaviour,
-    IBeginDragHandler, IDragHandler, IEndDragHandler
+public class DrawerPanel : MonoBehaviour
 {
     // ── Inspector ────────────────────────────────────────────────────────────
 
@@ -45,12 +44,6 @@ public class DrawerPanel : MonoBehaviour,
              "숨김 위치는 Awake에서 초기 anchoredPosition.y로 자동 캡처됩니다.")]
     [SerializeField] private float _shownAnchoredY = 0f;
 
-    [Header("드래그 임계값")]
-    [Tooltip("이 거리(px) 이상 드래그하면 완료 처리합니다.")]
-    [SerializeField] private float _distanceThreshold = 100f;
-    [Tooltip("이 속도(px/s) 이상이면 거리 미달이어도 완료 처리합니다.")]
-    [SerializeField] private float _velocityThreshold  = 600f;
-
     [Header("DOTween 설정")]
     [SerializeField] private float _animDuration = 0.4f;
     [SerializeField] private Ease  _showEase     = Ease.OutCubic;
@@ -58,7 +51,7 @@ public class DrawerPanel : MonoBehaviour,
 
     [Header("드로어 버튼 목록")]
     [Tooltip("펼쳐졌을 때 활성화되는 버튼들. 누르면 드로어가 닫힙니다.")]
-    [SerializeField] private Button[] _drawerButtons;
+    [SerializeField] private Button _drawerButton;
 
     // ── 이벤트 ───────────────────────────────────────────────────────────────
 
@@ -91,9 +84,6 @@ public class DrawerPanel : MonoBehaviour,
     /// <summary>이번 세션에서 이 패널을 열람한 횟수</summary>
     private int _openCount;
 
-    /// <summary>드래그 중 계산한 X 속도 (px/s, 오른쪽 양수)</summary>
-    private float _dragVelocity;
-
     // ── Unity ────────────────────────────────────────────────────────────────
 
     private void Awake()
@@ -103,12 +93,8 @@ public class DrawerPanel : MonoBehaviour,
         _hiddenAnchoredY     = _rect.anchoredPosition.y;
         _hiddenLocalRotation = _rect.localRotation;
 
-        SetButtonsActive(false);
-
-        if (_drawerButtons != null)
-            foreach (var btn in _drawerButtons)
-                if (btn != null)
-                    btn.onClick.AddListener(() => Hide());
+        if (_drawerButton != null)
+            _drawerButton.onClick.AddListener(() => Toggle());
     }
 
     private void OnDestroy()
@@ -116,10 +102,8 @@ public class DrawerPanel : MonoBehaviour,
         _moveTween?.Kill();
         _rotateTween?.Kill();
 
-        if (_drawerButtons != null)
-            foreach (var btn in _drawerButtons)
-                if (btn != null)
-                    btn.onClick.RemoveAllListeners();
+        if (_drawerButton != null)
+            _drawerButton.onClick.RemoveAllListeners();
     }
 
     // ── 외부 API ─────────────────────────────────────────────────────────────
@@ -129,96 +113,20 @@ public class DrawerPanel : MonoBehaviour,
 
     /// <summary>패널을 집어넣습니다 (Hidden 위치로 슬라이드, Rotation → 초기값).</summary>
     public void Hide(bool instant = false) => TransitionTo(isShowing: false, instant);
-
-    // _shownAnchoredX > _hiddenAnchoredX 이면 +1(왼→오른), 아니면 -1(오른→왼)
-    private float ShowDirection => _moveVertically 
-        ? Mathf.Sign(_shownAnchoredY - _hiddenAnchoredY) 
-        : Mathf.Sign(_shownAnchoredX - _hiddenAnchoredX);
-
-    // ── 드래그 핸들러 ────────────────────────────────────────────────────────
-
-    public void OnBeginDrag(PointerEventData eventData)
+    /// <summary>현재 상태의 반대로 패널을 열거나 닫습니다.</summary>
+    public void Toggle(bool instant = false)
     {
-        _moveTween?.Kill();
-        _rotateTween?.Kill();
-        _dragVelocity = 0f;
-    }
-
-    public void OnDrag(PointerEventData eventData)
-    {
-        if (Time.deltaTime > 0f)
-        {
-            _dragVelocity = _moveVertically
-                ? eventData.delta.y / Time.deltaTime
-                : eventData.delta.x / Time.deltaTime;
-        }
-
-        if (_moveVertically)
-        {
-            // Y축 드래그 처리
-            float newY = _rect.anchoredPosition.y + eventData.delta.y;
-            newY = Mathf.Clamp(newY,
-                Mathf.Min(_hiddenAnchoredY, _shownAnchoredY),
-                Mathf.Max(_hiddenAnchoredY, _shownAnchoredY));
-            _rect.anchoredPosition = new Vector2(_rect.anchoredPosition.x, newY);
-        }
-        else
-        {
-            // X축 드래그 처리
-            float newX = _rect.anchoredPosition.x + eventData.delta.x;
-            newX = Mathf.Clamp(newX,
-                Mathf.Min(_hiddenAnchoredX, _shownAnchoredX),
-                Mathf.Max(_hiddenAnchoredX, _shownAnchoredX));
-            _rect.anchoredPosition = new Vector2(newX, _rect.anchoredPosition.y);
-        }
-
-        // X 진행도(0-1)에 따라 Rotation 실시간 보간
-        ApplyRotationByProgress();
-    }
-
-    public void OnEndDrag(PointerEventData eventData)
-    {
-        // [HTH추가] FinalDecision 상태에서는 드래그로 닫기 차단
-        // 토글은 버튼 클릭으로만 가능
+        // [HTH추가] FinalDecision 상태에서는 닫기 차단
         if (GameFlowController.Instance?.CurrentLoopState == LoopStateType.FinalDecision)
         {
-            if (IsShown)
-                TransitionTo(isShowing: true, instant: false);
-            return;
+            if (IsShown) return; // 이미 열려있다면 무시
         }
 
-        // 현재 상태에 따라 반대 방향으로 충분히 이동했는지 판단
-        bool shouldShow = IsShown ? !ShouldHideOnRelease() : ShouldShowOnRelease();
-        TransitionTo(isShowing: shouldShow, instant: false);
+        if (IsShown) Hide(instant);
+        else Show(instant);
     }
 
     // ── 내부 전환 로직 ───────────────────────────────────────────────────────
-
-    /// <summary>Hidden 상태에서 Shown 방향으로 충분히 드래그했는지 판단합니다.</summary>
-    private bool ShouldShowOnRelease()
-    {
-        float currentPos = _moveVertically ? _rect.anchoredPosition.y : _rect.anchoredPosition.x;
-        float hiddenPos = _moveVertically ? _hiddenAnchoredY : _hiddenAnchoredX;
-
-        float draggedToShown = (currentPos - hiddenPos) * ShowDirection;
-        bool pastDistance = draggedToShown > _distanceThreshold;
-        bool fastSwipe = _dragVelocity * ShowDirection > _velocityThreshold;
-
-        return pastDistance || fastSwipe;
-    }
-
-    /// <summary>Shown 상태에서 Hidden 방향으로 충분히 드래그했는지 판단합니다.</summary>
-    private bool ShouldHideOnRelease()
-    {
-        float currentPos = _moveVertically ? _rect.anchoredPosition.y : _rect.anchoredPosition.x;
-        float shownPos = _moveVertically ? _shownAnchoredY : _shownAnchoredX;
-
-        float draggedToHidden = (shownPos - currentPos) * ShowDirection;
-        bool pastDistance = draggedToHidden > _distanceThreshold;
-        bool fastSwipe = _dragVelocity * ShowDirection < -_velocityThreshold;
-
-        return pastDistance || fastSwipe;
-    }
 
     private void TransitionTo(bool isShowing, bool instant)
     {
@@ -247,39 +155,21 @@ public class DrawerPanel : MonoBehaviour,
             return;
         }
 
-        // 위치와 회전을 동일한 Duration/Ease로 동기화
+        // 위치 이동
         _moveTween = _rect
-            .DOAnchorPosX(targetX, _animDuration)
-            .SetEase(ease)
-            .OnComplete(() => NotifyComplete(isShowing));
+        .DOAnchorPos(targetPos, _animDuration)
+        .SetEase(ease)
+        .OnComplete(() => NotifyComplete(isShowing));
 
         _rotateTween = _rect
             .DOLocalRotateQuaternion(targetRot, _animDuration)
             .SetEase(ease);
     }
 
-    /// <summary>드래그 X 진행도(0→1)를 기반으로 Rotation을 Lerp합니다.</summary>
-    private void ApplyRotationByProgress()
-    {
-        float range = _moveVertically
-            ? (_shownAnchoredY - _hiddenAnchoredY)
-            : (_shownAnchoredX - _hiddenAnchoredX);
-
-        if (Mathf.Approximately(range, 0f)) return;
-
-        float currentProgress = _moveVertically
-            ? (_rect.anchoredPosition.y - _hiddenAnchoredY)
-            : (_rect.anchoredPosition.x - _hiddenAnchoredX);
-
-        float t = Mathf.Clamp01(currentProgress / range);
-        _rect.localRotation = Quaternion.Lerp(_hiddenLocalRotation, ShownLocalRotation, t);
-    }
-
     private void NotifyComplete(bool isShowing)
     {
-        SetButtonsActive(isShowing);
-        if (isShowing) OnShown?.Invoke();
-        else           OnHidden?.Invoke();
+        //if (isShowing) OnShown?.Invoke();
+        //else           OnHidden?.Invoke();
 
         // [HTH추가]
         if (isShowing)
@@ -302,14 +192,6 @@ public class DrawerPanel : MonoBehaviour,
         }
     }
 
-    private void SetButtonsActive(bool active)
-    {
-        if (_drawerButtons == null) return;
-        foreach (var btn in _drawerButtons)
-            if (btn != null)
-                btn.gameObject.SetActive(active);
-    }
-
     // ── Editor 방어 ──────────────────────────────────────────────────────────
 
 #if UNITY_EDITOR
@@ -329,9 +211,6 @@ public class DrawerPanel : MonoBehaviour,
                 $"[DrawerPanel] _shownAnchoredY({_shownAnchoredY})가 " +
                 $"초기 anchoredPosition.y({rt.anchoredPosition.y})와 같습니다. " +
                 "두 값이 달라야 패널이 움직입니다.");
-
-        if (_distanceThreshold <= 0f)
-            Debug.LogWarning("[DrawerPanel] _distanceThreshold는 0보다 커야 합니다.");
 
         if (_animDuration <= 0f)
             Debug.LogWarning("[DrawerPanel] _animDuration은 0보다 커야 합니다.");
