@@ -17,7 +17,6 @@ public enum TutorialPhase
 
     // ── 2턴: UI 순차 해금 가이드 ────────────────────────────────────────────
     RoleDocGuide,           // 역할 기능 UI 하이라이트
-    NarrativeOrderGuide,    // 사서순 UI 하이라이트
     MemoBookGuide,          // 메모 수첩 하이라이트
     EventRecordGuide,       // 사건 기록 포스트잇 하이라이트
     MemoWriteGuide,         // 메모 O/△/X 기능 해금 안내

@@ -100,6 +100,7 @@ public class GameLogger : MonoBehaviour
         // GetDirectoryName 하면 실행파일(.exe) 위치
 #endif
 
+        // 단일 누적 파일 경로 설정 (스테이지별 구간은 EraseStageSection으로 관리)
         string logDir = Path.Combine(Application.persistentDataPath, "log");
         try
         {
@@ -112,8 +113,6 @@ public class GameLogger : MonoBehaviour
         }
         _logFilePath = Path.Combine(logDir, $"GameLog_{PlayerUuid}.jsonl");
         Debug.Log($"[GameLogger] 로그 파일 경로: {_logFilePath}");
-
-        Application.logMessageReceived += HandleUnityLog;
     }
 
     private void OnDestroy()
@@ -142,7 +141,15 @@ public class GameLogger : MonoBehaviour
         _sessionId = Guid.NewGuid().ToString("N").Substring(0, 8);
         _sessionStart = DateTime.UtcNow;
 
-        // 이번 스테이지 세션이 시작되는 파일 위치 기록
+        // 파일 경로는 UUID 기반 단일 파일 유지
+        string logDir = Path.Combine(Application.persistentDataPath, "log");
+        Directory.CreateDirectory(logDir);
+        _logFilePath = Path.Combine(logDir, $"GameLog_{PlayerUuid}.jsonl");
+
+        // 해당 stageId 구간만 말소 후 나머지는 유지
+        EraseStageSection(stageId);
+
+        // 말소 후 파일 끝 위치를 오프셋으로 저장
         _sessionStartFileOffset = File.Exists(_logFilePath)
             ? new FileInfo(_logFilePath).Length
             : 0L;
@@ -165,6 +172,53 @@ public class GameLogger : MonoBehaviour
             { "platform",        Application.platform.ToString() },
             { "system_language", Application.systemLanguage.ToString() },
         });
+    }
+    /// <summary>
+    /// 파일에서 특정 stageId의 세션 구간을 제거합니다.
+    /// session_start의 stage_id가 일치하는 라인부터 session_end까지 제거하고
+    /// 나머지 구간은 유지합니다.
+    /// 같은 stageId 재시작 시 이전 데이터만 말소하는 데 사용합니다.
+    /// </summary>
+    private void EraseStageSection(string stageId)
+    {
+        if (!File.Exists(_logFilePath)) return;
+
+        try
+        {
+            var lines = File.ReadAllLines(_logFilePath);
+            var result = new System.Collections.Generic.List<string>(lines.Length);
+            bool inTarget = false;
+
+            foreach (var line in lines)
+            {
+                if (string.IsNullOrWhiteSpace(line)) continue;
+
+                // session_start 라인에서 stage_id 확인
+                if (!inTarget && line.Contains("\"session_start\"") && line.Contains($"\"stage_id\":\"{stageId}\""))
+                {
+                    inTarget = true;  // 이 구간부터 제거 시작
+                    continue;
+                }
+
+                // session_end 라인에서 제거 종료
+                if (inTarget && line.Contains("\"session_end\""))
+                {
+                    inTarget = false; // 이 라인 포함 제거
+                    continue;
+                }
+
+                // 제거 구간이 아니면 유지
+                if (!inTarget)
+                    result.Add(line);
+            }
+
+            File.WriteAllLines(_logFilePath, result);
+            Debug.Log($"[GameLogger] 이전 {stageId} 구간 말소 완료");
+        }
+        catch (Exception e)
+        {
+            Debug.LogWarning($"[GameLogger] 구간 말소 실패: {e.Message}");
+        }
     }
 
     /// <summary>

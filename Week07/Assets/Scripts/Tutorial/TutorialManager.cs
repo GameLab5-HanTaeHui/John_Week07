@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -47,12 +48,10 @@ public class TutorialManager : SingletonMonobehaviour<TutorialManager>
 
     [Header("DrawerPanel CanvasGroup 참조 (각 패널 루트에 CanvasGroup 추가 필요)")]
     [SerializeField] private CanvasGroup _roleDocGroup;
-    [SerializeField] private CanvasGroup _narrativeOrderGroup;
     [SerializeField] private CanvasGroup _memoBookGroup;
 
     [Header("DrawerPanel 참조 (OnShown 구독용)")]
     [SerializeField] private DrawerPanel _roleDocDrawer;
-    [SerializeField] private DrawerPanel _narrativeOrderDrawer;
     [SerializeField] private DrawerPanel _memoBookDrawer;
 
     [Header("History / 메모 참조")]
@@ -71,12 +70,13 @@ public class TutorialManager : SingletonMonobehaviour<TutorialManager>
 
     [Header("하이라이트 대상 RectTransform 참조 (UI 요소)")]
     [SerializeField] private RectTransform _roleDocHighlightRect;
-    [SerializeField] private RectTransform _narrativeOrderHighlightRect;
     [SerializeField] private RectTransform _memoBookHighlightRect;
     [SerializeField] private RectTransform _eventRecordHighlightRect;
     [SerializeField] private RectTransform _dateUIHighlightRect;
     [Tooltip("강제 퇴고 조건 UI RectTransform")]
     [SerializeField] private RectTransform _forceLoopConditionRect;
+    [Header("화살표")]
+    [SerializeField] private Transform _TutoArrow;
 
     // ── 정적 상태 (기존 코드에서 TutorialManager.IsActive 로 체크) ──────────
 
@@ -113,6 +113,8 @@ public class TutorialManager : SingletonMonobehaviour<TutorialManager>
 
         if (_notepadToggleManager == null)
             _notepadToggleManager = FindObjectOfType<NotepadToggleManager>();
+
+        _TutoArrow.gameObject.SetActive(false);
 
         // Inspector 미연결 시 CharacterViews에서 자동 탐색
         if (_murdererCharacterTransform == null)
@@ -161,7 +163,7 @@ public class TutorialManager : SingletonMonobehaviour<TutorialManager>
             _playerAction.OnActionConfirmed += HandleActionConfirmed;
 
         if (_roleDocDrawer != null)        _roleDocDrawer.OnShown        += HandleRoleDocShown;
-        if (_narrativeOrderDrawer != null) _narrativeOrderDrawer.OnShown += HandleNarrativeOrderShown;
+        //if (_narrativeOrderDrawer != null) _narrativeOrderDrawer.OnShown += HandleNarrativeOrderShown;
         if (_memoBookDrawer != null)       _memoBookDrawer.OnShown       += HandleMemoBookShown;
 
         if (_historyController != null)
@@ -192,7 +194,6 @@ public class TutorialManager : SingletonMonobehaviour<TutorialManager>
             _playerAction.OnActionConfirmed -= HandleActionConfirmed;
 
         if (_roleDocDrawer != null)        _roleDocDrawer.OnShown        -= HandleRoleDocShown;
-        if (_narrativeOrderDrawer != null) _narrativeOrderDrawer.OnShown -= HandleNarrativeOrderShown;
         if (_memoBookDrawer != null)       _memoBookDrawer.OnShown       -= HandleMemoBookShown;
 
         if (_historyController != null)
@@ -212,6 +213,7 @@ public class TutorialManager : SingletonMonobehaviour<TutorialManager>
         switch (phase)
         {
             case TutorialPhase.Initial:
+                Debug.Log("1");
                 SetInputPermission(TutorialInputPermission.None);
                 if (_murdererCharacterTransform != null)
                     _uiManager?.SetBounceOnly(_murdererCharacterTransform);
@@ -220,6 +222,7 @@ public class TutorialManager : SingletonMonobehaviour<TutorialManager>
                 break;
 
             case TutorialPhase.RestrictedMove:
+                Debug.Log("2");
                 SetInputPermission(TutorialInputPermission.CharacterMove);
                 _uiManager?.SetClickAdvance(false);
                 if (_murdererCharacterTransform != null)
@@ -230,6 +233,15 @@ public class TutorialManager : SingletonMonobehaviour<TutorialManager>
                 break;
 
             case TutorialPhase.QuillPenUnlocked:
+                Debug.Log("3");
+
+                if (!_TutoArrow.gameObject.activeSelf)
+                {
+                    _TutoArrow.gameObject.SetActive(true);
+                    _TutoArrow.localPosition = new Vector3(440f, 200f, 0f);
+                    _TutoArrow.localRotation = Quaternion.Euler(0f, 0f, 0f);
+                    _uiManager?.SetSecondaryBounce(_TutoArrow);
+                }
                 SetInputPermission(TutorialInputPermission.AdvanceTurn);
                 _uiManager?.ClearWorldHighlight();
                 if (_quillPenTransform != null)
@@ -238,16 +250,24 @@ public class TutorialManager : SingletonMonobehaviour<TutorialManager>
                 break;
 
             case TutorialPhase.WaitingForTurnEnd:
+                Debug.Log("4");
                 SetInputPermission(TutorialInputPermission.None);
                 _uiManager?.ClearAll();
                 break;
 
             case TutorialPhase.ResultDisplaying:
+                Debug.Log("5");
                 SetInputPermission(TutorialInputPermission.None);
                 ShowPhaseGuide(phase);
                 break;
 
             case TutorialPhase.RoleDocGuide:
+                Debug.Log("왼쪽 역할");
+
+                _TutoArrow.localPosition = new Vector3(-680f, 220f, 0f);
+                _TutoArrow.localRotation = Quaternion.Euler(0f, 0f, 180f);
+                _uiManager?.SetSecondaryBounce(_TutoArrow);
+
                 SetInputPermission(TutorialInputPermission.RoleDocUI);
                 SetDrawerInteractable(_roleDocGroup, true);
                 _uiManager?.SetClickAdvance(false);
@@ -256,21 +276,16 @@ public class TutorialManager : SingletonMonobehaviour<TutorialManager>
                 ShowPhaseGuide(phase);
                 break;
 
-            case TutorialPhase.NarrativeOrderGuide:
-                SetInputPermission(TutorialInputPermission.RoleDocUI | TutorialInputPermission.NarrativeOrderUI);
-                SetDrawerInteractable(_narrativeOrderGroup, true);
-                _uiManager?.SetClickAdvance(false);
-                _uiManager?.ClearUIHighlight();
-                if (_narrativeOrderHighlightRect != null)
-                    _uiManager?.SetUIHighlight(_narrativeOrderHighlightRect);
-                ShowPhaseGuide(phase);
-                break;
-
             // ── 순서: MemoBook → MemoWrite → EventRecord ──────────────────────
 
             case TutorialPhase.MemoBookGuide:
+                Debug.Log("오른쪽 하단 메모");
+
+                _TutoArrow.localPosition = new Vector3(580f, -300f, 0f);
+                _TutoArrow.localRotation = Quaternion.Euler(0f, 0f, 270f);
+                _uiManager?.SetSecondaryBounce(_TutoArrow);
+
                 SetInputPermission(TutorialInputPermission.RoleDocUI
-                                 | TutorialInputPermission.NarrativeOrderUI
                                  | TutorialInputPermission.MemoOpen);
                 SetDrawerInteractable(_memoBookGroup, true);
                 _uiManager?.SetClickAdvance(false);
@@ -281,8 +296,8 @@ public class TutorialManager : SingletonMonobehaviour<TutorialManager>
                 break;
 
             case TutorialPhase.MemoWriteGuide:
+                Debug.Log("9");
                 SetInputPermission(TutorialInputPermission.RoleDocUI
-                                 | TutorialInputPermission.NarrativeOrderUI
                                  | TutorialInputPermission.MemoOpen
                                  | TutorialInputPermission.MemoWrite);
                 _uiManager?.SetClickAdvance(false);
@@ -293,8 +308,13 @@ public class TutorialManager : SingletonMonobehaviour<TutorialManager>
                 break;
 
             case TutorialPhase.EventRecordGuide:
+                Debug.Log("왼쪽 하단 파일");
+
+                _TutoArrow.localPosition = new Vector3(-725f, -300f, 0f);
+                _TutoArrow.localRotation = Quaternion.Euler(0f, 0f, 270);
+                _uiManager?.SetSecondaryBounce(_TutoArrow);
+
                 SetInputPermission(TutorialInputPermission.RoleDocUI
-                                 | TutorialInputPermission.NarrativeOrderUI
                                  | TutorialInputPermission.MemoOpen
                                  | TutorialInputPermission.MemoWrite
                                  | TutorialInputPermission.EventRecord);
@@ -306,8 +326,8 @@ public class TutorialManager : SingletonMonobehaviour<TutorialManager>
                 break;
 
             case TutorialPhase.FinalDecisionBookGuide:
+                Debug.Log("11");
                 SetInputPermission(TutorialInputPermission.RoleDocUI
-                                 | TutorialInputPermission.NarrativeOrderUI
                                  | TutorialInputPermission.MemoOpen
                                  | TutorialInputPermission.MemoWrite
                                  | TutorialInputPermission.EventRecord
@@ -319,6 +339,7 @@ public class TutorialManager : SingletonMonobehaviour<TutorialManager>
                 break;
 
             case TutorialPhase.DateUIGuide:
+                Debug.Log("12");
                 SetInputPermission(TutorialInputPermission.All);
                 _uiManager?.SetClickAdvance(true);
                 _uiManager?.ClearWorldHighlight();
@@ -328,6 +349,7 @@ public class TutorialManager : SingletonMonobehaviour<TutorialManager>
                 break;
 
             case TutorialPhase.FullyUnlocked:
+                Debug.Log("13");
                 SetInputPermission(TutorialInputPermission.All);
                 _uiManager?.ClearAll();
                 break;
@@ -412,19 +434,13 @@ public class TutorialManager : SingletonMonobehaviour<TutorialManager>
     private void HandleRoleDocShown()
     {
         if (_currentPhase != TutorialPhase.RoleDocGuide) return;
-        EnterPhase(TutorialPhase.NarrativeOrderGuide);
-    }
-
-    private void HandleNarrativeOrderShown()
-    {
-        if (_currentPhase != TutorialPhase.NarrativeOrderGuide) return;
         EnterPhase(TutorialPhase.MemoBookGuide);
     }
 
     private void HandleMemoBookShown()
     {
         if (_currentPhase != TutorialPhase.MemoBookGuide) return;
-        EnterPhase(TutorialPhase.MemoWriteGuide);
+        EnterPhase(TutorialPhase.EventRecordGuide);
     }
 
     private void HandleEventRecordClicked()
@@ -547,7 +563,7 @@ public class TutorialManager : SingletonMonobehaviour<TutorialManager>
     private void InitDrawerLocks()
     {
         SetDrawerInteractable(_roleDocGroup,        false);
-        SetDrawerInteractable(_narrativeOrderGroup, false);
+        //SetDrawerInteractable(_narrativeOrderGroup, false);
         SetDrawerInteractable(_memoBookGroup,       false);
     }
 }

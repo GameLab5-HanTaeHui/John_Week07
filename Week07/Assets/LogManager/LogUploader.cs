@@ -131,7 +131,7 @@ private void Awake()
             return;
         }
 
-        // 파일명은 UUID 기반으로 고정 (매번 같은 이름으로 올라감)
+        // 파일명: {StageId}_{UUID}.jsonl — 스테이지별로 구분
         string uploadFileName = $"{logger.PlayerUuid}.jsonl";
 
         StartCoroutine(UploadCoroutine(fullFileBytes, uploadFileName, isWin, stageId, onComplete));

@@ -28,7 +28,7 @@ public class TutorialUIManager : MonoBehaviour
     [Header("하이라이트 오버레이 (선택)")]
     [SerializeField] private RectTransform _highlightFrame;
     [SerializeField] private GameObject   _worldHighlightFx;
-
+    
     [Header("바운스 설정")]
     [Tooltip("원본 스케일 기준 최대 배율 (1.2 = 20% 크게)")]
     [SerializeField] private float _bounceScale     = 1.2f;

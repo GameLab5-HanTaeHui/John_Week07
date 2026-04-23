@@ -19,7 +19,8 @@ public class LobbyRandomSeedButton : MonoBehaviour
     private void OnClicked()
     {
         TurnHistoryRepository.Instance.ClearAll();
-        NewGameConfig.SetRandom(_stageId);
+        // [HTH추가] stageId가 없는 랜덤 모드는 "Random"으로 고정
+        NewGameConfig.SetRandom(!string.IsNullOrEmpty(_stageId) ? _stageId : "Random");
         UnityEngine.SceneManagement.SceneManager.LoadScene(_gameSceneName);
     }
 }
