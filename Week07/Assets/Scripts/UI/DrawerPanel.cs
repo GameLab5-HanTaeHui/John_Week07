@@ -1,4 +1,5 @@
 using DG.Tweening;
+using HTH;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -116,10 +117,15 @@ public class DrawerPanel : MonoBehaviour
     /// <summary>현재 상태의 반대로 패널을 열거나 닫습니다.</summary>
     public void Toggle(bool instant = false)
     {
-        // [HTH추가] FinalDecision 상태에서는 닫기 차단
-        if (GameFlowController.Instance?.CurrentLoopState == LoopStateType.FinalDecision)
+        // 튜토리얼 씬에서는 TutorialInputPermission으로만 열고 닫기 허용
+        if (TutorialManager.IsActive)
         {
-            if (IsShown) return; // 이미 열려있다면 무시
+            if (!IsShown)
+            {
+                bool canOpen = TutorialManager.Instance.IsInputAllowed(TutorialInputPermission.MemoOpen)
+                            || TutorialManager.Instance.IsInputAllowed(TutorialInputPermission.RoleDocUI);
+                if (!canOpen) return;
+            }
         }
 
         if (IsShown) Hide(instant);
@@ -131,6 +137,12 @@ public class DrawerPanel : MonoBehaviour
     private void TransitionTo(bool isShowing, bool instant)
     {
         IsShown = isShowing;
+
+        // PanelManager에 열림/닫힘 등록
+        if (isShowing)
+            PanelManager.Instance?.RegisterPanel(CloseFromBackdrop);
+        else
+            PanelManager.Instance?.UnregisterPanel(CloseFromBackdrop);
 
         // 선택된 축에 따라 목표 위치(Vector2) 설정
         float targetX = _moveVertically ? _rect.anchoredPosition.x
@@ -190,6 +202,16 @@ public class DrawerPanel : MonoBehaviour
         {
             OnHidden?.Invoke();
         }
+    }
+    /// <summary>
+    /// PanelManager의 바탕화면 클릭 감지 시 호출됩니다.
+    /// Toggle()과 달리 FinalDecision 체크 없이 무조건 닫힙니다.
+    /// (FinalDecision 체크는 PanelManager에서 이미 처리)
+    /// </summary>
+    private void CloseFromBackdrop()
+    {
+        if (IsShown)
+            Hide();
     }
 
     // ── Editor 방어 ──────────────────────────────────────────────────────────

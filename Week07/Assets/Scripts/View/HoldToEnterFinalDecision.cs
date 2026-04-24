@@ -70,6 +70,10 @@ public class HoldToEnterFinalDecision : MonoBehaviour
             !TutorialManager.Instance.IsInputAllowed(TutorialInputPermission.EnterFinalDecision))
             return;
 
+        // 튜토리얼 중 책 클릭 시 화살표 숨김 요청
+        if (TutorialManager.IsActive)
+            TutorialManager.Instance?.NotifyFinalDecisionBookClicked();
+
         PlayFillAnimation();
     }
 
@@ -96,16 +100,30 @@ public class HoldToEnterFinalDecision : MonoBehaviour
 
         ConfirmPanel.Instance?.Show(
             _confirmMessage,
-            onConfirm: () =>
-            {
-                _triggered = false;
-                HideFill();
-                GameFlowController.Instance?.EnterFinalDecision();
-            },
+             onConfirm: () =>
+             {
+                 _triggered = false;
+                 HideFill();
+
+                 // 튜토리얼 중에는 최종 추리 진입 차단
+                 if (TutorialManager.IsActive)
+                 {
+                     Debug.Log("[HoldToEnterFinalDecision] 튜토리얼 중 — 최종 추리 진입 차단");
+                     // ConfirmPanel 닫힌 후 다시 책 클릭 가능하도록 SetClickAdvance 복원
+                     TutorialManager.Instance?.RestoreClickAdvanceAfterBlock();
+                     return;
+                 }
+
+                 GameFlowController.Instance?.EnterFinalDecision();
+             },
             onCancel: () =>
             {
                 _triggered = false;
                 HideFill();
+
+                // 튜토리얼 FinalDecisionBookGuide 단계에서 취소 시 → DateUIGuide 진입
+                if (TutorialManager.IsActive)
+                    TutorialManager.Instance?.NotifyFinalDecisionCancelled();
             });
     }
 

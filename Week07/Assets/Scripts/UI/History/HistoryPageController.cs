@@ -1,3 +1,4 @@
+using HTH;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -118,7 +119,7 @@ public class HistoryPageController : MonoBehaviour
         if (_backdropButton != null)
         {
             _backdropButton.gameObject.SetActive(false);
-            _backdropButton.onClick.AddListener(CollapseExpanded);
+            _backdropButton.onClick.AddListener(OnBackdropClicked);
         }
 
         for (int loop = 0; loop < _panels.Length; loop++)
@@ -137,6 +138,24 @@ public class HistoryPageController : MonoBehaviour
                 panel.gameObject.SetActive(false);
             }
         }
+    }
+    /// <summary>
+    /// 패널 바깥 투명 버튼(_backdropButton) 클릭 시 호출됩니다.
+    ///
+    /// ─── 동작 조건 ────────────────────────────────────────────────────────
+    ///   FinalDecision 상태  → 차단 (버튼으로만 닫기)
+    ///   튜토리얼 중         → 차단 (튜토리얼 흐름 우선)
+    ///   일반 인게임         → CollapseExpanded() 호출
+    /// </summary>
+    private void OnBackdropClicked()
+    {
+        if (GameFlowController.Instance?.CurrentLoopState == LoopStateType.FinalDecision)
+            return;
+
+        // 튜토리얼 씬 전체에서 backdrop 클릭으로 닫기 차단
+        if (TutorialManager.IsActive) return;
+
+        CollapseExpanded();
     }
 
     // ── 이벤트 핸들러 ─────────────────────────────────────────────────────────
@@ -204,6 +223,9 @@ public class HistoryPageController : MonoBehaviour
         _expandedPanel = target;
         target.Expand(_expandOffset, instant);
         SetBackdropActive(true);
+
+        // PanelManager에 닫기 콜백 등록
+        PanelManager.Instance?.RegisterPanel(CollapseExpanded);
     }
 
     /// <summary>
@@ -216,6 +238,9 @@ public class HistoryPageController : MonoBehaviour
         _expandedPanel.Collapse();
         _expandedPanel = null;
         SetBackdropActive(false);
+
+        // PanelManager 등록 해제
+        PanelManager.Instance?.UnregisterPanel(CollapseExpanded);
 
         OnAnyPanelCollapsed?.Invoke();
     }

@@ -14,6 +14,10 @@ namespace HTH
         public TextMeshProUGUI ButtonText => _buttonText;
 
         private Color _orignalColor;
+        private void OnEnable()
+        {
+            _buttonText.color = Color.black;
+        }
         void Start()
         {
             _orignalColor = _buttonText.color;

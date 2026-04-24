@@ -36,6 +36,11 @@ public class LogUploader : MonoBehaviour
     // Inspector 대신 코드에서 URL을 설정할 때 사용합니다.
     // 빌드 후 씬 참조가 끊어지는 경우를 대비한 폴백입니다.
     private const string FALLBACK_WEBHOOK_URL = "https://discord.com/api/webhooks/1496334476031033375/dxKk2qUqkV-b7tNwyjXYcjshXwQWm60g18VTWvj3CJGC5NT7eAaMudxVwHoTMnpnbjYF"; // ← 여기에 Webhook URL 붙여넣기
+    private const string FALLBACK_INVALID_WEBHOOK_URL = "https://discord.com/api/webhooks/1497091757089882262/U6SND2KIgjqRKNvPAKmkipLSjN9RYJDgQtDUmT5PQM-4a_AmI0YzMGUsTZNV-wndKCgO";
+
+    [Header("비정상 플레이 Discord Webhook (별도 채널)")]
+    [Tooltip("60초 미만 비정상 플레이를 업로드할 Discord 채널 Webhook URL")]
+    [SerializeField] private string _invalidWebhookUrl = "https://discord.com/api/webhooks/1497091757089882262/U6SND2KIgjqRKNvPAKmkipLSjN9RYJDgQtDUmT5PQM-4a_AmI0YzMGUsTZNV-wndKCgO";
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     private static void AutoCreate()
@@ -72,15 +77,19 @@ private void Awake()
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
-        // [HTH추가] 
-        // Inspector URL이 비어있으면 코드 상수 폴백 사용
         if (string.IsNullOrEmpty(_webhookUrl) && !string.IsNullOrEmpty(FALLBACK_WEBHOOK_URL))
         {
             _webhookUrl = FALLBACK_WEBHOOK_URL;
             Debug.Log("[LogUploader] 폴백 Webhook URL 적용됨");
         }
+        if (string.IsNullOrEmpty(_invalidWebhookUrl) && !string.IsNullOrEmpty(FALLBACK_INVALID_WEBHOOK_URL))
+        {
+            _invalidWebhookUrl = FALLBACK_INVALID_WEBHOOK_URL;
+            Debug.Log("[LogUploader] 비정상 플레이 폴백 Webhook URL 적용됨");
+        }
 
-        Debug.Log($"[LogUploader] 초기화 완료 — Webhook URL {(string.IsNullOrEmpty(_webhookUrl) ? "미설정 ⚠️" : "설정됨 ✅")}");
+        Debug.Log($"[LogUploader] 초기화 완료 — 정상 URL {(string.IsNullOrEmpty(_webhookUrl) ? "미설정 ⚠️" : "설정됨 ✅")} " +
+            $"/ 비정상 URL {(string.IsNullOrEmpty(_invalidWebhookUrl) ? "미설정 ⚠️" : "설정됨 ✅")}");
     }
 
     // ── 공개 API ─────────────────────────────────────────────────────────────
@@ -131,26 +140,43 @@ private void Awake()
             return;
         }
 
-        // 파일명: {StageId}_{UUID}.jsonl — 스테이지별로 구분
-        string uploadFileName = $"{logger.PlayerUuid}.jsonl";
+        // 정상/비정상 세션 분기
+        bool isValidSession = GameLogger.Instance?.IsValidSession ?? true;
+        string targetUrl = isValidSession ? _webhookUrl : _invalidWebhookUrl;
+        // 파일명: {UUID}_{Version}.jsonl — 버전별로 파일 구분
+        string safeVersion = logger.BuildVersion?.Replace(".", "_") ?? "unknown";
+        string uploadFileName = $"{logger.PlayerUuid}_{safeVersion}.jsonl";
 
-        StartCoroutine(UploadCoroutine(fullFileBytes, uploadFileName, isWin, stageId, onComplete));
+        if (!isValidSession)
+        {
+            Debug.Log($"[LogUploader] 비정상 플레이 감지 ({GameLogger.Instance?.SessionElapsedSec}초) — 별도 채널로 업로드");
+
+            if (string.IsNullOrEmpty(_invalidWebhookUrl))
+            {
+                Debug.LogWarning("[LogUploader] 비정상 Webhook URL 미설정 — 업로드 스킵");
+                onComplete?.Invoke();
+                return;
+            }
+        }
+
+        StartCoroutine(UploadCoroutine(fullFileBytes, uploadFileName, isWin, stageId, onComplete, targetUrl));
     }
 
     // ── 코루틴 ───────────────────────────────────────────────────────────────
 
-    private IEnumerator UploadCoroutine(byte[] bytes, string fileName, bool isWin, string stageId, Action onComplete)
+    private IEnumerator UploadCoroutine(byte[] bytes, string fileName, bool isWin, string stageId, Action onComplete, string webhookUrl = null)
     {
         Debug.Log("[LogUploader] 데이터를 전송 합니다");
         _uploadInProgress = true;
 
+        string targetUrl = !string.IsNullOrEmpty(webhookUrl) ? webhookUrl : _webhookUrl;
         string summary = BuildSummary(isWin, stageId, bytes.Length);
 
         var form = new WWWForm();
         form.AddField("content", summary);
         form.AddBinaryData("file", bytes, fileName, "text/plain");
 
-        using (UnityWebRequest req = UnityWebRequest.Post(_webhookUrl, form))
+        using (UnityWebRequest req = UnityWebRequest.Post(targetUrl, form))
         {
             req.timeout = _timeoutSec;
             yield return req.SendWebRequest();
@@ -166,7 +192,7 @@ private void Awake()
             else
             {
                 Debug.LogWarning($"[LogUploader] 업로드 실패: {req.error} / code={req.responseCode} / result={req.result}");
-                Debug.LogWarning($"[LogUploader] URL={_webhookUrl.Substring(0, Mathf.Min(40, _webhookUrl.Length))}...");
+                Debug.LogWarning($"[LogUploader] URL={targetUrl.Substring(0, Mathf.Min(40, targetUrl.Length))}...");
             }
         }
 
@@ -188,7 +214,11 @@ private void Awake()
         var sb = new StringBuilder();
 
         // ── 제목 ──────────────────────────────────────────────────────────────
-        sb.AppendLine($"**[Week07] {stageId} · {(isWin ? "✅ 승리" : "❌ 패배")}**");
+        bool isValid = GameLogger.Instance?.IsValidSession ?? true;
+        string validMark = isValid ? "" : "  ⚠️ 비정상 플레이";
+
+        string version = GameLogger.Instance?.BuildVersion ?? "unknown";
+        sb.AppendLine($"**[Week07] v{version} · {stageId} · {(isWin ? "✅ 승리" : "❌ 패배")}{validMark}**");
         sb.AppendLine("──────────────────────────");
 
         // ── 플레이어 정보 ──────────────────────────────────────────────────────

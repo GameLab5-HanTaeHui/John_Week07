@@ -1,6 +1,5 @@
 using DG.Tweening;
 using System.Collections;
-using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -420,6 +419,7 @@ public class TutorialManager : SingletonMonobehaviour<TutorialManager>
             case TutorialPhase.FullyUnlocked:
                 Debug.Log("13");
                 SetInputPermission(TutorialInputPermission.All);
+                _currentPhase = TutorialPhase.Inactive;
                 _uiManager?.ClearAll();
                 break;
         }
@@ -549,8 +549,14 @@ public class TutorialManager : SingletonMonobehaviour<TutorialManager>
     {
         switch (_currentPhase)
         {
-            case TutorialPhase.FinalDecisionBookGuide: EnterPhase(TutorialPhase.DateUIGuide);    break;
-            case TutorialPhase.DateUIGuide:            EnterPhase(TutorialPhase.FullyUnlocked); break;
+            // 텍스트 클릭 시 가이드만 숨김
+            // 실제 단계 진입은 책 클릭 → 취소 버튼(NotifyFinalDecisionCancelled)으로 처리
+            case TutorialPhase.FinalDecisionBookGuide:
+                _uiManager?.HideGuide();
+                break;
+            case TutorialPhase.DateUIGuide:
+                EnterPhase(TutorialPhase.FullyUnlocked);
+                break;
             default:
                 _uiManager?.HideGuide();
                 break;
@@ -558,7 +564,52 @@ public class TutorialManager : SingletonMonobehaviour<TutorialManager>
     }
 
     // ── 입력 허가 공개 API ────────────────────────────────────────────────────
+    /// <summary>
+    /// HoldToEnterFinalDecision의 확인 패널에서 취소(좀더 생각해보기) 버튼 클릭 시 호출됩니다.
+    /// FinalDecisionBookGuide 단계에서만 유효하며 DateUIGuide로 진입합니다.
+    /// </summary>
+    public void NotifyFinalDecisionCancelled()
+    {
+        if (_currentPhase != TutorialPhase.FinalDecisionBookGuide) return;
+        EnterPhase(TutorialPhase.DateUIGuide);
+    }
+    /// <summary>
+    /// 튜토리얼 중 최종 추리 진입이 차단된 후
+    /// 다시 책 클릭이 가능하도록 SetClickAdvance를 복원합니다.
+    /// HoldToEnterFinalDecision의 확인 버튼 차단 시 호출합니다.
+    /// </summary>
+    public void RestoreClickAdvanceAfterBlock()
+    {
+        if (_currentPhase != TutorialPhase.FinalDecisionBookGuide) return;
 
+        // 화살표와 바운스 복원
+        if (!_TutoArrow.gameObject.activeSelf)
+        {
+            _TutoArrow.gameObject.SetActive(true);
+            _TutoArrow.localPosition = new Vector3(500f, 70f, 0f);
+            _TutoArrow.localRotation = Quaternion.Euler(0f, 0f, 0f);
+            _uiManager?.SetSecondaryBounce(_TutoArrow);
+        }
+
+        // 가이드 텍스트 클릭 가능 복원
+        _uiManager?.SetClickAdvance(true);
+        ShowPhaseGuide(TutorialPhase.FinalDecisionBookGuide);
+    }
+    /// <summary>
+    /// HoldToEnterFinalDecision의 책 오브젝트 클릭 시 호출됩니다.
+    /// FinalDecisionBookGuide 단계에서 화살표를 숨깁니다.
+    /// ConfirmPanel이 열리는 동안 화살표가 표시되지 않도록 합니다.
+    /// </summary>
+    public void NotifyFinalDecisionBookClicked()
+    {
+        if (_currentPhase != TutorialPhase.FinalDecisionBookGuide) return;
+        _TutoArrow.gameObject.SetActive(false);
+        _uiManager?.ClearSecondaryBounce();
+
+        // 책 클릭 후 ConfirmPanel이 열리는 동안
+        // 화면 클릭으로 가이드 텍스트가 사라지지 않도록 차단
+        _uiManager?.SetClickAdvance(false);
+    }
     /// <summary>지정한 입력 종류가 현재 허용되는지 반환합니다.</summary>
     public bool IsInputAllowed(TutorialInputPermission permission)
     {

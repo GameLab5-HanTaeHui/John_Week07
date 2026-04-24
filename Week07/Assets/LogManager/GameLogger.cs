@@ -33,6 +33,12 @@ public class GameLogger : MonoBehaviour
 
     private const string PLAYER_UUID_KEY = "hth_player_uuid";
     private const string ATTEMPT_KEY_PREFIX = "hth_attempt_";
+    private const string BUILD_VERSION_KEY = "hth_build_version";
+    /// <summary>
+    /// 정상 플레이 판단 기준 시간(초).
+    /// 이 시간 미만이면 비정상 플레이로 간주합니다.
+    /// </summary>
+    private const int MIN_VALID_PLAY_SEC = 60;
 
     /// <summary>
     /// 씬에 배치 없이도 자동으로 인스턴스를 생성합니다.
@@ -62,13 +68,23 @@ public class GameLogger : MonoBehaviour
     public string SessionId => _sessionId;
     public DateTime SessionStart => _sessionStart;
     public string PlayerUuid { get; private set; }
+    public string BuildVersion { get; private set; }
     public string CurrentStageId => _currentStageId;
     public bool IsLoggingActive => _isLoggingActive;
 
-    /// <summary>세션 시작 후 경과 시간(초). final_decision_enter 등에서 사용합니다.</summary>
-    public int SessionElapsedSec => _isLoggingActive
-        ? (int)(System.DateTime.UtcNow - _sessionStart).TotalSeconds
-        : 0;
+    /// <summary>
+    /// 세션 시작 후 경과 시간(초).
+    /// 로깅 종료 후에도 마지막 세션의 경과 시간을 반환합니다.
+    /// </summary>
+    public int SessionElapsedSec => _sessionStart == default
+        ? 0
+        : (int)(System.DateTime.UtcNow - _sessionStart).TotalSeconds;
+
+    /// <summary>
+    /// 현재(또는 마지막) 세션이 정상 플레이인지 여부입니다.
+    /// StopStageLogging() 호출 후에도 정확한 값을 반환합니다.
+    /// </summary>
+    public bool IsValidSession => SessionElapsedSec >= MIN_VALID_PLAY_SEC;
 
     private void Awake()
     {
@@ -80,28 +96,45 @@ public class GameLogger : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
-        // 익명 UUID 복원 또는 신규 생성 (같은 기기 = 같은 UUID = 같은 파일)
+        // 빌드 버전 체크 — 버전이 달라지면 UUID 초기화 (플레이테스트 데이터 구분)
+        string savedVersion = PlayerPrefs.GetString(BUILD_VERSION_KEY, string.Empty);
+        string currentVersion = Application.version;
+        bool isNewVersion = savedVersion != currentVersion;
+
+        if (isNewVersion)
+        {
+            Debug.Log($"[GameLogger] 버전 변경 감지 ({savedVersion} → {currentVersion}) — UUID 초기화");
+
+            // 이전 버전 PlayerPrefs 전체 초기화 (UUID, attempt 횟수 등)
+            PlayerPrefs.DeleteKey(PLAYER_UUID_KEY);
+
+            // attempt_number도 초기화 (새 플레이테스트 시작)
+            PlayerPrefs.DeleteAll();
+
+            PlayerPrefs.SetString(BUILD_VERSION_KEY, currentVersion);
+            PlayerPrefs.Save();
+        }
+
+        // UUID 복원 또는 신규 발급
         PlayerUuid = PlayerPrefs.GetString(PLAYER_UUID_KEY, string.Empty);
         if (string.IsNullOrEmpty(PlayerUuid))
         {
             PlayerUuid = Guid.NewGuid().ToString("N").Substring(0, 12);
             PlayerPrefs.SetString(PLAYER_UUID_KEY, PlayerUuid);
+            PlayerPrefs.SetString(BUILD_VERSION_KEY, currentVersion);
             PlayerPrefs.Save();
+            Debug.Log($"[GameLogger] 새 UUID 발급 — {PlayerUuid} (버전: {currentVersion})");
+        }
+        else
+        {
+            Debug.Log($"[GameLogger] 기존 UUID 복원 — {PlayerUuid} (버전: {currentVersion})");
         }
 
-        // [HTH추가]
-        // 로그 파일 경로는 플레이어 UUID당 고정 (누적 append)
-        // 빌드/에디터 모두 호환되는 경로 설정
-#if UNITY_EDITOR
-        string exeDir = Path.GetDirectoryName(Application.dataPath);
-#else
-        string exeDir = Path.GetDirectoryName(Application.dataPath);
-        // Windows 빌드: Application.dataPath = "MyGame_Data/"
-        // GetDirectoryName 하면 실행파일(.exe) 위치
-#endif
-
+        // 현재 빌드 버전 저장
+        BuildVersion = currentVersion;
         // 단일 누적 파일 경로 설정 (스테이지별 구간은 EraseStageSection으로 관리)
         string logDir = Path.Combine(Application.persistentDataPath, "log");
+        string safeVersion = SanitizeFileName(Application.version);
         try
         {
             Directory.CreateDirectory(logDir);
@@ -111,8 +144,10 @@ public class GameLogger : MonoBehaviour
             Debug.LogError($"[GameLogger] 로그 폴더 생성 실패: {e.Message}");
             return;
         }
-        _logFilePath = Path.Combine(logDir, $"GameLog_{PlayerUuid}.jsonl");
+        _logFilePath = Path.Combine(logDir, $"GameLog_{PlayerUuid}_{safeVersion}.jsonl");
         Debug.Log($"[GameLogger] 로그 파일 경로: {_logFilePath}");
+
+        Application.logMessageReceived += HandleUnityLog;
     }
 
     private void OnDestroy()
@@ -141,13 +176,17 @@ public class GameLogger : MonoBehaviour
         _sessionId = Guid.NewGuid().ToString("N").Substring(0, 8);
         _sessionStart = DateTime.UtcNow;
 
-        // 파일 경로는 UUID 기반 단일 파일 유지
-        string logDir = Path.Combine(Application.persistentDataPath, "log");
-        Directory.CreateDirectory(logDir);
-        _logFilePath = Path.Combine(logDir, $"GameLog_{PlayerUuid}.jsonl");
-
-        // 해당 stageId 구간만 말소 후 나머지는 유지
-        EraseStageSection(stageId);
+        // 이전 세션이 정상 플레이였을 때만 해당 stageId 구간 말소
+        // 비정상 플레이(60초 미만)가 정상 기록을 덮어쓰는 것을 방지
+        if (WasPreviousSessionValid(stageId))
+        {
+            EraseStageSection(stageId);
+            Debug.Log($"[GameLogger] 이전 정상 기록 말소 — {stageId}");
+        }
+        else
+        {
+            Debug.Log($"[GameLogger] 이전 기록 유지 — {stageId} (이전 세션이 비정상이었거나 첫 플레이)");
+        }
 
         // 말소 후 파일 끝 위치를 오프셋으로 저장
         _sessionStartFileOffset = File.Exists(_logFilePath)
@@ -168,10 +207,60 @@ public class GameLogger : MonoBehaviour
             { "session_id",      _sessionId                      },
             { "stage_id",        _currentStageId                 },
             { "attempt_number",  attemptNumber                   },
+            { "build_version",   Application.version             },
             { "unity_version",   Application.unityVersion        },
             { "platform",        Application.platform.ToString() },
             { "system_language", Application.systemLanguage.ToString() },
         });
+    }
+    /// <summary>
+    /// 파일 내 해당 stageId의 이전 세션이 정상 플레이였는지 확인합니다.
+    /// session_end의 duration_sec이 MIN_VALID_PLAY_SEC 이상이면 정상으로 간주합니다.
+    /// 이전 기록이 없으면 true를 반환합니다 (첫 플레이는 말소 대상 없음).
+    /// </summary>
+    private bool WasPreviousSessionValid(string stageId)
+    {
+        if (!File.Exists(_logFilePath)) return true;
+
+        try
+        {
+            var lines = File.ReadAllLines(_logFilePath);
+            bool inTarget = false;
+            int lastDurationSec = -1;
+
+            foreach (var line in lines)
+            {
+                if (string.IsNullOrWhiteSpace(line)) continue;
+
+                // 해당 stageId의 session_start 감지
+                if (!inTarget
+                    && line.Contains("\"session_start\"")
+                    && line.Contains($"\"stage_id\":\"{stageId}\""))
+                {
+                    inTarget = true;
+                    continue;
+                }
+
+                // session_end에서 duration_sec 추출
+                if (inTarget && line.Contains("\"session_end\""))
+                {
+                    lastDurationSec = ExtractDurationSec(line);
+                    inTarget = false;
+                }
+            }
+
+            // 이전 기록 없음 → 말소 대상 없으므로 true
+            if (lastDurationSec < 0) return true;
+
+            bool isValid = lastDurationSec >= MIN_VALID_PLAY_SEC;
+            Debug.Log($"[GameLogger] 이전 {stageId} 세션 duration={lastDurationSec}초 → {(isValid ? "정상" : "비정상")}");
+            return isValid;
+        }
+        catch (Exception e)
+        {
+            Debug.LogWarning($"[GameLogger] 이전 세션 유효성 확인 실패: {e.Message}");
+            return true;
+        }
     }
     /// <summary>
     /// 파일에서 특정 stageId의 세션 구간을 제거합니다.
@@ -186,24 +275,26 @@ public class GameLogger : MonoBehaviour
         try
         {
             var lines = File.ReadAllLines(_logFilePath);
-            var result = new System.Collections.Generic.List<string>(lines.Length);
+            var result = new List<string>(lines.Length);
             bool inTarget = false;
 
             foreach (var line in lines)
             {
                 if (string.IsNullOrWhiteSpace(line)) continue;
 
-                // session_start 라인에서 stage_id 확인
-                if (!inTarget && line.Contains("\"session_start\"") && line.Contains($"\"stage_id\":\"{stageId}\""))
+                // 해당 stageId의 session_start 감지 → 제거 구간 시작
+                if (!inTarget
+                    && line.Contains("\"session_start\"")
+                    && line.Contains($"\"stage_id\":\"{stageId}\""))
                 {
-                    inTarget = true;  // 이 구간부터 제거 시작
+                    inTarget = true;
                     continue;
                 }
 
-                // session_end 라인에서 제거 종료
+                // session_end 감지 → 제거 구간 종료 (이 라인 포함 제거)
                 if (inTarget && line.Contains("\"session_end\""))
                 {
-                    inTarget = false; // 이 라인 포함 제거
+                    inTarget = false;
                     continue;
                 }
 
@@ -213,13 +304,33 @@ public class GameLogger : MonoBehaviour
             }
 
             File.WriteAllLines(_logFilePath, result);
-            Debug.Log($"[GameLogger] 이전 {stageId} 구간 말소 완료");
+            Debug.Log($"[GameLogger] {stageId} 구간 말소 완료 — {lines.Length - result.Count}줄 제거");
         }
         catch (Exception e)
         {
             Debug.LogWarning($"[GameLogger] 구간 말소 실패: {e.Message}");
         }
     }
+    /// <summary>
+    /// session_end JSON 라인에서 duration_sec 값을 추출합니다.
+    /// </summary>
+    private static int ExtractDurationSec(string jsonLine)
+    {
+        const string key = "\"duration_sec\":";
+        int idx = jsonLine.IndexOf(key, StringComparison.Ordinal);
+        if (idx < 0) return -1;
+
+        idx += key.Length;
+        int end = idx;
+        while (end < jsonLine.Length && (char.IsDigit(jsonLine[end]) || jsonLine[end] == '-'))
+            end++;
+
+        if (int.TryParse(jsonLine.Substring(idx, end - idx), out int result))
+            return result;
+
+        return -1;
+    }
+
 
     /// <summary>
     /// 스테이지 로깅을 종료하고 session_end 이벤트를 기록합니다.
