@@ -6,38 +6,47 @@ using TMPro;
 namespace HTH.Campaign
 {
     /// <summary>
-    /// Phase2 프로파일 추리 UI입니다.
+    /// 개별 캐릭터의 프로파일 추리 UI입니다.
+    ///
+    /// ─── 이 스크립트의 역할 ──────────────────────────────────────────────
+    ///   특정 캐릭터의 4개 프로파일 항목을 표시하고,
+    ///   플레이어가 각 항목의 선택지를 골라 제출하면 정답을 판정합니다.
+    ///   결과에 따라 컨셉 카드와 시점 완결문을 표시하고 해금 처리합니다.
+    ///
+    /// ─── 열리는 조건 ─────────────────────────────────────────────────────
+    ///   CharacterRecordBook의 "추리하기" 버튼 클릭 (기록장에서 직접)
+    ///   또는 ProfileInquiryAllUI에서 캐릭터 선택 시
+    ///   → Show(characterId) 호출
+    ///   → FragmentCollector.GetFragmentCount(characterId) >= RequiredFragmentCount 확인
+    ///   → 조건 충족 시 패널 활성화
     ///
     /// ─── 동작 흐름 ───────────────────────────────────────────────────────
-    ///   플레이어가 특정 캐릭터의 프로파일 추리 버튼 클릭
-    ///   → 대화 조각 수 체크 (RequiredFragmentCount 이상인지)
-    ///   → 조건 충족 시 Show(characterId) 호출
-    ///   → 4개의 프로파일 항목 표시
-    ///   → 각 항목마다 선택지 버튼 표시
-    ///   → 플레이어가 각 항목의 선택지 선택
-    ///   → 제출 버튼 클릭
-    ///   → 정답 판정
-    ///       일부 정답 → 컨셉 카드 해금
-    ///       전부 정답 → 컨셉 카드 + 시점 완결문 해금
-    ///   → 결과 표시 후 닫기
+    ///   Show(characterId) 호출
+    ///   → 대화 조각 수 체크 (부족하면 열리지 않음)
+    ///   → 캐릭터 정보 표시 (#번호, 이름, 조각 수)
+    ///   → ProfileItemView 프리팹을 4개 동적 생성 (각 프로파일 항목)
+    ///   → 각 ProfileItemView에 질문과 선택지 버튼 설정
+    ///   → 모든 항목이 선택되면 제출 버튼 활성화
+    ///   → 제출 버튼 클릭 → 정답 판정
+    ///   → 결과 패널 표시 (컨셉 카드, 시점 완결문)
+    ///   → FragmentCollector에 해금 기록 요청
+    ///   → 결과 닫기 버튼 클릭 → 패널 닫힘
     ///
-    /// ─── Canvas 구조 ─────────────────────────────────────────────────────
-    ///   ProfileInquiryPanel
-    ///   ├── CharacterIdText        ← #1, #2 등 번호 표시
-    ///   ├── CharacterNameText      ← 수집된 이름 표시 (미수집 시 ???)
-    ///   ├── FragmentCountText      ← 수집된 조각 수 표시
-    ///   ├── ProfileItemContainer   ← ProfileItemView 4개 배치
-    ///   ├── SubmitButton           ← 제출 버튼
-    ///   ├── CloseButton            ← 닫기 버튼
-    ///   └── ResultPanel            ← 결과 표시 패널
-    ///       ├── ResultText
-    ///       ├── ConceptCardPanel
-    ///       └── EpiloguePanel
+    /// ─── 씬 배치 ─────────────────────────────────────────────────────────
+    ///   _CampaignSystem 하위 GameObject에 컴포넌트로 추가합니다.
+    ///   Canvas/ProfileInquiryPanel을 Inspector에서 Panel 필드에 연결합니다.
     ///
-    /// ─── Inspector 설정 ──────────────────────────────────────────────────
-    ///   ProfileData       → 이 스테이지의 ProfileDataSO
-    ///   FragmentCollector → 대화 조각 수집 관리자
-    ///   ProfileItemViewPrefab → 프로파일 항목 UI 프리팹
+    /// ─── Inspector 연결 ──────────────────────────────────────────────────
+    ///   Profile Data             → ProfileDataSO 에셋
+    ///   Fragment Collector       → _CampaignSystem/FragmentCollector
+    ///   Character Record Book    → _CampaignSystem/CharacterRecordBook (이름 표시용)
+    ///   Panel                    → Canvas/ProfileInquiryPanel
+    ///   Profile Item Container   → ProfileInquiryPanel 하위 빈 GameObject (항목 목록 부모)
+    ///   Profile Item View Prefab → ProfileItemView.prefab
+    ///   Submit Button            → 제출 Button
+    ///   Close Button             → 닫기 Button
+    ///   Result Panel             → ProfileInquiryPanel 하위 결과 패널 (기본 비활성)
+    ///   Result Close Button      → 결과 패널의 닫기 Button
     /// </summary>
     [DisallowMultipleComponent]
     public class ProfileInquiryUI : MonoBehaviour
@@ -45,39 +54,81 @@ namespace HTH.Campaign
         // ── Inspector ────────────────────────────────────────────────────
 
         [Header("데이터")]
+        [Tooltip("캐릭터별 프로파일 항목, 선택지, 정답 데이터입니다.\n" +
+                 "Project → Create → HTH → Campaign → ProfileData로 생성합니다.")]
         [SerializeField] private ProfileDataSO _profileData;
+
+        [Tooltip("대화 조각 수집 관리 컴포넌트입니다.\n" +
+                 "조각 수 체크와 보상 해금에 사용됩니다.")]
         [SerializeField] private FragmentCollector _fragmentCollector;
+
+        [Tooltip("인물 기록장 컴포넌트입니다.\n" +
+                 "수집된 캐릭터 이름을 가져와 표시할 때 사용됩니다.")]
         [SerializeField] private CharacterRecordBook _characterRecordBook;
 
         [Header("UI 루트")]
+        [Tooltip("프로파일 추리 전체 패널입니다.\nCanvas/ProfileInquiryPanel을 연결합니다.")]
         [SerializeField] private GameObject _panel;
 
         [Header("캐릭터 정보")]
+        [Tooltip("'#1', '#2' 등 캐릭터 번호를 표시합니다.")]
         [SerializeField] private TMP_Text _characterIdText;
+
+        [Tooltip("캐릭터 이름을 표시합니다. 미수집 시 '???'로 표시됩니다.")]
         [SerializeField] private TMP_Text _characterNameText;
+
+        [Tooltip("'대화 조각 3/3' 형식으로 수집 현황을 표시합니다.")]
         [SerializeField] private TMP_Text _fragmentCountText;
 
         [Header("프로파일 항목")]
+        [Tooltip("ProfileItemView 프리팹이 생성될 부모 Transform입니다.\n" +
+                 "ProfileInquiryPanel 하위에 빈 GameObject를 만들어 연결합니다.\n" +
+                 "Vertical Layout Group 컴포넌트를 추가하면 자동으로 정렬됩니다.")]
         [SerializeField] private Transform _profileItemContainer;
+
+        [Tooltip("프로파일 항목 1개의 UI 프리팹입니다.\n" +
+                 "ProfileItemView.prefab을 연결합니다.\n" +
+                 "Show() 호출 시 프로파일 항목 수만큼 동적으로 생성됩니다.")]
         [SerializeField] private ProfileItemView _profileItemViewPrefab;
 
         [Header("버튼")]
+        [Tooltip("모든 항목 선택 완료 시 활성화됩니다. 클릭 시 정답 판정이 시작됩니다.")]
         [SerializeField] private Button _submitButton;
+
+        [Tooltip("패널을 닫습니다. 선택을 저장하지 않고 닫힙니다.")]
         [SerializeField] private Button _closeButton;
 
         [Header("결과 패널")]
+        [Tooltip("제출 후 결과를 표시하는 패널입니다. 기본적으로 비활성화되어 있습니다.")]
         [SerializeField] private GameObject _resultPanel;
+
+        [Tooltip("'3/4 정답' 또는 '전부 정답!' 형식으로 결과를 표시합니다.")]
         [SerializeField] private TMP_Text _resultText;
+
+        [Tooltip("컨셉 카드 내용을 표시하는 패널입니다. 일부 정답 이상 시 활성화됩니다.")]
         [SerializeField] private GameObject _conceptCardPanel;
+
+        [Tooltip("컨셉 카드 내용(캐치프레이즈, 배경, 성격)을 표시합니다.")]
         [SerializeField] private TMP_Text _conceptCardText;
+
+        [Tooltip("시점 완결문을 표시하는 패널입니다. 전부 정답 시에만 활성화됩니다.")]
         [SerializeField] private GameObject _epiloguePanel;
+
+        [Tooltip("캐릭터의 시점 독백 텍스트를 표시합니다.")]
         [SerializeField] private TMP_Text _epilogueText;
+
+        [Tooltip("결과 패널을 닫고 프로파일 추리 패널 전체를 닫습니다.")]
         [SerializeField] private Button _resultCloseButton;
 
         // ── 내부 상태 ─────────────────────────────────────────────────────
 
+        // 현재 추리 중인 캐릭터의 프로파일 데이터입니다.
         private CharacterProfileData _currentProfile;
+
+        // 현재 추리 중인 캐릭터 ID입니다. FragmentCollector에 보상 해금을 요청할 때 사용됩니다.
         private int _currentCharacterId;
+
+        // 동적으로 생성된 ProfileItemView 목록입니다. 제출 시 각 항목의 선택값을 가져옵니다.
         private List<ProfileItemView> _itemViews = new();
 
         /// <summary>현재 패널이 열려있는지 여부입니다.</summary>
@@ -87,6 +138,7 @@ namespace HTH.Campaign
 
         private void Awake()
         {
+            // 시작 시 패널을 숨깁니다. Show()에서 활성화됩니다.
             if (_panel != null) _panel.SetActive(false);
             if (_resultPanel != null) _resultPanel.SetActive(false);
 
@@ -105,9 +157,10 @@ namespace HTH.Campaign
         // ── 공개 API ─────────────────────────────────────────────────────
 
         /// <summary>
-        /// 특정 캐릭터의 프로파일 추리 UI를 표시합니다.
-        /// 대화 조각이 부족하면 열리지 않습니다.
-        /// CharacterRecordBook 또는 별도 버튼에서 호출합니다.
+        /// 특정 캐릭터의 프로파일 추리 패널을 엽니다.
+        /// CharacterRecordBook의 "추리하기" 버튼 또는 ProfileInquiryAllUI에서 호출합니다.
+        ///
+        /// 대화 조각이 RequiredFragmentCount 미만이면 열리지 않습니다.
         /// </summary>
         public void Show(int characterId)
         {
@@ -124,15 +177,14 @@ namespace HTH.Campaign
                 return;
             }
 
-            // 대화 조각 수 체크
             int fragmentCount = _fragmentCollector != null
                 ? _fragmentCollector.GetFragmentCount(characterId)
                 : 0;
 
+            // 조각이 부족하면 열지 않습니다.
             if (fragmentCount < profile.RequiredFragmentCount)
             {
                 Debug.Log($"[ProfileInquiryUI] 조각 부족 — {fragmentCount}/{profile.RequiredFragmentCount}");
-                // TODO: 조각 부족 피드백 UI 표시
                 return;
             }
 
@@ -149,7 +201,7 @@ namespace HTH.Campaign
             Debug.Log($"[ProfileInquiryUI] 프로파일 추리 열림 — CharacterId={characterId}");
         }
 
-        /// <summary>프로파일 추리 UI를 닫습니다.</summary>
+        /// <summary>프로파일 추리 패널을 닫습니다.</summary>
         public void Hide()
         {
             if (_panel != null) _panel.SetActive(false);
@@ -157,16 +209,23 @@ namespace HTH.Campaign
             ClearProfileItems();
         }
 
+        /// <summary>
+        /// ProfileItemView에서 선택지가 변경됐을 때 호출됩니다.
+        /// 모든 항목이 선택됐는지 체크해 제출 버튼의 활성화 여부를 갱신합니다.
+        /// </summary>
+        public void OnItemSelectionChanged()
+        {
+            RefreshSubmitButton();
+        }
+
         // ── Private — UI 구성 ─────────────────────────────────────────────
 
-        private void RefreshCharacterInfo(int characterId,
-                                          int fragmentCount,
-                                          int requiredCount)
+        private void RefreshCharacterInfo(int characterId, int fragmentCount, int requiredCount)
         {
             if (_characterIdText != null)
                 _characterIdText.text = $"#{characterId}";
 
-            // 수집된 이름 표시 (미수집 시 ???)
+            // CharacterRecordBook에서 수집된 이름을 가져옵니다. 없으면 "???"입니다.
             if (_characterNameText != null)
             {
                 string name = _characterRecordBook?.GetCollectedName(characterId);
@@ -177,6 +236,13 @@ namespace HTH.Campaign
                 _fragmentCountText.text = $"대화 조각 {fragmentCount}/{requiredCount}";
         }
 
+        /// <summary>
+        /// 프로파일 항목 뷰를 동적으로 생성합니다.
+        /// _profileItemContainer 하위에 ProfileItemView 프리팹을 항목 수만큼 Instantiate합니다.
+        ///
+        /// 각 항목에 RequiredFragmentId가 설정되어 있고 해당 조각이 미수집이면
+        /// isLocked = true로 설정해 잠금 상태로 표시합니다.
+        /// </summary>
         private void BuildProfileItems(CharacterProfileData profile)
         {
             ClearProfileItems();
@@ -188,7 +254,7 @@ namespace HTH.Campaign
                 var item = profile.ProfileItems[i];
                 if (item == null) continue;
 
-                // 해당 항목 추리 가능 여부 체크
+                // 이 항목을 보려면 특정 조각이 필요한지 체크합니다.
                 bool isLocked = !string.IsNullOrEmpty(item.RequiredFragmentId)
                     && (_fragmentCollector == null
                         || !_fragmentCollector.HasFragment(item.RequiredFragmentId));
@@ -208,15 +274,18 @@ namespace HTH.Campaign
             _itemViews.Clear();
         }
 
+        /// <summary>
+        /// 모든 항목(잠금 제외)에 선택이 완료됐는지 체크해 제출 버튼 활성화 여부를 갱신합니다.
+        /// ProfileItemView.OnItemSelectionChanged() → 이 메서드 호출 순서로 동작합니다.
+        /// </summary>
         private void RefreshSubmitButton()
         {
             if (_submitButton == null) return;
 
-            // 모든 항목에 선택이 완료됐는지 체크
             bool allSelected = true;
             foreach (var view in _itemViews)
             {
-                if (view == null || view.IsLocked) continue;
+                if (view == null || view.IsLocked) continue; // 잠금 항목은 건너뜀
                 if (!view.HasSelection)
                 {
                     allSelected = false;
@@ -226,43 +295,46 @@ namespace HTH.Campaign
             _submitButton.interactable = allSelected;
         }
 
-        // ── Private — 제출 판정 ───────────────────────────────────────────
+        // ── Private — 제출 및 판정 ────────────────────────────────────────
 
         private void OnSubmitClicked()
         {
             if (_currentProfile == null) return;
 
-            // 선택된 답안 수집
+            // 각 ProfileItemView에서 선택된 인덱스를 수집합니다.
+            // 잠금 항목은 -1로 처리합니다.
             var answers = new int[_currentProfile.ProfileItems.Count];
             for (int i = 0; i < _itemViews.Count; i++)
             {
-                if (_itemViews[i] == null || _itemViews[i].IsLocked)
-                    answers[i] = -1;
-                else
-                    answers[i] = _itemViews[i].SelectedIndex;
+                answers[i] = (_itemViews[i] == null || _itemViews[i].IsLocked)
+                    ? -1
+                    : _itemViews[i].SelectedIndex;
             }
 
             int correctCount = _currentProfile.CountCorrect(answers);
             bool allCorrect = _currentProfile.IsAllCorrect(answers);
 
             Debug.Log($"[ProfileInquiryUI] 제출 — {correctCount}/{_currentProfile.ProfileItems.Count} 정답");
-
             ShowResult(correctCount, allCorrect);
         }
 
+        /// <summary>
+        /// 정답 판정 결과를 표시합니다.
+        /// 일부 정답(1개 이상): 컨셉 카드 해금
+        /// 전부 정답: 컨셉 카드 + 시점 완결문 해금
+        /// </summary>
         private void ShowResult(int correctCount, bool allCorrect)
         {
             if (_resultPanel == null) return;
 
             int total = _currentProfile?.ProfileItems.Count ?? 4;
 
-            // 결과 텍스트
             if (_resultText != null)
                 _resultText.text = allCorrect
                     ? $"전부 정답! ({correctCount}/{total})\n모든 보상이 해금됩니다."
                     : $"{correctCount}/{total} 정답\n일부 보상이 해금됩니다.";
 
-            // 컨셉 카드 해금 (일부 정답 이상)
+            // 1개 이상 정답 → 컨셉 카드 표시
             bool conceptCardUnlocked = correctCount > 0;
             if (_conceptCardPanel != null)
             {
@@ -278,7 +350,7 @@ namespace HTH.Campaign
                 }
             }
 
-            // 시점 완결문 해금 (전부 정답)
+            // 전부 정답 → 시점 완결문 표시
             if (_epiloguePanel != null)
             {
                 _epiloguePanel.SetActive(allCorrect);
@@ -288,7 +360,8 @@ namespace HTH.Campaign
 
             _resultPanel.SetActive(true);
 
-            // FragmentCollector에 보상 해금 알림
+            // FragmentCollector에 해금 기록을 요청합니다.
+            // 이 기록은 PlayerPrefs와 RewardSaveData에 저장됩니다.
             if (_fragmentCollector != null)
             {
                 if (conceptCardUnlocked)
@@ -302,14 +375,6 @@ namespace HTH.Campaign
         {
             if (_resultPanel != null) _resultPanel.SetActive(false);
             Hide();
-        }
-
-        // ── 외부에서 ProfileItemView 선택 변경 알림 ───────────────────────
-
-        /// <summary>ProfileItemView에서 선택이 변경될 때 호출됩니다.</summary>
-        public void OnItemSelectionChanged()
-        {
-            RefreshSubmitButton();
         }
     }
 }

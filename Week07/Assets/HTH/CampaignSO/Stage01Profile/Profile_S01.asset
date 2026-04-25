@@ -31,3 +31,105 @@ MonoBehaviour:
       GimmickRelevance: "\uBB54\uB370 \uC774\uAC74"
       CardIllustration: {fileID: 21300000, guid: da951ff8cc869324ca09cf422bfaee91, type: 3}
     EpilogueText: "\uC644\uC131 \u3145\u3131"
+  - CharacterId: 1
+    RequiredFragmentCount: 3
+    ProfileItems:
+    - Question: "\uC9C8\uBB381"
+      Choices:
+      - "\uC120\uD0DD1"
+      - "\uC120\uD0DD2"
+      CorrectChoiceIndex: 0
+      RequiredFragmentId: 
+    ConceptCard:
+      Catchphrase: "\uC640 \uC0CC\uC988!"
+      Appearance: "\uBF08\uB2E4\uADC0\uC774\uB2E4"
+      NarrativeBackground: "\uC5B8\uB354\uD14C\uC77C"
+      Personality: "\uC720\uC5F0\uD558\uB2E4"
+      GimmickRelevance: "\uBB54\uB370 \uC774\uAC74"
+      CardIllustration: {fileID: 21300000, guid: da951ff8cc869324ca09cf422bfaee91, type: 3}
+    EpilogueText: "\uC644\uC131 \u3145\u3131"
+  - CharacterId: 1
+    RequiredFragmentCount: 3
+    ProfileItems:
+    - Question: "\uC9C8\uBB381"
+      Choices:
+      - "\uC120\uD0DD1"
+      - "\uC120\uD0DD2"
+      CorrectChoiceIndex: 0
+      RequiredFragmentId: 
+    ConceptCard:
+      Catchphrase: "\uC640 \uC0CC\uC988!"
+      Appearance: "\uBF08\uB2E4\uADC0\uC774\uB2E4"
+      NarrativeBackground: "\uC5B8\uB354\uD14C\uC77C"
+      Personality: "\uC720\uC5F0\uD558\uB2E4"
+      GimmickRelevance: "\uBB54\uB370 \uC774\uAC74"
+      CardIllustration: {fileID: 21300000, guid: da951ff8cc869324ca09cf422bfaee91, type: 3}
+    EpilogueText: "\uC644\uC131 \u3145\u3131"
+  - CharacterId: 1
+    RequiredFragmentCount: 3
+    ProfileItems:
+    - Question: "\uC9C8\uBB381"
+      Choices:
+      - "\uC120\uD0DD1"
+      - "\uC120\uD0DD2"
+      CorrectChoiceIndex: 0
+      RequiredFragmentId: 
+    ConceptCard:
+      Catchphrase: "\uC640 \uC0CC\uC988!"
+      Appearance: "\uBF08\uB2E4\uADC0\uC774\uB2E4"
+      NarrativeBackground: "\uC5B8\uB354\uD14C\uC77C"
+      Personality: "\uC720\uC5F0\uD558\uB2E4"
+      GimmickRelevance: "\uBB54\uB370 \uC774\uAC74"
+      CardIllustration: {fileID: 21300000, guid: da951ff8cc869324ca09cf422bfaee91, type: 3}
+    EpilogueText: "\uC644\uC131 \u3145\u3131"
+  - CharacterId: 1
+    RequiredFragmentCount: 3
+    ProfileItems:
+    - Question: "\uC9C8\uBB381"
+      Choices:
+      - "\uC120\uD0DD1"
+      - "\uC120\uD0DD2"
+      CorrectChoiceIndex: 0
+      RequiredFragmentId: 
+    ConceptCard:
+      Catchphrase: "\uC640 \uC0CC\uC988!"
+      Appearance: "\uBF08\uB2E4\uADC0\uC774\uB2E4"
+      NarrativeBackground: "\uC5B8\uB354\uD14C\uC77C"
+      Personality: "\uC720\uC5F0\uD558\uB2E4"
+      GimmickRelevance: "\uBB54\uB370 \uC774\uAC74"
+      CardIllustration: {fileID: 21300000, guid: da951ff8cc869324ca09cf422bfaee91, type: 3}
+    EpilogueText: "\uC644\uC131 \u3145\u3131"
+  - CharacterId: 1
+    RequiredFragmentCount: 3
+    ProfileItems:
+    - Question: "\uC9C8\uBB381"
+      Choices:
+      - "\uC120\uD0DD1"
+      - "\uC120\uD0DD2"
+      CorrectChoiceIndex: 0
+      RequiredFragmentId: 
+    ConceptCard:
+      Catchphrase: "\uC640 \uC0CC\uC988!"
+      Appearance: "\uBF08\uB2E4\uADC0\uC774\uB2E4"
+      NarrativeBackground: "\uC5B8\uB354\uD14C\uC77C"
+      Personality: "\uC720\uC5F0\uD558\uB2E4"
+      GimmickRelevance: "\uBB54\uB370 \uC774\uAC74"
+      CardIllustration: {fileID: 21300000, guid: da951ff8cc869324ca09cf422bfaee91, type: 3}
+    EpilogueText: "\uC644\uC131 \u3145\u3131"
+  - CharacterId: 1
+    RequiredFragmentCount: 3
+    ProfileItems:
+    - Question: "\uC9C8\uBB381"
+      Choices:
+      - "\uC120\uD0DD1"
+      - "\uC120\uD0DD2"
+      CorrectChoiceIndex: 0
+      RequiredFragmentId: 
+    ConceptCard:
+      Catchphrase: "\uC640 \uC0CC\uC988!"
+      Appearance: "\uBF08\uB2E4\uADC0\uC774\uB2E4"
+      NarrativeBackground: "\uC5B8\uB354\uD14C\uC77C"
+      Personality: "\uC720\uC5F0\uD558\uB2E4"
+      GimmickRelevance: "\uBB54\uB370 \uC774\uAC74"
+      CardIllustration: {fileID: 21300000, guid: da951ff8cc869324ca09cf422bfaee91, type: 3}
+    EpilogueText: "\uC644\uC131 \u3145\u3131"

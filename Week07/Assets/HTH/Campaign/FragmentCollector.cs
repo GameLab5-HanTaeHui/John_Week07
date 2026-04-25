@@ -7,63 +7,92 @@ namespace HTH.Campaign
     /// <summary>
     /// 대화 조각 수집 및 보상 해금을 관리합니다.
     ///
-    /// ─── 수집 흐름 ───────────────────────────────────────────────────────
-    ///   다이얼로그 출력 완료
-    ///   → TryCollectFragment(fragmentId)
-    ///   → 중복 수집 방지 체크
-    ///   → 조각 해금 + 저장
-    ///   → 캐릭터별 수집 수 갱신
-    ///   → 보상 체크 (컨셉 카드 / 시점 완결문 해금 가능 여부)
-    ///
-    /// ─── 보상 단계 (기획서 기준) ─────────────────────────────────────────
-    ///   1단계: 일정 조각 수집 + 프로파일 일부 정답 → 컨셉 카드
-    ///   2단계: 프로파일 완전 정답 → 시점 완결문
-    ///   3단계: 스테이지 모든 인물 카드 해금 → 엔딩
+    /// ─── 이 스크립트의 역할 ──────────────────────────────────────────────
+    ///   대사 재생 완료 후 DialogueTriggerManager로부터 조각 수집 요청을 받습니다.
+    ///   수집된 조각 수를 추적하고, 조건을 충족하면 보상 해금 이벤트를 발생시킵니다.
+    ///   프로파일 추리 완료 시 컨셉 카드와 시점 완결문 해금을 기록합니다.
+    ///   모든 캐릭터의 시점 완결문이 해금되면 엔딩 이벤트를 발생시킵니다.
     ///
     /// ─── FragmentId 명명 규칙 ────────────────────────────────────────────
-    ///   "{stageId}_char{characterId}_frag{index}"
-    ///   예: "Stage_1_Phase2_char1_frag0"
+    ///   반드시 이 규칙을 따라야 캐릭터 ID 파싱이 정상 동작합니다.
+    ///   형식: "{stageId}_char{characterId}_frag{index}"
+    ///   예시: "Stage_1_Phase2_char1_frag0" → 캐릭터 #1의 첫 번째 조각
+    ///         "Stage_1_Phase2_char3_frag2" → 캐릭터 #3의 세 번째 조각
+    ///   CampaignDialogueSO의 GroupDialogueEntry.FragmentId 필드에 이 형식으로 입력합니다.
     ///
-    /// ─── PlayerPrefs 키 규칙 ─────────────────────────────────────────────
-    ///   수집된 조각: "hth_frag_{stageId}_{fragmentId}"
+    /// ─── 보상 해금 흐름 ──────────────────────────────────────────────────
+    ///   조각 수집 → 캐릭터별 카운트 증가
+    ///   → _conceptCardMinFragments 이상 수집 시 OnConceptCardUnlockable 이벤트
+    ///   → CharacterRecordBook, ProfileInquiryAllUI가 이를 수신해 추리 버튼 활성화
+    ///
+    ///   프로파일 추리 제출 → ProfileInquiryUI에서 판정
+    ///   → 일부 정답 → UnlockConceptCard() 호출
+    ///   → 전부 정답 → UnlockEpilogue() 호출
+    ///   → 모든 캐릭터 완수 → OnAllCharactersCompleted 이벤트
+    ///   → CampaignModeManager가 수신해 엔딩 씬 전환
+    ///
+    /// ─── 씬 배치 ─────────────────────────────────────────────────────────
+    ///   _CampaignSystem 하위 GameObject에 컴포넌트로 추가합니다.
+    ///
+    /// ─── Inspector 설정 ──────────────────────────────────────────────────
+    ///   Concept Card Min Fragments → 컨셉 카드 해금 가능 최소 조각 수 (기본값 3)
+    ///   Reward Save Data           → RewardSaveData 에셋 (로비 보상 열람용)
     /// </summary>
     [DisallowMultipleComponent]
     public class FragmentCollector : MonoBehaviour
     {
-        // ── 컨셉 카드 해금에 필요한 최소 조각 수 (Inspector 설정 가능) ──────
+        // ── Inspector ────────────────────────────────────────────────────
+
         [Header("보상 조건")]
-        [Tooltip("컨셉 카드 해금에 필요한 캐릭터별 최소 대화 조각 수")]
+        [Tooltip("이 수 이상의 대화 조각을 수집하면 프로파일 추리 버튼이 활성화됩니다.\n" +
+                 "ProfileDataSO의 RequiredFragmentCount와 별개로 동작합니다.")]
         [SerializeField] private int _conceptCardMinFragments = 3;
 
         [Header("보상 저장")]
-        [Tooltip("로비에서 보상 열람에 사용할 저장 데이터")]
+        [Tooltip("로비에서 보상을 열람할 때 사용하는 저장 데이터입니다.\n" +
+                 "Project → Create → HTH → Campaign → RewardSaveData로 생성합니다.\n" +
+                 "스테이지 씬과 로비 씬에서 같은 에셋을 공유합니다.")]
         [SerializeField] private RewardSaveData _rewardSaveData;
 
-        // ── 상태 ─────────────────────────────────────────────────────────
+        // ── 런타임 데이터 ─────────────────────────────────────────────────
 
+        // 수집된 모든 FragmentId 집합입니다.
+        // 컨셉 카드("conceptcard_1")와 시점 완결문("epilogue_1") 해금 기록도 여기에 저장됩니다.
         private readonly HashSet<string> _collectedFragmentIds = new();
+
+        // 캐릭터별 수집된 조각 수입니다.
+        // key = characterId, value = 수집된 조각 수
         private readonly Dictionary<int, int> _fragmentCountPerChar = new();
+
+        // 현재 초기화된 스테이지 ID입니다. Save/Load에 사용됩니다.
         private string _currentStageId;
 
         // ── 이벤트 ───────────────────────────────────────────────────────
 
-        /// <summary>새 대화 조각 수집 시 발생합니다. string: fragmentId</summary>
+        /// <summary>
+        /// 새 대화 조각이 수집될 때 발생합니다.
+        /// string 파라미터: 수집된 FragmentId
+        /// 구독: CharacterRecordBook (수집 현황 UI 갱신)
+        /// </summary>
         public event Action<string> OnFragmentCollected;
 
         /// <summary>
-        /// 컨셉 카드 해금 조건 충족 시 발생합니다.
-        /// int: characterId
+        /// 특정 캐릭터의 조각이 _conceptCardMinFragments 이상 수집됐을 때 발생합니다.
+        /// int 파라미터: characterId
+        /// 구독: CharacterRecordBook (추리 버튼 활성화), ProfileInquiryAllUI (버튼 상태 갱신)
         /// </summary>
         public event Action<int> OnConceptCardUnlockable;
 
         /// <summary>
         /// 시점 완결문 해금 조건 충족 시 발생합니다.
-        /// int: characterId
+        /// int 파라미터: characterId
+        /// 현재 미사용 — 추후 연동 예정입니다.
         /// </summary>
         public event Action<int> OnEpilogueUnlockable;
 
         /// <summary>
-        /// 스테이지 전체 기록 완수 시 발생합니다. (엔딩 조건)
+        /// 모든 캐릭터(#1~#7)의 시점 완결문이 해금됐을 때 발생합니다.
+        /// 구독: CampaignModeManager (엔딩 씬 전환 처리)
         /// </summary>
         public event Action OnAllCharactersCompleted;
 
@@ -71,7 +100,8 @@ namespace HTH.Campaign
 
         /// <summary>
         /// 스테이지 ID를 설정하고 저장된 수집 기록을 로드합니다.
-        /// CampaignModeManager.OnPhase2Entered 이벤트 수신 시 호출합니다.
+        /// DialogueTriggerManager.OnPhase2Entered()에서 호출합니다.
+        /// 이전 세션에서 수집한 조각 기록을 PlayerPrefs에서 복원합니다.
         /// </summary>
         public void Initialize(string stageId)
         {
@@ -84,17 +114,19 @@ namespace HTH.Campaign
 
         /// <summary>
         /// 대화 조각 수집을 시도합니다.
+        /// DialogueTriggerManager.PlayGroupDialogue()의 onComplete에서 호출합니다.
+        ///
         /// 이미 수집됐거나 fragmentId가 비어있으면 무시합니다.
-        /// DialogueTriggerManager에서 다이얼로그 출력 완료 후 호출합니다.
+        /// 수집 성공 시 PlayerPrefs에 저장하고 보상 조건을 체크합니다.
         /// </summary>
         public void TryCollectFragment(string fragmentId)
         {
             if (string.IsNullOrEmpty(fragmentId)) return;
-            if (_collectedFragmentIds.Contains(fragmentId)) return;
+            if (_collectedFragmentIds.Contains(fragmentId)) return; // 중복 방지
 
             _collectedFragmentIds.Add(fragmentId);
 
-            // 캐릭터별 카운트 갱신
+            // FragmentId에서 캐릭터 ID를 파싱해 캐릭터별 카운트를 증가시킵니다.
             int charId = ParseCharacterIdFromFragment(fragmentId);
             if (charId >= 0)
             {
@@ -107,7 +139,6 @@ namespace HTH.Campaign
             Debug.Log($"[FragmentCollector] 조각 수집 — {fragmentId} (캐릭터 {charId})");
             OnFragmentCollected?.Invoke(fragmentId);
 
-            // 보상 체크
             if (charId >= 0)
                 CheckRewards(charId);
         }
@@ -126,16 +157,68 @@ namespace HTH.Campaign
         /// <summary>수집된 전체 조각 수를 반환합니다.</summary>
         public int GetTotalFragmentCount() => _collectedFragmentIds.Count;
 
+        // ── 보상 해금 API ─────────────────────────────────────────────────
+
+        /// <summary>
+        /// 컨셉 카드 해금을 기록합니다.
+        /// ProfileInquiryUI.ShowResult()에서 일부 이상 정답일 때 호출합니다.
+        /// </summary>
+        public void UnlockConceptCard(int characterId)
+        {
+            string key = $"conceptcard_{characterId}";
+            if (_collectedFragmentIds.Contains(key)) return; // 이미 해금됨
+
+            _collectedFragmentIds.Add(key);
+            Save();
+
+            // 로비에서 보상 열람 시 사용할 데이터에도 저장합니다.
+            _rewardSaveData?.SaveConceptCardUnlock(characterId);
+
+            Debug.Log($"[FragmentCollector] 컨셉 카드 해금 — 캐릭터 {characterId}");
+        }
+
+        /// <summary>
+        /// 시점 완결문 해금을 기록합니다.
+        /// ProfileInquiryUI.ShowResult()에서 전부 정답일 때 호출합니다.
+        /// 해금 후 모든 캐릭터 완수 여부를 체크합니다.
+        /// </summary>
+        public void UnlockEpilogue(int characterId)
+        {
+            string key = $"epilogue_{characterId}";
+            if (_collectedFragmentIds.Contains(key)) return;
+
+            _collectedFragmentIds.Add(key);
+            Save();
+
+            _rewardSaveData?.SaveEpilogueUnlock(characterId);
+
+            Debug.Log($"[FragmentCollector] 시점 완결문 해금 — 캐릭터 {characterId}");
+
+            // 모든 캐릭터의 시점 완결문이 해금됐는지 확인합니다.
+            CheckAllCharactersCompleted();
+        }
+
+        /// <summary>컨셉 카드 해금 여부를 확인합니다.</summary>
+        public bool IsConceptCardUnlocked(int characterId)
+            => _collectedFragmentIds.Contains($"conceptcard_{characterId}");
+
+        /// <summary>시점 완결문 해금 여부를 확인합니다.</summary>
+        public bool IsEpilogueUnlocked(int characterId)
+            => _collectedFragmentIds.Contains($"epilogue_{characterId}");
+
         // ── 저장/로드 ─────────────────────────────────────────────────────
 
-        /// <summary>현재 수집 기록을 PlayerPrefs에 저장합니다.</summary>
         public void Save()
         {
             if (string.IsNullOrEmpty(_currentStageId)) return;
             Save(_currentStageId);
         }
 
-        /// <summary>특정 스테이지의 수집 기록을 PlayerPrefs에 저장합니다.</summary>
+        /// <summary>
+        /// 수집 기록을 PlayerPrefs에 저장합니다.
+        /// 모든 FragmentId를 '|'로 연결한 문자열로 저장합니다.
+        /// 저장 키: "hth_frag_{stageId}"
+        /// </summary>
         public void Save(string stageId)
         {
             if (string.IsNullOrEmpty(stageId)) return;
@@ -146,7 +229,10 @@ namespace HTH.Campaign
             PlayerPrefs.Save();
         }
 
-        /// <summary>특정 스테이지의 수집 기록을 PlayerPrefs에서 로드합니다.</summary>
+        /// <summary>
+        /// PlayerPrefs에서 수집 기록을 로드합니다.
+        /// Initialize()에서 호출됩니다.
+        /// </summary>
         public void Load(string stageId)
         {
             if (string.IsNullOrEmpty(stageId)) return;
@@ -165,6 +251,7 @@ namespace HTH.Campaign
 
                     _collectedFragmentIds.Add(fragmentId);
 
+                    // 캐릭터별 카운트도 복원합니다.
                     int charId = ParseCharacterIdFromFragment(fragmentId);
                     if (charId >= 0)
                     {
@@ -175,7 +262,6 @@ namespace HTH.Campaign
             }
         }
 
-        /// <summary>특정 스테이지의 모든 수집 기록을 초기화합니다.</summary>
         public void Clear(string stageId)
         {
             _collectedFragmentIds.Clear();
@@ -191,14 +277,12 @@ namespace HTH.Campaign
 
         /// <summary>
         /// 캐릭터별 보상 조건을 체크합니다.
-        /// 1단계: 최소 조각 수 충족 → 컨셉 카드 해금 가능 이벤트
-        /// 2단계: 프로파일 추리는 별도 시스템에서 처리 (추후 연동)
+        /// 조각이 _conceptCardMinFragments 이상이면 OnConceptCardUnlockable 이벤트를 발생시킵니다.
         /// </summary>
         private void CheckRewards(int characterId)
         {
             int count = GetFragmentCount(characterId);
 
-            // 1단계: 컨셉 카드 해금 조건 충족
             if (count >= _conceptCardMinFragments)
             {
                 Debug.Log($"[FragmentCollector] 컨셉 카드 해금 가능 — 캐릭터 {characterId} ({count}개)");
@@ -207,58 +291,11 @@ namespace HTH.Campaign
         }
 
         /// <summary>
-        /// 컨셉 카드 해금을 기록합니다.
-        /// ProfileInquiryUI에서 일부 정답 시 호출합니다.
-        /// </summary>
-        public void UnlockConceptCard(int characterId)
-        {
-            string key = $"conceptcard_{characterId}";
-            if (_collectedFragmentIds.Contains(key)) return;
-
-            _collectedFragmentIds.Add(key);
-            Save();
-
-            // 로비 보상 열람용 저장
-            _rewardSaveData?.SaveConceptCardUnlock(characterId);
-
-            Debug.Log($"[FragmentCollector] 컨셉 카드 해금 — 캐릭터 {characterId}");
-        }
-
-        /// <summary>
-        /// 시점 완결문 해금을 기록합니다.
-        /// ProfileInquiryUI에서 전부 정답 시 호출합니다.
-        /// </summary>
-        public void UnlockEpilogue(int characterId)
-        {
-            string key = $"epilogue_{characterId}";
-            if (_collectedFragmentIds.Contains(key)) return;
-
-            _collectedFragmentIds.Add(key);
-            Save();
-
-            // 로비 보상 열람용 저장
-            _rewardSaveData?.SaveEpilogueUnlock(characterId);
-
-            Debug.Log($"[FragmentCollector] 시점 완결문 해금 — 캐릭터 {characterId}");
-
-            CheckAllCharactersCompleted();
-        }
-
-        /// <summary>컨셉 카드 해금 여부를 확인합니다.</summary>
-        public bool IsConceptCardUnlocked(int characterId)
-            => _collectedFragmentIds.Contains($"conceptcard_{characterId}");
-
-        /// <summary>시점 완결문 해금 여부를 확인합니다.</summary>
-        public bool IsEpilogueUnlocked(int characterId)
-            => _collectedFragmentIds.Contains($"epilogue_{characterId}");
-
-        /// <summary>
-        /// 모든 캐릭터의 시점 완결문이 해금됐는지 체크합니다.
-        /// 전부 완료 시 OnAllCharactersCompleted 이벤트를 발생시킵니다.
+        /// 캐릭터 #1~#7 전부의 시점 완결문이 해금됐는지 체크합니다.
+        /// 전부 해금됐으면 OnAllCharactersCompleted 이벤트를 발생시킵니다.
         /// </summary>
         private void CheckAllCharactersCompleted()
         {
-            // 캐릭터 1~7 전부 완료 여부 체크
             for (int i = 1; i <= 7; i++)
             {
                 if (!IsEpilogueUnlocked(i)) return;
@@ -270,14 +307,18 @@ namespace HTH.Campaign
 
         /// <summary>
         /// FragmentId에서 캐릭터 ID를 파싱합니다.
-        /// 명명 규칙: "{stageId}_char{characterId}_frag{index}"
+        /// 명명 규칙 "_char{id}_"을 기준으로 파싱합니다.
+        /// 파싱 실패 시 -1을 반환합니다.
+        ///
+        /// 예: "Stage_1_Phase2_char3_frag0" → 3
+        ///     "conceptcard_5"             → -1 (규칙 불일치)
         /// </summary>
         private int ParseCharacterIdFromFragment(string fragmentId)
         {
             if (string.IsNullOrEmpty(fragmentId)) return -1;
 
             const string marker = "_char";
-            int startIdx = fragmentId.IndexOf(marker, System.StringComparison.Ordinal);
+            int startIdx = fragmentId.IndexOf(marker, StringComparison.Ordinal);
             if (startIdx < 0) return -1;
 
             startIdx += marker.Length;

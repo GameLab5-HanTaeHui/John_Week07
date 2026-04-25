@@ -605,8 +605,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.00056541344, y: 0.0022518928, z: 0.0020473264}
-  m_Center: {x: -0.00013970998, y: 0.0016382667, z: -0.0009194136}
+  m_Size: {x: 0.0010583817, y: 0.0022518937, z: 0.0025184038}
+  m_Center: {x: -0.000037806487, y: 0.0016382616, z: -0.0006838776}
 --- !u!114 &26829727
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2547,7 +2547,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &142017083
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4991,7 +4991,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &321175537
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8894,7 +8894,7 @@ MonoBehaviour:
   _setupConfig: {fileID: 11400000, guid: c8b4f5edc20791e46b21e19fb9387ca5, type: 2}
   _characterSpawner: {fileID: 1589347838}
   _lobbySceneName: LobbyScene
-  _stageId: 
+  _stageId: Stage_1
   _triggerEndingDialogueOnWin: 0
 --- !u!1001 &538387526
 PrefabInstance:
@@ -9121,8 +9121,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.17980076, y: 0.09238417, z: 0.16583046}
-  m_Center: {x: 0.03270775, y: 0.042311307, z: -0.061277106}
+  m_Size: {x: 0.23462312, y: 0.09238417, z: 0.2901094}
+  m_Center: {x: 0.0052961805, y: 0.042311307, z: 0.0008630177}
 --- !u!114 &545330540
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17481,7 +17481,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1042277493
 RectTransform:
   m_ObjectHideFlags: 0
@@ -22902,7 +22902,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 123.6, y: 104.8}
+  m_AnchoredPosition: {x: 123.6, y: 104.79999}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &1352308789
@@ -24838,7 +24838,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: -160.6, y: 102.3}
+  m_AnchoredPosition: {x: -160.6, y: 102.29999}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &1430064787
@@ -30022,7 +30022,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1813443746
 RectTransform:
   m_ObjectHideFlags: 0
@@ -31883,7 +31883,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1953585280
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -33008,7 +33008,7 @@ MonoBehaviour:
   _nameText: {fileID: 610868181}
   _dialogueText: {fileID: 1634299471}
   _characterSprites:
-  - {fileID: 0}
+  - {fileID: 21300000, guid: da951ff8cc869324ca09cf422bfaee91, type: 3}
   - {fileID: 21300000, guid: da951ff8cc869324ca09cf422bfaee91, type: 3}
   - {fileID: 21300000, guid: 49d5c9344013d52468fc4b0aa647f216, type: 3}
   - {fileID: 21300000, guid: 859cd977bab22f14cabf057c28090b48, type: 3}

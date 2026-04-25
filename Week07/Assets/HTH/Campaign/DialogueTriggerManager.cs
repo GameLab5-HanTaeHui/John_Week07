@@ -1,31 +1,39 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.EventSystems.EventTrigger;
 
 namespace HTH.Campaign
 {
     /// <summary>
     /// 캐릭터 조우를 감지하고 다이얼로그를 선택해 DialoguePlayer에 전달합니다.
     ///
-    /// ─── 동작 흐름 ───────────────────────────────────────────────────────
-    ///   CampaignModeManager.OnPhase2Entered 수신 → 활성화
-    ///   PlayerActionState.OnActionConfirmed 이벤트 수신
-    ///   → OnCharacterMoved(movedCharacterId, zoneId) 호출
-    ///   → 해당 구역의 캐릭터 목록 수집
-    ///   → 2명 이상: 그룹 대사 체크
-    ///   → 1명: 단독 대사 체크 (미확정 기능 — 활성화 여부는 추후 결정)
-    ///   → DialogueConditionEvaluator로 출력 가능 여부 확인
-    ///   → CampaignDialogueSO에서 대사 검색
-    ///   → DialoguePlayer.Play() 호출
-    ///   → 재생 완료 후 ProgressTracker 기록 + FragmentCollector 수집 요청
+    /// ─── 이 스크립트의 역할 ──────────────────────────────────────────────
+    ///   캠페인 2회차(Phase2)에서 "누가 누구와 같은 구역에 있는가"를 판단해
+    ///   해당 조합의 대사를 찾아 DialoguePlayer에게 재생을 요청합니다.
+    ///   대사 재생이 완료되면 대화 조각 수집과 이름 공개도 처리합니다.
     ///
-    /// ─── 활성화 조건 ─────────────────────────────────────────────────────
-    ///   CampaignModeManager.IsPhase2Active == true 일 때만 동작
+    /// ─── 트리거 시점 ─────────────────────────────────────────────────────
+    ///   캐릭터 이동 시점이 아닌 턴 종료(날짜 변경) 시점에 모든 구역을 체크합니다.
+    ///   플레이어가 원하는 캐릭터들을 배치하고 날짜 변경 버튼을 누르면
+    ///   그 시점에 각 구역의 조합을 판별해 대사를 0→1→2→3 순서로 재생합니다.
     ///
-    /// ─── Inspector 설정 ──────────────────────────────────────────────────
-    ///   DialogueData    → 이 스테이지의 CampaignDialogueSO
-    ///   DialoguePlayer  → UI 출력 담당
-    ///   EnableSoloDialogue → 단독 대사 기능 활성화 여부 (미확정)
+    /// ─── 대사 출력 조건 ──────────────────────────────────────────────────
+    ///   1. Phase2 활성 상태
+    ///   2. 이번 씬 진입 이후 아직 출력하지 않은 조합 (씬 재시작 시 리셋)
+    ///   3. 해당 조합의 대화 조각이 아직 미수집
+    ///      → 이미 수집 완료된 조합은 영구적으로 스킵
+    ///
+    /// ─── 씬 배치 ─────────────────────────────────────────────────────────
+    ///   _CampaignSystem 하위 GameObject에 컴포넌트로 추가합니다.
+    ///   Canvas 안에 배치하지 않습니다 (UI 컴포넌트가 아님).
+    ///
+    /// ─── Inspector 연결 ──────────────────────────────────────────────────
+    ///   Dialogue Data         → CampaignDialogueSO 에셋 (대사 데이터)
+    ///   Dialogue Player       → _CampaignSystem/DialoguePlayer
+    ///   Fragment Collector    → _CampaignSystem/FragmentCollector
+    ///   Character Record Book → _CampaignSystem/CharacterRecordBook
+    ///   Active Zones [0~3]    → 각 구역의 대사 활성화 여부
     /// </summary>
     [DisallowMultipleComponent]
     public class DialogueTriggerManager : MonoBehaviour
@@ -33,28 +41,43 @@ namespace HTH.Campaign
         // ── Inspector ────────────────────────────────────────────────────
 
         [Header("데이터")]
-        [Tooltip("이 스테이지의 캠페인 다이얼로그 데이터")]
+        [Tooltip("이 스테이지의 캠페인 다이얼로그 데이터\n" +
+                 "Project → Create → HTH → Campaign → DialogueData로 생성합니다.")]
         [SerializeField] private CampaignDialogueSO _dialogueData;
 
         [Header("컴포넌트 참조")]
+        [Tooltip("대사를 화면에 출력하는 컴포넌트\n_CampaignSystem/DialoguePlayer를 연결합니다.")]
         [SerializeField] private DialoguePlayer _dialoguePlayer;
+
+        [Tooltip("대화 조각 수집을 담당하는 컴포넌트\n_CampaignSystem/FragmentCollector를 연결합니다.")]
         [SerializeField] private FragmentCollector _fragmentCollector;
+
+        [Tooltip("인물 기록장 컴포넌트. 대사에서 이름이 공개될 때 등록됩니다.\n" +
+                 "_CampaignSystem/CharacterRecordBook을 연결합니다.")]
         [SerializeField] private CharacterRecordBook _characterRecordBook;
 
         [Header("단독 대사 (미확정)")]
-        [Tooltip("단독 대사 기능 활성화 여부. 사용 여부 미확정 — 기능만 구현됨.")]
+        [Tooltip("단독 대사 기능 활성화 여부.\n" +
+                 "현재 사용 여부가 결정되지 않아 false로 유지합니다.\n" +
+                 "true로 설정 시 혼자 있는 캐릭터에게도 대사가 출력됩니다.")]
         [SerializeField] private bool _enableSoloDialogue = false;
 
         [Header("구역 대사 활성화 (0 → 1 → 2 → 3 순서)")]
-        [Tooltip("체크된 구역만 턴 종료 시 대사 체크. 인덱스 = ZoneId.")]
+        [Tooltip("체크된 구역만 턴 종료 시 대사를 체크합니다.\n" +
+                 "인덱스 = ZoneId (0=Zone0, 1=Zone1, 2=Zone2, 3=Zone3)\n" +
+                 "false로 설정된 구역은 캐릭터가 모여있어도 대사가 나오지 않습니다.")]
         [SerializeField] private bool[] _activeZones = new bool[GameState.ZoneCount] { true, true, true, true };
 
         // ── 내부 상태 ─────────────────────────────────────────────────────
 
+        // 이번 씬 진입 이후 출력된 조합을 기록합니다. (씬 재시작 시 리셋)
+        // PlayerPrefs에 저장하지 않습니다.
         private DialogueProgressTracker _progressTracker;
-        private DialogueConditionEvaluator _conditionEvaluator;
-        private PlayerActionState _playerAction;
 
+        // 대사 출력 조건을 판별합니다.
+        private DialogueConditionEvaluator _conditionEvaluator;
+
+        // Phase2가 활성화되고 초기화가 완료됐는지 여부입니다.
         private bool _isInitialized;
 
         // ── Unity ────────────────────────────────────────────────────────
@@ -67,22 +90,15 @@ namespace HTH.Campaign
 
         private void Start()
         {
-            // Phase2 진입 이벤트 구독
             if (CampaignModeManager.Instance != null)
                 CampaignModeManager.Instance.OnPhase2Entered += OnPhase2Entered;
 
-            // GameFlowController.OnLoopReset 구독
-            // → 루프마다 PlayerActionState가 갱신될 수 있으므로 재구독
             var gfc = GameFlowController.Instance;
             if (gfc == null) return;
 
-            // [캠패인모드] 턴 종료 시점에 다이얼로그 트리거
             var turnSM = gfc.GetTurnSM();
             if (turnSM != null)
-                turnSM.OnTurnEndEntered += OnTurnEndEntered;
-
-            // 최초 구독 시도
-            SubscribePlayerActionEvents();
+                turnSM.OnPlayerActionStarted += OnPlayerActionStarted;
         }
 
         private void OnDestroy()
@@ -95,98 +111,72 @@ namespace HTH.Campaign
 
             var turnSM = gfc.GetTurnSM();
             if (turnSM != null)
-                turnSM.OnTurnEndEntered -= OnTurnEndEntered;
-
-                UnsubscribePlayerActionEvents();
+                turnSM.OnPlayerActionStarted -= OnPlayerActionStarted;
         }
 
         // ── 이벤트 핸들러 ─────────────────────────────────────────────────
 
+        /// <summary>
+        /// Phase2 진입 시 호출됩니다.
+        /// ProgressTracker는 메모리만 초기화합니다 (PlayerPrefs 저장 없음).
+        /// FragmentCollector는 이전 수집 기록을 PlayerPrefs에서 로드합니다.
+        /// </summary>
         private void OnPhase2Entered(string stageId)
         {
-            // 다이얼로그 데이터 스테이지 ID 검증
             if (_dialogueData == null)
             {
-                Debug.LogError("[DialogueTriggerManager] CampaignDialogueSO가 연결되지 않았습니다.");
+                Debug.LogError("[DialogueTriggerManager] CampaignDialogueSO가 연결되지 않았습니다.\n" +
+                               "Inspector의 Dialogue Data 필드에 에셋을 연결해주세요.");
                 return;
             }
 
+            // 출력 기록 리셋 (씬 진입마다 초기화)
             _progressTracker.Initialize(stageId);
-            _fragmentCollector?.Initialize(stageId);
-            _isInitialized = true;
 
+            // 대화 조각 수집 기록 로드 (영구 저장 — 이미 수집한 조각은 유지)
+            _fragmentCollector?.Initialize(stageId);
+
+            _isInitialized = true;
             Debug.Log($"[DialogueTriggerManager] Phase2 활성화 — {stageId}");
         }
+
         /// <summary>
-        /// 턴 종료 시 호출됩니다.
-        /// 모든 구역을 순회하며 캐릭터 조합에 맞는 대사를 트리거합니다.
+        /// 다음 턴 PlayerAction이 시작될 때 호출됩니다.
+        /// 검은 화면 페이드 인이 완전히 끝난 후 발생하므로
+        /// 이전 화면의 클릭이 대사 스킵으로 인식되지 않습니다.
+        ///
+        /// 흐름:
+        ///   TurnEnd(검은 화면) 완료
+        ///   → AdvanceTurn() → 다음 루프 또는 다음 턴
+        ///   → LoopStart → RunningTurn → PlayerAction 진입
+        ///   → OnPlayerActionStarted 이벤트 발생 → 여기서 수신
+        ///   → 캠페인 대사 시작
         /// </summary>
-        private void OnTurnEndEntered(System.Collections.Generic.IReadOnlyList<string> _, bool __)
+        private void OnPlayerActionStarted()
         {
             if (!_isInitialized) return;
             if (!CampaignModeManager.IsPhase2Active) return;
 
+            // 이전 턴의 캐릭터 배치를 기준으로 대사를 트리거합니다.
             TriggerDialoguesForAllZones();
         }
-        /// <summary>
-        /// PlayerActionState.OnActionConfirmed 이벤트 수신 시 호출됩니다.
-        /// (characterId, targetZoneId)
-        /// </summary>
-        private void OnActionConfirmed(int characterId, int targetZoneId)
-        {
-            if (!_isInitialized) return;
-            if (!CampaignModeManager.IsPhase2Active) return;
-            if (_dialoguePlayer != null && _dialoguePlayer.IsPlaying) return;
 
-            OnCharacterMoved(characterId, targetZoneId);
-        }
-
-        // ── 공개 API ─────────────────────────────────────────────────────
-
-        /// <summary>
-        /// 캐릭터 이동 완료 시 호출됩니다.
-        /// 해당 구역의 캐릭터 조합을 판별해 다이얼로그를 트리거합니다.
-        /// </summary>
-        public void OnCharacterMoved(int movedCharacterId, int zoneId)
-        {
-            if (!_isInitialized || !CampaignModeManager.IsPhase2Active) return;
-
-            var characterIds = GetCharactersInZone(zoneId);
-
-            if (characterIds.Count >= 2)
-            {
-                // 2명 이상: 그룹 대사 체크
-                TryTriggerGroupDialogue(characterIds);
-            }
-            else if (characterIds.Count == 1 && _enableSoloDialogue)
-            {
-                // 1명: 단독 대사 체크 (미확정 기능)
-                TryTriggerSoloDialogue(movedCharacterId);
-            }
-        }
-        // ── Private — 전체 구역 순회 ─────────────────────────────────────────
+        // ── Private — 전체 구역 순회 ─────────────────────────────────────
 
         /// <summary>
         /// 활성화된 구역을 0 → 1 → 2 → 3 순서로 순회하며
-        /// 캐릭터 조합에 맞는 대사를 순차 재생합니다.
-        /// Inspector의 _activeZones에서 체크된 구역만 체크합니다.
+        /// 캐릭터 조합에 맞는 대사를 찾아 순차 재생합니다.
         /// </summary>
         private void TriggerDialoguesForAllZones()
         {
-            var pendingEntries = new System.Collections.Generic.List
-                <(GroupDialogueEntry entry, System.Collections.Generic.HashSet<int> ids)>();
+            var pendingEntries = new List<(GroupDialogueEntry entry, HashSet<int> ids)>();
 
-            // 0 → 1 → 2 → 3 순서로 순회
             for (int zoneId = 0; zoneId < GameState.ZoneCount; zoneId++)
             {
-                // Inspector에서 비활성화된 구역은 스킵
                 if (_activeZones == null
                     || zoneId >= _activeZones.Length
                     || !_activeZones[zoneId])
-                {
-                    Debug.Log($"[DialogueTriggerManager] 구역 {zoneId} 비활성화 — 스킵");
                     continue;
-                }
 
                 var characterIds = GetCharactersInZone(zoneId);
                 if (characterIds.Count < 2) continue;
@@ -194,8 +184,7 @@ namespace HTH.Campaign
                 var entry = _dialogueData.FindGroupDialogue(characterIds);
                 if (entry == null) continue;
 
-                if (!_conditionEvaluator.CanPlay(entry, characterIds,
-                                                  _progressTracker, _fragmentCollector))
+                if (!_conditionEvaluator.CanPlay(entry, characterIds, _progressTracker, _fragmentCollector))
                     continue;
 
                 pendingEntries.Add((entry, characterIds));
@@ -208,23 +197,22 @@ namespace HTH.Campaign
 
         /// <summary>
         /// 여러 구역의 대사를 순서대로 재생합니다.
+        /// 한 구역의 대사가 완전히 끝난 후 다음 구역의 대사를 재생합니다.
         /// </summary>
-        private System.Collections.IEnumerator PlaySequential(System.Collections.Generic.List
-                <(GroupDialogueEntry entry, System.Collections.Generic.HashSet<int> ids)> entries)
+        private IEnumerator PlaySequential(List<(GroupDialogueEntry entry, HashSet<int> ids)> entries)
         {
             foreach (var (entry, characterIds) in entries)
             {
                 bool done = false;
                 PlayGroupDialogue(entry, characterIds, onComplete: () => done = true);
-                yield return new UnityEngine.WaitUntil(() => done);
+                yield return new WaitUntil(() => done);
             }
         }
 
         // ── Private — 조우 판별 ───────────────────────────────────────────
 
         /// <summary>
-        /// 구역 내 생존 캐릭터 ID 집합을 수집합니다.
-        /// GameState를 통해 현재 구역의 캐릭터 목록을 가져옵니다.
+        /// 특정 구역 내의 생존 캐릭터 ID 집합을 반환합니다.
         /// </summary>
         private HashSet<int> GetCharactersInZone(int zoneId)
         {
@@ -239,24 +227,15 @@ namespace HTH.Campaign
             return result;
         }
 
-        /// <summary>그룹 대사 트리거를 시도합니다.</summary>
-        private void TryTriggerGroupDialogue(HashSet<int> characterIds)
-        {
-            var entry = _dialogueData.FindGroupDialogue(characterIds);
-            if (entry == null) return;
-
-            if (!_conditionEvaluator.CanPlay(entry, characterIds, _progressTracker, _fragmentCollector))
-                return;
-
-            PlayGroupDialogue(entry, characterIds);
-        }
-
-        /// <summary>단독 대사 트리거를 시도합니다. (미확정 기능)</summary>
+        /// <summary>
+        /// 단독 대사 트리거를 시도합니다. (미확정 기능)
+        /// </summary>
         private void TryTriggerSoloDialogue(int characterId)
         {
             var entry = _dialogueData.FindSoloDialogue(characterId);
             if (entry == null) return;
 
+            // 단독 대사는 SoloDialogueEntry 오버로드를 사용합니다.
             if (!_conditionEvaluator.CanPlay(entry, _progressTracker, _fragmentCollector))
                 return;
 
@@ -265,7 +244,13 @@ namespace HTH.Campaign
 
         // ── Private — 다이얼로그 재생 ─────────────────────────────────────
 
-        private void PlayGroupDialogue(GroupDialogueEntry entry, HashSet<int> characterIds, System.Action onComplete = null)
+        /// <summary>
+        /// 그룹 대사를 재생합니다.
+        /// 완료 후 출력 기록, 조각 수집, 이름 공개를 처리합니다.
+        /// </summary>
+        private void PlayGroupDialogue(GroupDialogueEntry entry,
+                                       HashSet<int> characterIds,
+                                       Action onComplete = null)
         {
             if (_dialoguePlayer == null)
             {
@@ -273,24 +258,24 @@ namespace HTH.Campaign
                 return;
             }
 
-            _dialoguePlayer.Play(
-                entry.Lines,
-                onComplete: () =>
-                {
-                    _progressTracker.MarkGroupPlayed(characterIds);
+            _dialoguePlayer.Play(entry.Lines, onComplete: () =>
+            {
+                // 이번 씬에서 이 조합의 대사가 다시 나오지 않도록 기록합니다.
+                _progressTracker.MarkGroupPlayed(characterIds);
 
-                    // 대화 조각 수집
-                    if (!string.IsNullOrEmpty(entry.FragmentId))
-                        _fragmentCollector?.TryCollectFragment(entry.FragmentId);
+                // 대화 조각 수집 (영구 저장)
+                if (!string.IsNullOrEmpty(entry.FragmentId))
+                    _fragmentCollector?.TryCollectFragment(entry.FragmentId);
 
-                    // 이름 공개 처리
-                    RevealCharacterNamesFromLines(entry.Lines);
+                // 이름 공개
+                RevealCharacterNamesFromLines(entry.Lines);
 
-                    Debug.Log($"[DialogueTriggerManager] 그룹 대사 완료 — {string.Join(",", characterIds)}");
-                    onComplete?.Invoke();
-                });
+                Debug.Log($"[DialogueTriggerManager] 그룹 대사 완료 — {string.Join(",", characterIds)}");
+                onComplete?.Invoke();
+            });
         }
 
+        /// <summary>단독 대사를 재생합니다.</summary>
         private void PlaySoloDialogue(SoloDialogueEntry entry)
         {
             if (_dialoguePlayer == null) return;
@@ -302,23 +287,18 @@ namespace HTH.Campaign
                 if (!string.IsNullOrEmpty(entry.FragmentId))
                     _fragmentCollector?.TryCollectFragment(entry.FragmentId);
 
-                // 이름 공개 처리
                 RevealCharacterNamesFromLines(entry.Lines);
 
                 Debug.Log($"[DialogueTriggerManager] 단독 대사 완료 — ID:{entry.CharacterId}");
             });
         }
 
-        // ── Private — 이벤트 구독 ─────────────────────────────────────────
+        // ── Private — 이름 공개 ───────────────────────────────────────────
 
         /// <summary>
-        /// 대사 줄 목록에서 이름 공개 필드를 확인하고
-        /// CharacterRecordBook에 이름을 등록합니다.
-        /// DialogueLine.RevealCharacterId >= 0이고
-        /// RevealCharacterName이 비어있지 않은 경우에만 동작합니다.
+        /// 대사 줄 목록에서 이름 공개 필드를 확인하고 CharacterRecordBook에 등록합니다.
         /// </summary>
-        private void RevealCharacterNamesFromLines(
-            System.Collections.Generic.List<DialogueLine> lines)
+        private void RevealCharacterNamesFromLines(List<DialogueLine> lines)
         {
             if (lines == null || _characterRecordBook == null) return;
 
@@ -334,54 +314,20 @@ namespace HTH.Campaign
             }
         }
 
-        /// <summary>
-        /// PlayerActionState 이벤트를 구독합니다.
-        /// GameFlowController.Start() 이후에 호출해야 합니다.
-        /// </summary>
-        private void SubscribePlayerActionEvents()
-        {
-            var gfc = GameFlowController.Instance;
-            if (gfc == null) return;
+        // ── 테스트용 (배포 전 제거) ───────────────────────────────────────
 
-            var playerAction = gfc.GetPlayerActionState();
-            if (playerAction == null)
-            {
-                Debug.LogWarning("[DialogueTriggerManager] PlayerActionState를 찾을 수 없습니다.");
-                return;
-            }
-
-            // 중복 구독 방지
-            if (_playerAction == playerAction) return;
-
-            UnsubscribePlayerActionEvents();
-            _playerAction = playerAction;
-            _playerAction.OnActionConfirmed += OnActionConfirmed;
-
-            Debug.Log("[DialogueTriggerManager] PlayerActionState 구독 완료");
-        }
-
-        /// <summary>
-        /// 루프 리셋 시 PlayerActionState 재구독합니다.
-        /// PlayerActionState 인스턴스가 루프마다 유지되므로 실질적 재구독은 최초 1회입니다.
-        /// </summary>
-        private void ResubscribePlayerActionEvents()
-        {
-            SubscribePlayerActionEvents();
-        }
-
-        private void UnsubscribePlayerActionEvents()
-        {
-            if (_playerAction != null)
-            {
-                _playerAction.OnActionConfirmed -= OnActionConfirmed;
-                _playerAction = null;
-            }
-        }
-        // 테스트용 — 배포 전 제거
         [ContextMenu("테스트: Phase2 강제 진입")]
         private void TestEnterPhase2()
         {
             CampaignModeManager.Instance?.OnFirstRunCleared("Stage_1");
+        }
+
+        [ContextMenu("테스트: PlayerPrefs 초기화")]
+        private void TestClearPlayerPrefs()
+        {
+            PlayerPrefs.DeleteAll();
+            PlayerPrefs.Save();
+            Debug.Log("[DialogueTriggerManager] PlayerPrefs 전체 초기화 완료");
         }
     }
 }

@@ -29,3 +29,17 @@ MonoBehaviour:
     Condition:
       RequiredFragmentId: 
       MinLoopCount: 0
+  - ParticipantIds: 0100000003000000
+    Lines:
+    - SpeakerId: 1
+      Text: "\uB108\uB294 \uB204\uAD6C\uC57C?"
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 3
+      Text: "\uB098\uB294 \uD30C\uD53C\uB8E8\uC2A4\uC57C"
+      RevealCharacterId: 2
+      RevealCharacterName: "\uD30C\uD53C\uB8E8\uC2A4"
+    FragmentId: 
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0

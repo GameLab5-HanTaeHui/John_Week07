@@ -1,4 +1,6 @@
-﻿namespace HTH.Campaign
+﻿using UnityEngine;
+
+namespace HTH.Campaign
 {
     /// <summary>
     /// 다이얼로그 출력 조건을 판별합니다.
@@ -26,23 +28,32 @@
         ///   - 필요한 조각이 아직 미수집
         ///   - 루프 횟수 조건 미충족
         /// </summary>
-        public bool CanPlay(GroupDialogueEntry entry,
-                            System.Collections.Generic.HashSet<int> characterIds,
-                            DialogueProgressTracker tracker,
-                            FragmentCollector collector)
+        public bool CanPlay(GroupDialogueEntry entry, System.Collections.Generic.HashSet<int> characterIds, 
+            DialogueProgressTracker tracker, FragmentCollector collector)
         {
             if (entry == null) return false;
 
-            // Phase2 활성 체크
-            if (!CampaignModeManager.IsPhase2Active) return false;
+            if (!CampaignModeManager.IsPhase2Active)
+            {
+                Debug.Log("[CEV] 차단 — Phase2 비활성");
+                return false;
+            }
 
-            // 이미 출력된 조합인지 체크
-            if (tracker != null && tracker.HasPlayedGroup(characterIds)) return false;
+            if (tracker != null && tracker.HasPlayedGroup(characterIds))
+            {
+                Debug.Log("[CEV] 차단 — 이미 출력된 조합");
+                return false;
+            }
 
-            // 조건 데이터 체크
             if (entry.Condition != null && !entry.Condition.IsEmpty)
             {
-                if (!EvaluateCondition(entry.Condition, collector)) return false;
+                if (!EvaluateCondition(entry.Condition, collector))
+                {
+                    Debug.Log($"[CEV] 차단 — 조건 미충족 " +
+                              $"(RequiredFragment={entry.Condition.RequiredFragmentId}, " +
+                              $"MinLoop={entry.Condition.MinLoopCount})");
+                    return false;
+                }
             }
 
             return true;
@@ -59,19 +70,22 @@
         ///   - 필요한 조각이 아직 미수집
         ///   - 루프 횟수 조건 미충족
         /// </summary>
-        public bool CanPlay(SoloDialogueEntry entry,
-                            DialogueProgressTracker tracker,
-                            FragmentCollector collector)
+        public bool CanPlay(SoloDialogueEntry entry, DialogueProgressTracker tracker, FragmentCollector collector)
         {
             if (entry == null) return false;
 
-            // Phase2 활성 체크
             if (!CampaignModeManager.IsPhase2Active) return false;
 
             // 이미 출력된 캐릭터인지 체크
             if (tracker != null && tracker.HasPlayedSolo(entry.CharacterId)) return false;
 
-            // 조건 데이터 체크
+            // 대화 조각이 이미 수집된 경우 스킵
+            if (!string.IsNullOrEmpty(entry.FragmentId)
+                && collector != null
+                && collector.HasFragment(entry.FragmentId))
+                return false;
+
+            // 추가 조건 체크
             if (entry.Condition != null && !entry.Condition.IsEmpty)
             {
                 if (!EvaluateCondition(entry.Condition, collector)) return false;

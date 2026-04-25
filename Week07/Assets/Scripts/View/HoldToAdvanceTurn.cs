@@ -113,9 +113,7 @@ public class HoldToAdvanceTurn : MonoBehaviour
     {
         _triggered = true;
 
-        ConfirmPanel.Instance?.Show(
-            _confirmMessage,
-            onConfirm: () =>
+        ConfirmPanel.Instance?.Show(_confirmMessage, onConfirm: () =>
             {
                 _triggered = false;
                 HideFill();
