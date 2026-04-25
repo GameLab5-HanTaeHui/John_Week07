@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -19,12 +20,15 @@ namespace HTH.Campaign
     ///   → Show(characterId) 호출
     ///   → FragmentCollector.GetFragmentCount(characterId) >= RequiredFragmentCount 확인
     ///   → 조건 충족 시 패널 활성화
+    ///   → 조건 미충족 시 _insufficientFragmentText로 피드백 표시
     ///
     /// ─── 동작 흐름 ───────────────────────────────────────────────────────
     ///   Show(characterId) 호출
-    ///   → 대화 조각 수 체크 (부족하면 열리지 않음)
+    ///   → 대화 조각 수 체크
+    ///       부족 → "대화 조각이 부족합니다. (1/3)" 텍스트 2초 표시 후 자동 숨김
+    ///       충족 → 패널 활성화
     ///   → 캐릭터 정보 표시 (#번호, 이름, 조각 수)
-    ///   → ProfileItemView 프리팹을 4개 동적 생성 (각 프로파일 항목)
+    ///   → ProfileItemView 프리팹을 동적 생성 (각 프로파일 항목)
     ///   → 각 ProfileItemView에 질문과 선택지 버튼 설정
     ///   → 모든 항목이 선택되면 제출 버튼 활성화
     ///   → 제출 버튼 클릭 → 정답 판정
@@ -37,16 +41,18 @@ namespace HTH.Campaign
     ///   Canvas/ProfileInquiryPanel을 Inspector에서 Panel 필드에 연결합니다.
     ///
     /// ─── Inspector 연결 ──────────────────────────────────────────────────
-    ///   Profile Data             → ProfileDataSO 에셋
-    ///   Fragment Collector       → _CampaignSystem/FragmentCollector
-    ///   Character Record Book    → _CampaignSystem/CharacterRecordBook (이름 표시용)
-    ///   Panel                    → Canvas/ProfileInquiryPanel
-    ///   Profile Item Container   → ProfileInquiryPanel 하위 빈 GameObject (항목 목록 부모)
-    ///   Profile Item View Prefab → ProfileItemView.prefab
-    ///   Submit Button            → 제출 Button
-    ///   Close Button             → 닫기 Button
-    ///   Result Panel             → ProfileInquiryPanel 하위 결과 패널 (기본 비활성)
-    ///   Result Close Button      → 결과 패널의 닫기 Button
+    ///   Profile Data               → ProfileDataSO 에셋
+    ///   Fragment Collector         → _CampaignSystem/FragmentCollector
+    ///   Character Record Book      → _CampaignSystem/CharacterRecordBook
+    ///   Panel                      → Canvas/ProfileInquiryPanel
+    ///   Profile Item Container     → ProfileInquiryPanel 하위 빈 GameObject
+    ///   Profile Item View Prefab   → ProfileItemView.prefab
+    ///   Submit Button              → 제출 Button
+    ///   Close Button               → 닫기 Button
+    ///   Result Panel               → 결과 패널 (기본 비활성)
+    ///   Result Close Button        → 결과 패널 닫기 Button
+    ///   Insufficient Fragment Text → 조각 부족 피드백 TMP_Text (기본 비활성)
+    ///   Feedback Duration          → 피드백 표시 시간(초, 기본값 2)
     /// </summary>
     [DisallowMultipleComponent]
     public class ProfileInquiryUI : MonoBehaviour
@@ -82,13 +88,11 @@ namespace HTH.Campaign
 
         [Header("프로파일 항목")]
         [Tooltip("ProfileItemView 프리팹이 생성될 부모 Transform입니다.\n" +
-                 "ProfileInquiryPanel 하위에 빈 GameObject를 만들어 연결합니다.\n" +
                  "Vertical Layout Group 컴포넌트를 추가하면 자동으로 정렬됩니다.")]
         [SerializeField] private Transform _profileItemContainer;
 
         [Tooltip("프로파일 항목 1개의 UI 프리팹입니다.\n" +
-                 "ProfileItemView.prefab을 연결합니다.\n" +
-                 "Show() 호출 시 프로파일 항목 수만큼 동적으로 생성됩니다.")]
+                 "ProfileItemView.prefab을 연결합니다.")]
         [SerializeField] private ProfileItemView _profileItemViewPrefab;
 
         [Header("버튼")]
@@ -120,16 +124,22 @@ namespace HTH.Campaign
         [Tooltip("결과 패널을 닫고 프로파일 추리 패널 전체를 닫습니다.")]
         [SerializeField] private Button _resultCloseButton;
 
+        [Header("조각 부족 피드백")]
+        [Tooltip("대화 조각이 부족할 때 표시할 TMP_Text입니다.\n" +
+                 "ProfileInquiryPanel 하위에 배치하고 기본 비활성화 상태로 둡니다.\n" +
+                 "예: '대화 조각이 부족합니다. (1/3)'\n" +
+                 "패널이 닫힌 상태에서도 표시되므로 Canvas 직속에 배치해도 됩니다.")]
+        [SerializeField] private TMP_Text _insufficientFragmentText;
+
+        [Tooltip("조각 부족 피드백 텍스트가 표시되는 시간(초)입니다.")]
+        [SerializeField] private float _feedbackDuration = 2f;
+
         // ── 내부 상태 ─────────────────────────────────────────────────────
 
-        // 현재 추리 중인 캐릭터의 프로파일 데이터입니다.
         private CharacterProfileData _currentProfile;
-
-        // 현재 추리 중인 캐릭터 ID입니다. FragmentCollector에 보상 해금을 요청할 때 사용됩니다.
         private int _currentCharacterId;
-
-        // 동적으로 생성된 ProfileItemView 목록입니다. 제출 시 각 항목의 선택값을 가져옵니다.
         private List<ProfileItemView> _itemViews = new();
+        private Coroutine _feedbackCoroutine;
 
         /// <summary>현재 패널이 열려있는지 여부입니다.</summary>
         public bool IsOpen { get; private set; }
@@ -138,9 +148,9 @@ namespace HTH.Campaign
 
         private void Awake()
         {
-            // 시작 시 패널을 숨깁니다. Show()에서 활성화됩니다.
             if (_panel != null) _panel.SetActive(false);
             if (_resultPanel != null) _resultPanel.SetActive(false);
+            if (_insufficientFragmentText != null) _insufficientFragmentText.gameObject.SetActive(false);
 
             _submitButton?.onClick.AddListener(OnSubmitClicked);
             _closeButton?.onClick.AddListener(Hide);
@@ -158,9 +168,7 @@ namespace HTH.Campaign
 
         /// <summary>
         /// 특정 캐릭터의 프로파일 추리 패널을 엽니다.
-        /// CharacterRecordBook의 "추리하기" 버튼 또는 ProfileInquiryAllUI에서 호출합니다.
-        ///
-        /// 대화 조각이 RequiredFragmentCount 미만이면 열리지 않습니다.
+        /// 대화 조각이 RequiredFragmentCount 미만이면 피드백 텍스트를 표시하고 열리지 않습니다.
         /// </summary>
         public void Show(int characterId)
         {
@@ -181,10 +189,11 @@ namespace HTH.Campaign
                 ? _fragmentCollector.GetFragmentCount(characterId)
                 : 0;
 
-            // 조각이 부족하면 열지 않습니다.
+            // 조각이 부족하면 피드백을 표시하고 패널을 열지 않습니다.
             if (fragmentCount < profile.RequiredFragmentCount)
             {
                 Debug.Log($"[ProfileInquiryUI] 조각 부족 — {fragmentCount}/{profile.RequiredFragmentCount}");
+                ShowInsufficientFeedback(fragmentCount, profile.RequiredFragmentCount);
                 return;
             }
 
@@ -209,10 +218,7 @@ namespace HTH.Campaign
             ClearProfileItems();
         }
 
-        /// <summary>
-        /// ProfileItemView에서 선택지가 변경됐을 때 호출됩니다.
-        /// 모든 항목이 선택됐는지 체크해 제출 버튼의 활성화 여부를 갱신합니다.
-        /// </summary>
+        /// <summary>ProfileItemView에서 선택지가 변경됐을 때 호출됩니다.</summary>
         public void OnItemSelectionChanged()
         {
             RefreshSubmitButton();
@@ -225,7 +231,6 @@ namespace HTH.Campaign
             if (_characterIdText != null)
                 _characterIdText.text = $"#{characterId}";
 
-            // CharacterRecordBook에서 수집된 이름을 가져옵니다. 없으면 "???"입니다.
             if (_characterNameText != null)
             {
                 string name = _characterRecordBook?.GetCollectedName(characterId);
@@ -236,13 +241,6 @@ namespace HTH.Campaign
                 _fragmentCountText.text = $"대화 조각 {fragmentCount}/{requiredCount}";
         }
 
-        /// <summary>
-        /// 프로파일 항목 뷰를 동적으로 생성합니다.
-        /// _profileItemContainer 하위에 ProfileItemView 프리팹을 항목 수만큼 Instantiate합니다.
-        ///
-        /// 각 항목에 RequiredFragmentId가 설정되어 있고 해당 조각이 미수집이면
-        /// isLocked = true로 설정해 잠금 상태로 표시합니다.
-        /// </summary>
         private void BuildProfileItems(CharacterProfileData profile)
         {
             ClearProfileItems();
@@ -254,7 +252,6 @@ namespace HTH.Campaign
                 var item = profile.ProfileItems[i];
                 if (item == null) continue;
 
-                // 이 항목을 보려면 특정 조각이 필요한지 체크합니다.
                 bool isLocked = !string.IsNullOrEmpty(item.RequiredFragmentId)
                     && (_fragmentCollector == null
                         || !_fragmentCollector.HasFragment(item.RequiredFragmentId));
@@ -274,10 +271,6 @@ namespace HTH.Campaign
             _itemViews.Clear();
         }
 
-        /// <summary>
-        /// 모든 항목(잠금 제외)에 선택이 완료됐는지 체크해 제출 버튼 활성화 여부를 갱신합니다.
-        /// ProfileItemView.OnItemSelectionChanged() → 이 메서드 호출 순서로 동작합니다.
-        /// </summary>
         private void RefreshSubmitButton()
         {
             if (_submitButton == null) return;
@@ -285,7 +278,7 @@ namespace HTH.Campaign
             bool allSelected = true;
             foreach (var view in _itemViews)
             {
-                if (view == null || view.IsLocked) continue; // 잠금 항목은 건너뜀
+                if (view == null || view.IsLocked) continue;
                 if (!view.HasSelection)
                 {
                     allSelected = false;
@@ -301,8 +294,6 @@ namespace HTH.Campaign
         {
             if (_currentProfile == null) return;
 
-            // 각 ProfileItemView에서 선택된 인덱스를 수집합니다.
-            // 잠금 항목은 -1로 처리합니다.
             var answers = new int[_currentProfile.ProfileItems.Count];
             for (int i = 0; i < _itemViews.Count; i++)
             {
@@ -318,11 +309,6 @@ namespace HTH.Campaign
             ShowResult(correctCount, allCorrect);
         }
 
-        /// <summary>
-        /// 정답 판정 결과를 표시합니다.
-        /// 일부 정답(1개 이상): 컨셉 카드 해금
-        /// 전부 정답: 컨셉 카드 + 시점 완결문 해금
-        /// </summary>
         private void ShowResult(int correctCount, bool allCorrect)
         {
             if (_resultPanel == null) return;
@@ -334,7 +320,6 @@ namespace HTH.Campaign
                     ? $"전부 정답! ({correctCount}/{total})\n모든 보상이 해금됩니다."
                     : $"{correctCount}/{total} 정답\n일부 보상이 해금됩니다.";
 
-            // 1개 이상 정답 → 컨셉 카드 표시
             bool conceptCardUnlocked = correctCount > 0;
             if (_conceptCardPanel != null)
             {
@@ -350,7 +335,6 @@ namespace HTH.Campaign
                 }
             }
 
-            // 전부 정답 → 시점 완결문 표시
             if (_epiloguePanel != null)
             {
                 _epiloguePanel.SetActive(allCorrect);
@@ -360,8 +344,6 @@ namespace HTH.Campaign
 
             _resultPanel.SetActive(true);
 
-            // FragmentCollector에 해금 기록을 요청합니다.
-            // 이 기록은 PlayerPrefs와 RewardSaveData에 저장됩니다.
             if (_fragmentCollector != null)
             {
                 if (conceptCardUnlocked)
@@ -375,6 +357,37 @@ namespace HTH.Campaign
         {
             if (_resultPanel != null) _resultPanel.SetActive(false);
             Hide();
+        }
+
+        // ── Private — 조각 부족 피드백 ───────────────────────────────────
+
+        /// <summary>
+        /// 조각 부족 피드백 텍스트를 일정 시간 표시 후 숨깁니다.
+        /// Show()에서 조각 수가 RequiredFragmentCount 미만일 때 호출됩니다.
+        /// 패널이 열리지 않은 상태에서도 텍스트만 표시됩니다.
+        /// </summary>
+        private void ShowInsufficientFeedback(int current, int required)
+        {
+            if (_insufficientFragmentText == null) return;
+
+            if (_feedbackCoroutine != null)
+            {
+                StopCoroutine(_feedbackCoroutine);
+                _feedbackCoroutine = null;
+            }
+
+            _feedbackCoroutine = StartCoroutine(FeedbackCoroutine(current, required));
+        }
+
+        private IEnumerator FeedbackCoroutine(int current, int required)
+        {
+            _insufficientFragmentText.text = $"대화 조각이 부족합니다. ({current}/{required})";
+            _insufficientFragmentText.gameObject.SetActive(true);
+
+            yield return new WaitForSeconds(_feedbackDuration);
+
+            _insufficientFragmentText.gameObject.SetActive(false);
+            _feedbackCoroutine = null;
         }
     }
 }

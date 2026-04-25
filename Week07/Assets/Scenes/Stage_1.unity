@@ -14328,8 +14328,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\uC791\uC131\uD558\uAE30"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 506c185530260ac4f9db85e64d3b5193, type: 2}
-  m_sharedMaterial: {fileID: 5040206823531127963, guid: 506c185530260ac4f9db85e64d3b5193, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 45461fa7f3c562f458fc696e4c6c4008, type: 2}
+  m_sharedMaterial: {fileID: 5040206823531127963, guid: 45461fa7f3c562f458fc696e4c6c4008, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -14359,7 +14359,7 @@ MonoBehaviour:
   m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -16220,8 +16220,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\uB354 \uC0DD\uAC01\uD558\uAE30"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 506c185530260ac4f9db85e64d3b5193, type: 2}
-  m_sharedMaterial: {fileID: 5040206823531127963, guid: 506c185530260ac4f9db85e64d3b5193, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 45461fa7f3c562f458fc696e4c6c4008, type: 2}
+  m_sharedMaterial: {fileID: 5040206823531127963, guid: 45461fa7f3c562f458fc696e4c6c4008, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -16245,13 +16245,13 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 47.7
+  m_fontSize: 44.05
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -20036,8 +20036,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\uC791\uC131\uD558\uAE30"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 506c185530260ac4f9db85e64d3b5193, type: 2}
-  m_sharedMaterial: {fileID: 5040206823531127963, guid: 506c185530260ac4f9db85e64d3b5193, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 45461fa7f3c562f458fc696e4c6c4008, type: 2}
+  m_sharedMaterial: {fileID: 5040206823531127963, guid: 45461fa7f3c562f458fc696e4c6c4008, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -20067,7 +20067,7 @@ MonoBehaviour:
   m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -33007,6 +33007,7 @@ MonoBehaviour:
   _characterImage: {fileID: 1224340404}
   _nameText: {fileID: 610868181}
   _dialogueText: {fileID: 1634299471}
+  _characterRecordBook: {fileID: 230924565}
   _characterSprites:
   - {fileID: 21300000, guid: da951ff8cc869324ca09cf422bfaee91, type: 3}
   - {fileID: 21300000, guid: da951ff8cc869324ca09cf422bfaee91, type: 3}
@@ -33016,10 +33017,12 @@ MonoBehaviour:
   - {fileID: 21300000, guid: fd455a31920dbd14599f71f978299db0, type: 3}
   - {fileID: 21300000, guid: 7275a075e9214a743b7effd72d988284, type: 3}
   - {fileID: 21300000, guid: 7b96f54915c9bcc4c9cfdd2f8a6182c7, type: 3}
-  _isGlitchMode: 0
+  _glitchName: 1
+  _glitchDialogue: 0
   _glitchChars: "\u2588\u2593\u2592\u2591\u2584\u2580?#@&*"
   _clickToAdvance: 1
   _autoAdvanceDelay: 2
+  _clickBlockDuration: 1.5
 --- !u!1 &2084337655 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 107974, guid: 6e323d600295e85498372437c65fc51e, type: 3}

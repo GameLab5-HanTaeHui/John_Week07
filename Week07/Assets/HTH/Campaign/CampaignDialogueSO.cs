@@ -57,47 +57,24 @@ namespace HTH.Campaign
         {
             if (characterIds == null || characterIds.Count < 2) return null;
 
-            Debug.Log($"[CampaignDialogueSO] 검색 시작 — 입력 조합: {{{string.Join(",", characterIds)}}}, " +
-                      $"등록된 GroupDialogue 수: {_groupDialogues.Count}");
-
-            for (int i = 0; i < _groupDialogues.Count; i++)
+            foreach (var entry in _groupDialogues)
             {
-                var entry = _groupDialogues[i];
-                if (entry == null || entry.ParticipantIds == null)
-                {
-                    Debug.Log($"[CampaignDialogueSO] [{i}] null 스킵");
-                    continue;
-                }
-
-                Debug.Log($"[CampaignDialogueSO] [{i}] 비교 — " +
-                          $"등록 조합: {{{string.Join(",", entry.ParticipantIds)}}}, " +
-                          $"입력 수: {characterIds.Count}, 등록 수: {entry.ParticipantIds.Count}");
-
-                if (entry.ParticipantIds.Count != characterIds.Count)
-                {
-                    Debug.Log($"[CampaignDialogueSO] [{i}] 수 불일치 스킵");
-                    continue;
-                }
+                if (entry == null || entry.ParticipantIds == null) continue;
+                if (entry.ParticipantIds.Count != characterIds.Count) continue;
 
                 bool allMatch = true;
                 foreach (int id in entry.ParticipantIds)
                 {
                     if (!characterIds.Contains(id))
                     {
-                        Debug.Log($"[CampaignDialogueSO] [{i}] ID {id} 불일치");
                         allMatch = false;
                         break;
                     }
                 }
 
-                if (allMatch)
-                {
-                    Debug.Log($"[CampaignDialogueSO] [{i}] 매칭 성공");
-                    return entry;
-                }
+                if (allMatch) return entry;
             }
 
-            Debug.Log($"[CampaignDialogueSO] 매칭 실패 — 해당 조합 없음");
             return null;
         }
 

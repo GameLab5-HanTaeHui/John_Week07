@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -37,10 +38,12 @@ namespace HTH.Campaign
     ///   Fragment Collector         → _CampaignSystem/FragmentCollector
     ///   Character Record Book      → _CampaignSystem/CharacterRecordBook
     ///   Panel                      → Canvas/ProfileInquiryAllPanel
-    ///   Character Select Container → ProfileInquiryAllPanel 하위 빈 GameObject (버튼 목록 부모)
+    ///   Character Select Container → ProfileInquiryAllPanel 하위 빈 GameObject
     ///   Select Button Prefab       → CharacterSelectButton.prefab
     ///   Close Button               → 닫기 Button
     ///   Profile Inquiry UI         → _CampaignSystem/ProfileInquiryUI
+    ///   Insufficient Fragment Text → 조각 부족 피드백 TMP_Text (기본 비활성)
+    ///   Feedback Duration          → 피드백 표시 시간(초)
     /// </summary>
     [DisallowMultipleComponent]
     public class ProfileInquiryAllUI : MonoBehaviour
@@ -79,11 +82,22 @@ namespace HTH.Campaign
                  "_CampaignSystem/ProfileInquiryUI를 연결합니다.")]
         [SerializeField] private ProfileInquiryUI _profileInquiryUI;
 
+        [Header("조각 부족 피드백")]
+        [Tooltip("대화 조각이 부족할 때 표시할 TMP_Text입니다.\n" +
+                 "ProfileInquiryAllPanel 하위에 배치하고 기본 비활성화 상태로 둡니다.\n" +
+                 "예: '대화 조각이 부족합니다. (1/3)'")]
+        [SerializeField] private TMP_Text _insufficientFragmentText;
+
+        [Tooltip("조각 부족 피드백 텍스트가 표시되는 시간(초)입니다.")]
+        [SerializeField] private float _feedbackDuration = 2f;
+
         // ── 내부 상태 ─────────────────────────────────────────────────────
 
         // 생성된 캐릭터 선택 버튼 목록입니다.
         // 추리 완료 후 버튼 상태를 갱신할 때 사용됩니다.
         private readonly List<CharacterSelectButton> _selectButtons = new();
+
+        private Coroutine _feedbackCoroutine;
 
         /// <summary>현재 패널이 열려있는지 여부입니다.</summary>
         public bool IsOpen { get; private set; }
@@ -92,14 +106,19 @@ namespace HTH.Campaign
 
         private void Awake()
         {
-            if (_panel != null) _panel.SetActive(false);
+            if (_panel != null)
+                _panel.SetActive(false);
+
+            if (_insufficientFragmentText != null)
+                _insufficientFragmentText.gameObject.SetActive(false);
+
             _closeButton?.onClick.AddListener(Hide);
         }
 
         private void Start()
         {
-            // 컨셉 카드 해금 이벤트를 구독합니다.
-            // 추리 완료 → FragmentCollector.UnlockConceptCard() → 이벤트 발생 → 버튼 갱신 순서
+            // 컨셉 카드 해금 이벤트 구독
+            // 추리 완료 → FragmentCollector.UnlockConceptCard() → 이벤트 발생 → 버튼 갱신
             if (_fragmentCollector != null)
                 _fragmentCollector.OnConceptCardUnlockable += OnConceptCardUnlocked;
         }
@@ -117,9 +136,7 @@ namespace HTH.Campaign
         /// <summary>
         /// 인물 추리 전체 UI를 엽니다.
         /// HoldToEnterFinalDecision에서 Phase2 확인 클릭 시 호출합니다.
-        ///
         /// Show() 호출 시마다 버튼을 새로 생성합니다.
-        /// (수집 현황이 달라졌을 수 있으므로 항상 최신 상태로 갱신)
         /// </summary>
         public void Show()
         {
@@ -159,15 +176,30 @@ namespace HTH.Campaign
             }
         }
 
+        /// <summary>
+        /// 조각 부족 피드백을 표시합니다.
+        /// ProfileInquiryUI.Show()에서 조각 부족 시 호출됩니다.
+        /// </summary>
+        public void ShowInsufficientFeedback(int current, int required)
+        {
+            if (_insufficientFragmentText == null) return;
+
+            if (_feedbackCoroutine != null)
+            {
+                StopCoroutine(_feedbackCoroutine);
+                _feedbackCoroutine = null;
+            }
+
+            _feedbackCoroutine = StartCoroutine(FeedbackCoroutine(current, required));
+        }
+
         // ── Private ──────────────────────────────────────────────────────
 
         /// <summary>
         /// 기존 버튼을 제거하고 ProfileDataSO의 캐릭터 목록 기준으로 버튼을 새로 생성합니다.
-        /// 각 버튼에 조각 수, 잠금 여부, 완료 여부, 이름을 표시합니다.
         /// </summary>
         private void BuildCharacterButtons()
         {
-            // 기존 버튼 제거
             foreach (var btn in _selectButtons)
                 if (btn != null) Destroy(btn.gameObject);
             _selectButtons.Clear();
@@ -192,7 +224,6 @@ namespace HTH.Campaign
                     profile.RequiredFragmentCount,
                     isUnlocked,
                     isCompleted,
-                    // charId를 클로저로 캡처해 각 버튼이 올바른 ID로 Show()를 호출하도록 합니다.
                     onClicked: () => OnCharacterSelected(charId));
 
                 _selectButtons.Add(btn);
@@ -214,6 +245,17 @@ namespace HTH.Campaign
         private void OnConceptCardUnlocked(int characterId)
         {
             RefreshCharacterButton(characterId);
+        }
+
+        private IEnumerator FeedbackCoroutine(int current, int required)
+        {
+            _insufficientFragmentText.text = $"대화 조각이 부족합니다. ({current}/{required})";
+            _insufficientFragmentText.gameObject.SetActive(true);
+
+            yield return new WaitForSeconds(_feedbackDuration);
+
+            _insufficientFragmentText.gameObject.SetActive(false);
+            _feedbackCoroutine = null;
         }
     }
 }

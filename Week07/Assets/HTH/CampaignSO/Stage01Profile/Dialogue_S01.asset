@@ -13,33 +13,4275 @@ MonoBehaviour:
   m_Name: Dialogue_S01
   m_EditorClassIdentifier: Assembly-CSharp::HTH.Campaign.CampaignDialogueSO
   _stageId: Stage_1_Phase2
-  _soloDialogues: []
+  _soloDialogues:
+  - CharacterId: 1
+    Lines:
+    - SpeakerId: 1
+      Text: "\uC0AC\uB78C\uB4E4\uC774 \uC11C\uB85C\uB97C \uBBFF\uB294 \uD45C\uC815\uC744
+        \uC9C0\uC744 \uB54C\uB9C8\uB2E4, \uB098\uB294 \uADF8 \uD2C8\uC774 \uC5B4\uB514\uC11C\uBD80\uD130
+        \uBC8C\uC5B4\uC9C8\uC9C0 \uBA3C\uC800 \uBCF4\uAC8C \uB41C\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 1
+      Text: "\uB2E4\uC815\uD55C \uB9D0\uC740 \uBC30\uC6E0\uB2E4. \uD558\uC9C0\uB9CC
+        \uB2E4\uC815\uD55C \uC0AC\uB78C\uC774 \uB418\uB294 \uBC95\uC740 \uB05D\uB0B4
+        \uBC30\uC6B0\uC9C0 \uBABB\uD588\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 1
+      Text: "\uBAA8\uB450\uC5D0\uAC8C \uBD04\uC774 \uC628\uB2E4\uBA74, \uB098\uB294
+        \uC65C \uB298 \uBB38\uBC16\uC5D0\uC11C \uADF8 \uC628\uB3C4\uB9CC \uD6D4\uCCD0\uBD10\uC57C
+        \uD558\uB294 \uAC78\uAE4C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 1
+      Text: "\uB2E4\uB4E4 \uC11C\uB85C\uC758 \uC774\uB984\uC744 \uB108\uBB34 \uC27D\uAC8C
+        \uBD80\uB978\uB2E4. \uBD80\uB974\uBA74 \uB3CC\uC544\uC624\uB294 \uAC8C \uB2F9\uC5F0\uD55C
+        \uAC83\uCC98\uB7FC."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 1
+      Text: "\uB098\uB294 \uC5B8\uC81C\uB098 \uADF8 \uBD04\uC758 \uBC14\uAE65\uC5D0
+        \uC788\uC5C8\uB2E4. \uADF8\uB7F0\uB370\uB3C4, \uC190\uC744 \uBED7\uACE0 \uC2F6\uC5C8\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 1
+      Text: "\uBD80\uC218\uACE0 \uC2F6\uC740 \uAC74 \uADF8\uB4E4\uC774 \uC544\uB2C8\uB77C\u2026
+        \uADF8 \uC548\uC5D0 \uB4E4\uC5B4\uAC08 \uC218 \uC5C6\uB294 \uB098 \uC790\uC2E0\uC77C\uC9C0\uB3C4
+        \uBAA8\uB978\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_solo_char1_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - CharacterId: 2
+    Lines:
+    - SpeakerId: 2
+      Text: "\uC5EC\uAE30\uC11C \uBA48\uCD94\uBA74 \uC9C0\uAE08\uAE4C\uC9C0 \uBC84\uD168
+        \uC628 \uC2DC\uAC04\uB9C8\uC800 \uD750\uB824\uC9C8 \uAC83 \uAC19\uC544."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 2
+      Text: "\uB3D9\uB8CC\uB97C \uC544\uB07C\uC9C0 \uC54A\uB294 \uAC8C \uC544\uB2C8\uB2E4.
+        \uB2E4\uB9CC \uC544\uC9C1 \uB05D\uB098\uC9C0 \uC54A\uC740 \uC804\uC7C1 \uC55E\uC5D0\uC11C
+        \uC26C\uC5B4 \uAC00\uC790\uB294 \uB9D0\uC774 \uB450\uB824\uC6B8 \uBFD0\uC774\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 2
+      Text: "\uC5B8\uC820\uAC00\uB294 \uC81C\uB300\uB85C \uB05D\uB9FA\uC5B4\uC57C
+        \uD574. \uADF8\uB798\uC57C \uC783\uC5B4\uBC84\uB9B0 \uAC83\uB4E4\uB3C4 \uADF8\uB0E5
+        \uC9C0\uB098\uAC04 \uC77C\uC774 \uC544\uB2C8\uAC8C \uB420 \uD14C\uB2C8\uAE4C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 2
+      Text: "\uC5EC\uAE30\uC11C \uBA48\uCD94\uBA74 \uC9C0\uAE08\uAE4C\uC9C0 \uC783\uC5B4\uC628
+        \uBAA8\uB4E0 \uAC83\uC774 \uC544\uBB34 \uC758\uBBF8 \uC5C6\uC5B4\uC9C4\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 2
+      Text: "\uB098\uB294 \uB05D\uAE4C\uC9C0 \uAC00\uC57C \uD55C\uB2E4\uACE0 \uC0DD\uAC01\uD574.
+        \uADF8\uB798\uC57C \uC5EC\uAE30\uAE4C\uC9C0 \uC628 \uC2DC\uAC04\uC774 \uBB34\uB108\uC9C0\uC9C0
+        \uC54A\uC744 \uAC83 \uAC19\uC544\uC11C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 2
+      Text: "\uB3D9\uB8CC\uB4E4\uC744 \uC544\uB080\uB2E4. \uADF8\uB798\uC11C \uB354\uB354\uC6B1
+        \uD568\uAED8 \uAC00\uC57C \uD55C\uB2E4\uACE0 \uBBFF\uB294\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_solo_char2_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - CharacterId: 3
+    Lines:
+    - SpeakerId: 3
+      Text: "\uB8E8\uC774\uC2A4\uAC00 \uC228\uC744 \uACE0\uB974\uB294 \uC18C\uB9AC\uB9CC
+        \uB4E4\uB9AC\uBA74, \uC138\uC0C1\uC758 \uC18C\uB780\uC740 \uC7A0\uC2DC \uBA40\uC5B4\uC9C4\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 3
+      Text: "\uBAA8\uB450\uB97C \uC704\uD55C \uC77C\uC774\uB77C\uB294 \uB9D0\uC740
+        \uC790\uC8FC \uB4E4\uC5C8\uC9C0\uB9CC, \uADF8 \uB9D0\uC774 \uAC00\uAE4C\uC6B4
+        \uC0AC\uB78C \uD558\uB098\uB3C4 \uC9C0\uCF1C \uC8FC\uC9C0 \uBABB\uD55C\uB2E4\uBA74
+        \uC27D\uAC8C \uBBFF\uAE30 \uC5B4\uB835\uC2B5\uB2C8\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 3
+      Text: "\uC774 \uB9C8\uC74C\uC774 \uC8C4\uB77C\uBA74, \uB098\uB294 \uAE30\uAEBC\uC774
+        \uADF8 \uC8C4\uB97C \uAE30\uB3C4\uCC98\uB7FC \uD488\uACE0 \uAC00\uACA0\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 3
+      Text: "\uB8E8\uC774\uC2A4\uAC00 \uC6C3\uC9C0 \uC54A\uB294 \uB0A0\uC740, \uC138\uC0C1\uC774
+        \uC870\uAE08\uC529 \uBB34\uB108\uC9C0\uB294 \uAC83\uCC98\uB7FC \uB290\uAEF4\uC9C4\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 3
+      Text: "\uB0B4 \uAE30\uB3C4\uAC00 \uC2E0\uC5D0\uAC8C \uB2FF\uC9C0 \uC54A\uB294\uB2E4\uBA74,
+        \uB0B4\uAC00 \uC9C1\uC811 \uC9C0\uD0A4\uBA74 \uB41C\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 3
+      Text: "\uADF8\uB97C \uC704\uD5D8\uD558\uAC8C \uB9CC\uB4DC\uB294 \uBAA8\uB4E0
+        \uAC83\uC5D0\uC11C \uBA40\uB9AC \uB5BC\uC5B4\uB193\uACE0 \uC2F6\uB2E4. \uC774\uAC83\uC774
+        \uC0AC\uB791\uC774 \uC544\uB2C8\uBA74 \uBB34\uC5C7\uC778\uAC00."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_solo_char3_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - CharacterId: 4
+    Lines:
+    - SpeakerId: 4
+      Text: "\uC544\uBB34 \uC77C\uB3C4 \uC77C\uC5B4\uB098\uC9C0 \uC54A\uB294 \uC2DC\uAC04\uC774
+        \uD544\uC694\uD558\uB2E4. \uBB34\uC5B8\uAC00\uB97C \uBC14\uB77C\uB294 \uC77C\uC870\uCC28
+        \uC774\uC81C\uB294 \uB108\uBB34 \uBB34\uAC81\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 4
+      Text: "\uB2E4 \uC54C\uACE0 \uC788\uB2E4. \uB0B4\uAC00 \uCE68\uBB35\uD558\uB294
+        \uB3D9\uC548 \uB204\uAD70\uAC00\uB294 \uB354 \uAE4A\uC774 \uB2E4\uCE5C\uB2E4\uB294
+        \uAC83\uB3C4, \uADF8\uB798\uB3C4 \uB098\uB294 \uC6C0\uC9C1\uC774\uC9C0 \uBABB\uD55C\uB2E4\uB294
+        \uAC83\uB3C4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 4
+      Text: "\uB204\uAD70\uAC00 \uB0B4 \uBAAB\uC758 \uD604\uC2E4\uAE4C\uC9C0 \uAC00\uB824
+        \uC900\uB2E4\uBA74, \uC7A0\uAE50\uCBE4\uC740 \uADF8 \uADF8\uB298 \uC544\uB798
+        \uC788\uACE0 \uC2F6\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 4
+      Text: "\uC544\uBB34 \uC77C\uB3C4 \uC548 \uC77C\uC5B4\uB0AC\uC73C\uBA74 \uC88B\uACA0\uB2E4.
+        \uC544\uBB34\uB3C4 \uBB3B\uC9C0 \uC54A\uACE0, \uC544\uBB34\uB3C4 \uC7AC\uCD09\uD558\uC9C0
+        \uC54A\uB294 \uACF3\uC5D0\uC11C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 4
+      Text: "\uB370\uC6B0\uC2A4\uAC00 \uB0B4 \uC606\uC5D0 \uC788\uC73C\uBA74 \uC228\uC740
+        \uC26C\uC5B4\uC9C4\uB2E4. \uADF8\uAC8C \uC633\uC740\uC9C0\uB294\u2026 \uBAA8\uB974\uACA0\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 4
+      Text: "\uB098\uB294 \uC774\uBBF8 \uB9CE\uC774 \uC9C0\uCCE4\uB2E4. \uB354 \uB098\uC544\uAC00\uC790\uB294
+        \uB9D0\uC774 \uAC00\uB054\uC740 \uB108\uBB34 \uBA40\uAC8C \uB4E4\uB824."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_solo_char4_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - CharacterId: 5
+    Lines:
+    - SpeakerId: 5
+      Text: "\uC0AC\uB78C\uC740 \uC808\uB9DD\uD560 \uB54C \uAC00\uC7A5 \uC194\uC9C1\uD55C
+        \uD5A5\uC744 \uB0B8\uB2E4. \uC5B5\uC9C0\uB85C \uC228\uAE34 \uAC10\uC815\uC77C\uC218\uB85D
+        \uB4B7\uB9DB\uC774 \uAE4A\uC9C0."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 5
+      Text: "\uB05D\uC740 \uB298 \uC9E7\uC9C0. \uC624\uB798 \uB0A8\uB294 \uAC74 \uADF8
+        \uB4A4\uC5D0 \uB0A8\uC740 \uACF5\uAE30\uC640 \uC0AC\uB78C\uB4E4\uC758 \uC5BC\uAD74\uC774\uB354\uB77C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 5
+      Text: "\uC774 \uC6A9\uBCD1\uB2E8\uC740 \uC544\uC9C1 \uB35C \uC775\uC5C8\uC5B4.
+        \uC870\uAE08\uB9CC \uB354 \uC11C\uB85C\uB97C \uBBFF\uACE0, \uC870\uAE08\uB9CC
+        \uB354 \uC11C\uB85C\uB97C \uC758\uC2EC\uD558\uBA74 \uC644\uC131\uB420 \uAC70\uC57C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 5
+      Text: "\uB2E4\uB4E4 \uC6C3\uC744 \uB54C\uB791 \uC870\uC6A9\uD560 \uB54C \uB0C4\uC0C8\uAC00
+        \uB2EC\uB77C. \uC774\uC0C1\uD558\uC9C0? \uD1A0\uB2C8\uB9CC \uADF8\uB807\uAC8C
+        \uB290\uB07C\uB098?"
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 5
+      Text: "\uC544\uC9C1\uC740 \uC544\uB2C8\uC57C. \uC870\uAE08 \uB354 \uAE30\uB2E4\uB9AC\uBA74,
+        \uD6E8\uC52C \uC9C4\uD574\uC9C8 \uAC83 \uAC19\uC544."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 5
+      Text: "\uAC89\uC740 \uB2EC\uCF64\uD574\uC57C \uD574. \uADF8\uB798\uC57C \uC544\uBB34\uB3C4
+        \uC548 \uB180\uB77C\uB2C8\uAE4C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_solo_char5_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - CharacterId: 6
+    Lines:
+    - SpeakerId: 6
+      Text: "\uB204\uAD70\uAC00 \uC55E\uC5D0 \uC11C\uC57C \uD55C\uB2E4\uBA74, \uB098\uB294
+        \uC790\uAFB8 \uADF8\uAC8C \uB0B4 \uBAAB\uC774\uB77C\uACE0 \uC0DD\uAC01\uD558\uAC8C
+        \uB41C\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 6
+      Text: "\uB0B4\uAC00 \uBA3C\uC800 \uC815\uD558\uBA74 \uBAA8\uB450\uAC00 \uB35C
+        \uB2E4\uCE60 \uAC70\uB77C \uBBFF\uC5C8\uB2E4. \uADF8\uAC8C \uB9DE\uB294\uC9C0\uB294
+        \uC544\uC9C1\uB3C4 \uC798 \uBAA8\uB974\uACA0\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 6
+      Text: "\uC88B\uC740 \uC758\uB3C4\uB77C\uB294 \uB9D0 \uC544\uB798\uC5D0\uC11C\uB3C4,
+        \uB204\uAD70\uAC00\uC758 \uBAAB\uC740 \uC27D\uAC8C \uAC00\uB824\uC9C8 \uC218
+        \uC788\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 6
+      Text: "\uB204\uAD70\uAC00 \uC55E\uC5D0 \uC11C\uC57C \uD55C\uB2E4\uBA74, \uADF8\uAC74
+        \uB098\uC5EC\uC57C \uD55C\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 6
+      Text: "\uB0B4\uAC00 \uB300\uC2E0\uD558\uBA74 \uB41C\uB2E4. \uADF8\uAC8C \uAC00\uC7A5
+        \uBE60\uB974\uACE0, \uAC00\uC7A5 \uB35C \uC544\uD508 \uAE38\uC774\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 6
+      Text: "\uD558\uC9C0\uB9CC \uAC00\uB054 \uC0DD\uAC01\uD55C\uB2E4. \uB0B4\uAC00
+        \uB300\uC2E0\uD558\uB294 \uAC83\uC774 \uC815\uB9D0 \uADF8\uB4E4\uC744 \uC0B4\uB9AC\uB294
+        \uC77C\uC778\uC9C0."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_solo_char6_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - CharacterId: 7
+    Lines:
+    - SpeakerId: 7
+      Text: "\uBA3C\uC800 \uC6C0\uC9C1\uC778 \uC0AC\uB78C\uC740 \uC0B0\uB2E4. \uB4A4\uC5D0
+        \uB0A8\uC740 \uC0AC\uB78C\uC740 \uAE30\uC5B5\uC774 \uB41C\uB2E4. \uB098\uB294
+        \uADF8 \uAE30\uC5B5\uB4E4\uC744 \uB108\uBB34 \uB9CE\uC774 \uB370\uB9AC\uACE0
+        \uC654\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uD070 \uB9D0\uC774 \uB098\uC62C\uC218\uB85D, \uC815\uC791 \uC791\uACE0
+        \uAD6C\uCCB4\uC801\uC778 \uC774\uB984\uB4E4\uC740 \uB354 \uC27D\uAC8C \uD750\uB824\uC9C4\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uB098\uB294 \uD654\uAC00 \uB09C \uAC8C \uC544\uB2C8\uB2E4. \uB2E4\uB9CC
+        \uB610 \uB204\uAD70\uAC00\uB97C \uB0A8\uACA8 \uB450\uACE0 \uAC00\uB294 \uBC1C\uAC78\uC74C\uC744
+        \uACAC\uB51C \uC218 \uC5C6\uC744 \uBFD0\uC774\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uC88B\uC740 \uC774\uB984\uC740 \uB298 \uC77C\uC774 \uB05D\uB09C \uB4A4\uC5D0
+        \uBD99\uB294\uB2E4. \uADF8 \uC804\uAE4C\uC9C0 \uC0AC\uB77C\uC9C0\uB294 \uAC74
+        \uC798 \uBCF4\uC774\uC9C0\uB3C4 \uC54A\uACE0."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uBA3C\uC800 \uC6C0\uC9C1\uC5EC\uC57C \uC0B0\uB2E4. \uD558\uC9C0\uB9CC
+        \uBA3C\uC800 \uC6C0\uC9C1\uC774\uBA74, \uB204\uAD70\uAC00\uB294 \uB4A4\uC5D0
+        \uB0A8\uB294\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uBA54\uC774\uB294 \uB05D\uC744 \uBCF8\uB2E4. \uB098\uB294 \uADF8 \uB05D\uAE4C\uC9C0
+        \uAC00\uB294 \uAE38\uC5D0 \uB5A8\uC5B4\uC9C0\uB294 \uC0AC\uB78C\uB4E4\uC744
+        \uBCF8\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_solo_char7_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
   _groupDialogues:
   - ParticipantIds: 0100000002000000
     Lines:
     - SpeakerId: 1
-      Text: "\uB108\uB294 \uB204\uAD6C\uC57C?"
+      Text: "\uB124\uAC00 \uB05D\uC744 \uBCF4\uB824\uB294 \uAC74 \uC54C\uACA0\uC5B4.
+        \uB2E4\uB9CC \uBAA8\uB450\uAC00 \uAC19\uC740 \uC18D\uB3C4\uB85C \uAC77\uB294
+        \uAC74 \uC544\uB2C8\uC57C."
       RevealCharacterId: -1
       RevealCharacterName: 
     - SpeakerId: 2
-      Text: "\uB098\uB294 \uC0CC\uC988\uC57C"
-      RevealCharacterId: 2
-      RevealCharacterName: "\uC0CC\uC988"
-    FragmentId: 
+      Text: "\uC5D4\uBE44, \uB10C \uB298 \uB9D0\uBCF4\uB2E4 \uB9CE\uC774 \uBCF4\uACE0
+        \uC788\uC9C0. \uADF8\uB807\uB2E4\uBA74 \uB0B4\uAC00 \uC65C \uBA48\uCD9C \uC218
+        \uC5C6\uB294\uC9C0\uB3C4 \uC54C \uAC70\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 2
+      Text: "\uC774\uB300\uB85C \uAC00\uB2E4\uAC04 \uB2A6\uB294\uB2E4. \uBAA8\uB450\uAC00
+        \uB108\uBB34 \uB290\uB824."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 1
+      Text: "\uC9C0\uCE5C \uAC70\uACA0\uC8E0. \uC624\uB798 \uBC84\uD2F0\uB824\uBA74
+        \uAC00\uB054\uC740 \uBA48\uCDB0\uC57C \uD558\uB2C8\uAE4C\uC694."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 2
+      Text: "\uC9C0\uAE08\uC740 \uBA48\uCD9C \uC218 \uC5C6\uC5B4. \uC544\uC9C1 \uD574\uC57C
+        \uD560 \uC77C\uC774 \uB0A8\uC544 \uC788\uC5B4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 1
+      Text: "\uADF8\uB798\uB3C4\u2026 \uB2E4\uB4E4 \uBA54\uC774\uB9CC\uD07C \uC55E\uC73C\uB85C
+        \uBCFC \uC218 \uC788\uB294 \uAC74 \uC544\uB2C8\uB2C8\uAE4C\uC694."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_1_2_frag0
     Condition:
       RequiredFragmentId: 
       MinLoopCount: 0
   - ParticipantIds: 0100000003000000
     Lines:
     - SpeakerId: 1
-      Text: "\uB108\uB294 \uB204\uAD6C\uC57C?"
+      Text: "\uB370\uC6B0\uC2A4, \uC9C0\uD0A4\uACE0 \uC2F6\uC740 \uB9C8\uC74C\uC774
+        \uD074\uC218\uB85D \uB354 \uB9CE\uC740 \uAC78 \uAC00\uB9AC\uAC8C \uB418\uB354\uB77C."
       RevealCharacterId: -1
       RevealCharacterName: 
     - SpeakerId: 3
-      Text: "\uB098\uB294 \uD30C\uD53C\uB8E8\uC2A4\uC57C"
-      RevealCharacterId: 2
-      RevealCharacterName: "\uD30C\uD53C\uB8E8\uC2A4"
-    FragmentId: 
+      Text: "\uC911\uC7AC\uB294 \uACE0\uB9D9\uC2B5\uB2C8\uB2E4\uB9CC, \uC81C \uC6B0\uC120\uC21C\uC704\uB294
+        \uBD84\uBA85\uD569\uB2C8\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 1
+      Text: "\uB8E8\uC774\uC2A4\uB97C \uB9CE\uC774 \uAC71\uC815\uD558\uC2DC\uB294\uAD70\uC694."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 3
+      Text: "\uAC71\uC815\uC774 \uC544\uB2D9\uB2C8\uB2E4. \uB2F9\uC5F0\uD55C \uCC45\uC784\uC785\uB2C8\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 1
+      Text: "\uCC45\uC784\uC774\uB77C\u2026 \uC0AC\uB791\uACFC\uB294 \uB2E4\uB978
+        \uB9D0\uCC98\uB7FC \uB4E4\uB9AC\uB124\uC694."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 3
+      Text: "\uB9D0\uC758 \uC774\uB984\uC774 \uBB34\uC5C7\uC774\uB4E0, \uC81C\uAC00
+        \uC9C0\uCF1C\uC57C \uD55C\uB2E4\uB294 \uC0AC\uC2E4\uC740 \uBCC0\uD558\uC9C0
+        \uC54A\uC2B5\uB2C8\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_1_3_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 0100000004000000
+    Lines:
+    - SpeakerId: 1
+      Text: "\uC870\uC6A9\uD788 \uC788\uACE0 \uC2F6\uB2E4\uB294 \uB9C8\uC74C, \uC774\uD574\uD574.
+        \uD558\uC9C0\uB9CC \uCE68\uBB35\uC774 \uB298 \uC548\uC804\uD55C \uAC74 \uC544\uB2C8\uC57C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 4
+      Text: "\uB10C \uBB3B\uB294 \uBC29\uC2DD\uC774 \uBD80\uB4DC\uB7EC\uC6CC\uC11C
+        \uB300\uB2F5 \uC548 \uD574\uB3C4 \uB418\uB294 \uAE30\uBD84\uC774 \uB4E4\uC5B4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 4
+      Text: "\uB108\uB294\u2026 \uC7AC\uCD09 \uC548 \uD574\uC11C \uC88B\uC544."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 1
+      Text: "\uC800\uB3C4 \uB204\uAD70\uAC00\uB97C \uC7AC\uCD09\uD560 \uC790\uACA9\uC740
+        \uC5C6\uC73C\uB2C8\uAE4C\uC694."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 4
+      Text: "\uADF8 \uB9D0, \uC870\uAE08 \uC774\uC0C1\uD558\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 1
+      Text: "\uADF8\uB0E5\u2026 \uC624\uB798 \uBA48\uCDB0 \uC788\uB358 \uC0AC\uB78C\uC740
+        \uC6C0\uC9C1\uC774\uB294 \uBC95\uC744 \uC798 \uBAA8\uB978\uB2E4\uB294 \uB73B\uC774\uC5D0\uC694."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_1_4_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 0100000005000000
+    Lines:
+    - SpeakerId: 1
+      Text: "\uB124\uAC00 \uD5A5\uC744 \uB9D0\uD560 \uB54C\uB9C8\uB2E4, \uB204\uAD70\uAC00\uB294
+        \uC774\uBBF8 \uB3C4\uB9C8 \uC704\uC5D0 \uC624\uB978 \uAE30\uBD84\uC774 \uB4E4\uC5B4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 5
+      Text: "\uC5D4\uBE44\uB294 \uC7AC\uBBF8\uC788\uC5B4. \uC6C3\uACE0 \uC788\uB294\uB370\uB3C4
+        \uB208\uC740 \uB298 \uB2E4\uB978 \uB9DB\uC744 \uC7AC\uACE0 \uC788\uAC70\uB4E0."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 5
+      Text: "\uC5D4\uBE44\uB294 \uC0AC\uB78C\uB4E4 \uD45C\uC815 \uC798 \uBCF4\uC9C0?
+        \uD1A0\uB2C8\uB3C4 \uC880 \uC54C\uC544."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 1
+      Text: "\uADF8\uAC74 \uC88B\uC740 \uBC84\uB987\uB9CC\uC740 \uC544\uB2C8\uC5D0\uC694."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 5
+      Text: "\uC751! \uC54C\uC544\uB3C4 \uBAA8\uB974\uB294 \uCC99\uD558\uBA74 \uB418\uC796\uC544?"
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 1
+      Text: "\u2026\uD1A0\uB2C8\uB294 \uAC00\uB054 \uB108\uBB34 \uC815\uD655\uD55C
+        \uB9D0\uC744 \uD558\uB124\uC694."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_1_5_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 0100000006000000
+    Lines:
+    - SpeakerId: 1
+      Text: "\uD504\uB9AC\uB4DC, \uB2E4 \uB124 \uBAAB\uC73C\uB85C \uB9CC\uB4E4\uBA74
+        \uC544\uBB34\uB3C4 \uC81C\uB300\uB85C \uC11C\uC9C0 \uBABB\uD574."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 6
+      Text: "\uB108\uBB34 \uC624\uB798 \uB0A8\uC758 \uB9C8\uC74C\uC744 \uC77D\uC73C\uBA74
+        \uC815\uC791 \uC790\uAE30 \uBC1C\uBC11\uC744 \uB193\uCE5C\uB2E4. \uB124\uAC00
+        \uBB34\uB108\uC9C0\uB294 \uAC83\uB9CC\uC740 \uB0B4\uAC00 \uB9C9\uACA0\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 6
+      Text: "\uB0B4\uAC00 \uB9E1\uC73C\uBA74 \uB41C\uB2E4. \uADF8\uAC8C \uAC00\uC7A5
+        \uC548\uC815\uC801\uC774\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 1
+      Text: "\uC815\uB9D0 \uBAA8\uB450\uAC00 \uADF8\uAC78 \uC6D0\uD55C\uB2E4\uACE0
+        \uC0DD\uAC01\uD558\uC138\uC694?"
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 6
+      Text: "\uC6D0\uD558\uC9C0 \uC54A\uC544\uB3C4 \uD544\uC694\uD558\uB2E4\uBA74
+        \uD574\uC57C \uD55C\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 1
+      Text: "\uADF8 \uB9D0\uC740\u2026 \uB9C8\uCE58 \uBA85\uB839\uCC98\uB7FC \uB4E4\uB9AC\uB124\uC694."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_1_6_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 0100000007000000
+    Lines:
+    - SpeakerId: 1
+      Text: "\uB124 \uC9C8\uBB38\uC740 \uAC70\uC2AC\uB9AC\uC9C0\uB9CC \uAF2D \uD544\uC694\uD55C
+        \uB9D0\uC774\uAE30\uB3C4 \uD574."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uB124\uAC00 \uC870\uC6A9\uD560\uC218\uB85D \uB354 \uC758\uC2EC\uC2A4\uB7EC\uC6CC.
+        \uC544\uBB34\uB3C4 \uADF8\uB807\uAC8C \uC624\uB798 \uC911\uAC04\uC5D0\uB9CC
+        \uC11C \uC788\uC9C4 \uBABB\uD574."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uB10C \uB108\uBB34 \uB9E4\uB044\uB7EC\uC6CC. \uB2E4\uB4E4 \uB110 \uD3B8\uD558\uAC8C
+        \uC5EC\uAE30\uB294\uB370, \uC774\uC0C1\uD558\uAC8C \uB124 \uD754\uC801\uC740
+        \uC5C6\uC5B4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 1
+      Text: "\uADF8\uB807\uAC8C \uBCF4\uC600\uB098\uC694?"
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uBCF4\uC600\uB0D0\uACE0 \uBB3B\uB294 \uC0AC\uB78C\uC740 \uB300\uAC1C
+        \uC54C\uACE0 \uC788\uC5B4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 1
+      Text: "\u2026\uC0C8\uD134\uC740 \uB298 \uC544\uD508 \uACF3\uC744 \uBA3C\uC800
+        \uBCF4\uB124\uC694."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_1_7_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 0200000003000000
+    Lines:
+    - SpeakerId: 2
+      Text: "\uD55C\uCABD\uB9CC \uBCF4\uACE0 \uC788\uC744 \uC5EC\uC720\uB294 \uC5C6\uB2E4.
+        \uBAA8\uB450\uB97C \uC0DD\uAC01\uD55C\uB2E4\uBA74 \uB354 \uC11C\uB458\uB7EC\uC57C
+        \uD574."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 3
+      Text: "\uB05D\uC744 \uC11C\uB450\uB97C\uC218\uB85D \uB354 \uC57D\uD55C \uC0AC\uB78C\uC774
+        \uBA3C\uC800 \uB2E4\uCE69\uB2C8\uB2E4. \uADF8 \uC810\uC740 \uC78A\uC9C0 \uB9D0\uC544
+        \uC8FC\uC2ED\uC2DC\uC624."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 2
+      Text: "\uB8E8\uC774\uC2A4\uB9CC \uACC4\uC18D \uBE7C\uB458 \uC218\uB294 \uC5C6\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 3
+      Text: "\uB8E8\uC774\uC2A4\uB294 \uC774\uBBF8 \uCDA9\uBD84\uD788 \uBC84\uD17C\uC2B5\uB2C8\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 2
+      Text: "\uC6B0\uB9AC \uBAA8\uB450 \uADF8\uB7AC\uC5B4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 3
+      Text: "\uADF8 \uBAA8\uB450\uB77C\uB294 \uB9D0\uB85C \uD55C \uC0AC\uB78C\uC744
+        \uBC00\uC5B4\uBD99\uC774\uC9C0 \uB9C8\uC2ED\uC2DC\uC624."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_2_3_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 0200000004000000
+    Lines:
+    - SpeakerId: 2
+      Text: "\uC9C0\uD0A4\uACE0 \uC2F6\uC740 \uC0AC\uB78C\uC774 \uC788\uB2E4\uBA74
+        \uB354\uB354\uC6B1 \uC2F8\uC6C0\uC744 \uB05D\uB0B4\uC57C \uD55C\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 4
+      Text: "\uBA54\uC774, \uB05D\uC744 \uBD10\uC57C \uD55C\uB2E4\uB294 \uB9D0\uC740
+        \uC54C\uC544. \uADFC\uB370 \uB09C \uAC00\uB054 \uBA48\uCD94\uACE0 \uC2F6\uC5B4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 2
+      Text: "\uB8E8\uC774\uC2A4, \uB124 \uD798\uC774 \uD544\uC694\uD558\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 4
+      Text: "\u2026\uB0B4 \uD798 \uAC19\uC740 \uAC70 \uC774\uC81C \uBCC4\uB85C \uC548
+        \uB0A8\uC558\uC5B4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 2
+      Text: "\uADF8\uB798\uB3C4 \uC11C\uC57C \uD574. \uC544\uC9C1 \uB05D\uB098\uC9C0
+        \uC54A\uC558\uC73C\uB2C8\uAE4C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 4
+      Text: "\uADF8 \uB9D0\uC774 \uC81C\uC77C \uD53C\uACE4\uD574. \uC544\uC9C1, \uC544\uC9C1,
+        \uC544\uC9C1\u2026"
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_2_4_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 0200000005000000
+    Lines:
+    - SpeakerId: 2
+      Text: "\uC0AC\uB78C\uC744 \uB108\uBB34 \uAC00\uBCCD\uAC8C \uB2E4\uB8E8\uB294
+        \uB9D0\uC740, \uB09C \uB05D\uAE4C\uC9C0 \uBABB \uB118\uACA8."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 5
+      Text: "\uB05D\uC744 \uBCF4\uACA0\uB2E4\uB294 \uC0AC\uB78C\uC740 \uB2E4\uB8E8\uAE30
+        \uC26C\uC6CC. \uBD88\uC744 \uB354 \uC8FC\uBA74 \uC2A4\uC2A4\uB85C \uB053\uC5B4\uC624\uB974\uB2C8\uAE4C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 5
+      Text: "\uBA54\uC774 \uC5B8\uB2C8\uB294 \uC774\uC0C1\uD558\uAC8C \uC2DC\uC120\uC744
+        \uBAA8\uC73C\uB294 \uC0AC\uB78C\uC774\uC57C. \uC55E\uC5D0 \uC11C\uBA74 \uB2E4\uB4E4
+        \uD55C \uBC88\uCBE4 \uBCF4\uAC8C \uB418\uC796\uC544."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 2
+      Text: "\uADF8\uB7F0 \uB9D0\uB85C \uB4E4\uB728\uC9C0 \uC54A\uC544."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 5
+      Text: "\uADF8\uB798\uB3C4 \uB2E4\uB4E4 \uBA54\uC774 \uC5B8\uB2C8\uAC00 \uB04C\uACE0
+        \uAC00\uC57C \uC6C0\uC9C1\uC774\uC796\uC544?"
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 2
+      Text: "\u2026\uADF8\uAC74 \uB0B4\uAC00 \uD574\uC57C \uD560 \uC77C\uC774\uB2C8\uAE4C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_2_5_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 0200000006000000
+    Lines:
+    - SpeakerId: 2
+      Text: "\uD504\uB9AC\uB4DC, \uB124\uAC00 \uC9D0\uC744 \uB098\uB204\uB824\uB294
+        \uAC74 \uC54C\uC9C0\uB9CC \uB9C8\uC9C0\uB9C9 \uCC45\uC784\uC740 \uB0B4\uAC00
+        \uC9C4\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 6
+      Text: "\uB05D\uC744 \uC644\uC218\uD574\uC57C \uD55C\uB2E4\uBA74 \uB0B4\uAC00
+        \uBC29\uD328\uAC00 \uB418\uACA0\uB2E4. \uB124\uAC00 \uBB34\uB108\uC9C0\uAC8C
+        \uB450\uC9C4 \uC54A\uACA0\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 6
+      Text: "\uC704\uD5D8\uD55C \uC790\uB9AC\uB77C\uBA74 \uB0B4\uAC00 \uAC00\uACA0\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 2
+      Text: "\uB610 \uADF8\uB7F0 \uC2DD\uC73C\uB85C \uB05D\uB0B4\uB824 \uD558\uC9C0
+        \uB9C8."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 6
+      Text: "\uB204\uAD70\uAC00\uB294 \uAC10\uB2F9\uD574\uC57C \uD55C\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 2
+      Text: "\uC774\uC81C\uB294 \uB204\uAD70\uAC00 \uD55C \uC0AC\uB78C\uC5D0\uAC8C\uB9CC
+        \uAC12\uC744 \uCE58\uB974\uAC8C \uD558\uBA70 \uB098\uC544\uAC00\uACE0 \uC2F6\uC9C0
+        \uC54A\uC544."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_2_6_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 0200000007000000
+    Lines:
+    - SpeakerId: 2
+      Text: "\uC0C8\uD134, \uB124 \uC9C8\uBB38\uC740 \uC774\uD574\uD55C\uB2E4. \uADF8\uB798\uB3C4
+        \uB204\uAD70\uAC00\uB294 \uB9DD\uC124\uC784\uBCF4\uB2E4 \uACB0\uB2E8\uC744
+        \uD0DD\uD574\uC57C \uD574."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uBA54\uC774, \uB05D\uC744 \uBCF4\uC790\uB294 \uB9D0 \uB4A4\uC5D4 \uB298
+        \uB204\uAC00 \uB0A8\uB294\uC9C0\uBD80\uD130 \uB9D0\uD574."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 2
+      Text: "\uC77C\uB2E8 \uB05D\uAE4C\uC9C0 \uAC00\uC57C \uB2F5\uC774 \uB098\uC628\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uB05D\uAE4C\uC9C0 \uAC00\uB294 \uB3D9\uC548 \uB204\uAC00 \uB5A8\uC5B4\uC9C0\uB294\uC9C0\uB294
+        \uC548 \uBCF4\uC774\uC9C0?"
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 2
+      Text: "\uADF8\uB807\uAC8C \uBA48\uCDB0 \uC11C\uC11C \uBAA8\uB450\uB97C \uAD6C\uD560
+        \uC218 \uC788\uB2E4\uACE0 \uC0DD\uAC01\uD574?"
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uC544\uB2C8. \uC801\uC5B4\uB3C4 \uB5A0\uBC00\uC5B4 \uB193\uACE0 \uC88B\uC740
+        \uC774\uB984\uC744 \uBD99\uC774\uC9C4 \uB9D0\uC544\uC57C\uC9C0."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_2_7_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 0300000004000000
+    Lines:
+    - SpeakerId: 3
+      Text: "\uB8E8\uC774\uC2A4, \uBB34\uB9AC\uD574\uC11C \uB9D0\uD558\uC9C0 \uC54A\uC544\uB3C4
+        \uB429\uB2C8\uB2E4. \uC5EC\uAE30\uC5D4 \uC81C\uAC00 \uC788\uACA0\uC2B5\uB2C8\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 4
+      Text: "\uB124\uAC00 \uACC1\uC5D0 \uC788\uC73C\uBA74 \uD3B8\uD574. \uADF8\uAC8C
+        \uC88B\uC740 \uAC74\uC9C0 \uB098\uC05C \uAC74\uC9C4 \uBAA8\uB974\uACA0\uC9C0\uB9CC."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 4
+      Text: "\uADF8\uB0E5\u2026 \uB458\uB9CC \uC788\uC73C\uBA74 \uC548 \uB3FC?"
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 3
+      Text: "\uAC00\uB2A5\uD558\uB2E4\uBA74 \uADF8\uB807\uAC8C \uB9CC\uB4E4\uACE0
+        \uC2F6\uC2B5\uB2C8\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 4
+      Text: "\uB2E4\uB4E4 \uD654\uB0B4\uACA0\uC9C0."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 3
+      Text: "\uADF8\uB4E4\uC774 \uBB34\uC5C7\uC744 \uB9D0\uD558\uB4E0, \uB2F9\uC2E0\uC774
+        \uBB34\uB108\uC9C0\uB294 \uAC83\uBCF4\uB2E4 \uC911\uC694\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_3_4_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 0300000005000000
+    Lines:
+    - SpeakerId: 3
+      Text: "\uB2F9\uC2E0\uC758 \uBBF8\uC18C\uC5D0\uB294 \uC9C0\uB098\uCE58\uAC8C
+        \uB9CE\uC740 \uC545\uC758\uAC00 \uBC30\uC5B4 \uC788\uC2B5\uB2C8\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 5
+      Text: "\uC870\uAE08\uB9CC \uB354 \uD754\uB4E4\uB9AC\uBA74 \uB531 \uC88B\uACA0\uB124.
+        \uC544\uC9C1\uC740 \uD5A5\uC774 \uB35C \uC62C\uB790\uC5B4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 5
+      Text: "\uB370\uC6B0\uC2A4 \uC624\uBE60\uB294 \uB9E8\uB0A0 \uB8E8\uC774\uC2A4
+        \uC5B8\uB2C8\uB9CC \uBD10. \uAE38 \uC783\uC5B4\uBC84\uB9AC\uBA74 \uC5B4\uB5A1\uD574?"
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 3
+      Text: "\uAE38\uC744 \uC783\uC740 \uC801 \uC5C6\uC2B5\uB2C8\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 5
+      Text: "\uADF8\uB798? \uD55C\uCABD\uB9CC \uBCF4\uBA74 \uB2E4\uB978 \uCABD\uC740
+        \uC798 \uC548 \uBCF4\uC774\uB358\uB370!"
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 3
+      Text: "\u2026\uBB34\uC2A8 \uB73B\uC785\uB2C8\uAE4C?"
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 5
+      Text: "\uC544\uBB34 \uB73B \uC5C6\uC5B4! \uADF8\uB0E5 \uD1A0\uB2C8 \uC0DD\uAC01!"
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_3_5_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 0300000006000000
+    Lines:
+    - SpeakerId: 3
+      Text: "\uB204\uAD70\uAC00\uB97C \uBA3C\uC800 \uBC00\uC5B4 \uB123\uB294 \uBC29\uC2DD\uC758
+        \uC9C8\uC11C\uB294 \uC624\uB798 \uBC84\uD2F0\uC9C0 \uBABB\uD569\uB2C8\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 6
+      Text: "\uCC45\uC784\uC740 \uB098\uB20C \uC218 \uC788\uC5B4\uB3C4, \uCE7C\uB0A0\uC740
+        \uBA3C\uC800 \uB0B4\uAC00 \uBC1B\uB294 \uD3B8\uC774 \uB0AB\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 3
+      Text: "\uB2F9\uC2E0\uC774 \uBA3C\uC800 \uB098\uC120\uB2E4\uACE0 \uD574\uC11C
+        \uBAA8\uB4E0 \uAC8C \uD574\uACB0\uB41C\uB2E4\uACE0 \uBBFF\uAE34 \uC5B4\uB835\uC2B5\uB2C8\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 6
+      Text: "\uC544\uBB34\uB3C4 \uB098\uC11C\uC9C0 \uC54A\uB294 \uAC83\uBCF4\uB2E4
+        \uB0AB\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 3
+      Text: "\uADF8 \uC120\uD0DD \uB54C\uBB38\uC5D0 \uB8E8\uC774\uC2A4\uAC00 \uC704\uD5D8\uD574\uC9C4\uB2E4\uBA74
+        \uBC1B\uC544\uB4E4\uC77C \uC218 \uC5C6\uC2B5\uB2C8\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 6
+      Text: "\uACB0\uAD6D \uB108\uC758 \uBAA8\uB450\uB294 \uD55C \uC0AC\uB78C\uBFD0\uC774\uAD70."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_3_6_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 0300000007000000
+    Lines:
+    - SpeakerId: 3
+      Text: "\uC0C8\uD134, \uC758\uC2EC\uC774 \uD544\uC694\uD558\uB2E4\uB294 \uAC74
+        \uC555\uB2C8\uB2E4. \uD558\uC9C0\uB9CC \uBAA8\uB4E0 \uAC83\uC744 \uBD88\uC2E0\uB9CC\uC73C\uB85C
+        \uBC84\uD2F8 \uC218\uB294 \uC5C6\uC2B5\uB2C8\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uB09C \uD070 \uB9D0\uBCF4\uB2E4, \uADF8 \uACFC\uC815\uC5D0\uC11C \uB193\uCE58\uB294
+        \uAC8C \uC5C6\uB294\uC9C0\uBD80\uD130 \uBCF4\uB294 \uD3B8\uC774\uC57C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uB108\uB294 \uB8E8\uC774\uC2A4\uB97C \uC9C0\uD0A4\uB294 \uAC8C \uC544\uB2C8\uB77C
+        \uC228\uAE30\uACE0 \uC788\uC5B4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 3
+      Text: "\uD568\uBD80\uB85C \uB9D0\uD558\uC9C0 \uB9C8\uC2ED\uC2DC\uC624."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uD568\uBD80\uB85C \uBCF4\uB294 \uAC8C \uC544\uB2C8\uC57C. \uB108\uBB34
+        \uB178\uACE8\uC801\uC774\uB77C \uBCF4\uC774\uB294 \uAC70\uC9C0."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 3
+      Text: "\uB2F9\uC2E0\uC740 \uBAA8\uB4E0 \uBCF4\uD638\uB97C \uAC10\uAE08\uC73C\uB85C
+        \uD574\uC11D\uD558\uB294\uAD70\uC694."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_3_7_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 0400000005000000
+    Lines:
+    - SpeakerId: 4
+      Text: "\uB124 \uB9D0\uC740 \uBC30\uACE0\uD508 \uC18C\uB9AC\uC778\uB370, \uB4E3\uACE0
+        \uC788\uC73C\uBA74 \uC790\uAFB8 \uB204\uAC00 \uC0AC\uB77C\uC9C8 \uAC83 \uAC19\uC544."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 5
+      Text: "\uC870\uAE08\uB9CC \uB354 \uD754\uB4E4\uB9AC\uBA74 \uB531 \uC88B\uACA0\uB124.
+        \uC544\uC9C1\uC740 \uD5A5\uC774 \uB35C \uC62C\uB790\uC5B4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 5
+      Text: "\uB8E8\uC774\uC2A4 \uC5B8\uB2C8\uB294 \uC870\uC6A9\uD574\uC11C \uC88B\uC544.
+        \uC606\uC5D0 \uC788\uC73C\uBA74 \uC218\uD504 \uC2DD\uB294 \uC18C\uB9AC\uB3C4
+        \uB4E4\uB9B4 \uAC83 \uAC19\uC544."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 4
+      Text: "\u2026\uADF8\uB7F0 \uC18C\uB9AC\uB294 \uC548 \uB4E4\uB824."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 5
+      Text: "\uD1A0\uB2C8\uB294 \uB4E4\uB9AC\uB294 \uAC83 \uAC19\uC740\uB370? \uAE30\uBD84\uC774
+        \uB9D0\uB791\uD574\uC9C0\uB294 \uC18C\uB9AC!"
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 4
+      Text: "\uB108 \uC774\uC0C1\uD574. \uADFC\uB370\u2026 \uC2DC\uB044\uB7FD\uC9C4
+        \uC54A\uC544\uC11C \uAD1C\uCC2E\uC544."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_4_5_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 0400000006000000
+    Lines:
+    - SpeakerId: 4
+      Text: "\uD504\uB9AC\uB4DC, \uB2E4 \uB124\uAC00 \uAC10\uB2F9\uD558\uB824 \uD558\uC9C0
+        \uB9C8. \uBCF4\uB294 \uCABD\uB3C4 \uBC84\uAC81\uAC70\uB4E0."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 6
+      Text: "\uCC45\uC784\uC740 \uB098\uB20C \uC218 \uC788\uC5B4\uB3C4, \uCE7C\uB0A0\uC740
+        \uBA3C\uC800 \uB0B4\uAC00 \uBC1B\uB294 \uD3B8\uC774 \uB0AB\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 6
+      Text: "\uBB34\uB9AC\uD558\uC9C0 \uB9C8\uB77C. \uD544\uC694\uD55C \uC77C\uC740
+        \uB0B4\uAC00 \uD558\uACA0\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 4
+      Text: "\uADF8\uB7F0 \uB9D0 \uB4E4\uC73C\uBA74 \uB354 \uBBF8\uC548\uD574\uC838."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 6
+      Text: "\uBBF8\uC548\uD574\uD560 \uD544\uC694 \uC5C6\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 4
+      Text: "\uADF8\uB7EC\uB2C8\uAE4C \uB354 \uADF8\uB798. \uB098\uB294 \uC544\uBB34\uAC83\uB3C4
+        \uC548 \uD558\uB2C8\uAE4C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_4_6_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 0400000007000000
+    Lines:
+    - SpeakerId: 4
+      Text: "\uADF8\uB7F0 \uC9C8\uBB38\uC740 \uB4E3\uAE30 \uC2EB\uC740\uB370, \uC774\uC0C1\uD558\uAC8C
+        \uAC00\uC7A5 \uD53C\uD560 \uC218 \uC5C6\uB294 \uB9D0\uCC98\uB7FC \uB4E4\uB824."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uB09C \uD070 \uB9D0\uBCF4\uB2E4, \uADF8 \uACFC\uC815\uC5D0\uC11C \uB193\uCE58\uB294
+        \uAC8C \uC5C6\uB294\uC9C0\uBD80\uD130 \uBCF4\uB294 \uD3B8\uC774\uC57C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uB108\uB3C4 \uBBFF\uC9C0 \uC54A\uB294\uAD70. \uC774 \uC5EC\uC815\uC774
+        \uBAA8\uB450\uB97C \uAD6C\uD55C\uB2E4\uB294 \uB9D0\uC744."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 4
+      Text: "\uBBFF\uACE0 \uC548 \uBBFF\uACE0\uB97C \uC0DD\uAC01\uD558\uB294 \uAC83\uB3C4
+        \uD53C\uACE4\uD574."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uADF8\uAC8C \uB124 \uBC29\uC2DD\uC774\uC57C?"
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 4
+      Text: "\uBAB0\uB77C. \uADF8\uB0E5 \uC624\uB298\uB9CC \uB118\uAE30\uACE0 \uC2F6\uC5B4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_4_7_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 0500000006000000
+    Lines:
+    - SpeakerId: 5
+      Text: "\uD504\uB9AC\uB4DC \uAC19\uC740 \uC0AC\uB78C\uC740 \uB4DC\uBB3C\uC9C0.
+        \uC2A4\uC2A4\uB85C \uBA3C\uC800 \uB098\uC11C\uB824\uB294 \uC0AC\uB78C\uC740
+        \uC5B4\uB514\uC11C\uB098 \uB208\uC5D0 \uB744\uAC70\uB4E0."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 6
+      Text: "\uAC00\uBCBC\uC6B4 \uB9D0\uB85C \uB118\uAE38 \uC218 \uC5C6\uB294 \uC120\uC774
+        \uC788\uC5B4. \uADF8\uAC78 \uB118\uB294\uB2E4\uBA74 \uB098\uB294 \uAC00\uB9CC\uC788\uC9C0
+        \uC54A\uACA0\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 5
+      Text: "\uD504\uB9AC\uB4DC \uC624\uBE60\uB294 \uB9E8\uB0A0 \uB300\uC2E0 \uB4E4\uC5B4\uC8FC\uB124.
+        \uBB34\uAC70\uC6B4 \uAC83\uB3C4, \uC5B4\uB824\uC6B4 \uAC83\uB3C4!"
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 6
+      Text: "\uB124\uAC00 \uB2E4\uCE58\uC9C0 \uC54A\uC73C\uBA74 \uADF8\uAC78\uB85C
+        \uB410\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 5
+      Text: "\uADF8\uB7EC\uB2E4 \uD504\uB9AC\uB4DC \uC624\uBE60\uAC00 \uB0A9\uC791\uD574\uC9C0\uBA74
+        \uC5B4\uB5A1\uD574?"
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 6
+      Text: "\uADF8 \uC815\uB3C4\uB85C\uB294 \uBB34\uB108\uC9C0\uC9C0 \uC54A\uB294\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 5
+      Text: "\uC751, \uADF8\uB798\uC11C \uB354 \uC2E0\uAE30\uD574!"
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_5_6_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 0500000007000000
+    Lines:
+    - SpeakerId: 5
+      Text: "\uC9C8\uBB38\uC774 \uB9CE\uC740 \uC0AC\uB78C\uC77C\uC218\uB85D \uB2E4\uB8E8\uAE30
+        \uC5B4\uB835\uC9C0. \uADF8\uB798\uC11C \uB354 \uC624\uB798 \uB208\uC774 \uAC00."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uD1A0\uB2C8, \uB124 \uB9D0\uC740 \uC774\uC0C1\uD558\uAC8C \uC624\uB798
+        \uB0A8\uC544. \uB4E3\uACE0 \uB098\uBA74 \uACF5\uAE30\uAC00 \uB2EC\uB77C\uC838."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uB10C \uC65C \uB2E4\uB4E4 \uC2F8\uC6B8 \uB54C \uC6C3\uC5B4?"
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 5
+      Text: "\uC6C3\uC740 \uAC70 \uC544\uB2C8\uC57C. \uADF8\uB0E5 \uC785\uC774 \uC774\uB807\uAC8C
+        \uC0DD\uAE34 \uAC70\uC57C!"
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uAC70\uC9D3\uB9D0\uC774 \uC11C\uD234\uC9C4 \uC54A\uC740\uB370, \uC774\uC0C1\uD558\uAC8C
+        \uD2F0\uAC00 \uB098."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 5
+      Text: "\uC0C8\uD134 \uC5B8\uB2C8\uB294 \uB108\uBB34 \uB9E4\uC6B4 \uB9D0\uB9CC
+        \uD574. \uBB3C \uB9C8\uC2E4\uB798?"
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_5_7_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 0600000007000000
+    Lines:
+    - SpeakerId: 6
+      Text: "\uC0C8\uD134, \uB124 \uC758\uC2EC\uC774 \uD544\uC694\uD55C \uAC74 \uC548\uB2E4.
+        \uADF8\uB798\uB3C4 \uB204\uAD70\uAC00\uB294 \uBA3C\uC800 \uBAB8\uC744 \uC138\uC6CC\uC57C
+        \uD55C\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uD76C\uC0DD\uC744 \uB108\uBB34 \uC27D\uAC8C \uC88B\uC740 \uB9D0\uB85C
+        \uD3EC\uC7A5\uD558\uC9C4 \uB9C8. \uB0A8\uC740 \uC0AC\uB78C\uB4E4\uC5D0\uAC90
+        \uB298 \uB2E4\uB978 \uBB34\uAC8C\uB85C \uB0A8\uC73C\uB2C8\uAE4C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 6
+      Text: "\uB0B4\uAC00 \uB300\uC2E0\uD558\uBA74 \uC544\uBB34\uB3C4 \uC783\uC9C0
+        \uC54A\uC744 \uC218 \uC788\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uC544\uB2C8. \uADF8\uB7FC \uB124\uAC00 \uC0AC\uB77C\uC9C0\uB294 \uAC70\uC796\uC544."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 6
+      Text: "\uADF8\uAC8C \uCD5C\uC120\uC774\uB77C\uBA74 \uBC1B\uC544\uB4E4\uC5EC\uC57C
+        \uD55C\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uB124\uAC00 \uC815\uD55C \uCD5C\uC120\uC774 \uBAA8\uB450\uC758 \uC120\uD0DD\uC740
+        \uC544\uB2C8\uC57C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_6_7_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 010000000200000003000000
+    Lines:
+    - SpeakerId: 1
+      Text: "\uB124\uAC00 \uB05D\uC744 \uBCF4\uB824\uB294 \uAC74 \uC54C\uACA0\uC5B4.
+        \uB2E4\uB9CC \uBAA8\uB450\uAC00 \uAC19\uC740 \uC18D\uB3C4\uB85C \uAC77\uB294
+        \uAC74 \uC544\uB2C8\uC57C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 2
+      Text: "\uC5D4\uBE44, \uB10C \uB298 \uB9D0\uBCF4\uB2E4 \uB9CE\uC774 \uBCF4\uACE0
+        \uC788\uC9C0. \uADF8\uB807\uB2E4\uBA74 \uB0B4\uAC00 \uC65C \uBA48\uCD9C \uC218
+        \uC5C6\uB294\uC9C0\uB3C4 \uC54C \uAC70\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 3
+      Text: "\uB05D\uC744 \uC11C\uB450\uB97C\uC218\uB85D \uB354 \uC57D\uD55C \uC0AC\uB78C\uC774
+        \uBA3C\uC800 \uB2E4\uCE69\uB2C8\uB2E4. \uADF8 \uC810\uC740 \uC78A\uC9C0 \uB9D0\uC544
+        \uC8FC\uC2ED\uC2DC\uC624."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_1_2_3_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 010000000200000004000000
+    Lines:
+    - SpeakerId: 1
+      Text: "\uBA54\uC774, \uADF8\uB807\uAC8C\uAE4C\uC9C0 \uB05D\uC744 \uBD99\uC7A1\uB294
+        \uAC74 \uB450\uB824\uC6CC\uC11C\uC57C, \uC544\uB2C8\uBA74 \uC815\uB9D0 \uBBFF\uC5B4\uC11C\uC57C?"
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 2
+      Text: "\uB204\uAD70\uAC00\uB294 \uB05D\uAE4C\uC9C0 \uAC00\uC57C \uD55C\uB2E4.
+        \uB098\uB294 \uADF8 \uC790\uB9AC\uB97C \uD53C\uD558\uC9C0 \uC54A\uACA0\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 4
+      Text: "\uBA54\uC774, \uB05D\uC744 \uBD10\uC57C \uD55C\uB2E4\uB294 \uB9D0\uC740
+        \uC54C\uC544. \uADFC\uB370 \uB09C \uAC00\uB054 \uBA48\uCD94\uACE0 \uC2F6\uC5B4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_1_2_4_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 010000000200000005000000
+    Lines:
+    - SpeakerId: 1
+      Text: "\uD1A0\uB2C8\uC758 \uB18D\uB2F4\uC740 \uB298 \uD55C \uBC15\uC790 \uB2A6\uAC8C
+        \uC18C\uB984\uC774 \uB3CB\uC544."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 2
+      Text: "\uC0AC\uB78C\uC744 \uB108\uBB34 \uAC00\uBCCD\uAC8C \uB2E4\uB8E8\uB294
+        \uB9D0\uC740, \uB09C \uB05D\uAE4C\uC9C0 \uBABB \uB118\uACA8."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 5
+      Text: "\uB05D\uC744 \uBCF4\uACA0\uB2E4\uB294 \uC0AC\uB78C\uC740 \uB2E4\uB8E8\uAE30
+        \uC26C\uC6CC. \uBD88\uC744 \uB354 \uC8FC\uBA74 \uC2A4\uC2A4\uB85C \uB053\uC5B4\uC624\uB974\uB2C8\uAE4C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_1_2_5_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 010000000200000006000000
+    Lines:
+    - SpeakerId: 1
+      Text: "\uB124\uAC00 \uBA3C\uC800 \uC55E\uC11C\uBA74, \uB2E4\uB978 \uC0AC\uB78C\uB4E4\uC740
+        \uC790\uAE30 \uC18D\uB3C4\uB97C \uC783\uAE30 \uC26C\uC6CC."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 2
+      Text: "\uD504\uB9AC\uB4DC, \uB124\uAC00 \uC9D0\uC744 \uB098\uB204\uB824\uB294
+        \uAC74 \uC54C\uC9C0\uB9CC \uB9C8\uC9C0\uB9C9 \uCC45\uC784\uC740 \uB0B4\uAC00
+        \uC9C4\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 6
+      Text: "\uB05D\uC744 \uC644\uC218\uD574\uC57C \uD55C\uB2E4\uBA74 \uB0B4\uAC00
+        \uBC29\uD328\uAC00 \uB418\uACA0\uB2E4. \uB124\uAC00 \uBB34\uB108\uC9C0\uAC8C
+        \uB450\uC9C4 \uC54A\uACA0\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_1_2_6_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 010000000200000007000000
+    Lines:
+    - SpeakerId: 1
+      Text: "\uBA54\uC774\uB294 \uC55E\uC73C\uB85C \uBC00\uACE0, \uC0C8\uD134\uC740
+        \uBC1C\uBC11\uC744 \uBB3B\uB124. \uB458 \uB2E4 \uD2C0\uB9B0 \uB9D0\uC740
+        \uC544\uB2C8\uC57C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 2
+      Text: "\uC0C8\uD134, \uB124 \uC9C8\uBB38\uC740 \uC774\uD574\uD55C\uB2E4. \uADF8\uB798\uB3C4
+        \uB204\uAD70\uAC00\uB294 \uB9DD\uC124\uC784\uBCF4\uB2E4 \uACB0\uB2E8\uC744
+        \uD0DD\uD574\uC57C \uD574."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uBA54\uC774, \uB05D\uC744 \uBCF4\uC790\uB294 \uB9D0 \uB4A4\uC5D4 \uB298
+        \uB204\uAC00 \uB0A8\uB294\uC9C0\uBD80\uD130 \uB9D0\uD574."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_1_2_7_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 010000000300000004000000
+    Lines:
+    - SpeakerId: 1
+      Text: "\uB370\uC6B0\uC2A4\uC640 \uB8E8\uC774\uC2A4\uB97C \uBCF4\uACE0 \uC788\uC73C\uBA74,
+        \uC0AC\uB78C\uC740 \uC65C \uC11C\uB85C\uC5D0\uAC8C \uB3CC\uC544\uAC00\uB824
+        \uD558\uB294\uC9C0 \uC54C \uAC83\uB3C4 \uAC19\uC544."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 3
+      Text: "\uB8E8\uC774\uC2A4, \uBB34\uB9AC\uD574\uC11C \uB9D0\uD558\uC9C0 \uC54A\uC544\uB3C4
+        \uB429\uB2C8\uB2E4. \uC5EC\uAE30\uC5D4 \uC81C\uAC00 \uC788\uACA0\uC2B5\uB2C8\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 4
+      Text: "\uB124\uAC00 \uACC1\uC5D0 \uC788\uC73C\uBA74 \uD3B8\uD574. \uADF8\uAC8C
+        \uC88B\uC740 \uAC74\uC9C0 \uB098\uC05C \uAC74\uC9C4 \uBAA8\uB974\uACA0\uC9C0\uB9CC."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 4
+      Text: "\uC5D4\uBE44\uB294 \uC870\uC6A9\uD574\uC11C \uC88B\uC544."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 3
+      Text: "\uADF8\uB798\uB3C4 \uB108\uBB34 \uAC00\uAE4C\uC774 \uB458 \uD544\uC694\uB294
+        \uC5C6\uC2B5\uB2C8\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 1
+      Text: "\uC800\uB294 \uBC29\uD574\uD558\uC9C0 \uC54A\uC744\uAC8C\uC694."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 4
+      Text: "\uBD10, \uC774\uB7F0 \uB9D0\uB3C4 \uC548 \uBD88\uD3B8\uD558\uAC8C \uD558\uC796\uC544."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 3
+      Text: "\u2026\uADF8\uB798\uC11C \uB354 \uC870\uC2EC\uD574\uC57C \uD569\uB2C8\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_1_3_4_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 010000000300000005000000
+    Lines:
+    - SpeakerId: 1
+      Text: "\uB124\uAC00 \uD5A5\uC744 \uB9D0\uD560 \uB54C\uB9C8\uB2E4, \uB204\uAD70\uAC00\uB294
+        \uC774\uBBF8 \uB3C4\uB9C8 \uC704\uC5D0 \uC624\uB978 \uAE30\uBD84\uC774 \uB4E4\uC5B4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 3
+      Text: "\uB2F9\uC2E0\uC758 \uBBF8\uC18C\uC5D0\uB294 \uC9C0\uB098\uCE58\uAC8C
+        \uB9CE\uC740 \uC545\uC758\uAC00 \uBC30\uC5B4 \uC788\uC2B5\uB2C8\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 5
+      Text: "\uC5D4\uBE44\uB294 \uC7AC\uBBF8\uC788\uC5B4. \uC6C3\uACE0 \uC788\uB294\uB370\uB3C4
+        \uB208\uC740 \uB298 \uB2E4\uB978 \uB9DB\uC744 \uC7AC\uACE0 \uC788\uAC70\uB4E0."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_1_3_5_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 010000000300000006000000
+    Lines:
+    - SpeakerId: 1
+      Text: "\uD504\uB9AC\uB4DC, \uB2E4 \uB124 \uBAAB\uC73C\uB85C \uB9CC\uB4E4\uBA74
+        \uC544\uBB34\uB3C4 \uC81C\uB300\uB85C \uC11C\uC9C0 \uBABB\uD574."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 3
+      Text: "\uB204\uAD70\uAC00\uB97C \uBA3C\uC800 \uBC00\uC5B4 \uB123\uB294 \uBC29\uC2DD\uC758
+        \uC9C8\uC11C\uB294 \uC624\uB798 \uBC84\uD2F0\uC9C0 \uBABB\uD569\uB2C8\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 6
+      Text: "\uB108\uBB34 \uC624\uB798 \uB0A8\uC758 \uB9C8\uC74C\uC744 \uC77D\uC73C\uBA74
+        \uC815\uC791 \uC790\uAE30 \uBC1C\uBC11\uC744 \uB193\uCE5C\uB2E4. \uB124\uAC00
+        \uBB34\uB108\uC9C0\uB294 \uAC83\uB9CC\uC740 \uB0B4\uAC00 \uB9C9\uACA0\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_1_3_6_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 010000000300000007000000
+    Lines:
+    - SpeakerId: 1
+      Text: "\uB124 \uC9C8\uBB38\uC740 \uAC70\uC2AC\uB9AC\uC9C0\uB9CC \uAF2D \uD544\uC694\uD55C
+        \uB9D0\uC774\uAE30\uB3C4 \uD574."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 3
+      Text: "\uC0C8\uD134, \uC758\uC2EC\uC774 \uD544\uC694\uD558\uB2E4\uB294 \uAC74
+        \uC555\uB2C8\uB2E4. \uD558\uC9C0\uB9CC \uBAA8\uB4E0 \uAC83\uC744 \uBD88\uC2E0\uB9CC\uC73C\uB85C
+        \uBC84\uD2F8 \uC218\uB294 \uC5C6\uC2B5\uB2C8\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uB124\uAC00 \uC870\uC6A9\uD560\uC218\uB85D \uB354 \uC758\uC2EC\uC2A4\uB7EC\uC6CC.
+        \uC544\uBB34\uB3C4 \uADF8\uB807\uAC8C \uC624\uB798 \uC911\uAC04\uC5D0\uB9CC
+        \uC11C \uC788\uC9C4 \uBABB\uD574."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_1_3_7_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 010000000400000005000000
+    Lines:
+    - SpeakerId: 1
+      Text: "\uB124\uAC00 \uD5A5\uC744 \uB9D0\uD560 \uB54C\uB9C8\uB2E4, \uB204\uAD70\uAC00\uB294
+        \uC774\uBBF8 \uB3C4\uB9C8 \uC704\uC5D0 \uC624\uB978 \uAE30\uBD84\uC774 \uB4E4\uC5B4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 4
+      Text: "\uB124 \uB9D0\uC740 \uBC30\uACE0\uD508 \uC18C\uB9AC\uC778\uB370, \uB4E3\uACE0
+        \uC788\uC73C\uBA74 \uC790\uAFB8 \uB204\uAC00 \uC0AC\uB77C\uC9C8 \uAC83 \uAC19\uC544."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 5
+      Text: "\uC5D4\uBE44\uB294 \uC7AC\uBBF8\uC788\uC5B4. \uC6C3\uACE0 \uC788\uB294\uB370\uB3C4
+        \uB208\uC740 \uB298 \uB2E4\uB978 \uB9DB\uC744 \uC7AC\uACE0 \uC788\uAC70\uB4E0."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_1_4_5_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 010000000400000006000000
+    Lines:
+    - SpeakerId: 1
+      Text: "\uD504\uB9AC\uB4DC, \uB2E4 \uB124 \uBAAB\uC73C\uB85C \uB9CC\uB4E4\uBA74
+        \uC544\uBB34\uB3C4 \uC81C\uB300\uB85C \uC11C\uC9C0 \uBABB\uD574."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 4
+      Text: "\uC5D4\uBE44\uB791 \uC788\uC73C\uBA74 \uC870\uC6A9\uD574\uC11C \uC88B\uB124.
+        \uC801\uC5B4\uB3C4 \uC5B5\uC9C0\uB85C \uACB0\uC815\uC744 \uBC00\uC5B4\uBD99\uC774\uC9C4
+        \uC54A\uC73C\uB2C8\uAE4C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 6
+      Text: "\uB108\uBB34 \uC624\uB798 \uB0A8\uC758 \uB9C8\uC74C\uC744 \uC77D\uC73C\uBA74
+        \uC815\uC791 \uC790\uAE30 \uBC1C\uBC11\uC744 \uB193\uCE5C\uB2E4. \uB124\uAC00
+        \uBB34\uB108\uC9C0\uB294 \uAC83\uB9CC\uC740 \uB0B4\uAC00 \uB9C9\uACA0\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_1_4_6_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 010000000400000007000000
+    Lines:
+    - SpeakerId: 1
+      Text: "\uB124 \uC9C8\uBB38\uC740 \uAC70\uC2AC\uB9AC\uC9C0\uB9CC \uAF2D \uD544\uC694\uD55C
+        \uB9D0\uC774\uAE30\uB3C4 \uD574."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 4
+      Text: "\uADF8\uB7F0 \uC9C8\uBB38\uC740 \uB4E3\uAE30 \uC2EB\uC740\uB370, \uC774\uC0C1\uD558\uAC8C
+        \uAC00\uC7A5 \uD53C\uD560 \uC218 \uC5C6\uB294 \uB9D0\uCC98\uB7FC \uB4E4\uB824."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uB124\uAC00 \uC870\uC6A9\uD560\uC218\uB85D \uB354 \uC758\uC2EC\uC2A4\uB7EC\uC6CC.
+        \uC544\uBB34\uB3C4 \uADF8\uB807\uAC8C \uC624\uB798 \uC911\uAC04\uC5D0\uB9CC
+        \uC11C \uC788\uC9C4 \uBABB\uD574."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_1_4_7_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 010000000500000006000000
+    Lines:
+    - SpeakerId: 1
+      Text: "\uB124\uAC00 \uD5A5\uC744 \uB9D0\uD560 \uB54C\uB9C8\uB2E4, \uB204\uAD70\uAC00\uB294
+        \uC774\uBBF8 \uB3C4\uB9C8 \uC704\uC5D0 \uC624\uB978 \uAE30\uBD84\uC774 \uB4E4\uC5B4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 5
+      Text: "\uD504\uB9AC\uB4DC \uAC19\uC740 \uC0AC\uB78C\uC740 \uB4DC\uBB3C\uC9C0.
+        \uC2A4\uC2A4\uB85C \uBA3C\uC800 \uB098\uC11C\uB824\uB294 \uC0AC\uB78C\uC740
+        \uC5B4\uB514\uC11C\uB098 \uB208\uC5D0 \uB744\uAC70\uB4E0."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 6
+      Text: "\uAC00\uBCBC\uC6B4 \uB9D0\uB85C \uB118\uAE38 \uC218 \uC5C6\uB294 \uC120\uC774
+        \uC788\uC5B4. \uADF8\uAC78 \uB118\uB294\uB2E4\uBA74 \uB098\uB294 \uAC00\uB9CC\uC788\uC9C0
+        \uC54A\uACA0\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_1_5_6_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 010000000500000007000000
+    Lines:
+    - SpeakerId: 1
+      Text: "\uD1A0\uB2C8, \uB124\uAC00 \uC6C3\uC744\uC218\uB85D \uACF5\uAE30\uAC00
+        \uB354 \uCC28\uAC00\uC6CC\uC838."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 5
+      Text: "\uC9C8\uBB38\uC774 \uB9CE\uC740 \uC0AC\uB78C\uC77C\uC218\uB85D \uB2E4\uB8E8\uAE30
+        \uC5B4\uB835\uC9C0. \uADF8\uB798\uC11C \uB354 \uC624\uB798 \uB208\uC774 \uAC00."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uD1A0\uB2C8, \uB124 \uB9D0\uC740 \uC774\uC0C1\uD558\uAC8C \uC624\uB798
+        \uB0A8\uC544. \uB4E3\uACE0 \uB098\uBA74 \uACF5\uAE30\uAC00 \uB2EC\uB77C\uC838."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 5
+      Text: "\uC0C8\uD134 \uC5B8\uB2C8\uB294 \uB208\uC774 \uBFB0\uC871\uD574. \uCF55\uCF55
+        \uCC14\uB7EC."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uB108\uD76C \uB458\uC740 \uB2E4\uB974\uAC8C \uC774\uC0C1\uD574."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 1
+      Text: "\uC800\uD76C\uAC00 \uADF8\uB807\uAC8C \uB2EE\uC544 \uBCF4\uC774\uB098\uC694?"
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uC544\uB2C8. \uD558\uB098\uB294 \uC228\uAE30\uACE0, \uD558\uB098\uB294
+        \uAE30\uB2E4\uB824."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 5
+      Text: "\uAE30\uB2E4\uB9AC\uBA74 \uC88B\uC740 \uC77C\uC774 \uC0DD\uAE30\uAE30\uB3C4
+        \uD574! \uCFE0\uD0A4\uCC98\uB7FC!"
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_1_5_7_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 010000000600000007000000
+    Lines:
+    - SpeakerId: 1
+      Text: "\uBAA8\uB450\uB97C \uB300\uC2E0 \uC9CA\uC5B4\uC9C0\uB824\uB294 \uD45C\uC815\uC774
+        \uB108\uBB34 \uC775\uC219\uD574\uC11C \uB354 \uBD88\uC548\uD574."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 6
+      Text: "\uC0C8\uD134, \uB124 \uC758\uC2EC\uC774 \uD544\uC694\uD55C \uAC74 \uC548\uB2E4.
+        \uADF8\uB798\uB3C4 \uB204\uAD70\uAC00\uB294 \uBA3C\uC800 \uBAB8\uC744 \uC138\uC6CC\uC57C
+        \uD55C\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uD76C\uC0DD\uC744 \uB108\uBB34 \uC27D\uAC8C \uC88B\uC740 \uB9D0\uB85C
+        \uD3EC\uC7A5\uD558\uC9C4 \uB9C8. \uB0A8\uC740 \uC0AC\uB78C\uB4E4\uC5D0\uAC90
+        \uB298 \uB2E4\uB978 \uBB34\uAC8C\uB85C \uB0A8\uC73C\uB2C8\uAE4C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_1_6_7_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 020000000300000004000000
+    Lines:
+    - SpeakerId: 2
+      Text: "\uC11C\uB85C\uB97C \uC9C0\uD0A4\uACE0 \uC2F6\uC740 \uAC74 \uC54C\uACA0\uC9C0\uB9CC,
+        \uC9C0\uAE08\uC740 \uBA48\uCD9C \uB54C\uAC00 \uC544\uB2C8\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 3
+      Text: "\uB2F9\uC2E0\uC774 \uBC84\uD2F8 \uD798\uC774 \uC5C6\uB2E4\uBA74, \uC81C\uAC00
+        \uB300\uC2E0 \uBC84\uD2F0\uACA0\uC2B5\uB2C8\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 4
+      Text: "\uB2E4 \uAD1C\uCC2E\uC9C0 \uC54A\uC740\uB370, \uB124\uAC00 \uAD1C\uCC2E\uB2E4\uACE0
+        \uB9D0\uD558\uBA74 \uC7A0\uAE50\uC740 \uBBFF\uAC8C \uB3FC."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_2_3_4_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 020000000300000005000000
+    Lines:
+    - SpeakerId: 2
+      Text: "\uB204\uAD70\uAC00\uC758 \uBD88\uD589\uC744 \uC6C3\uC73C\uBA70 \uB118\uAE30\uB294
+        \uC0AC\uB78C\uC740, \uB09C \uC624\uB798 \uB450\uC9C0 \uC54A\uC544."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 3
+      Text: "\uB2F9\uC2E0\uC758 \uC815\uC758\uAC00 \uC81C\uAC00 \uC9C0\uD0A4\uB824\uB294
+        \uC0AC\uB78C\uC744 \uC704\uD5D8\uC5D0 \uB450\uB294 \uC21C\uAC04, \uC800\uB294
+        \uB2F9\uC2E0\uACFC \uAC19\uC740 \uD3B8\uC77C \uC218 \uC5C6\uC2B5\uB2C8\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 5
+      Text: "\uD06C\uAC8C \uBE5B\uB098\uB294 \uB9D0\uC77C\uC218\uB85D \uC8FC\uBCC0
+        \uACF5\uAE30\uAE4C\uC9C0 \uBE60\uB974\uAC8C \uB2EC\uC544\uC624\uB974\uB354\uB77C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_2_3_5_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 020000000300000006000000
+    Lines:
+    - SpeakerId: 2
+      Text: "\uB204\uAD70\uAC00\uAC00 \uB300\uC2E0 \uBAA8\uB4E0 \uAC12\uC744 \uCE58\uB974\uB294
+        \uD750\uB984\uC740 \uC774\uC81C \uADF8\uB9CC \uBCF4\uACE0 \uC2F6\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 3
+      Text: "\uBA54\uC774, \uB2F9\uC2E0\uC758 \uB73B\uC740 \uC774\uD574\uD569\uB2C8\uB2E4.
+        \uB2E4\uB9CC \uB204\uAD70\uAC00\uB97C \uBC00\uC5B4\uBD99\uC774\uB294 \uB05D\uC774\uB77C\uBA74
+        \uC27D\uAC8C \uB3D9\uC758\uD558\uAE34 \uC5B4\uB835\uC2B5\uB2C8\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 6
+      Text: "\uBA54\uC774, \uB124\uAC00 \uB05D\uC744 \uBCF4\uB824\uB294 \uB73B\uC740
+        \uC548\uB2E4. \uD558\uC9C0\uB9CC \uADF8 \uB300\uAC00\uAE4C\uC9C0 \uD63C\uC790
+        \uC9CA\uC5B4\uC9C8 \uD544\uC694\uB294 \uC5C6\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_2_3_6_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 020000000300000007000000
+    Lines:
+    - SpeakerId: 2
+      Text: "\uB204\uAC00 \uB0A8\uACA8\uC9C8\uC9C0\uB97C \uBB3B\uAE30 \uC804\uC5D0,
+        \uBA3C\uC800 \uB05D\uB0BC \uBC29\uBC95\uC744 \uCC3E\uC544\uC57C \uD55C\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 3
+      Text: "\uB05D\uC744 \uC11C\uB450\uB97C\uC218\uB85D \uB354 \uC57D\uD55C \uC0AC\uB78C\uC774
+        \uBA3C\uC800 \uB2E4\uCE69\uB2C8\uB2E4. \uADF8 \uC810\uC740 \uC78A\uC9C0 \uB9D0\uC544
+        \uC8FC\uC2ED\uC2DC\uC624."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uD070 \uACB0\uC2EC\uC740 \uB298 \uBA4B\uC788\uAC8C \uB4E4\uB824. \uADF8\uB798\uC11C
+        \uADF8 \uADF8\uB9BC\uC790\uB3C4 \uB354 \uB2A6\uAC8C \uBCF4\uC774\uB354\uB77C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_2_3_7_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 020000000400000005000000
+    Lines:
+    - SpeakerId: 2
+      Text: "\uB204\uAD70\uAC00\uC758 \uBD88\uD589\uC744 \uC6C3\uC73C\uBA70 \uB118\uAE30\uB294
+        \uC0AC\uB78C\uC740, \uB09C \uC624\uB798 \uB450\uC9C0 \uC54A\uC544."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 4
+      Text: "\uBA54\uC774, \uB05D\uC744 \uBD10\uC57C \uD55C\uB2E4\uB294 \uB9D0\uC740
+        \uC54C\uC544. \uADFC\uB370 \uB09C \uAC00\uB054 \uBA48\uCD94\uACE0 \uC2F6\uC5B4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 5
+      Text: "\uD06C\uAC8C \uBE5B\uB098\uB294 \uB9D0\uC77C\uC218\uB85D \uC8FC\uBCC0
+        \uACF5\uAE30\uAE4C\uC9C0 \uBE60\uB974\uAC8C \uB2EC\uC544\uC624\uB974\uB354\uB77C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_2_4_5_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 020000000400000006000000
+    Lines:
+    - SpeakerId: 2
+      Text: "\uB204\uAD70\uAC00\uAC00 \uB300\uC2E0 \uBAA8\uB4E0 \uAC12\uC744 \uCE58\uB974\uB294
+        \uD750\uB984\uC740 \uC774\uC81C \uADF8\uB9CC \uBCF4\uACE0 \uC2F6\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 4
+      Text: "\uACC4\uC18D \uC55E\uC73C\uB85C\uB9CC \uAC00\uBA74 \uC5B8\uC820\uAC00
+        \uC9C4\uC9DC \uC544\uBB34\uAC83\uB3C4 \uC548 \uB0A8\uC744 \uAC83 \uAC19\uC544."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 6
+      Text: "\uBA54\uC774, \uB124\uAC00 \uB05D\uC744 \uBCF4\uB824\uB294 \uB73B\uC740
+        \uC548\uB2E4. \uD558\uC9C0\uB9CC \uADF8 \uB300\uAC00\uAE4C\uC9C0 \uD63C\uC790
+        \uC9CA\uC5B4\uC9C8 \uD544\uC694\uB294 \uC5C6\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_2_4_6_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 020000000400000007000000
+    Lines:
+    - SpeakerId: 2
+      Text: "\uB204\uAC00 \uB0A8\uACA8\uC9C8\uC9C0\uB97C \uBB3B\uAE30 \uC804\uC5D0,
+        \uBA3C\uC800 \uB05D\uB0BC \uBC29\uBC95\uC744 \uCC3E\uC544\uC57C \uD55C\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 4
+      Text: "\uB124\uAC00 \uBC84\uD2F0\uB294 \uC774\uC720\uB294 \uC54C\uACA0\uB294\uB370,
+        \uBAA8\uB450\uAC00 \uAC19\uC740 \uD798\uC744 \uAC00\uC9C4 \uAC74 \uC544\uB2C8\uC796\uC544."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uD070 \uACB0\uC2EC\uC740 \uB298 \uBA4B\uC788\uAC8C \uB4E4\uB824. \uADF8\uB798\uC11C
+        \uADF8 \uADF8\uB9BC\uC790\uB3C4 \uB354 \uB2A6\uAC8C \uBCF4\uC774\uB354\uB77C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_2_4_7_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 020000000500000006000000
+    Lines:
+    - SpeakerId: 2
+      Text: "\uB204\uAD70\uAC00\uC758 \uBD88\uD589\uC744 \uC6C3\uC73C\uBA70 \uB118\uAE30\uB294
+        \uC0AC\uB78C\uC740, \uB09C \uC624\uB798 \uB450\uC9C0 \uC54A\uC544."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 5
+      Text: "\uD06C\uAC8C \uBE5B\uB098\uB294 \uB9D0\uC77C\uC218\uB85D \uC8FC\uBCC0
+        \uACF5\uAE30\uAE4C\uC9C0 \uBE60\uB974\uAC8C \uB2EC\uC544\uC624\uB974\uB354\uB77C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 6
+      Text: "\uB108\uBB34 \uD070 \uC774\uB984\uC744 \uC9CA\uC5B4\uC9C0\uB824 \uD558\uC9C0
+        \uB9C8\uB77C. \uB05D\uAE4C\uC9C0 \uBC84\uD2F0\uB294 \uAC83\uB9CC\uC73C\uB85C\uB3C4
+        \uCDA9\uBD84\uD558\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_2_5_6_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 020000000500000007000000
+    Lines:
+    - SpeakerId: 2
+      Text: "\uC0AC\uB78C\uC744 \uB108\uBB34 \uAC00\uBCCD\uAC8C \uB2E4\uB8E8\uB294
+        \uB9D0\uC740, \uB09C \uB05D\uAE4C\uC9C0 \uBABB \uB118\uACA8."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 5
+      Text: "\uB05D\uC744 \uBCF4\uACA0\uB2E4\uB294 \uC0AC\uB78C\uC740 \uB2E4\uB8E8\uAE30
+        \uC26C\uC6CC. \uBD88\uC744 \uB354 \uC8FC\uBA74 \uC2A4\uC2A4\uB85C \uB053\uC5B4\uC624\uB974\uB2C8\uAE4C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uACB0\uB9D0\uC774 \uD544\uC694\uD558\uB2E8 \uAC74 \uC54C\uC9C0. \uADF8\uB7F0\uB370
+        \uADF8 \uACB0\uB9D0 \uBC11\uBC14\uB2E5\uC5D0 \uAE54\uB9B4 \uC0AC\uB78C\uC740
+        \uB204\uAD6C\uC57C?"
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_2_5_7_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 020000000600000007000000
+    Lines:
+    - SpeakerId: 2
+      Text: "\uB204\uAC00 \uB0A8\uACA8\uC9C8\uC9C0\uB97C \uBB3B\uAE30 \uC804\uC5D0,
+        \uBA3C\uC800 \uB05D\uB0BC \uBC29\uBC95\uC744 \uCC3E\uC544\uC57C \uD55C\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 6
+      Text: "\uB05D\uC744 \uC644\uC218\uD574\uC57C \uD55C\uB2E4\uBA74 \uB0B4\uAC00
+        \uBC29\uD328\uAC00 \uB418\uACA0\uB2E4. \uB124\uAC00 \uBB34\uB108\uC9C0\uAC8C
+        \uB450\uC9C4 \uC54A\uACA0\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uD070 \uACB0\uC2EC\uC740 \uB298 \uBA4B\uC788\uAC8C \uB4E4\uB824. \uADF8\uB798\uC11C
+        \uADF8 \uADF8\uB9BC\uC790\uB3C4 \uB354 \uB2A6\uAC8C \uBCF4\uC774\uB354\uB77C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 2
+      Text: "\uB370\uC6B0\uC2A4\uC640 \uB8E8\uC774\uC2A4\uB294 \uACC4\uC18D \uB4A4\uB85C
+        \uBE60\uC9C4\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 6
+      Text: "\uB8E8\uC774\uC2A4\uC758 \uC0C1\uD0DC\uB294 \uBD84\uBA85 \uC88B\uC9C0
+        \uC54A\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uC0C1\uD0DC\uB9CC \uBB38\uC81C\uAC00 \uC544\uB2C8\uC57C. \uC800 \uB458\uC740
+        \uC774\uBBF8 \uC6B0\uB9AC\uC640 \uB2E4\uB978 \uACF3\uC5D0 \uC788\uC5B4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 2
+      Text: "\uADF8\uB798\uC11C \uB354 \uBD99\uC7A1\uC544\uC57C \uD574. \uD769\uC5B4\uC9C0\uBA74
+        \uB05D\uC774\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uBD99\uC7A1\uB294\uB2E4\uACE0 \uD568\uAED8 \uC788\uB294 \uAC74 \uC544\uB2C8\uC57C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_2_6_7_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 030000000400000005000000
+    Lines:
+    - SpeakerId: 3
+      Text: "\uB8E8\uC774\uC2A4\uB9CC \uBB34\uC0AC\uD558\uB2E4\uBA74, \uC800\uB294
+        \uB2E4\uB978 \uC2DC\uC120\uC744 \uC5BC\uB9C8\uB4E0\uC9C0 \uAC10\uB2F9\uD560
+        \uC218 \uC788\uC2B5\uB2C8\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 4
+      Text: "\uB370\uC6B0\uC2A4, \uADF8\uB807\uAC8C\uAE4C\uC9C0 \uC560\uC4F0\uC9C0
+        \uC54A\uC544\uB3C4 \uB3FC. \uADF8\uB7F0\uB370\uB3C4 \uB124\uAC00 \uC788\uC73C\uBA74
+        \uC870\uAE08 \uB35C \uBB34\uB108\uC838."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 5
+      Text: "\uB458 \uC0AC\uC774\uC5D4 \uB2EC\uCF64\uD55C \uB0C4\uC0C8\uAC00 \uB098.
+        \uC624\uB798 \uB450\uBA74 \uC369\uB294 \uC18D\uB3C4\uB3C4 \uC544\uB984\uB2F5\uACA0\uC9C0."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_3_4_5_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 030000000400000006000000
+    Lines:
+    - SpeakerId: 3
+      Text: "\uB8E8\uC774\uC2A4, \uBB34\uB9AC\uD574\uC11C \uB9D0\uD558\uC9C0 \uC54A\uC544\uB3C4
+        \uB429\uB2C8\uB2E4. \uC5EC\uAE30\uC5D4 \uC81C\uAC00 \uC788\uACA0\uC2B5\uB2C8\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 4
+      Text: "\uB124\uAC00 \uACC1\uC5D0 \uC788\uC73C\uBA74 \uD3B8\uD574. \uADF8\uAC8C
+        \uC88B\uC740 \uAC74\uC9C0 \uB098\uC05C \uAC74\uC9C4 \uBAA8\uB974\uACA0\uC9C0\uB9CC."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 6
+      Text: "\uB450 \uC0AC\uB78C\uC740 \uB4A4\uB97C \uC9C0\uCF1C\uB77C. \uC804\uBA74\uC758
+        \uBB34\uAC8C\uB294 \uB0B4\uAC00 \uBC1B\uACA0\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_3_4_6_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 030000000400000007000000
+    Lines:
+    - SpeakerId: 3
+      Text: "\uB2F9\uC2E0\uC774 \uBC84\uD2F8 \uD798\uC774 \uC5C6\uB2E4\uBA74, \uC81C\uAC00
+        \uB300\uC2E0 \uBC84\uD2F0\uACA0\uC2B5\uB2C8\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 4
+      Text: "\uB2E4 \uAD1C\uCC2E\uC9C0 \uC54A\uC740\uB370, \uB124\uAC00 \uAD1C\uCC2E\uB2E4\uACE0
+        \uB9D0\uD558\uBA74 \uC7A0\uAE50\uC740 \uBBFF\uAC8C \uB3FC."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uC11C\uB85C\uB97C \uBD99\uB4DC\uB294 \uC190\uC774 \uAC15\uD560\uC218\uB85D,
+        \uB193\uCCD0 \uBC84\uB9AC\uB294 \uBC14\uAE65\uB3C4 \uCEE4\uC9C0\uB294 \uBC95\uC774\uC57C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_3_4_7_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 030000000500000006000000
+    Lines:
+    - SpeakerId: 3
+      Text: "\uB204\uAD70\uAC00\uB97C \uBA3C\uC800 \uBC00\uC5B4 \uB123\uB294 \uBC29\uC2DD\uC758
+        \uC9C8\uC11C\uB294 \uC624\uB798 \uBC84\uD2F0\uC9C0 \uBABB\uD569\uB2C8\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 5
+      Text: "\uC22D\uACE0\uD55C \uB9D0\uC740 \uBD84\uC704\uAE30\uB97C \uCC38 \uBE60\uB974\uAC8C
+        \uBC14\uAFD4 \uB193\uC9C0. \uC0AC\uB78C\uB4E4 \uD45C\uC815\uAE4C\uC9C0 \uB2EC\uB77C\uC9C0\uB2C8\uAE4C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 6
+      Text: "\uC0AC\uB78C\uC744 \uB3C4\uB9C8 \uC704\uC5D0 \uC62C\uB824\uB193\uB294
+        \uC2DC\uC120, \uADF8\uAC74 \uC5EC\uAE30\uC11C \uB05D\uC774\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_3_5_6_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 030000000500000007000000
+    Lines:
+    - SpeakerId: 3
+      Text: "\uD1A0\uB2C8, \uC0AC\uB78C\uC744 \uB9DB\uC73C\uB85C \uB9D0\uD558\uB294
+        \uD0DC\uB3C4\uB294 \uB4E3\uB294 \uAC83\uB9CC\uC73C\uB85C\uB3C4 \uBD88\uACBD\uD558\uAD70\uC694."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 5
+      Text: "\uC758\uC2EC\uC774 \uB9CE\uC740 \uC785\uB9DB\uC740 \uBCC4\uB85C \uC548
+        \uC88B\uC544\uD558\uC9C0\uB9CC, \uB05D\uB9DB\uC740 \uB610 \uBB18\uD558\uAC8C
+        \uAE38\uB354\uAD70."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uC6C3\uC73C\uBA74\uC11C \uC0AC\uB78C\uC744 \uC370\uC5B4 \uBCF4\uB294
+        \uB208, \uB09C \uADF8\uB7F0 \uAC78 \uC5EC\uB7EC \uBC88 \uBD24\uC5B4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_3_5_7_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 030000000600000007000000
+    Lines:
+    - SpeakerId: 3
+      Text: "\uB2F9\uC2E0\uC774 \uB300\uC2E0 \uC9CA\uC5B4\uC9C0\uB824\uB294 \uB9C8\uC74C\uC740
+        \uC54C\uC9C0\uB9CC, \uADF8 \uACB0\uB2E8\uC774 \uBAA8\uB450\uB97C \uAD6C\uD558\uC9C4
+        \uBABB\uD569\uB2C8\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 6
+      Text: "\uB204\uAC00 \uB0A8\uACA8\uC9C8\uC9C0\uB97C \uBB3B\uB294\uB2E4\uBA74,
+        \uC6B0\uC120 \uB0B4\uAC00 \uC55E\uC5D0 \uC11C\uACA0\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uB124\uAC00 \uBA3C\uC800 \uC81C\uB2E8\uC5D0 \uC624\uB974\uB294 \uC21C\uAC04,
+        \uB2E4\uB978 \uC0AC\uB78C\uB4E4\uC740 \uAC70\uC808\uD560 \uAE30\uD68C\uC870\uCC28
+        \uC783\uC5B4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_3_6_7_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 040000000500000006000000
+    Lines:
+    - SpeakerId: 4
+      Text: "\uD1A0\uB2C8, \uB124\uAC00 \uC6C3\uC73C\uBA74 \uBB18\uD558\uAC8C \uC228\uC774
+        \uB9C9\uD600. \uB18D\uB2F4\uC778\uB370\uB3C4 \uC804\uD600 \uC548 \uC6C3\uACA8."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 5
+      Text: "\uC22D\uACE0\uD55C \uB9D0\uC740 \uBD84\uC704\uAE30\uB97C \uCC38 \uBE60\uB974\uAC8C
+        \uBC14\uAFD4 \uB193\uC9C0. \uC0AC\uB78C\uB4E4 \uD45C\uC815\uAE4C\uC9C0 \uB2EC\uB77C\uC9C0\uB2C8\uAE4C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 6
+      Text: "\uC0AC\uB78C\uC744 \uB3C4\uB9C8 \uC704\uC5D0 \uC62C\uB824\uB193\uB294
+        \uC2DC\uC120, \uADF8\uAC74 \uC5EC\uAE30\uC11C \uB05D\uC774\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_4_5_6_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 040000000500000007000000
+    Lines:
+    - SpeakerId: 4
+      Text: "\uADF8\uB7F0 \uC9C8\uBB38\uC740 \uB4E3\uAE30 \uC2EB\uC740\uB370, \uC774\uC0C1\uD558\uAC8C
+        \uAC00\uC7A5 \uD53C\uD560 \uC218 \uC5C6\uB294 \uB9D0\uCC98\uB7FC \uB4E4\uB824."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 5
+      Text: "\uC758\uC2EC\uC774 \uB9CE\uC740 \uC785\uB9DB\uC740 \uBCC4\uB85C \uC548
+        \uC88B\uC544\uD558\uC9C0\uB9CC, \uB05D\uB9DB\uC740 \uB610 \uBB18\uD558\uAC8C
+        \uAE38\uB354\uAD70."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uC6C3\uC73C\uBA74\uC11C \uC0AC\uB78C\uC744 \uC370\uC5B4 \uBCF4\uB294
+        \uB208, \uB09C \uADF8\uB7F0 \uAC78 \uC5EC\uB7EC \uBC88 \uBD24\uC5B4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_4_5_7_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 040000000600000007000000
+    Lines:
+    - SpeakerId: 4
+      Text: "\uB124 \uC9C8\uBB38\uC740 \uD53C\uACE4\uD55C\uB370, \uADF8\uB798\uC11C
+        \uB354 \uD53C\uD560 \uC218\uAC00 \uC5C6\uC5B4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 6
+      Text: "\uB204\uAC00 \uB0A8\uACA8\uC9C8\uC9C0\uB97C \uBB3B\uB294\uB2E4\uBA74,
+        \uC6B0\uC120 \uB0B4\uAC00 \uC55E\uC5D0 \uC11C\uACA0\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uB124\uAC00 \uBA3C\uC800 \uC81C\uB2E8\uC5D0 \uC624\uB974\uB294 \uC21C\uAC04,
+        \uB2E4\uB978 \uC0AC\uB78C\uB4E4\uC740 \uAC70\uC808\uD560 \uAE30\uD68C\uC870\uCC28
+        \uC783\uC5B4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_4_6_7_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 050000000600000007000000
+    Lines:
+    - SpeakerId: 5
+      Text: "\uC22D\uACE0\uD55C \uB9D0\uC740 \uBD84\uC704\uAE30\uB97C \uCC38 \uBE60\uB974\uAC8C
+        \uBC14\uAFD4 \uB193\uC9C0. \uC0AC\uB78C\uB4E4 \uD45C\uC815\uAE4C\uC9C0 \uB2EC\uB77C\uC9C0\uB2C8\uAE4C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 6
+      Text: "\uB124 \uC9C8\uBB38\uC774 \uC633\uB2E4 \uD574\uB3C4, \uC544\uBB34\uB3C4
+        \uB9C9\uC544\uC11C\uC9C0 \uC54A\uC73C\uBA74 \uB354 \uB9CE\uC740 \uC0AC\uB78C\uC774
+        \uC4F0\uB7EC\uC9C4\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uD504\uB9AC\uB4DC, \uB124\uAC00 \uBA3C\uC800 \uB098\uC11C\uACA0\uB2E4\uB294
+        \uB9D0\uB3C4 \uACB0\uAD6D\uC740 \uB124 \uCABD\uC73C\uB85C \uBB34\uAC8C\uB97C
+        \uB04C\uC5B4\uC624\uB294 \uAC70\uC57C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_5_6_7_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 01000000020000000300000004000000
+    Lines:
+    - SpeakerId: 1
+      Text: "\uB370\uC6B0\uC2A4\uC640 \uB8E8\uC774\uC2A4\uB97C \uBCF4\uACE0 \uC788\uC73C\uBA74,
+        \uC0AC\uB78C\uC740 \uC65C \uC11C\uB85C\uC5D0\uAC8C \uB3CC\uC544\uAC00\uB824
+        \uD558\uB294\uC9C0 \uC54C \uAC83\uB3C4 \uAC19\uC544."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 2
+      Text: "\uB450 \uC0AC\uB78C\uC758 \uC0AC\uC815\uC774 \uBB34\uC5C7\uC774\uB4E0,
+        \uC9C0\uAE08\uC740 \uBA48\uCDB0 \uC124 \uC5EC\uC720\uAC00 \uC5C6\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 3
+      Text: "\uB8E8\uC774\uC2A4, \uBB34\uB9AC\uD574\uC11C \uB9D0\uD558\uC9C0 \uC54A\uC544\uB3C4
+        \uB429\uB2C8\uB2E4. \uC5EC\uAE30\uC5D4 \uC81C\uAC00 \uC788\uACA0\uC2B5\uB2C8\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 4
+      Text: "\uB124\uAC00 \uACC1\uC5D0 \uC788\uC73C\uBA74 \uD3B8\uD574. \uADF8\uAC8C
+        \uC88B\uC740 \uAC74\uC9C0 \uB098\uC05C \uAC74\uC9C4 \uBAA8\uB974\uACA0\uC9C0\uB9CC."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_1_2_3_4_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 01000000020000000300000005000000
+    Lines:
+    - SpeakerId: 1
+      Text: "\uB124\uAC00 \uD5A5\uC744 \uB9D0\uD560 \uB54C\uB9C8\uB2E4, \uB204\uAD70\uAC00\uB294
+        \uC774\uBBF8 \uB3C4\uB9C8 \uC704\uC5D0 \uC624\uB978 \uAE30\uBD84\uC774 \uB4E4\uC5B4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 2
+      Text: "\uD1A0\uB2C8, \uB124 \uC6C3\uC74C \uB4A4\uC5D0 \uC228\uC740 \uB0C4\uC0C8\uAC00
+        \uB9C8\uC74C\uC5D0 \uB4E4\uC9C0 \uC54A\uC544."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 3
+      Text: "\uB05D\uC744 \uC11C\uB450\uB97C\uC218\uB85D \uB354 \uC57D\uD55C \uC0AC\uB78C\uC774
+        \uBA3C\uC800 \uB2E4\uCE69\uB2C8\uB2E4. \uADF8 \uC810\uC740 \uC78A\uC9C0 \uB9D0\uC544
+        \uC8FC\uC2ED\uC2DC\uC624."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 5
+      Text: "\uBA54\uC774\uC758 \uCE7C\uB05D\uC740 \uCC38 \uC88B\uC740 \uD5A5\uC744
+        \uB0B4. \uBBFF\uC74C\uC774 \uAC15\uD560\uC218\uB85D \uD0C0\uB4E4\uC5B4 \uAC00\uB294
+        \uB0C4\uC0C8\uB3C4 \uC9C4\uD558\uAC70\uB4E0."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_1_2_3_5_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 01000000020000000300000006000000
+    Lines:
+    - SpeakerId: 1
+      Text: "\uD504\uB9AC\uB4DC, \uB2E4 \uB124 \uBAAB\uC73C\uB85C \uB9CC\uB4E4\uBA74
+        \uC544\uBB34\uB3C4 \uC81C\uB300\uB85C \uC11C\uC9C0 \uBABB\uD574."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 2
+      Text: "\uC774\uBC88\uC5D4 \uB204\uAD6C \uD558\uB098\uB9CC \uC9D0\uC744 \uB5A0\uC548\uB294
+        \uBC29\uC2DD\uC73C\uB85C \uB05D\uB0B4\uACE0 \uC2F6\uC9C0 \uC54A\uC544."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 3
+      Text: "\uB2F9\uC2E0\uC758 \uC815\uC758\uAC00 \uC81C\uAC00 \uC9C0\uD0A4\uB824\uB294
+        \uC0AC\uB78C\uC744 \uC704\uD5D8\uC5D0 \uB450\uB294 \uC21C\uAC04, \uC800\uB294
+        \uB2F9\uC2E0\uACFC \uAC19\uC740 \uD3B8\uC77C \uC218 \uC5C6\uC2B5\uB2C8\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 6
+      Text: "\uB108\uBB34 \uD070 \uC774\uB984\uC744 \uC9CA\uC5B4\uC9C0\uB824 \uD558\uC9C0
+        \uB9C8\uB77C. \uB05D\uAE4C\uC9C0 \uBC84\uD2F0\uB294 \uAC83\uB9CC\uC73C\uB85C\uB3C4
+        \uCDA9\uBD84\uD558\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_1_2_3_6_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 01000000020000000300000007000000
+    Lines:
+    - SpeakerId: 1
+      Text: "\uB05D\uC744 \uBCF4\uC790\uB294 \uC0AC\uB78C\uACFC \uB0A8\uACA8\uC9C8
+        \uC0AC\uB78C\uC744 \uBB3B\uB294 \uC0AC\uB78C\uC774 \uAC19\uC774 \uC788\uC73C\uBA74,
+        \uB300\uB2F5\uC740 \uB298 \uC5B4\uB824\uC6CC\uC9C0\uC9C0."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 2
+      Text: "\uBAA8\uB450\uB97C \uAD6C\uD560 \uC218 \uC5C6\uB2E4 \uD574\uB3C4, \uADF8\uB798\uC11C
+        \uCE7C\uC744 \uAC70\uB458 \uC218\uB294 \uC5C6\uC5B4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 3
+      Text: "\uBA54\uC774, \uB2F9\uC2E0\uC758 \uB73B\uC740 \uC774\uD574\uD569\uB2C8\uB2E4.
+        \uB2E4\uB9CC \uB204\uAD70\uAC00\uB97C \uBC00\uC5B4\uBD99\uC774\uB294 \uB05D\uC774\uB77C\uBA74
+        \uC27D\uAC8C \uB3D9\uC758\uD558\uAE34 \uC5B4\uB835\uC2B5\uB2C8\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uACB0\uB9D0\uC774 \uD544\uC694\uD558\uB2E8 \uAC74 \uC54C\uC9C0. \uADF8\uB7F0\uB370
+        \uADF8 \uACB0\uB9D0 \uBC11\uBC14\uB2E5\uC5D0 \uAE54\uB9B4 \uC0AC\uB78C\uC740
+        \uB204\uAD6C\uC57C?"
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 2
+      Text: "\uC65C \uB610 \uB124\uAC00 \uBA3C\uC800 \uB098\uC11C. \uC774\uB7F0 \uC2DD\uC73C\uB85C
+        \uAC00\uACE0 \uC2F6\uC9C4 \uC54A\uC558\uB294\uB370."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uBD10. \uACB0\uAD6D \uC120\uD0DD\uC744 \uBE7C\uC557\uACE0 \uB5A0\uB0AC\uC796\uC544.
+        \uC0B4\uC544\uB0A8\uC740 \uC0AC\uB78C\uD55C\uD14C\uB294 \uBB3B\uC9C0\uB3C4
+        \uC54A\uACE0."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 1
+      Text: "\uD504\uB9AC\uB4DC\uB294 \uBAA8\uB450\uB97C \uC9C0\uD0A4\uB824 \uD588\uC5B4\uC694.
+        \uD558\uC9C0\uB9CC \uC9C0\uCF1C\uC9C4 \uC0AC\uB78C\uC774 \uC774\uAC78 \uC6D0\uD588\uB294\uC9C0\uB294\u2026"
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 3
+      Text: "\uBA3C\uC800 \uB0B4\uBBF8\uB294 \uC190\uC774 \uC544\uB984\uB2E4\uC6CC
+        \uBCF4\uC77C \uC218\uB294 \uC788\uC2B5\uB2C8\uB2E4. \uD558\uC9C0\uB9CC \uB0A8\uC740
+        \uCABD\uC5D0\uAC90 \uC624\uB798 \uB0A8\uB294 \uC77C\uC774\uAE30\uB3C4 \uD569\uB2C8\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_1_2_3_7_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 01000000020000000400000005000000
+    Lines:
+    - SpeakerId: 1
+      Text: "\uB124\uAC00 \uD5A5\uC744 \uB9D0\uD560 \uB54C\uB9C8\uB2E4, \uB204\uAD70\uAC00\uB294
+        \uC774\uBBF8 \uB3C4\uB9C8 \uC704\uC5D0 \uC624\uB978 \uAE30\uBD84\uC774 \uB4E4\uC5B4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 2
+      Text: "\uD1A0\uB2C8, \uB124 \uC6C3\uC74C \uB4A4\uC5D0 \uC228\uC740 \uB0C4\uC0C8\uAC00
+        \uB9C8\uC74C\uC5D0 \uB4E4\uC9C0 \uC54A\uC544."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 4
+      Text: "\uB124\uAC00 \uBC84\uD2F0\uB294 \uC774\uC720\uB294 \uC54C\uACA0\uB294\uB370,
+        \uBAA8\uB450\uAC00 \uAC19\uC740 \uD798\uC744 \uAC00\uC9C4 \uAC74 \uC544\uB2C8\uC796\uC544."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 5
+      Text: "\uBA54\uC774\uC758 \uCE7C\uB05D\uC740 \uCC38 \uC88B\uC740 \uD5A5\uC744
+        \uB0B4. \uBBFF\uC74C\uC774 \uAC15\uD560\uC218\uB85D \uD0C0\uB4E4\uC5B4 \uAC00\uB294
+        \uB0C4\uC0C8\uB3C4 \uC9C4\uD558\uAC70\uB4E0."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_1_2_4_5_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 01000000020000000400000006000000
+    Lines:
+    - SpeakerId: 1
+      Text: "\uD504\uB9AC\uB4DC, \uB2E4 \uB124 \uBAAB\uC73C\uB85C \uB9CC\uB4E4\uBA74
+        \uC544\uBB34\uB3C4 \uC81C\uB300\uB85C \uC11C\uC9C0 \uBABB\uD574."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 2
+      Text: "\uC774\uBC88\uC5D4 \uB204\uAD6C \uD558\uB098\uB9CC \uC9D0\uC744 \uB5A0\uC548\uB294
+        \uBC29\uC2DD\uC73C\uB85C \uB05D\uB0B4\uACE0 \uC2F6\uC9C0 \uC54A\uC544."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 4
+      Text: "\uBA54\uC774, \uB05D\uC744 \uBD10\uC57C \uD55C\uB2E4\uB294 \uB9D0\uC740
+        \uC54C\uC544. \uADFC\uB370 \uB09C \uAC00\uB054 \uBA48\uCD94\uACE0 \uC2F6\uC5B4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 6
+      Text: "\uB108\uBB34 \uD070 \uC774\uB984\uC744 \uC9CA\uC5B4\uC9C0\uB824 \uD558\uC9C0
+        \uB9C8\uB77C. \uB05D\uAE4C\uC9C0 \uBC84\uD2F0\uB294 \uAC83\uB9CC\uC73C\uB85C\uB3C4
+        \uCDA9\uBD84\uD558\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_1_2_4_6_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 01000000020000000400000007000000
+    Lines:
+    - SpeakerId: 1
+      Text: "\uB05D\uC744 \uBCF4\uC790\uB294 \uC0AC\uB78C\uACFC \uB0A8\uACA8\uC9C8
+        \uC0AC\uB78C\uC744 \uBB3B\uB294 \uC0AC\uB78C\uC774 \uAC19\uC774 \uC788\uC73C\uBA74,
+        \uB300\uB2F5\uC740 \uB298 \uC5B4\uB824\uC6CC\uC9C0\uC9C0."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 2
+      Text: "\uBAA8\uB450\uB97C \uAD6C\uD560 \uC218 \uC5C6\uB2E4 \uD574\uB3C4, \uADF8\uB798\uC11C
+        \uCE7C\uC744 \uAC70\uB458 \uC218\uB294 \uC5C6\uC5B4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 4
+      Text: "\uACC4\uC18D \uC55E\uC73C\uB85C\uB9CC \uAC00\uBA74 \uC5B8\uC820\uAC00
+        \uC9C4\uC9DC \uC544\uBB34\uAC83\uB3C4 \uC548 \uB0A8\uC744 \uAC83 \uAC19\uC544."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uACB0\uB9D0\uC774 \uD544\uC694\uD558\uB2E8 \uAC74 \uC54C\uC9C0. \uADF8\uB7F0\uB370
+        \uADF8 \uACB0\uB9D0 \uBC11\uBC14\uB2E5\uC5D0 \uAE54\uB9B4 \uC0AC\uB78C\uC740
+        \uB204\uAD6C\uC57C?"
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_1_2_4_7_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 01000000020000000500000006000000
+    Lines:
+    - SpeakerId: 1
+      Text: "\uB124\uAC00 \uD5A5\uC744 \uB9D0\uD560 \uB54C\uB9C8\uB2E4, \uB204\uAD70\uAC00\uB294
+        \uC774\uBBF8 \uB3C4\uB9C8 \uC704\uC5D0 \uC624\uB978 \uAE30\uBD84\uC774 \uB4E4\uC5B4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 2
+      Text: "\uD1A0\uB2C8, \uB124 \uC6C3\uC74C \uB4A4\uC5D0 \uC228\uC740 \uB0C4\uC0C8\uAC00
+        \uB9C8\uC74C\uC5D0 \uB4E4\uC9C0 \uC54A\uC544."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 5
+      Text: "\uBA54\uC774\uC758 \uCE7C\uB05D\uC740 \uCC38 \uC88B\uC740 \uD5A5\uC744
+        \uB0B4. \uBBFF\uC74C\uC774 \uAC15\uD560\uC218\uB85D \uD0C0\uB4E4\uC5B4 \uAC00\uB294
+        \uB0C4\uC0C8\uB3C4 \uC9C4\uD558\uAC70\uB4E0."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 6
+      Text: "\uB05D\uC744 \uC644\uC218\uD574\uC57C \uD55C\uB2E4\uBA74 \uB0B4\uAC00
+        \uBC29\uD328\uAC00 \uB418\uACA0\uB2E4. \uB124\uAC00 \uBB34\uB108\uC9C0\uAC8C
+        \uB450\uC9C4 \uC54A\uACA0\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_1_2_5_6_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 01000000020000000500000007000000
+    Lines:
+    - SpeakerId: 1
+      Text: "\uBA54\uC774\uB294 \uC55E\uC73C\uB85C \uBC00\uACE0, \uC0C8\uD134\uC740
+        \uBC1C\uBC11\uC744 \uBB3B\uB124. \uB458 \uB2E4 \uD2C0\uB9B0 \uB9D0\uC740
+        \uC544\uB2C8\uC57C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 2
+      Text: "\uB204\uAD70\uAC00\uC758 \uBD88\uD589\uC744 \uC6C3\uC73C\uBA70 \uB118\uAE30\uB294
+        \uC0AC\uB78C\uC740, \uB09C \uC624\uB798 \uB450\uC9C0 \uC54A\uC544."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 5
+      Text: "\uD06C\uAC8C \uBE5B\uB098\uB294 \uB9D0\uC77C\uC218\uB85D \uC8FC\uBCC0
+        \uACF5\uAE30\uAE4C\uC9C0 \uBE60\uB974\uAC8C \uB2EC\uC544\uC624\uB974\uB354\uB77C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uBA54\uC774, \uB05D\uC744 \uBCF4\uC790\uB294 \uB9D0 \uB4A4\uC5D4 \uB298
+        \uB204\uAC00 \uB0A8\uB294\uC9C0\uBD80\uD130 \uB9D0\uD574."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\u2026\uB610 \uB0A8\uACBC\uC5B4. \uC774\uBC88\uC5D0\uB3C4 \uB0B4\uAC00
+        \uBA3C\uC800 \uC6C0\uC9C1\uC600\uAE30 \uB54C\uBB38\uC5D0."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 1
+      Text: "\uC0C8\uD134 \uD0D3\uB9CC\uC740 \uC544\uB2C8\uC5D0\uC694. \uD558\uC9C0\uB9CC
+        \uC0C8\uD134\uC774 \uADF8 \uB9D0\uC744 \uBBFF\uC9C0 \uC54A\uC744 \uAC83\uB3C4
+        \uC54C\uC544\uC694."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 2
+      Text: "\uC9C0\uAE08 \uD544\uC694\uD55C \uAC74 \uC774\uC720\uB97C \uCC3E\uB294
+        \uAC70\uC57C. \uC5EC\uAE30\uC11C \uBA48\uCD94\uBA74 \uC0C1\uD669\uC774 \uB354
+        \uB098\uBE60\uC9C8 \uC218 \uC788\uC5B4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 5
+      Text: "\uC774\uC804 \uC790\uB9AC\uC5D0\uB3C4 \uB204\uAC00 \uC788\uC5C8\uAD6C\uB098\u2026
+        \uC6C0\uC9C1\uC778 \uB4A4\uC758 \uB9DB\uC740 \uB298 \uB2A6\uAC8C \uC62C\uB77C\uC640."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 5
+      Text: "\uC5B4\u2026 \uC65C \uC4F0\uB7EC\uC84C\uC5B4? \uBC29\uAE08\uAE4C\uC9C0
+        \uAD1C\uCC2E\uC558\uC796\uC544. \uC815\uB9D0 \uC774\uC0C1\uD558\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 1
+      Text: "\uD1A0\uB2C8, \uBC29\uAE08 \uBB58 \uBD24\uB098\uC694? \uBAA8\uB974\uB294
+        \uCC99\uD558\uAE30\uC5D4 \uB108\uBB34 \uAC00\uAE4C\uC6E0\uC5B4\uC694."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 2
+      Text: "\uBAA8\uB450 \uB5A8\uC5B4\uC838. \uAC19\uC740 \uAD6C\uC5ED\uC5D0 \uC788\uB358
+        \uC0AC\uB78C\uBD80\uD130 \uD655\uC778\uD55C\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uADC0\uC5EC\uC6B4 \uC5BC\uAD74 \uB4A4\uC5D0 \uC228\uC740 \uAC8C \uBB54\uC9C0
+        \uC774\uC81C \uBD10\uC57C\uACA0\uB124."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_1_2_5_7_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 01000000020000000600000007000000
+    Lines:
+    - SpeakerId: 1
+      Text: "\uB05D\uC744 \uBCF4\uC790\uB294 \uC0AC\uB78C\uACFC \uB0A8\uACA8\uC9C8
+        \uC0AC\uB78C\uC744 \uBB3B\uB294 \uC0AC\uB78C\uC774 \uAC19\uC774 \uC788\uC73C\uBA74,
+        \uB300\uB2F5\uC740 \uB298 \uC5B4\uB824\uC6CC\uC9C0\uC9C0."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 2
+      Text: "\uBAA8\uB450\uB97C \uAD6C\uD560 \uC218 \uC5C6\uB2E4 \uD574\uB3C4, \uADF8\uB798\uC11C
+        \uCE7C\uC744 \uAC70\uB458 \uC218\uB294 \uC5C6\uC5B4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 6
+      Text: "\uBA54\uC774, \uB124\uAC00 \uB05D\uC744 \uBCF4\uB824\uB294 \uB73B\uC740
+        \uC548\uB2E4. \uD558\uC9C0\uB9CC \uADF8 \uB300\uAC00\uAE4C\uC9C0 \uD63C\uC790
+        \uC9CA\uC5B4\uC9C8 \uD544\uC694\uB294 \uC5C6\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uACB0\uB9D0\uC774 \uD544\uC694\uD558\uB2E8 \uAC74 \uC54C\uC9C0. \uADF8\uB7F0\uB370
+        \uADF8 \uACB0\uB9D0 \uBC11\uBC14\uB2E5\uC5D0 \uAE54\uB9B4 \uC0AC\uB78C\uC740
+        \uB204\uAD6C\uC57C?"
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 2
+      Text: "\uAC10\uC815\uC73C\uB85C \uC6C0\uC9C1\uC778 \uAC74 \uC544\uB2C8\uC57C.
+        \uB354 \uBC88\uC9C0\uC9C0 \uC54A\uAC8C \uBA48\uCDB0 \uC138\uC6B4 \uAC83\uBFD0\uC774\uC57C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 1
+      Text: "\uBA54\uC774\uB294 \uACB0\uAD6D \uCC45\uC784\uC744 \uBB3C\uC5C8\uAD70\uC694.
+        \uBB38\uC81C\uB294 \uADF8 \uCC45\uC784\uC774 \uC5B4\uB514\uAE4C\uC9C0 \uC774\uC5B4\uC9C8\uC9C0\uC608\uC694."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 6
+      Text: "\uC545\uC744 \uBA48\uCD98 \uC120\uD0DD\uC774\uB2E4. \uD558\uC9C0\uB9CC
+        \uADF8 \uC120\uD0DD\uC758 \uBB34\uAC8C\uB3C4 \uB204\uAD70\uAC00\uB294 \uC9CA\uC5B4\uC838\uC57C
+        \uD55C\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uB05D\uB09C \uAC78\uB85C \uBCF4\uC9C4 \uB9C8. \uD558\uB098\uAC00 \uBA48\uCDC4\uB2E4\uACE0
+        \uD574\uC11C \uB0A8\uC740 \uD754\uC801\uAE4C\uC9C0 \uC0AC\uB77C\uC9C4 \uAC74
+        \uC544\uB2C8\uB2C8\uAE4C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_1_2_6_7_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 01000000030000000400000005000000
+    Lines:
+    - SpeakerId: 1
+      Text: "\uB450 \uC0AC\uB78C\uC774 \uC11C\uB85C\uB9CC \uBCF4\uACE0 \uC788\uC73C\uBA74,
+        \uB098\uBA38\uC9C0\uB294 \uC810\uC810 \uBC14\uAE65\uC73C\uB85C \uBC00\uB824\uB098\uACA0\uC9C0."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 3
+      Text: "\uB2F9\uC2E0\uC774 \uBC84\uD2F8 \uD798\uC774 \uC5C6\uB2E4\uBA74, \uC81C\uAC00
+        \uB300\uC2E0 \uBC84\uD2F0\uACA0\uC2B5\uB2C8\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 4
+      Text: "\uB2E4 \uAD1C\uCC2E\uC9C0 \uC54A\uC740\uB370, \uB124\uAC00 \uAD1C\uCC2E\uB2E4\uACE0
+        \uB9D0\uD558\uBA74 \uC7A0\uAE50\uC740 \uBBFF\uAC8C \uB3FC."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 5
+      Text: "\uC11C\uB85C\uB9CC \uBCF4\uB294 \uC0AC\uB78C\uB4E4\uC740 \uBD84\uC704\uAE30\uB97C
+        \uBE60\uB974\uAC8C \uBC14\uAFB8\uC9C0. \uAC00\uAE4C\uC6B4 \uB9CC\uD07C \uD754\uB4E4\uB9BC\uB3C4
+        \uCEE4 \uBCF4\uC5EC."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_1_3_4_5_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 01000000030000000400000006000000
+    Lines:
+    - SpeakerId: 1
+      Text: "\uB458 \uC0AC\uC774 \uACF5\uAE30\uAC00 \uB108\uBB34 \uB530\uB73B\uD574\uC11C,
+        \uB2E4\uB978 \uB9D0\uC774 \uB07C\uC5B4\uB4E4 \uD2C8\uC774 \uC5C6\uB124."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 3
+      Text: "\uB8E8\uC774\uC2A4\uB9CC \uBB34\uC0AC\uD558\uB2E4\uBA74, \uC800\uB294
+        \uB2E4\uB978 \uC2DC\uC120\uC744 \uC5BC\uB9C8\uB4E0\uC9C0 \uAC10\uB2F9\uD560
+        \uC218 \uC788\uC2B5\uB2C8\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 4
+      Text: "\uB370\uC6B0\uC2A4, \uADF8\uB807\uAC8C\uAE4C\uC9C0 \uC560\uC4F0\uC9C0
+        \uC54A\uC544\uB3C4 \uB3FC. \uADF8\uB7F0\uB370\uB3C4 \uB124\uAC00 \uC788\uC73C\uBA74
+        \uC870\uAE08 \uB35C \uBB34\uB108\uC838."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 6
+      Text: "\uC9C0\uD0A4\uACE0 \uC2F6\uC740 \uC0AC\uB78C\uC774 \uC788\uB2E4\uBA74
+        \uB354\uB354\uC6B1 \uB4A4\uC5D0 \uC788\uC5B4\uB77C. \uCE7C\uB0A0\uC740 \uB0B4\uAC00
+        \uB9C9\uB294\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_1_3_4_6_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 01000000030000000400000007000000
+    Lines:
+    - SpeakerId: 1
+      Text: "\uB370\uC6B0\uC2A4\uC640 \uB8E8\uC774\uC2A4\uB97C \uBCF4\uACE0 \uC788\uC73C\uBA74,
+        \uC0AC\uB78C\uC740 \uC65C \uC11C\uB85C\uC5D0\uAC8C \uB3CC\uC544\uAC00\uB824
+        \uD558\uB294\uC9C0 \uC54C \uAC83\uB3C4 \uAC19\uC544."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 3
+      Text: "\uB8E8\uC774\uC2A4, \uBB34\uB9AC\uD574\uC11C \uB9D0\uD558\uC9C0 \uC54A\uC544\uB3C4
+        \uB429\uB2C8\uB2E4. \uC5EC\uAE30\uC5D4 \uC81C\uAC00 \uC788\uACA0\uC2B5\uB2C8\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 4
+      Text: "\uB124\uAC00 \uACC1\uC5D0 \uC788\uC73C\uBA74 \uD3B8\uD574. \uADF8\uAC8C
+        \uC88B\uC740 \uAC74\uC9C0 \uB098\uC05C \uAC74\uC9C4 \uBAA8\uB974\uACA0\uC9C0\uB9CC."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uB458\uB9CC \uBCF4\uACE0 \uC788\uC73C\uBA74 \uD3B8\uD560 \uC21C \uC788\uACA0\uC9C0.
+        \uB300\uC2E0 \uB2E4\uB978 \uAC74 \uC810\uC810 \uBA40\uC5B4\uC9C8 \uD14C\uACE0."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_1_3_4_7_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 01000000030000000500000006000000
+    Lines:
+    - SpeakerId: 1
+      Text: "\uB124\uAC00 \uD5A5\uC744 \uB9D0\uD560 \uB54C\uB9C8\uB2E4, \uB204\uAD70\uAC00\uB294
+        \uC774\uBBF8 \uB3C4\uB9C8 \uC704\uC5D0 \uC624\uB978 \uAE30\uBD84\uC774 \uB4E4\uC5B4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 3
+      Text: "\uB2F9\uC2E0\uC774 \uB300\uC2E0 \uC9CA\uC5B4\uC9C0\uB824\uB294 \uB9C8\uC74C\uC740
+        \uC54C\uC9C0\uB9CC, \uADF8 \uACB0\uB2E8\uC774 \uBAA8\uB450\uB97C \uAD6C\uD558\uC9C4
+        \uBABB\uD569\uB2C8\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 5
+      Text: "\uD504\uB9AC\uB4DC \uAC19\uC740 \uC0AC\uB78C\uC740 \uB4DC\uBB3C\uC9C0.
+        \uC2A4\uC2A4\uB85C \uBA3C\uC800 \uB098\uC11C\uB824\uB294 \uC0AC\uB78C\uC740
+        \uC5B4\uB514\uC11C\uB098 \uB208\uC5D0 \uB744\uAC70\uB4E0."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 6
+      Text: "\uAC00\uBCBC\uC6B4 \uB9D0\uB85C \uB118\uAE38 \uC218 \uC5C6\uB294 \uC120\uC774
+        \uC788\uC5B4. \uADF8\uAC78 \uB118\uB294\uB2E4\uBA74 \uB098\uB294 \uAC00\uB9CC\uC788\uC9C0
+        \uC54A\uACA0\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_1_3_5_6_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 01000000030000000500000007000000
+    Lines:
+    - SpeakerId: 1
+      Text: "\uD1A0\uB2C8, \uB124\uAC00 \uC6C3\uC744\uC218\uB85D \uACF5\uAE30\uAC00
+        \uB354 \uCC28\uAC00\uC6CC\uC838."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 3
+      Text: "\uC544\uBB34\uB9AC \uAC00\uBCCD\uAC8C \uB9D0\uD574\uB3C4, \uD0C0\uC778\uC744
+        \uD574\uCE58\uB294 \uC77C\uAE4C\uC9C0 \uAC00\uBCBC\uC6CC\uC9C0\uC9C4 \uC54A\uC2B5\uB2C8\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 5
+      Text: "\uC9C8\uBB38\uC774 \uB9CE\uC740 \uC0AC\uB78C\uC77C\uC218\uB85D \uB2E4\uB8E8\uAE30
+        \uC5B4\uB835\uC9C0. \uADF8\uB798\uC11C \uB354 \uC624\uB798 \uB208\uC774 \uAC00."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uD1A0\uB2C8, \uB124 \uB9D0\uC740 \uC774\uC0C1\uD558\uAC8C \uC624\uB798
+        \uB0A8\uC544. \uB4E3\uACE0 \uB098\uBA74 \uACF5\uAE30\uAC00 \uB2EC\uB77C\uC838."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_1_3_5_7_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 01000000030000000600000007000000
+    Lines:
+    - SpeakerId: 1
+      Text: "\uBAA8\uB450\uB97C \uB300\uC2E0 \uC9CA\uC5B4\uC9C0\uB824\uB294 \uD45C\uC815\uC774
+        \uB108\uBB34 \uC775\uC219\uD574\uC11C \uB354 \uBD88\uC548\uD574."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 3
+      Text: "\uD504\uB9AC\uB4DC, \uBA3C\uC800 \uB098\uC11C\uB294 \uB9C8\uC74C\uC774
+        \uB298 \uAC00\uC7A5 \uC88B\uC740 \uB2F5\uC774 \uB418\uB294 \uAC74 \uC544\uB2D9\uB2C8\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 6
+      Text: "\uC0C8\uD134, \uB124 \uC758\uC2EC\uC774 \uD544\uC694\uD55C \uAC74 \uC548\uB2E4.
+        \uADF8\uB798\uB3C4 \uB204\uAD70\uAC00\uB294 \uBA3C\uC800 \uBAB8\uC744 \uC138\uC6CC\uC57C
+        \uD55C\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uD76C\uC0DD\uC744 \uB108\uBB34 \uC27D\uAC8C \uC88B\uC740 \uB9D0\uB85C
+        \uD3EC\uC7A5\uD558\uC9C4 \uB9C8. \uB0A8\uC740 \uC0AC\uB78C\uB4E4\uC5D0\uAC90
+        \uB298 \uB2E4\uB978 \uBB34\uAC8C\uB85C \uB0A8\uC73C\uB2C8\uAE4C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_1_3_6_7_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 01000000040000000500000006000000
+    Lines:
+    - SpeakerId: 1
+      Text: "\uB124\uAC00 \uD5A5\uC744 \uB9D0\uD560 \uB54C\uB9C8\uB2E4, \uB204\uAD70\uAC00\uB294
+        \uC774\uBBF8 \uB3C4\uB9C8 \uC704\uC5D0 \uC624\uB978 \uAE30\uBD84\uC774 \uB4E4\uC5B4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 4
+      Text: "\uB124 \uB9D0\uC740 \uBC30\uACE0\uD508 \uC18C\uB9AC\uC778\uB370, \uB4E3\uACE0
+        \uC788\uC73C\uBA74 \uC790\uAFB8 \uB204\uAC00 \uC0AC\uB77C\uC9C8 \uAC83 \uAC19\uC544."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 5
+      Text: "\uD504\uB9AC\uB4DC \uAC19\uC740 \uC0AC\uB78C\uC740 \uB4DC\uBB3C\uC9C0.
+        \uC2A4\uC2A4\uB85C \uBA3C\uC800 \uB098\uC11C\uB824\uB294 \uC0AC\uB78C\uC740
+        \uC5B4\uB514\uC11C\uB098 \uB208\uC5D0 \uB744\uAC70\uB4E0."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 6
+      Text: "\uAC00\uBCBC\uC6B4 \uB9D0\uB85C \uB118\uAE38 \uC218 \uC5C6\uB294 \uC120\uC774
+        \uC788\uC5B4. \uADF8\uAC78 \uB118\uB294\uB2E4\uBA74 \uB098\uB294 \uAC00\uB9CC\uC788\uC9C0
+        \uC54A\uACA0\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_1_4_5_6_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 01000000040000000500000007000000
+    Lines:
+    - SpeakerId: 1
+      Text: "\uD1A0\uB2C8, \uB124\uAC00 \uC6C3\uC744\uC218\uB85D \uACF5\uAE30\uAC00
+        \uB354 \uCC28\uAC00\uC6CC\uC838."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 4
+      Text: "\uC0C8\uD134 \uB9D0\uC774 \uD2C0\uB9B0 \uAC74 \uC544\uB2C8\uC9C0. \uB298
+        \uB204\uAD70\uAC00\uB294 \uB4A4\uC5D0 \uB0A8\uC558\uC73C\uB2C8\uAE4C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 5
+      Text: "\uC9C8\uBB38\uC774 \uB9CE\uC740 \uC0AC\uB78C\uC77C\uC218\uB85D \uB2E4\uB8E8\uAE30
+        \uC5B4\uB835\uC9C0. \uADF8\uB798\uC11C \uB354 \uC624\uB798 \uB208\uC774 \uAC00."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uD1A0\uB2C8, \uB124 \uB9D0\uC740 \uC774\uC0C1\uD558\uAC8C \uC624\uB798
+        \uB0A8\uC544. \uB4E3\uACE0 \uB098\uBA74 \uACF5\uAE30\uAC00 \uB2EC\uB77C\uC838."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_1_4_5_7_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 01000000040000000600000007000000
+    Lines:
+    - SpeakerId: 1
+      Text: "\uBAA8\uB450\uB97C \uB300\uC2E0 \uC9CA\uC5B4\uC9C0\uB824\uB294 \uD45C\uC815\uC774
+        \uB108\uBB34 \uC775\uC219\uD574\uC11C \uB354 \uBD88\uC548\uD574."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 4
+      Text: "\uADF8\uB7F0 \uC9C8\uBB38\uC740 \uB4E3\uAE30 \uC2EB\uC740\uB370, \uC774\uC0C1\uD558\uAC8C
+        \uAC00\uC7A5 \uD53C\uD560 \uC218 \uC5C6\uB294 \uB9D0\uCC98\uB7FC \uB4E4\uB824."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 6
+      Text: "\uC0C8\uD134, \uB124 \uC758\uC2EC\uC774 \uD544\uC694\uD55C \uAC74 \uC548\uB2E4.
+        \uADF8\uB798\uB3C4 \uB204\uAD70\uAC00\uB294 \uBA3C\uC800 \uBAB8\uC744 \uC138\uC6CC\uC57C
+        \uD55C\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uD76C\uC0DD\uC744 \uB108\uBB34 \uC27D\uAC8C \uC88B\uC740 \uB9D0\uB85C
+        \uD3EC\uC7A5\uD558\uC9C4 \uB9C8. \uB0A8\uC740 \uC0AC\uB78C\uB4E4\uC5D0\uAC90
+        \uB298 \uB2E4\uB978 \uBB34\uAC8C\uB85C \uB0A8\uC73C\uB2C8\uAE4C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_1_4_6_7_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 01000000050000000600000007000000
+    Lines:
+    - SpeakerId: 1
+      Text: "\uB124\uAC00 \uD5A5\uC744 \uB9D0\uD560 \uB54C\uB9C8\uB2E4, \uB204\uAD70\uAC00\uB294
+        \uC774\uBBF8 \uB3C4\uB9C8 \uC704\uC5D0 \uC624\uB978 \uAE30\uBD84\uC774 \uB4E4\uC5B4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 5
+      Text: "\uD504\uB9AC\uB4DC \uAC19\uC740 \uC0AC\uB78C\uC740 \uB4DC\uBB3C\uC9C0.
+        \uC2A4\uC2A4\uB85C \uBA3C\uC800 \uB098\uC11C\uB824\uB294 \uC0AC\uB78C\uC740
+        \uC5B4\uB514\uC11C\uB098 \uB208\uC5D0 \uB744\uAC70\uB4E0."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 6
+      Text: "\uB204\uAC00 \uB0A8\uACA8\uC9C8\uC9C0\uB97C \uBB3B\uB294\uB2E4\uBA74,
+        \uC6B0\uC120 \uB0B4\uAC00 \uC55E\uC5D0 \uC11C\uACA0\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uB124\uAC00 \uBA3C\uC800 \uC81C\uB2E8\uC5D0 \uC624\uB974\uB294 \uC21C\uAC04,
+        \uB2E4\uB978 \uC0AC\uB78C\uB4E4\uC740 \uAC70\uC808\uD560 \uAE30\uD68C\uC870\uCC28
+        \uC783\uC5B4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_1_5_6_7_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 02000000030000000400000005000000
+    Lines:
+    - SpeakerId: 2
+      Text: "\uB204\uAD70\uAC00\uC758 \uBD88\uD589\uC744 \uC6C3\uC73C\uBA70 \uB118\uAE30\uB294
+        \uC0AC\uB78C\uC740, \uB09C \uC624\uB798 \uB450\uC9C0 \uC54A\uC544."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 3
+      Text: "\uB8E8\uC774\uC2A4\uB9CC \uBB34\uC0AC\uD558\uB2E4\uBA74, \uC800\uB294
+        \uB2E4\uB978 \uC2DC\uC120\uC744 \uC5BC\uB9C8\uB4E0\uC9C0 \uAC10\uB2F9\uD560
+        \uC218 \uC788\uC2B5\uB2C8\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 4
+      Text: "\uB370\uC6B0\uC2A4, \uADF8\uB807\uAC8C\uAE4C\uC9C0 \uC560\uC4F0\uC9C0
+        \uC54A\uC544\uB3C4 \uB3FC. \uADF8\uB7F0\uB370\uB3C4 \uB124\uAC00 \uC788\uC73C\uBA74
+        \uC870\uAE08 \uB35C \uBB34\uB108\uC838."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 5
+      Text: "\uB458 \uC0AC\uC774\uC5D4 \uB2EC\uCF64\uD55C \uB0C4\uC0C8\uAC00 \uB098.
+        \uC624\uB798 \uB450\uBA74 \uC369\uB294 \uC18D\uB3C4\uB3C4 \uC544\uB984\uB2F5\uACA0\uC9C0."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_2_3_4_5_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 02000000030000000400000006000000
+    Lines:
+    - SpeakerId: 2
+      Text: "\uB450 \uC0AC\uB78C\uC758 \uC0AC\uC815\uC774 \uBB34\uC5C7\uC774\uB4E0,
+        \uC9C0\uAE08\uC740 \uBA48\uCDB0 \uC124 \uC5EC\uC720\uAC00 \uC5C6\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 3
+      Text: "\uB8E8\uC774\uC2A4, \uBB34\uB9AC\uD574\uC11C \uB9D0\uD558\uC9C0 \uC54A\uC544\uB3C4
+        \uB429\uB2C8\uB2E4. \uC5EC\uAE30\uC5D4 \uC81C\uAC00 \uC788\uACA0\uC2B5\uB2C8\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 4
+      Text: "\uB124\uAC00 \uACC1\uC5D0 \uC788\uC73C\uBA74 \uD3B8\uD574. \uADF8\uAC8C
+        \uC88B\uC740 \uAC74\uC9C0 \uB098\uC05C \uAC74\uC9C4 \uBAA8\uB974\uACA0\uC9C0\uB9CC."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 6
+      Text: "\uBA54\uC774, \uB124\uAC00 \uB05D\uC744 \uBCF4\uB824\uB294 \uB73B\uC740
+        \uC548\uB2E4. \uD558\uC9C0\uB9CC \uADF8 \uB300\uAC00\uAE4C\uC9C0 \uD63C\uC790
+        \uC9CA\uC5B4\uC9C8 \uD544\uC694\uB294 \uC5C6\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_2_3_4_6_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 02000000030000000400000007000000
+    Lines:
+    - SpeakerId: 2
+      Text: "\uC11C\uB85C\uB97C \uC9C0\uD0A4\uACE0 \uC2F6\uC740 \uAC74 \uC54C\uACA0\uC9C0\uB9CC,
+        \uC9C0\uAE08\uC740 \uBA48\uCD9C \uB54C\uAC00 \uC544\uB2C8\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 3
+      Text: "\uB2F9\uC2E0\uC774 \uBC84\uD2F8 \uD798\uC774 \uC5C6\uB2E4\uBA74, \uC81C\uAC00
+        \uB300\uC2E0 \uBC84\uD2F0\uACA0\uC2B5\uB2C8\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 4
+      Text: "\uB2E4 \uAD1C\uCC2E\uC9C0 \uC54A\uC740\uB370, \uB124\uAC00 \uAD1C\uCC2E\uB2E4\uACE0
+        \uB9D0\uD558\uBA74 \uC7A0\uAE50\uC740 \uBBFF\uAC8C \uB3FC."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uD070 \uACB0\uC2EC\uC740 \uB298 \uBA4B\uC788\uAC8C \uB4E4\uB824. \uADF8\uB798\uC11C
+        \uADF8 \uADF8\uB9BC\uC790\uB3C4 \uB354 \uB2A6\uAC8C \uBCF4\uC774\uB354\uB77C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_2_3_4_7_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 02000000030000000500000006000000
+    Lines:
+    - SpeakerId: 2
+      Text: "\uB204\uAD70\uAC00\uC758 \uBD88\uD589\uC744 \uC6C3\uC73C\uBA70 \uB118\uAE30\uB294
+        \uC0AC\uB78C\uC740, \uB09C \uC624\uB798 \uB450\uC9C0 \uC54A\uC544."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 3
+      Text: "\uB2F9\uC2E0\uC758 \uC815\uC758\uAC00 \uC81C\uAC00 \uC9C0\uD0A4\uB824\uB294
+        \uC0AC\uB78C\uC744 \uC704\uD5D8\uC5D0 \uB450\uB294 \uC21C\uAC04, \uC800\uB294
+        \uB2F9\uC2E0\uACFC \uAC19\uC740 \uD3B8\uC77C \uC218 \uC5C6\uC2B5\uB2C8\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 5
+      Text: "\uD06C\uAC8C \uBE5B\uB098\uB294 \uB9D0\uC77C\uC218\uB85D \uC8FC\uBCC0
+        \uACF5\uAE30\uAE4C\uC9C0 \uBE60\uB974\uAC8C \uB2EC\uC544\uC624\uB974\uB354\uB77C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 6
+      Text: "\uB108\uBB34 \uD070 \uC774\uB984\uC744 \uC9CA\uC5B4\uC9C0\uB824 \uD558\uC9C0
+        \uB9C8\uB77C. \uB05D\uAE4C\uC9C0 \uBC84\uD2F0\uB294 \uAC83\uB9CC\uC73C\uB85C\uB3C4
+        \uCDA9\uBD84\uD558\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_2_3_5_6_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 02000000030000000500000007000000
+    Lines:
+    - SpeakerId: 2
+      Text: "\uC0AC\uB78C\uC744 \uB108\uBB34 \uAC00\uBCCD\uAC8C \uB2E4\uB8E8\uB294
+        \uB9D0\uC740, \uB09C \uB05D\uAE4C\uC9C0 \uBABB \uB118\uACA8."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 3
+      Text: "\uBA54\uC774, \uB2F9\uC2E0\uC758 \uB73B\uC740 \uC774\uD574\uD569\uB2C8\uB2E4.
+        \uB2E4\uB9CC \uB204\uAD70\uAC00\uB97C \uBC00\uC5B4\uBD99\uC774\uB294 \uB05D\uC774\uB77C\uBA74
+        \uC27D\uAC8C \uB3D9\uC758\uD558\uAE34 \uC5B4\uB835\uC2B5\uB2C8\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 5
+      Text: "\uB05D\uC744 \uBCF4\uACA0\uB2E4\uB294 \uC0AC\uB78C\uC740 \uB2E4\uB8E8\uAE30
+        \uC26C\uC6CC. \uBD88\uC744 \uB354 \uC8FC\uBA74 \uC2A4\uC2A4\uB85C \uB053\uC5B4\uC624\uB974\uB2C8\uAE4C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uACB0\uB9D0\uC774 \uD544\uC694\uD558\uB2E8 \uAC74 \uC54C\uC9C0. \uADF8\uB7F0\uB370
+        \uADF8 \uACB0\uB9D0 \uBC11\uBC14\uB2E5\uC5D0 \uAE54\uB9B4 \uC0AC\uB78C\uC740
+        \uB204\uAD6C\uC57C?"
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_2_3_5_7_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 02000000030000000600000007000000
+    Lines:
+    - SpeakerId: 2
+      Text: "\uB204\uAC00 \uB0A8\uACA8\uC9C8\uC9C0\uB97C \uBB3B\uAE30 \uC804\uC5D0,
+        \uBA3C\uC800 \uB05D\uB0BC \uBC29\uBC95\uC744 \uCC3E\uC544\uC57C \uD55C\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 3
+      Text: "\uB05D\uC744 \uC11C\uB450\uB97C\uC218\uB85D \uB354 \uC57D\uD55C \uC0AC\uB78C\uC774
+        \uBA3C\uC800 \uB2E4\uCE69\uB2C8\uB2E4. \uADF8 \uC810\uC740 \uC78A\uC9C0 \uB9D0\uC544
+        \uC8FC\uC2ED\uC2DC\uC624."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 6
+      Text: "\uB05D\uC744 \uC644\uC218\uD574\uC57C \uD55C\uB2E4\uBA74 \uB0B4\uAC00
+        \uBC29\uD328\uAC00 \uB418\uACA0\uB2E4. \uB124\uAC00 \uBB34\uB108\uC9C0\uAC8C
+        \uB450\uC9C4 \uC54A\uACA0\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uD070 \uACB0\uC2EC\uC740 \uB298 \uBA4B\uC788\uAC8C \uB4E4\uB824. \uADF8\uB798\uC11C
+        \uADF8 \uADF8\uB9BC\uC790\uB3C4 \uB354 \uB2A6\uAC8C \uBCF4\uC774\uB354\uB77C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_2_3_6_7_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 02000000040000000500000006000000
+    Lines:
+    - SpeakerId: 2
+      Text: "\uB204\uAD70\uAC00\uC758 \uBD88\uD589\uC744 \uC6C3\uC73C\uBA70 \uB118\uAE30\uB294
+        \uC0AC\uB78C\uC740, \uB09C \uC624\uB798 \uB450\uC9C0 \uC54A\uC544."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 4
+      Text: "\uBA54\uC774, \uB05D\uC744 \uBD10\uC57C \uD55C\uB2E4\uB294 \uB9D0\uC740
+        \uC54C\uC544. \uADFC\uB370 \uB09C \uAC00\uB054 \uBA48\uCD94\uACE0 \uC2F6\uC5B4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 5
+      Text: "\uD06C\uAC8C \uBE5B\uB098\uB294 \uB9D0\uC77C\uC218\uB85D \uC8FC\uBCC0
+        \uACF5\uAE30\uAE4C\uC9C0 \uBE60\uB974\uAC8C \uB2EC\uC544\uC624\uB974\uB354\uB77C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 6
+      Text: "\uB108\uBB34 \uD070 \uC774\uB984\uC744 \uC9CA\uC5B4\uC9C0\uB824 \uD558\uC9C0
+        \uB9C8\uB77C. \uB05D\uAE4C\uC9C0 \uBC84\uD2F0\uB294 \uAC83\uB9CC\uC73C\uB85C\uB3C4
+        \uCDA9\uBD84\uD558\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_2_4_5_6_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 02000000040000000500000007000000
+    Lines:
+    - SpeakerId: 2
+      Text: "\uC0AC\uB78C\uC744 \uB108\uBB34 \uAC00\uBCCD\uAC8C \uB2E4\uB8E8\uB294
+        \uB9D0\uC740, \uB09C \uB05D\uAE4C\uC9C0 \uBABB \uB118\uACA8."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 4
+      Text: "\uACC4\uC18D \uC55E\uC73C\uB85C\uB9CC \uAC00\uBA74 \uC5B8\uC820\uAC00
+        \uC9C4\uC9DC \uC544\uBB34\uAC83\uB3C4 \uC548 \uB0A8\uC744 \uAC83 \uAC19\uC544."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 5
+      Text: "\uB05D\uC744 \uBCF4\uACA0\uB2E4\uB294 \uC0AC\uB78C\uC740 \uB2E4\uB8E8\uAE30
+        \uC26C\uC6CC. \uBD88\uC744 \uB354 \uC8FC\uBA74 \uC2A4\uC2A4\uB85C \uB053\uC5B4\uC624\uB974\uB2C8\uAE4C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uACB0\uB9D0\uC774 \uD544\uC694\uD558\uB2E8 \uAC74 \uC54C\uC9C0. \uADF8\uB7F0\uB370
+        \uADF8 \uACB0\uB9D0 \uBC11\uBC14\uB2E5\uC5D0 \uAE54\uB9B4 \uC0AC\uB78C\uC740
+        \uB204\uAD6C\uC57C?"
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_2_4_5_7_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 02000000040000000600000007000000
+    Lines:
+    - SpeakerId: 2
+      Text: "\uB204\uAC00 \uB0A8\uACA8\uC9C8\uC9C0\uB97C \uBB3B\uAE30 \uC804\uC5D0,
+        \uBA3C\uC800 \uB05D\uB0BC \uBC29\uBC95\uC744 \uCC3E\uC544\uC57C \uD55C\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 4
+      Text: "\uB124\uAC00 \uBC84\uD2F0\uB294 \uC774\uC720\uB294 \uC54C\uACA0\uB294\uB370,
+        \uBAA8\uB450\uAC00 \uAC19\uC740 \uD798\uC744 \uAC00\uC9C4 \uAC74 \uC544\uB2C8\uC796\uC544."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 6
+      Text: "\uB05D\uC744 \uC644\uC218\uD574\uC57C \uD55C\uB2E4\uBA74 \uB0B4\uAC00
+        \uBC29\uD328\uAC00 \uB418\uACA0\uB2E4. \uB124\uAC00 \uBB34\uB108\uC9C0\uAC8C
+        \uB450\uC9C4 \uC54A\uACA0\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uD070 \uACB0\uC2EC\uC740 \uB298 \uBA4B\uC788\uAC8C \uB4E4\uB824. \uADF8\uB798\uC11C
+        \uADF8 \uADF8\uB9BC\uC790\uB3C4 \uB354 \uB2A6\uAC8C \uBCF4\uC774\uB354\uB77C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_2_4_6_7_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 02000000050000000600000007000000
+    Lines:
+    - SpeakerId: 2
+      Text: "\uB204\uAD70\uAC00\uC758 \uBD88\uD589\uC744 \uC6C3\uC73C\uBA70 \uB118\uAE30\uB294
+        \uC0AC\uB78C\uC740, \uB09C \uC624\uB798 \uB450\uC9C0 \uC54A\uC544."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 5
+      Text: "\uD06C\uAC8C \uBE5B\uB098\uB294 \uB9D0\uC77C\uC218\uB85D \uC8FC\uBCC0
+        \uACF5\uAE30\uAE4C\uC9C0 \uBE60\uB974\uAC8C \uB2EC\uC544\uC624\uB974\uB354\uB77C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 6
+      Text: "\uB108\uBB34 \uD070 \uC774\uB984\uC744 \uC9CA\uC5B4\uC9C0\uB824 \uD558\uC9C0
+        \uB9C8\uB77C. \uB05D\uAE4C\uC9C0 \uBC84\uD2F0\uB294 \uAC83\uB9CC\uC73C\uB85C\uB3C4
+        \uCDA9\uBD84\uD558\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uBA54\uC774, \uB05D\uC744 \uBCF4\uC790\uB294 \uB9D0 \uB4A4\uC5D4 \uB298
+        \uB204\uAC00 \uB0A8\uB294\uC9C0\uBD80\uD130 \uB9D0\uD574."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_2_5_6_7_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 03000000040000000500000006000000
+    Lines:
+    - SpeakerId: 3
+      Text: "\uB8E8\uC774\uC2A4, \uBB34\uB9AC\uD574\uC11C \uB9D0\uD558\uC9C0 \uC54A\uC544\uB3C4
+        \uB429\uB2C8\uB2E4. \uC5EC\uAE30\uC5D4 \uC81C\uAC00 \uC788\uACA0\uC2B5\uB2C8\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 4
+      Text: "\uB124\uAC00 \uACC1\uC5D0 \uC788\uC73C\uBA74 \uD3B8\uD574. \uADF8\uAC8C
+        \uC88B\uC740 \uAC74\uC9C0 \uB098\uC05C \uAC74\uC9C4 \uBAA8\uB974\uACA0\uC9C0\uB9CC."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 5
+      Text: "\uC11C\uB85C\uB9CC \uBC14\uB77C\uBCF4\uB294 \uC0AC\uB78C\uB4E4\uC740
+        \uBB34\uB108\uC9C8 \uB54C \uC18C\uB9AC\uAC00 \uB354 \uC88B\uB354\uB77C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 6
+      Text: "\uB450 \uC0AC\uB78C\uC740 \uB4A4\uB97C \uC9C0\uCF1C\uB77C. \uC804\uBA74\uC758
+        \uBB34\uAC8C\uB294 \uB0B4\uAC00 \uBC1B\uACA0\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_3_4_5_6_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 03000000040000000500000007000000
+    Lines:
+    - SpeakerId: 3
+      Text: "\uB2F9\uC2E0\uC774 \uBC84\uD2F8 \uD798\uC774 \uC5C6\uB2E4\uBA74, \uC81C\uAC00
+        \uB300\uC2E0 \uBC84\uD2F0\uACA0\uC2B5\uB2C8\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 4
+      Text: "\uB2E4 \uAD1C\uCC2E\uC9C0 \uC54A\uC740\uB370, \uB124\uAC00 \uAD1C\uCC2E\uB2E4\uACE0
+        \uB9D0\uD558\uBA74 \uC7A0\uAE50\uC740 \uBBFF\uAC8C \uB3FC."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 5
+      Text: "\uC11C\uB85C\uB9CC \uBCF4\uB294 \uC0AC\uB78C\uB4E4\uC740 \uBD84\uC704\uAE30\uB97C
+        \uBE60\uB974\uAC8C \uBC14\uAFB8\uC9C0. \uAC00\uAE4C\uC6B4 \uB9CC\uD07C \uD754\uB4E4\uB9BC\uB3C4
+        \uCEE4 \uBCF4\uC5EC."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uC11C\uB85C\uB97C \uBD99\uB4DC\uB294 \uC190\uC774 \uAC15\uD560\uC218\uB85D,
+        \uB193\uCCD0 \uBC84\uB9AC\uB294 \uBC14\uAE65\uB3C4 \uCEE4\uC9C0\uB294 \uBC95\uC774\uC57C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_3_4_5_7_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 03000000040000000600000007000000
+    Lines:
+    - SpeakerId: 3
+      Text: "\uB8E8\uC774\uC2A4\uB9CC \uBB34\uC0AC\uD558\uB2E4\uBA74, \uC800\uB294
+        \uB2E4\uB978 \uC2DC\uC120\uC744 \uC5BC\uB9C8\uB4E0\uC9C0 \uAC10\uB2F9\uD560
+        \uC218 \uC788\uC2B5\uB2C8\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 4
+      Text: "\uB370\uC6B0\uC2A4, \uADF8\uB807\uAC8C\uAE4C\uC9C0 \uC560\uC4F0\uC9C0
+        \uC54A\uC544\uB3C4 \uB3FC. \uADF8\uB7F0\uB370\uB3C4 \uB124\uAC00 \uC788\uC73C\uBA74
+        \uC870\uAE08 \uB35C \uBB34\uB108\uC838."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 6
+      Text: "\uB124 \uC9C8\uBB38\uC774 \uC633\uB2E4 \uD574\uB3C4, \uC544\uBB34\uB3C4
+        \uB9C9\uC544\uC11C\uC9C0 \uC54A\uC73C\uBA74 \uB354 \uB9CE\uC740 \uC0AC\uB78C\uC774
+        \uC4F0\uB7EC\uC9C4\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uD504\uB9AC\uB4DC, \uB124\uAC00 \uBA3C\uC800 \uB098\uC11C\uACA0\uB2E4\uB294
+        \uB9D0\uB3C4 \uACB0\uAD6D\uC740 \uB124 \uCABD\uC73C\uB85C \uBB34\uAC8C\uB97C
+        \uB04C\uC5B4\uC624\uB294 \uAC70\uC57C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_3_4_6_7_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 03000000050000000600000007000000
+    Lines:
+    - SpeakerId: 3
+      Text: "\uD504\uB9AC\uB4DC, \uBA3C\uC800 \uB098\uC11C\uB294 \uB9C8\uC74C\uC774
+        \uB298 \uAC00\uC7A5 \uC88B\uC740 \uB2F5\uC774 \uB418\uB294 \uAC74 \uC544\uB2D9\uB2C8\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 5
+      Text: "\uC790\uAE30 \uBAB8\uC73C\uB85C \uB9C9\uC544\uC11C\uB294 \uC0AC\uB78C\uC740
+        \uD5A5\uC774 \uC624\uB798 \uB0A8\uC9C0. \uB108\uBB34 \uC624\uB798 \uB0A8\uC544\uC11C
+        \uBB38\uC81C\uC9C0\uB9CC."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 6
+      Text: "\uC0C8\uD134, \uB124 \uC758\uC2EC\uC774 \uD544\uC694\uD55C \uAC74 \uC548\uB2E4.
+        \uADF8\uB798\uB3C4 \uB204\uAD70\uAC00\uB294 \uBA3C\uC800 \uBAB8\uC744 \uC138\uC6CC\uC57C
+        \uD55C\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uD76C\uC0DD\uC744 \uB108\uBB34 \uC27D\uAC8C \uC88B\uC740 \uB9D0\uB85C
+        \uD3EC\uC7A5\uD558\uC9C4 \uB9C8. \uB0A8\uC740 \uC0AC\uB78C\uB4E4\uC5D0\uAC90
+        \uB298 \uB2E4\uB978 \uBB34\uAC8C\uB85C \uB0A8\uC73C\uB2C8\uAE4C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_3_5_6_7_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 04000000050000000600000007000000
+    Lines:
+    - SpeakerId: 4
+      Text: "\uB124 \uC9C8\uBB38\uC740 \uD53C\uACE4\uD55C\uB370, \uADF8\uB798\uC11C
+        \uB354 \uD53C\uD560 \uC218\uAC00 \uC5C6\uC5B4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 5
+      Text: "\uD504\uB9AC\uB4DC \uAC19\uC740 \uC0AC\uB78C\uC740 \uB4DC\uBB3C\uC9C0.
+        \uC2A4\uC2A4\uB85C \uBA3C\uC800 \uB098\uC11C\uB824\uB294 \uC0AC\uB78C\uC740
+        \uC5B4\uB514\uC11C\uB098 \uB208\uC5D0 \uB744\uAC70\uB4E0."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 6
+      Text: "\uB204\uAC00 \uB0A8\uACA8\uC9C8\uC9C0\uB97C \uBB3B\uB294\uB2E4\uBA74,
+        \uC6B0\uC120 \uB0B4\uAC00 \uC55E\uC5D0 \uC11C\uACA0\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uB124\uAC00 \uBA3C\uC800 \uC81C\uB2E8\uC5D0 \uC624\uB974\uB294 \uC21C\uAC04,
+        \uB2E4\uB978 \uC0AC\uB78C\uB4E4\uC740 \uAC70\uC808\uD560 \uAE30\uD68C\uC870\uCC28
+        \uC783\uC5B4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_4_5_6_7_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 0100000002000000030000000400000005000000
+    Lines:
+    - SpeakerId: 1
+      Text: "\uC774\uB807\uAC8C \uBAA8\uC774\uBA74 \uB204\uAC00 \uBB34\uB108\uC9C8\uC9C0\uBCF4\uB2E4,
+        \uB204\uAC00 \uB05D\uAE4C\uC9C0 \uC228\uAE38\uC9C0\uAC00 \uB354 \uAD81\uAE08\uD574\uC838."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 2
+      Text: "\uB204\uAC00 \uC5B4\uB5A4 \uB9C8\uC74C\uC73C\uB85C \uC11C \uC788\uB4E0
+        \uC0C1\uAD00\uC5C6\uC5B4. \uB9C8\uC9C0\uB9C9\uAE4C\uC9C0 \uAC00\uB294 \uAC83\uB9CC\uC740
+        \uD3EC\uAE30\uD558\uC9C0 \uC54A\uB294\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 3
+      Text: "\uBAA8\uB450\uC758 \uB73B\uC774 \uB2E4\uB974\uB2E4\uB294 \uAC74 \uC555\uB2C8\uB2E4.
+        \uD558\uC9C0\uB9CC \uB8E8\uC774\uC2A4\uB9CC\uC740 \uC774 \uC18C\uB780\uC5D0\uC11C
+        \uBE7C \uB450\uACE0 \uC2F6\uAD70\uC694."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 4
+      Text: "\uB2E4\uB4E4 \uB108\uBB34 \uB9CE\uC740 \uAC78 \uC9CA\uC5B4\uC9C0\uACE0
+        \uC788\uB124. \uB09C \uADF8\uB0E5 \uC870\uC6A9\uD788 \uB05D\uB0AC\uC73C\uBA74
+        \uC88B\uACA0\uC5B4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 5
+      Text: "\uC774 \uC815\uB3C4\uBA74 \uCF54\uC2A4\uAC00 \uC544\uB2C8\uB77C \uC5F0\uD68C\uC9C0.
+        \uB204\uAC00 \uBA3C\uC800 \uBB34\uB108\uC9C8\uC9C0 \uAE30\uB300\uB418\uB294\uB370?"
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_1_2_3_4_5_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 0100000002000000030000000400000006000000
+    Lines:
+    - SpeakerId: 1
+      Text: "\uD55C\uC790\uB9AC\uC5D0 \uC774\uB807\uAC8C \uB2E4\uB978 \uACB0\uD54D\uC774
+        \uBAA8\uC600\uB294\uB370\uB3C4 \uC544\uC9C1 \uD568\uAED8 \uC11C \uC788\uB2E4\uB294
+        \uAC8C \uB354 \uC2E0\uAE30\uD574."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 2
+      Text: "\uAC01\uC790\uC758 \uC0DD\uAC01\uC774 \uB2E4\uB974\uB354\uB77C\uB3C4,
+        \uC9C0\uAE08\uC740 \uAC19\uC740 \uBC29\uD5A5\uC744 \uBD10\uC57C \uD55C\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 3
+      Text: "\uB300\uC758\uC640 \uACB0\uB9D0\uB3C4 \uC88B\uC2B5\uB2C8\uB2E4\uB9CC,
+        \uC81C\uAC8C \uAC00\uC7A5 \uC911\uC694\uD55C \uAC74 \uB8E8\uC774\uC2A4\uC758
+        \uBB34\uC0AC\uC785\uB2C8\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 4
+      Text: "\uB204\uAC00 \uC633\uC740\uC9C0\uBCF4\uB2E4, \uC5B8\uC81C\uCBE4 \uC880
+        \uC26C\uAC8C \uB418\uB294\uC9C0\uAC00 \uB354 \uAD81\uAE08\uD574."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 6
+      Text: "\uD754\uB4E4\uB824\uB3C4 \uC88B\uB2E4. \uB204\uAD70\uAC00\uB294 \uB05D\uAE4C\uC9C0
+        \uBC84\uD2F0\uACE0 \uBAA8\uB450\uB97C \uC138\uC6CC\uC57C \uD558\uB2C8\uAE4C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_1_2_3_4_6_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 0100000002000000030000000400000007000000
+    Lines:
+    - SpeakerId: 1
+      Text: "\uC774 \uC815\uB3C4\uB85C \uB9C8\uC74C\uC774 \uB9CE\uC544\uC9C0\uBA74,
+        \uCE68\uBB35\uBCF4\uB2E4 \uC791\uC740 \uADE0\uC5F4\uC774 \uB354 \uC704\uD5D8\uD574\uC838."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 2
+      Text: "\uD754\uB4E4\uB9AC\uB294 \uAC74 \uC774\uD574\uD55C\uB2E4. \uADF8\uB798\uB3C4
+        \uC5EC\uAE30\uC11C \uBC1C\uC744 \uBA48\uCD9C \uC21C \uC5C6\uC5B4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 3
+      Text: "\uC5EC\uB7EC\uBD84\uC758 \uC0AC\uBA85\uC774 \uBB34\uC5C7\uC774\uB4E0,
+        \uB8E8\uC774\uC2A4\uB97C \uD574\uCE58\uB294 \uC120\uD0DD\uC5D0\uB294 \uB3D9\uC758\uD560
+        \uC218 \uC5C6\uC2B5\uB2C8\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 4
+      Text: "\uC774 \uB9CE\uC740 \uB9C8\uC74C\uC774 \uD55C\uACF3\uC73C\uB85C \uAC08
+        \uB9AC \uC5C6\uC796\uC544. \uADF8\uB7EC\uB2C8 \uB354 \uD53C\uACE4\uD55C \uAC70\uACE0."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uB610 \uC55E\uC73C\uB85C \uAC00\uC790\uACE0 \uD558\uB124. \uADF8 \uB9D0\uC774
+        \uC2DC\uC791\uB420 \uB54C\uB9C8\uB2E4 \uB4A4\uC5D0 \uB0A8\uB294 \uC5BC\uAD74\uBD80\uD130
+        \uB5A0\uC62C\uB77C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_1_2_3_4_7_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 0100000002000000030000000500000006000000
+    Lines:
+    - SpeakerId: 1
+      Text: "\uB2E4\uB4E4 \uAC19\uC740 \uAE38\uC744 \uBCF4\uB294 \uCC99\uD558\uC9C0\uB9CC,
+        \uC2DC\uC120\uC774 \uD5A5\uD55C \uB05D\uC740 \uC804\uBD80 \uB2E4\uB974\uB124."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 2
+      Text: "\uC758\uC2EC\uB3C4 \uB450\uB824\uC6C0\uB3C4 \uB098\uC911\uC774\uB2E4.
+        \uC544\uC9C1 \uB05D\uB098\uC9C0 \uC54A\uC558\uACE0, \uB098\uB294 \uB05D\uC744
+        \uBD10\uC57C \uD55C\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 3
+      Text: "\uB05D\uC744 \uB17C\uD558\uAE30 \uC804\uC5D0, \uB204\uAC00 \uBA3C\uC800
+        \uC0C1\uCC98 \uC785\uB294\uC9C0\uBD80\uD130 \uBCF4\uC544\uC57C \uD558\uC9C0
+        \uC54A\uACA0\uC2B5\uB2C8\uAE4C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 5
+      Text: "\uB2E4\uB4E4 \uC785\uC73C\uB85C\uB294 \uACB0\uB9D0\uC744 \uB9D0\uD558\uC9C0\uB9CC,
+        \uC18D\uC5D0\uC120 \uC804\uBD80 \uB2E4\uB978 \uD5C8\uAE30\uB97C \uD0A4\uC6B0\uACE0
+        \uC788\uAD70."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 6
+      Text: "\uB204\uAD70\uAC00 \uBA3C\uC800 \uC4F0\uB7EC\uC838\uC57C \uD55C\uB2E4\uBA74
+        \uADF8\uAC74 \uB098\uC5EC\uC57C\uC9C0, \uB108\uD76C\uAC00 \uB420 \uC21C \uC5C6\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_1_2_3_5_6_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 0100000002000000030000000500000007000000
+    Lines:
+    - SpeakerId: 1
+      Text: "\uC774\uB807\uAC8C \uBAA8\uC774\uBA74 \uB204\uAC00 \uBB34\uB108\uC9C8\uC9C0\uBCF4\uB2E4,
+        \uB204\uAC00 \uB05D\uAE4C\uC9C0 \uC228\uAE38\uC9C0\uAC00 \uB354 \uAD81\uAE08\uD574\uC838."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 2
+      Text: "\uB204\uAC00 \uC5B4\uB5A4 \uB9C8\uC74C\uC73C\uB85C \uC11C \uC788\uB4E0
+        \uC0C1\uAD00\uC5C6\uC5B4. \uB9C8\uC9C0\uB9C9\uAE4C\uC9C0 \uAC00\uB294 \uAC83\uB9CC\uC740
+        \uD3EC\uAE30\uD558\uC9C0 \uC54A\uB294\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 3
+      Text: "\uBAA8\uB450\uC758 \uB73B\uC774 \uB2E4\uB974\uB2E4\uB294 \uAC74 \uC555\uB2C8\uB2E4.
+        \uD558\uC9C0\uB9CC \uC81C\uAC00 \uC9C0\uD0A4\uB824\uB294 \uC0AC\uB78C\uB9CC\uC740
+        \uC774 \uC18C\uB780\uC5D0\uC11C \uBE7C \uB450\uACE0 \uC2F6\uAD70\uC694."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 5
+      Text: "\uC774 \uC815\uB3C4\uBA74 \uCF54\uC2A4\uAC00 \uC544\uB2C8\uB77C \uC5F0\uD68C\uC9C0.
+        \uB204\uAC00 \uBA3C\uC800 \uBB34\uB108\uC9C8\uC9C0 \uAE30\uB300\uB418\uB294\uB370?"
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uC88B\uC544, \uB2E4\uB4E4 \uB9D0\uC740 \uBA4B\uC9C0\uB124. \uADF8\uB798\uC11C
+        \uADF8 \uBA4B\uC9C4 \uACB0\uB9D0 \uC544\uB798 \uB204\uAC00 \uBA3C\uC800 \uAE54\uB9AC\uB294\uB370?"
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_1_2_3_5_7_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 0100000002000000030000000600000007000000
+    Lines:
+    - SpeakerId: 1
+      Text: "\uD55C\uC790\uB9AC\uC5D0 \uC774\uB807\uAC8C \uB2E4\uB978 \uACB0\uD54D\uC774
+        \uBAA8\uC600\uB294\uB370\uB3C4 \uC544\uC9C1 \uD568\uAED8 \uC11C \uC788\uB2E4\uB294
+        \uAC8C \uB354 \uC2E0\uAE30\uD574."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 2
+      Text: "\uAC01\uC790\uC758 \uC0DD\uAC01\uC774 \uB2E4\uB974\uB354\uB77C\uB3C4,
+        \uC9C0\uAE08\uC740 \uAC19\uC740 \uBC29\uD5A5\uC744 \uBD10\uC57C \uD55C\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 3
+      Text: "\uB300\uC758\uC640 \uACB0\uB9D0\uB3C4 \uC88B\uC2B5\uB2C8\uB2E4\uB9CC,
+        \uC81C\uAC8C \uAC00\uC7A5 \uC911\uC694\uD55C \uAC74 \uADF8 \uC0AC\uB78C\uC758
+        \uBB34\uC0AC\uC785\uB2C8\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 6
+      Text: "\uD754\uB4E4\uB824\uB3C4 \uC88B\uB2E4. \uB204\uAD70\uAC00\uB294 \uB05D\uAE4C\uC9C0
+        \uBC84\uD2F0\uACE0 \uBAA8\uB450\uB97C \uC138\uC6CC\uC57C \uD558\uB2C8\uAE4C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uD070 \uB9D0\uB4E4\uC740 \uB298 \uADF8\uB7F4\uB4EF\uD558\uC9C0. \uADFC\uB370
+        \uADF8 \uB9D0\uB4E4 \uC0AC\uC774\uC5D0\uC11C \uBC00\uB824\uB098\uB294 \uCABD\uC740
+        \uB204\uAC00 \uBCF4\uB098?"
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_1_2_3_6_7_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 0100000002000000040000000500000006000000
+    Lines:
+    - SpeakerId: 1
+      Text: "\uC774 \uC815\uB3C4\uB85C \uB9C8\uC74C\uC774 \uB9CE\uC544\uC9C0\uBA74,
+        \uCE68\uBB35\uBCF4\uB2E4 \uC791\uC740 \uADE0\uC5F4\uC774 \uB354 \uC704\uD5D8\uD574\uC838."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 2
+      Text: "\uD754\uB4E4\uB9AC\uB294 \uAC74 \uC774\uD574\uD55C\uB2E4. \uADF8\uB798\uB3C4
+        \uC5EC\uAE30\uC11C \uBC1C\uC744 \uBA48\uCD9C \uC21C \uC5C6\uC5B4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 4
+      Text: "\uC774 \uB9CE\uC740 \uB9C8\uC74C\uC774 \uD55C\uACF3\uC73C\uB85C \uAC08
+        \uB9AC \uC5C6\uC796\uC544. \uADF8\uB7EC\uB2C8 \uB354 \uD53C\uACE4\uD55C \uAC70\uACE0."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 5
+      Text: "\uC774\uC57C, \uD55C\uC790\uB9AC\uC5D0 \uC774\uB807\uAC8C \uB9CE\uC740
+        \uACB0\uD54D\uC774 \uBAA8\uC774\uB2C8 \uD5A5\uC774 \uC815\uB9D0 \uC9C4\uD558\uB124."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 6
+      Text: "\uAC01\uC790\uC758 \uC774\uC720\uAC00 \uB2E4\uB974\uB354\uB77C\uB3C4,
+        \uBB34\uB108\uC9C0\uB294 \uC21C\uAC04\uB9CC\uD07C\uC740 \uB0B4\uAC00 \uB9C9\uACA0\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_1_2_4_5_6_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 0100000002000000040000000500000007000000
+    Lines:
+    - SpeakerId: 1
+      Text: "\uB2E4\uB4E4 \uAC19\uC740 \uAE38\uC744 \uBCF4\uB294 \uCC99\uD558\uC9C0\uB9CC,
+        \uC2DC\uC120\uC774 \uD5A5\uD55C \uB05D\uC740 \uC804\uBD80 \uB2E4\uB974\uB124."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 2
+      Text: "\uC758\uC2EC\uB3C4 \uB450\uB824\uC6C0\uB3C4 \uB098\uC911\uC774\uB2E4.
+        \uC544\uC9C1 \uB05D\uB098\uC9C0 \uC54A\uC558\uACE0, \uB098\uB294 \uB05D\uC744
+        \uBD10\uC57C \uD55C\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 4
+      Text: "\uC774\uB807\uAC8C \uB2E4 \uBAA8\uC5EC\uC11C \uAC19\uC740 \uB05D\uC744
+        \uBCF8\uB2E4\uB294 \uB9D0, \uC194\uC9C1\uD788 \uB09C \uC544\uC9C1\uB3C4 \uC798
+        \uBAA8\uB974\uACA0\uC5B4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 5
+      Text: "\uB2E4\uB4E4 \uC785\uC73C\uB85C\uB294 \uACB0\uB9D0\uC744 \uB9D0\uD558\uC9C0\uB9CC,
+        \uC18D\uC5D0\uC120 \uC804\uBD80 \uB2E4\uB978 \uD5C8\uAE30\uB97C \uD0A4\uC6B0\uACE0
+        \uC788\uAD70."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uB2E4\uB4E4 \uC790\uAE30 \uC774\uC720\uB294 \uBD84\uBA85\uD574. \uBB38\uC81C\uB294
+        \uADF8\uB7F0 \uC774\uC720\uAC00 \uB298 \uB204\uAD70\uAC00\uB97C \uBC00\uC5B4\uB0B8\uB2E4\uB294
+        \uAC70\uC57C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_1_2_4_5_7_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 0100000002000000040000000600000007000000
+    Lines:
+    - SpeakerId: 1
+      Text: "\uC774 \uC815\uB3C4\uB85C \uB9C8\uC74C\uC774 \uB9CE\uC544\uC9C0\uBA74,
+        \uCE68\uBB35\uBCF4\uB2E4 \uC791\uC740 \uADE0\uC5F4\uC774 \uB354 \uC704\uD5D8\uD574\uC838."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 2
+      Text: "\uD754\uB4E4\uB9AC\uB294 \uAC74 \uC774\uD574\uD55C\uB2E4. \uADF8\uB798\uB3C4
+        \uC5EC\uAE30\uC11C \uBC1C\uC744 \uBA48\uCD9C \uC21C \uC5C6\uC5B4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 4
+      Text: "\uC774 \uB9CE\uC740 \uB9C8\uC74C\uC774 \uD55C\uACF3\uC73C\uB85C \uAC08
+        \uB9AC \uC5C6\uC796\uC544. \uADF8\uB7EC\uB2C8 \uB354 \uD53C\uACE4\uD55C \uAC70\uACE0."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 6
+      Text: "\uAC01\uC790\uC758 \uC774\uC720\uAC00 \uB2E4\uB974\uB354\uB77C\uB3C4,
+        \uBB34\uB108\uC9C0\uB294 \uC21C\uAC04\uB9CC\uD07C\uC740 \uB0B4\uAC00 \uB9C9\uACA0\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uB610 \uC55E\uC73C\uB85C \uAC00\uC790\uACE0 \uD558\uB124. \uADF8 \uB9D0\uC774
+        \uC2DC\uC791\uB420 \uB54C\uB9C8\uB2E4 \uB4A4\uC5D0 \uB0A8\uB294 \uC5BC\uAD74\uBD80\uD130
+        \uB5A0\uC62C\uB77C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_1_2_4_6_7_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 0100000002000000050000000600000007000000
+    Lines:
+    - SpeakerId: 1
+      Text: "\uB2E4\uB4E4 \uAC19\uC740 \uAE38\uC744 \uBCF4\uB294 \uCC99\uD558\uC9C0\uB9CC,
+        \uC2DC\uC120\uC774 \uD5A5\uD55C \uB05D\uC740 \uC804\uBD80 \uB2E4\uB974\uB124."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 2
+      Text: "\uC758\uC2EC\uB3C4 \uB450\uB824\uC6C0\uB3C4 \uB098\uC911\uC774\uB2E4.
+        \uC544\uC9C1 \uB05D\uB098\uC9C0 \uC54A\uC558\uACE0, \uB098\uB294 \uB05D\uC744
+        \uBD10\uC57C \uD55C\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 5
+      Text: "\uB2E4\uB4E4 \uC785\uC73C\uB85C\uB294 \uACB0\uB9D0\uC744 \uB9D0\uD558\uC9C0\uB9CC,
+        \uC18D\uC5D0\uC120 \uC804\uBD80 \uB2E4\uB978 \uD5C8\uAE30\uB97C \uD0A4\uC6B0\uACE0
+        \uC788\uAD70."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 6
+      Text: "\uB204\uAD70\uAC00 \uBA3C\uC800 \uC4F0\uB7EC\uC838\uC57C \uD55C\uB2E4\uBA74
+        \uADF8\uAC74 \uB098\uC5EC\uC57C\uC9C0, \uB108\uD76C\uAC00 \uB420 \uC21C \uC5C6\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uB2E4\uB4E4 \uC790\uAE30 \uC774\uC720\uB294 \uBD84\uBA85\uD574. \uBB38\uC81C\uB294
+        \uADF8\uB7F0 \uC774\uC720\uAC00 \uB298 \uB204\uAD70\uAC00\uB97C \uBC00\uC5B4\uB0B8\uB2E4\uB294
+        \uAC70\uC57C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_1_2_5_6_7_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 0100000003000000040000000500000006000000
+    Lines:
+    - SpeakerId: 1
+      Text: "\uC774\uB807\uAC8C \uBAA8\uC774\uBA74 \uB204\uAC00 \uBB34\uB108\uC9C8\uC9C0\uBCF4\uB2E4,
+        \uB204\uAC00 \uB05D\uAE4C\uC9C0 \uC228\uAE38\uC9C0\uAC00 \uB354 \uAD81\uAE08\uD574\uC838."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 3
+      Text: "\uBAA8\uB450\uC758 \uB73B\uC774 \uB2E4\uB974\uB2E4\uB294 \uAC74 \uC555\uB2C8\uB2E4.
+        \uD558\uC9C0\uB9CC \uB8E8\uC774\uC2A4\uB9CC\uC740 \uC774 \uC18C\uB780\uC5D0\uC11C
+        \uBE7C \uB450\uACE0 \uC2F6\uAD70\uC694."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 4
+      Text: "\uB2E4\uB4E4 \uB108\uBB34 \uB9CE\uC740 \uAC78 \uC9CA\uC5B4\uC9C0\uACE0
+        \uC788\uB124. \uB09C \uADF8\uB0E5 \uC870\uC6A9\uD788 \uB05D\uB0AC\uC73C\uBA74
+        \uC88B\uACA0\uC5B4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 5
+      Text: "\uC774 \uC815\uB3C4\uBA74 \uCF54\uC2A4\uAC00 \uC544\uB2C8\uB77C \uC5F0\uD68C\uC9C0.
+        \uB204\uAC00 \uBA3C\uC800 \uBB34\uB108\uC9C8\uC9C0 \uAE30\uB300\uB418\uB294\uB370?"
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 6
+      Text: "\uACB0\uC815\uC774 \uD544\uC694\uD558\uB2E4\uBA74 \uB0B4\uAC00 \uAC10\uB2F9\uD558\uACA0\uB2E4.
+        \uB2E4\uB9CC \uB05D\uAE4C\uC9C0 \uC0B4\uC544\uB0A8\uC544 \uB2EC\uB77C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_1_3_4_5_6_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 0100000003000000040000000500000007000000
+    Lines:
+    - SpeakerId: 1
+      Text: "\uD55C\uC790\uB9AC\uC5D0 \uC774\uB807\uAC8C \uB2E4\uB978 \uACB0\uD54D\uC774
+        \uBAA8\uC600\uB294\uB370\uB3C4 \uC544\uC9C1 \uD568\uAED8 \uC11C \uC788\uB2E4\uB294
+        \uAC8C \uB354 \uC2E0\uAE30\uD574."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 3
+      Text: "\uB300\uC758\uC640 \uACB0\uB9D0\uB3C4 \uC88B\uC2B5\uB2C8\uB2E4\uB9CC,
+        \uC81C\uAC8C \uAC00\uC7A5 \uC911\uC694\uD55C \uAC74 \uB8E8\uC774\uC2A4\uC758
+        \uBB34\uC0AC\uC785\uB2C8\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 4
+      Text: "\uB204\uAC00 \uC633\uC740\uC9C0\uBCF4\uB2E4, \uC5B8\uC81C\uCBE4 \uC880
+        \uC26C\uAC8C \uB418\uB294\uC9C0\uAC00 \uB354 \uAD81\uAE08\uD574."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 5
+      Text: "\uC228\uAE30\uB294 \uC0AC\uB78C, \uBD99\uB4DC\uB294 \uC0AC\uB78C, \uB5A0\uB3C4\uB294
+        \uC0AC\uB78C\uAE4C\uC9C0. \uC624\uB298 \uACF5\uAE30\uAC00 \uAF64 \uC798 \uC775\uC5C8\uC5B4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uC0AC\uB791\uC774\uB4E0 \uC758\uC2EC\uC774\uB4E0 \uB2E4 \uC88B\uC9C0.
+        \uADFC\uB370 \uADF8\uB7F0 \uB9D0 \uB4A4\uC5D0 \uB0A8\uB294 \uC0AC\uB78C\uC740
+        \uB204\uAC00 \uC138\uB098?"
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_1_3_4_5_7_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 0100000003000000040000000600000007000000
+    Lines:
+    - SpeakerId: 1
+      Text: "\uC774 \uC815\uB3C4\uB85C \uB9C8\uC74C\uC774 \uB9CE\uC544\uC9C0\uBA74,
+        \uCE68\uBB35\uBCF4\uB2E4 \uC791\uC740 \uADE0\uC5F4\uC774 \uB354 \uC704\uD5D8\uD574\uC838."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 3
+      Text: "\uC5EC\uB7EC\uBD84\uC758 \uC0AC\uBA85\uC774 \uBB34\uC5C7\uC774\uB4E0,
+        \uB8E8\uC774\uC2A4\uB97C \uD574\uCE58\uB294 \uC120\uD0DD\uC5D0\uB294 \uB3D9\uC758\uD560
+        \uC218 \uC5C6\uC2B5\uB2C8\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 4
+      Text: "\uC774 \uB9CE\uC740 \uB9C8\uC74C\uC774 \uD55C\uACF3\uC73C\uB85C \uAC08
+        \uB9AC \uC5C6\uC796\uC544. \uADF8\uB7EC\uB2C8 \uB354 \uD53C\uACE4\uD55C \uAC70\uACE0."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 6
+      Text: "\uAC01\uC790\uC758 \uC774\uC720\uAC00 \uB2E4\uB974\uB354\uB77C\uB3C4,
+        \uBB34\uB108\uC9C0\uB294 \uC21C\uAC04\uB9CC\uD07C\uC740 \uB0B4\uAC00 \uB9C9\uACA0\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uB610 \uC55E\uC73C\uB85C \uAC00\uC790\uACE0 \uD558\uB124. \uADF8 \uB9D0\uC774
+        \uC2DC\uC791\uB420 \uB54C\uB9C8\uB2E4 \uB4A4\uC5D0 \uB0A8\uB294 \uC5BC\uAD74\uBD80\uD130
+        \uB5A0\uC62C\uB77C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_1_3_4_6_7_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 0100000003000000050000000600000007000000
+    Lines:
+    - SpeakerId: 1
+      Text: "\uB2E4\uB4E4 \uAC19\uC740 \uAE38\uC744 \uBCF4\uB294 \uCC99\uD558\uC9C0\uB9CC,
+        \uC2DC\uC120\uC774 \uD5A5\uD55C \uB05D\uC740 \uC804\uBD80 \uB2E4\uB974\uB124."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 3
+      Text: "\uB05D\uC744 \uB17C\uD558\uAE30 \uC804\uC5D0, \uB204\uAC00 \uBA3C\uC800
+        \uC0C1\uCC98 \uC785\uB294\uC9C0\uBD80\uD130 \uBCF4\uC544\uC57C \uD558\uC9C0
+        \uC54A\uACA0\uC2B5\uB2C8\uAE4C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 5
+      Text: "\uB2E4\uB4E4 \uC785\uC73C\uB85C\uB294 \uACB0\uB9D0\uC744 \uB9D0\uD558\uC9C0\uB9CC,
+        \uC18D\uC5D0\uC120 \uC804\uBD80 \uB2E4\uB978 \uD5C8\uAE30\uB97C \uD0A4\uC6B0\uACE0
+        \uC788\uAD70."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 6
+      Text: "\uB204\uAD70\uAC00 \uBA3C\uC800 \uC4F0\uB7EC\uC838\uC57C \uD55C\uB2E4\uBA74
+        \uADF8\uAC74 \uB098\uC5EC\uC57C\uC9C0, \uB108\uD76C\uAC00 \uB420 \uC21C \uC5C6\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uB2E4\uB4E4 \uC790\uAE30 \uC774\uC720\uB294 \uBD84\uBA85\uD574. \uBB38\uC81C\uB294
+        \uADF8\uB7F0 \uC774\uC720\uAC00 \uB298 \uB204\uAD70\uAC00\uB97C \uBC00\uC5B4\uB0B8\uB2E4\uB294
+        \uAC70\uC57C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_1_3_5_6_7_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 0100000004000000050000000600000007000000
+    Lines:
+    - SpeakerId: 1
+      Text: "\uC774\uB807\uAC8C \uBAA8\uC774\uBA74 \uB204\uAC00 \uBB34\uB108\uC9C8\uC9C0\uBCF4\uB2E4,
+        \uB204\uAC00 \uB05D\uAE4C\uC9C0 \uC228\uAE38\uC9C0\uAC00 \uB354 \uAD81\uAE08\uD574\uC838."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 4
+      Text: "\uB2E4\uB4E4 \uB108\uBB34 \uB9CE\uC740 \uAC78 \uC9CA\uC5B4\uC9C0\uACE0
+        \uC788\uB124. \uB09C \uADF8\uB0E5 \uC870\uC6A9\uD788 \uB05D\uB0AC\uC73C\uBA74
+        \uC88B\uACA0\uC5B4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 5
+      Text: "\uC774 \uC815\uB3C4\uBA74 \uCF54\uC2A4\uAC00 \uC544\uB2C8\uB77C \uC5F0\uD68C\uC9C0.
+        \uB204\uAC00 \uBA3C\uC800 \uBB34\uB108\uC9C8\uC9C0 \uAE30\uB300\uB418\uB294\uB370?"
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 6
+      Text: "\uACB0\uC815\uC774 \uD544\uC694\uD558\uB2E4\uBA74 \uB0B4\uAC00 \uAC10\uB2F9\uD558\uACA0\uB2E4.
+        \uB2E4\uB9CC \uB05D\uAE4C\uC9C0 \uC0B4\uC544\uB0A8\uC544 \uB2EC\uB77C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uC88B\uC544, \uB2E4\uB4E4 \uB9D0\uC740 \uBA4B\uC9C0\uB124. \uADF8\uB798\uC11C
+        \uADF8 \uBA4B\uC9C4 \uACB0\uB9D0 \uC544\uB798 \uB204\uAC00 \uBA3C\uC800 \uAE54\uB9AC\uB294\uB370?"
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_1_4_5_6_7_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 0200000003000000040000000500000006000000
+    Lines:
+    - SpeakerId: 2
+      Text: "\uAC01\uC790\uC758 \uC0DD\uAC01\uC774 \uB2E4\uB974\uB354\uB77C\uB3C4,
+        \uC9C0\uAE08\uC740 \uAC19\uC740 \uBC29\uD5A5\uC744 \uBD10\uC57C \uD55C\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 3
+      Text: "\uB300\uC758\uC640 \uACB0\uB9D0\uB3C4 \uC88B\uC2B5\uB2C8\uB2E4\uB9CC,
+        \uC81C\uAC8C \uAC00\uC7A5 \uC911\uC694\uD55C \uAC74 \uB8E8\uC774\uC2A4\uC758
+        \uBB34\uC0AC\uC785\uB2C8\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 4
+      Text: "\uB204\uAC00 \uC633\uC740\uC9C0\uBCF4\uB2E4, \uC5B8\uC81C\uCBE4 \uC880
+        \uC26C\uAC8C \uB418\uB294\uC9C0\uAC00 \uB354 \uAD81\uAE08\uD574."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 5
+      Text: "\uC624\uB298\uC740 \uC720\uB09C\uD788 \uACF5\uAE30\uAC00 \uBCF5\uC7A1\uD558\uB124.
+        \uC11C\uB85C \uB2E4\uB978 \uC628\uB3C4\uAC00 \uD55C\uB370 \uC11E\uC5EC \uC788\uC5B4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 6
+      Text: "\uD754\uB4E4\uB824\uB3C4 \uC88B\uB2E4. \uB204\uAD70\uAC00\uB294 \uB05D\uAE4C\uC9C0
+        \uBC84\uD2F0\uACE0 \uBAA8\uB450\uB97C \uC138\uC6CC\uC57C \uD558\uB2C8\uAE4C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_2_3_4_5_6_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 0200000003000000040000000500000007000000
+    Lines:
+    - SpeakerId: 2
+      Text: "\uD754\uB4E4\uB9AC\uB294 \uAC74 \uC774\uD574\uD55C\uB2E4. \uADF8\uB798\uB3C4
+        \uC5EC\uAE30\uC11C \uBC1C\uC744 \uBA48\uCD9C \uC21C \uC5C6\uC5B4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 3
+      Text: "\uC5EC\uB7EC\uBD84\uC758 \uC0AC\uBA85\uC774 \uBB34\uC5C7\uC774\uB4E0,
+        \uB8E8\uC774\uC2A4\uB97C \uD574\uCE58\uB294 \uC120\uD0DD\uC5D0\uB294 \uB3D9\uC758\uD560
+        \uC218 \uC5C6\uC2B5\uB2C8\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 4
+      Text: "\uC774 \uB9CE\uC740 \uB9C8\uC74C\uC774 \uD55C\uACF3\uC73C\uB85C \uAC08
+        \uB9AC \uC5C6\uC796\uC544. \uADF8\uB7EC\uB2C8 \uB354 \uD53C\uACE4\uD55C \uAC70\uACE0."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 5
+      Text: "\uC774\uC57C, \uD55C\uC790\uB9AC\uC5D0 \uC774\uB807\uAC8C \uB9CE\uC740
+        \uACB0\uD54D\uC774 \uBAA8\uC774\uB2C8 \uD5A5\uC774 \uC815\uB9D0 \uC9C4\uD558\uB124."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uB610 \uC55E\uC73C\uB85C \uAC00\uC790\uACE0 \uD558\uB124. \uADF8 \uB9D0\uC774
+        \uC2DC\uC791\uB420 \uB54C\uB9C8\uB2E4 \uB4A4\uC5D0 \uB0A8\uB294 \uC5BC\uAD74\uBD80\uD130
+        \uB5A0\uC62C\uB77C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_2_3_4_5_7_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 0200000003000000040000000600000007000000
+    Lines:
+    - SpeakerId: 2
+      Text: "\uC758\uC2EC\uB3C4 \uB450\uB824\uC6C0\uB3C4 \uB098\uC911\uC774\uB2E4.
+        \uC544\uC9C1 \uB05D\uB098\uC9C0 \uC54A\uC558\uACE0, \uB098\uB294 \uB05D\uC744
+        \uBD10\uC57C \uD55C\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 3
+      Text: "\uB05D\uC744 \uB17C\uD558\uAE30 \uC804\uC5D0, \uB204\uAC00 \uBA3C\uC800
+        \uC0C1\uCC98 \uC785\uB294\uC9C0\uBD80\uD130 \uBCF4\uC544\uC57C \uD558\uC9C0
+        \uC54A\uACA0\uC2B5\uB2C8\uAE4C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 4
+      Text: "\uC774\uB807\uAC8C \uB2E4 \uBAA8\uC5EC\uC11C \uAC19\uC740 \uB05D\uC744
+        \uBCF8\uB2E4\uB294 \uB9D0, \uC194\uC9C1\uD788 \uB09C \uC544\uC9C1\uB3C4 \uC798
+        \uBAA8\uB974\uACA0\uC5B4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 6
+      Text: "\uB204\uAD70\uAC00 \uBA3C\uC800 \uC4F0\uB7EC\uC838\uC57C \uD55C\uB2E4\uBA74
+        \uADF8\uAC74 \uB098\uC5EC\uC57C\uC9C0, \uB108\uD76C\uAC00 \uB420 \uC21C \uC5C6\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uB2E4\uB4E4 \uC790\uAE30 \uC774\uC720\uB294 \uBD84\uBA85\uD574. \uBB38\uC81C\uB294
+        \uADF8\uB7F0 \uC774\uC720\uAC00 \uB298 \uB204\uAD70\uAC00\uB97C \uBC00\uC5B4\uB0B8\uB2E4\uB294
+        \uAC70\uC57C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_2_3_4_6_7_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 0200000003000000050000000600000007000000
+    Lines:
+    - SpeakerId: 2
+      Text: "\uC758\uC2EC\uB3C4 \uB450\uB824\uC6C0\uB3C4 \uB098\uC911\uC774\uB2E4.
+        \uC544\uC9C1 \uB05D\uB098\uC9C0 \uC54A\uC558\uACE0, \uB098\uB294 \uB05D\uC744
+        \uBD10\uC57C \uD55C\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 3
+      Text: "\uB05D\uC744 \uB17C\uD558\uAE30 \uC804\uC5D0, \uB204\uAC00 \uBA3C\uC800
+        \uC0C1\uCC98 \uC785\uB294\uC9C0\uBD80\uD130 \uBCF4\uC544\uC57C \uD558\uC9C0
+        \uC54A\uACA0\uC2B5\uB2C8\uAE4C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 5
+      Text: "\uB2E4\uB4E4 \uC785\uC73C\uB85C\uB294 \uACB0\uB9D0\uC744 \uB9D0\uD558\uC9C0\uB9CC,
+        \uC18D\uC5D0\uC120 \uC804\uBD80 \uB2E4\uB978 \uD5C8\uAE30\uB97C \uD0A4\uC6B0\uACE0
+        \uC788\uAD70."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 6
+      Text: "\uB204\uAD70\uAC00 \uBA3C\uC800 \uC4F0\uB7EC\uC838\uC57C \uD55C\uB2E4\uBA74
+        \uADF8\uAC74 \uB098\uC5EC\uC57C\uC9C0, \uB108\uD76C\uAC00 \uB420 \uC21C \uC5C6\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uB2E4\uB4E4 \uC790\uAE30 \uC774\uC720\uB294 \uBD84\uBA85\uD574. \uBB38\uC81C\uB294
+        \uADF8\uB7F0 \uC774\uC720\uAC00 \uB298 \uB204\uAD70\uAC00\uB97C \uBC00\uC5B4\uB0B8\uB2E4\uB294
+        \uAC70\uC57C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_2_3_5_6_7_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 0200000004000000050000000600000007000000
+    Lines:
+    - SpeakerId: 2
+      Text: "\uB204\uAC00 \uC5B4\uB5A4 \uB9C8\uC74C\uC73C\uB85C \uC11C \uC788\uB4E0
+        \uC0C1\uAD00\uC5C6\uC5B4. \uB9C8\uC9C0\uB9C9\uAE4C\uC9C0 \uAC00\uB294 \uAC83\uB9CC\uC740
+        \uD3EC\uAE30\uD558\uC9C0 \uC54A\uB294\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 4
+      Text: "\uB2E4\uB4E4 \uB108\uBB34 \uB9CE\uC740 \uAC78 \uC9CA\uC5B4\uC9C0\uACE0
+        \uC788\uB124. \uB09C \uADF8\uB0E5 \uC870\uC6A9\uD788 \uB05D\uB0AC\uC73C\uBA74
+        \uC88B\uACA0\uC5B4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 5
+      Text: "\uC774 \uC815\uB3C4\uBA74 \uCF54\uC2A4\uAC00 \uC544\uB2C8\uB77C \uC5F0\uD68C\uC9C0.
+        \uB204\uAC00 \uBA3C\uC800 \uBB34\uB108\uC9C8\uC9C0 \uAE30\uB300\uB418\uB294\uB370?"
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 6
+      Text: "\uACB0\uC815\uC774 \uD544\uC694\uD558\uB2E4\uBA74 \uB0B4\uAC00 \uAC10\uB2F9\uD558\uACA0\uB2E4.
+        \uB2E4\uB9CC \uB05D\uAE4C\uC9C0 \uC0B4\uC544\uB0A8\uC544 \uB2EC\uB77C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uC88B\uC544, \uB2E4\uB4E4 \uB9D0\uC740 \uBA4B\uC9C0\uB124. \uADF8\uB798\uC11C
+        \uADF8 \uBA4B\uC9C4 \uACB0\uB9D0 \uC544\uB798 \uB204\uAC00 \uBA3C\uC800 \uAE54\uB9AC\uB294\uB370?"
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_2_4_5_6_7_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 0300000004000000050000000600000007000000
+    Lines:
+    - SpeakerId: 3
+      Text: "\uB300\uC758\uC640 \uACB0\uB9D0\uB3C4 \uC88B\uC2B5\uB2C8\uB2E4\uB9CC,
+        \uC81C\uAC8C \uAC00\uC7A5 \uC911\uC694\uD55C \uAC74 \uB8E8\uC774\uC2A4\uC758
+        \uBB34\uC0AC\uC785\uB2C8\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 4
+      Text: "\uB204\uAC00 \uC633\uC740\uC9C0\uBCF4\uB2E4, \uC5B8\uC81C\uCBE4 \uC880
+        \uC26C\uAC8C \uB418\uB294\uC9C0\uAC00 \uB354 \uAD81\uAE08\uD574."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 5
+      Text: "\uBD99\uC7A1\uB294 \uC0AC\uB78C\uB3C4 \uC788\uACE0, \uBA3C\uC800 \uB098\uC11C\uB824\uB294
+        \uC0AC\uB78C\uB3C4 \uC788\uACE0, \uB05D\uAE4C\uC9C0 \uC758\uC2EC\uD558\uB294
+        \uC0AC\uB78C\uB3C4 \uC788\uB124. \uC624\uB298\uC740 \uC720\uB09C\uD788 \uC18C\uB780\uC2A4\uB7EC\uC6CC."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 6
+      Text: "\uD754\uB4E4\uB824\uB3C4 \uC88B\uB2E4. \uB204\uAD70\uAC00\uB294 \uB05D\uAE4C\uC9C0
+        \uBC84\uD2F0\uACE0 \uBAA8\uB450\uB97C \uC138\uC6CC\uC57C \uD558\uB2C8\uAE4C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uC88B\uC740 \uB9D0\uC740 \uB9CE\uC9C0. \uADFC\uB370 \uADF8 \uB9D0\uB4E4\uC774
+        \uB204\uAD6C\uB97C \uAC00\uC7A5 \uC791\uAC8C \uB9CC\uB4DC\uB294\uC9C0\uB294
+        \uB298 \uB2A6\uAC8C \uBCF4\uC774\uB354\uB77C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_3_4_5_6_7_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 010000000200000003000000040000000500000006000000
+    Lines:
+    - SpeakerId: 1
+      Text: "\uC774 \uC815\uB3C4\uB85C \uB9C8\uC74C\uC774 \uB9CE\uC544\uC9C0\uBA74,
+        \uCE68\uBB35\uBCF4\uB2E4 \uC791\uC740 \uADE0\uC5F4\uC774 \uB354 \uC704\uD5D8\uD574\uC838."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 2
+      Text: "\uD754\uB4E4\uB9AC\uB294 \uAC74 \uC774\uD574\uD55C\uB2E4. \uADF8\uB798\uB3C4
+        \uC5EC\uAE30\uC11C \uBC1C\uC744 \uBA48\uCD9C \uC21C \uC5C6\uC5B4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 3
+      Text: "\uC5EC\uB7EC\uBD84\uC758 \uC0AC\uBA85\uC774 \uBB34\uC5C7\uC774\uB4E0,
+        \uB8E8\uC774\uC2A4\uB97C \uD574\uCE58\uB294 \uC120\uD0DD\uC5D0\uB294 \uB3D9\uC758\uD560
+        \uC218 \uC5C6\uC2B5\uB2C8\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 4
+      Text: "\uC774 \uB9CE\uC740 \uB9C8\uC74C\uC774 \uD55C\uACF3\uC73C\uB85C \uAC08
+        \uB9AC \uC5C6\uC796\uC544. \uADF8\uB7EC\uB2C8 \uB354 \uD53C\uACE4\uD55C \uAC70\uACE0."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 5
+      Text: "\uC774\uC57C, \uD55C\uC790\uB9AC\uC5D0 \uC774\uB807\uAC8C \uB9CE\uC740
+        \uACB0\uD54D\uC774 \uBAA8\uC774\uB2C8 \uD5A5\uC774 \uC815\uB9D0 \uC9C4\uD558\uB124."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 6
+      Text: "\uAC01\uC790\uC758 \uC774\uC720\uAC00 \uB2E4\uB974\uB354\uB77C\uB3C4,
+        \uBB34\uB108\uC9C0\uB294 \uC21C\uAC04\uB9CC\uD07C\uC740 \uB0B4\uAC00 \uB9C9\uACA0\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 1
+      Text: "\uC0C8\uD134\uC740 \uB05D\uAE4C\uC9C0 \uC758\uC2EC\uD588\uC5B4\uC694.
+        \uC5B4\uCA4C\uBA74 \uC6B0\uB9AC\uAC00 \uC678\uBA74\uD55C \uAC78 \uAC00\uC7A5
+        \uC815\uD655\uD788 \uBCF4\uACE0 \uC788\uC5C8\uB294\uC9C0\uB3C4\uC694."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 2
+      Text: "\uC0C8\uD134\uC774 \uC5C6\uC73C\uBA74 \uC6B0\uB9B4 \uBA48\uCDB0 \uC138\uC6B8
+        \uC0AC\uB78C\uC774 \uC904\uC5B4\uB4E0\uB2E4. \uADF8\uAC8C \uC624\uD788\uB824
+        \uB450\uB835\uAD70."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 3
+      Text: "\uADF8\uC758 \uC9C8\uBB38\uC740 \uBD88\uD3B8\uD588\uC9C0\uB9CC, \uC644\uC804\uD788
+        \uD2C0\uB9B0 \uB9D0\uC740 \uC544\uB2C8\uC5C8\uC2B5\uB2C8\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 4
+      Text: "\uC0C8\uD134\uC740 \uACC4\uC18D \uBB3C\uC5C8\uC9C0. \uB098\uB294 \uBB3B\uB294
+        \uAC83\uB3C4 \uC9C0\uCCE4\uB294\uB370\u2026 \uC774\uC81C \uB204\uAC00 \uBB3C\uC5B4\uBD10?"
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 5
+      Text: "\uC0C8\uD134 \uC5B8\uB2C8\uB294 \uD750\uB984\uC744 \uC790\uAFB8 \uB04A\uC5C8\uC5B4.
+        \uADFC\uB370 \uADF8\uAC8C \uC5C6\uC73C\uB2C8\uAE4C, \uAE38\uC774 \uB108\uBB34
+        \uB9E4\uB044\uB7EC\uC6CC."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 6
+      Text: "\uADF8\uC758 \uC758\uC2EC\uC774 \uB098\uB97C \uBA48\uCDB0 \uC138\uC6E0\uB2E4.
+        \uC774\uC81C\uB294 \uB0B4\uAC00 \uC2A4\uC2A4\uB85C \uBB3C\uC5B4\uC57C \uD55C\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_1_2_3_4_5_6_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 010000000200000003000000040000000500000007000000
+    Lines:
+    - SpeakerId: 1
+      Text: "\uB2E4\uB4E4 \uAC19\uC740 \uAE38\uC744 \uBCF4\uB294 \uCC99\uD558\uC9C0\uB9CC,
+        \uC2DC\uC120\uC774 \uD5A5\uD55C \uB05D\uC740 \uC804\uBD80 \uB2E4\uB974\uB124."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 2
+      Text: "\uC758\uC2EC\uB3C4 \uB450\uB824\uC6C0\uB3C4 \uB098\uC911\uC774\uB2E4.
+        \uC544\uC9C1 \uB05D\uB098\uC9C0 \uC54A\uC558\uACE0, \uB098\uB294 \uB05D\uC744
+        \uBD10\uC57C \uD55C\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 3
+      Text: "\uB05D\uC744 \uB17C\uD558\uAE30 \uC804\uC5D0, \uB204\uAC00 \uBA3C\uC800
+        \uC0C1\uCC98 \uC785\uB294\uC9C0\uBD80\uD130 \uBCF4\uC544\uC57C \uD558\uC9C0
+        \uC54A\uACA0\uC2B5\uB2C8\uAE4C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 4
+      Text: "\uC774\uB807\uAC8C \uB2E4 \uBAA8\uC5EC\uC11C \uAC19\uC740 \uB05D\uC744
+        \uBCF8\uB2E4\uB294 \uB9D0, \uC194\uC9C1\uD788 \uB09C \uC544\uC9C1\uB3C4 \uC798
+        \uBAA8\uB974\uACA0\uC5B4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 5
+      Text: "\uB2E4\uB4E4 \uC785\uC73C\uB85C\uB294 \uACB0\uB9D0\uC744 \uB9D0\uD558\uC9C0\uB9CC,
+        \uC18D\uC5D0\uC120 \uC804\uBD80 \uB2E4\uB978 \uD5C8\uAE30\uB97C \uD0A4\uC6B0\uACE0
+        \uC788\uAD70."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uB2E4\uB4E4 \uC790\uAE30 \uC774\uC720\uB294 \uBD84\uBA85\uD574. \uBB38\uC81C\uB294
+        \uADF8\uB7F0 \uC774\uC720\uAC00 \uB298 \uB204\uAD70\uAC00\uB97C \uBC00\uC5B4\uB0B8\uB2E4\uB294
+        \uAC70\uC57C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 1
+      Text: "\uD504\uB9AC\uB4DC\uB294 \uB05D\uAE4C\uC9C0 \uB204\uAD70\uAC00\uC758
+        \uBAAB\uC744 \uB300\uC2E0 \uAC00\uC838\uAC00\uB824 \uD588\uC5B4\uC694. \uADF8\uAC8C
+        \uBAA8\uB450\uB97C \uC0B4\uB9AC\uB294 \uAE38\uC774\uB77C \uBBFF\uC73C\uBA74\uC11C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 2
+      Text: "\uC65C \uB124\uAC00 \uBA3C\uC800\uC600\uC5B4. \uC65C \uB610 \uC774\uB7F0
+        \uC2DD\uC73C\uB85C \uBE44\uC5B4 \uBC84\uB824\uC57C \uD574."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 3
+      Text: "\uC88B\uC740 \uB73B\uC73C\uB85C \uD3EC\uC7A5\uD558\uAE30\uC5D4, \uB0A8\uC740
+        \uC0AC\uB78C\uB4E4\uC5D0\uAC8C \uB0A8\uC740 \uBB34\uAC8C\uAC00 \uB108\uBB34
+        \uD07D\uB2C8\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 4
+      Text: "\uBBF8\uC548\uD574. \uB108\uB294 \uB298 \uB300\uC2E0 \uC9CA\uC5B4\uC84C\uB294\uB370,
+        \uB098\uB294 \uB05D\uAE4C\uC9C0 \uAE30\uB300\uAE30\uB9CC \uD588\uC5B4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 5
+      Text: "\uD504\uB9AC\uB4DC \uC624\uBE60\uB294 \uAC00\uC7A5 \uBA3C\uC800 \uB098\uC130\uC5B4.
+        \uADF8\uB7F0 \uC0AC\uB78C\uC740 \uC0AC\uB77C\uC9C0\uB294 \uC21C\uAC04\uAE4C\uC9C0
+        \uB530\uB73B\uD558\uAD6C\uB098."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uBD10. \uACB0\uAD6D \uB9C8\uC9C0\uB9C9 \uC120\uD0DD\uAE4C\uC9C0 \uD63C\uC790
+        \uAC00\uC838\uAC14\uC796\uC544. \uB0A8\uC740 \uC0AC\uB78C\uD55C\uD14C \uBB3C\uC5B4\uBCF4\uC9C0\uB3C4
+        \uC54A\uACE0."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_1_2_3_4_5_7_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 010000000200000003000000040000000600000007000000
+    Lines:
+    - SpeakerId: 1
+      Text: "\uC774\uB807\uAC8C \uBAA8\uC774\uBA74 \uB204\uAC00 \uBB34\uB108\uC9C8\uC9C0\uBCF4\uB2E4,
+        \uB204\uAC00 \uB05D\uAE4C\uC9C0 \uC228\uAE38\uC9C0\uAC00 \uB354 \uAD81\uAE08\uD574\uC838."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 2
+      Text: "\uB204\uAC00 \uC5B4\uB5A4 \uB9C8\uC74C\uC73C\uB85C \uC11C \uC788\uB4E0
+        \uC0C1\uAD00\uC5C6\uC5B4. \uB9C8\uC9C0\uB9C9\uAE4C\uC9C0 \uAC00\uB294 \uAC83\uB9CC\uC740
+        \uD3EC\uAE30\uD558\uC9C0 \uC54A\uB294\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 3
+      Text: "\uBAA8\uB450\uC758 \uB73B\uC774 \uB2E4\uB974\uB2E4\uB294 \uAC74 \uC555\uB2C8\uB2E4.
+        \uD558\uC9C0\uB9CC \uB8E8\uC774\uC2A4\uB9CC\uC740 \uC774 \uC18C\uB780\uC5D0\uC11C
+        \uBE7C \uB450\uACE0 \uC2F6\uAD70\uC694."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 4
+      Text: "\uB2E4\uB4E4 \uB108\uBB34 \uB9CE\uC740 \uAC78 \uC9CA\uC5B4\uC9C0\uACE0
+        \uC788\uB124. \uB09C \uADF8\uB0E5 \uC870\uC6A9\uD788 \uB05D\uB0AC\uC73C\uBA74
+        \uC88B\uACA0\uC5B4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 6
+      Text: "\uACB0\uC815\uC774 \uD544\uC694\uD558\uB2E4\uBA74 \uB0B4\uAC00 \uAC10\uB2F9\uD558\uACA0\uB2E4.
+        \uB2E4\uB9CC \uB05D\uAE4C\uC9C0 \uC0B4\uC544\uB0A8\uC544 \uB2EC\uB77C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uC88B\uC544, \uB2E4\uB4E4 \uB9D0\uC740 \uBA4B\uC9C0\uB124. \uADF8\uB798\uC11C
+        \uADF8 \uBA4B\uC9C4 \uACB0\uB9D0 \uC544\uB798 \uB204\uAC00 \uBA3C\uC800 \uAE54\uB9AC\uB294\uB370?"
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 1
+      Text: "\uD1A0\uB2C8\uB294 \uB298 \uC6C3\uACE0 \uC788\uC5C8\uC8E0. \uADF8 \uC6C3\uC74C\uC774
+        \uBB34\uC5C7\uC744 \uAC00\uB9AC\uACE0 \uC788\uC5C8\uB294\uC9C0, \uC774\uC81C
+        \uD655\uC778\uD560 \uC218 \uC5C6\uB124\uC694."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 2
+      Text: "\uD1A0\uB2C8\uAC00 \uBE60\uC84C\uB2E4\uACE0 \uD574\uC11C \uB05D\uB09C
+        \uAC74 \uC544\uB2C8\uC57C. \uB0A8\uC740 \uD754\uC801\uBD80\uD130 \uD655\uC778\uD574\uC57C
+        \uD574."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 3
+      Text: "\uBD88\uC548\uD55C \uC544\uC774\uC600\uC2B5\uB2C8\uB2E4. \uB8E8\uC774\uC2A4\uC5D0\uAC8C
+        \uAC00\uAE4C\uC774 \uC624\uC9C0 \uBABB\uD558\uAC8C \uD55C \uD310\uB2E8\uC774
+        \uD2C0\uB9AC\uC9C4 \uC54A\uC558\uAD70\uC694."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 4
+      Text: "\uD1A0\uB2C8\uAC00 \uC870\uC6A9\uD558\uB2C8\uAE4C \uC774\uC0C1\uD574.
+        \uBC1D\uC740 \uC18C\uB9AC\uAC00 \uC0AC\uB77C\uC84C\uB294\uB370, \uC548\uC2EC\uC774
+        \uB418\uC9C4 \uC54A\uC544."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 6
+      Text: "\uC544\uC774\uCC98\uB7FC \uC6C3\uB358 \uC5BC\uAD74 \uB4A4\uC758 \uC5B4\uB460\uC744
+        \uB0B4\uAC00 \uB108\uBB34 \uB2A6\uAC8C \uBD24\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uB4DC\uB514\uC5B4 \uC870\uC6A9\uD574\uC84C\uB124. \uADF8\uB7F0\uB370
+        \uBB38\uC81C\uB294, \uC870\uC6A9\uD574\uC9C4 \uB4A4\uC5D0\uB3C4 \uCC1C\uCC1C\uD558\uB2E4\uB294
+        \uAC70\uC57C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_1_2_3_4_6_7_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 010000000200000003000000050000000600000007000000
+    Lines:
+    - SpeakerId: 1
+      Text: "\uD55C\uC790\uB9AC\uC5D0 \uC774\uB807\uAC8C \uB2E4\uB978 \uACB0\uD54D\uC774
+        \uBAA8\uC600\uB294\uB370\uB3C4 \uC544\uC9C1 \uD568\uAED8 \uC11C \uC788\uB2E4\uB294
+        \uAC8C \uB354 \uC2E0\uAE30\uD574."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 2
+      Text: "\uAC01\uC790\uC758 \uC0DD\uAC01\uC774 \uB2E4\uB974\uB354\uB77C\uB3C4,
+        \uC9C0\uAE08\uC740 \uAC19\uC740 \uBC29\uD5A5\uC744 \uBD10\uC57C \uD55C\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 3
+      Text: "\uB300\uC758\uC640 \uACB0\uB9D0\uB3C4 \uC88B\uC2B5\uB2C8\uB2E4\uB9CC,
+        \uC81C\uAC8C \uAC00\uC7A5 \uC911\uC694\uD55C \uAC74 \uADF8 \uC0AC\uB78C\uC758
+        \uBB34\uC0AC\uC785\uB2C8\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 5
+      Text: "\uC774\uC0C1\uD560 \uB9CC\uD07C \uC5EC\uB7EC \uAE30\uB958\uAC00 \uD55C\uC790\uB9AC\uC5D0
+        \uBAA8\uC600\uB124. \uADF8\uB798\uC11C \uB354 \uD765\uBBF8\uB85C\uC6CC."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 6
+      Text: "\uD754\uB4E4\uB824\uB3C4 \uC88B\uB2E4. \uB204\uAD70\uAC00\uB294 \uB05D\uAE4C\uC9C0
+        \uBC84\uD2F0\uACE0 \uBAA8\uB450\uB97C \uC138\uC6CC\uC57C \uD558\uB2C8\uAE4C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uD070 \uB9D0\uB4E4\uC740 \uB298 \uADF8\uB7F4\uB4EF\uD558\uC9C0. \uADFC\uB370
+        \uADF8 \uB9D0\uB4E4 \uC0AC\uC774\uC5D0\uC11C \uBC00\uB824\uB098\uB294 \uCABD\uC740
+        \uB204\uAC00 \uBCF4\uB098?"
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 1
+      Text: "\uB8E8\uC774\uC2A4\uB294 \uC26C\uACE0 \uC2F6\uB2E4\uACE0 \uD588\uC744
+        \uBFD0\uC778\uB370\u2026 \uC6B0\uB9AC\uB294 \uADF8 \uB9D0\uB3C4 \uC81C\uB300\uB85C
+        \uB4E3\uC9C0 \uBABB\uD588\uB124\uC694."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 2
+      Text: "\uB8E8\uC774\uC2A4\uAE4C\uC9C0 \uC783\uC5C8\uB2E4. \uB354\uB294 \uB204\uAD6C\uB3C4
+        \uB4A4\uC5D0 \uB0A8\uAE30\uC9C0 \uC54A\uACA0\uB2E4\uACE0 \uD588\uB294\uB370."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 3
+      Text: "\uB8E8\uC774\uC2A4\uAC00 \uC5C6\uB294 \uAE38\uC774\uB77C\uBA74, \uC81C\uAC00
+        \uAC78\uC5B4\uC57C \uD560 \uC774\uC720\uB3C4 \uC0AC\uB77C\uC84C\uC2B5\uB2C8\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 5
+      Text: "\uB8E8\uC774\uC2A4 \uC5B8\uB2C8\uB294 \uC870\uC6A9\uD588\uB294\uB370\u2026
+        \uC870\uC6A9\uD55C \uB9DB\uC740 \uC0AC\uB77C\uC9C0\uACE0 \uB098\uC11C \uB354
+        \uC624\uB798 \uB0A8\uB124."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 6
+      Text: "\uADF8\uAC00 \uB354 \uC26C\uC5B4\uB3C4 \uB41C\uB2E4\uACE0 \uB9D0\uD574\uC92C\uC5B4\uC57C
+        \uD588\uB2E4. \uB0B4\uAC00 \uB300\uC2E0 \uC9CA\uC5B4\uC9C8 \uC218 \uC788\uC5C8\uB294\uB370."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uBA48\uCD94\uACE0 \uC2F6\uB2E4\uB358 \uC0AC\uB78C\uC744 \uB05D\uAE4C\uC9C0
+        \uB04C\uACE0 \uC628 \uACB0\uACFC\uAC00 \uC774\uAC70\uC57C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_1_2_3_5_6_7_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 010000000200000004000000050000000600000007000000
+    Lines:
+    - SpeakerId: 1
+      Text: "\uC774 \uC815\uB3C4\uB85C \uB9C8\uC74C\uC774 \uB9CE\uC544\uC9C0\uBA74,
+        \uCE68\uBB35\uBCF4\uB2E4 \uC791\uC740 \uADE0\uC5F4\uC774 \uB354 \uC704\uD5D8\uD574\uC838."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 2
+      Text: "\uD754\uB4E4\uB9AC\uB294 \uAC74 \uC774\uD574\uD55C\uB2E4. \uADF8\uB798\uB3C4
+        \uC5EC\uAE30\uC11C \uBC1C\uC744 \uBA48\uCD9C \uC21C \uC5C6\uC5B4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 4
+      Text: "\uC774 \uB9CE\uC740 \uB9C8\uC74C\uC774 \uD55C\uACF3\uC73C\uB85C \uAC08
+        \uB9AC \uC5C6\uC796\uC544. \uADF8\uB7EC\uB2C8 \uB354 \uD53C\uACE4\uD55C \uAC70\uACE0."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 5
+      Text: "\uC774\uC57C, \uD55C\uC790\uB9AC\uC5D0 \uC774\uB807\uAC8C \uB9CE\uC740
+        \uACB0\uD54D\uC774 \uBAA8\uC774\uB2C8 \uD5A5\uC774 \uC815\uB9D0 \uC9C4\uD558\uB124."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 6
+      Text: "\uAC01\uC790\uC758 \uC774\uC720\uAC00 \uB2E4\uB974\uB354\uB77C\uB3C4,
+        \uBB34\uB108\uC9C0\uB294 \uC21C\uAC04\uB9CC\uD07C\uC740 \uB0B4\uAC00 \uB9C9\uACA0\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uB610 \uC55E\uC73C\uB85C \uAC00\uC790\uACE0 \uD558\uB124. \uADF8 \uB9D0\uC774
+        \uC2DC\uC791\uB420 \uB54C\uB9C8\uB2E4 \uB4A4\uC5D0 \uB0A8\uB294 \uC5BC\uAD74\uBD80\uD130
+        \uB5A0\uC62C\uB77C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 1
+      Text: "\uB370\uC6B0\uC2A4\uAC00 \uC0AC\uB77C\uC84C\uB2E4\uBA74, \uC774\uC81C
+        \uB8E8\uC774\uC2A4\uB97C \uBD99\uC7A1\uACE0 \uC788\uB358 \uC138\uACC4\uB3C4
+        \uD754\uB4E4\uB9AC\uACA0\uC8E0."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 2
+      Text: "\uC9C0\uAE08\uC740 \uB8E8\uC774\uC2A4\uBD80\uD130 \uCC59\uACA8. \uB354
+        \uBB34\uB108\uC9C0\uB294 \uC0AC\uB78C\uC740 \uC5C6\uC5B4\uC57C \uD574."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 4
+      Text: "\uB370\uC6B0\uC2A4\u2026? \uB300\uB2F5\uD574. \uB098, \uC774\uC81C \uC5B4\uB514\uC5D0
+        \uAE30\uB300\uC57C \uD574?"
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 5
+      Text: "\uB458\uC774 \uD558\uB098\uCC98\uB7FC \uBD99\uC5B4 \uC788\uC5C8\uB294\uB370\u2026
+        \uD558\uB098\uAC00 \uB5A8\uC5B4\uC9C0\uBA74 \uB098\uBA38\uC9C0\uB294 \uC5B4\uB5BB\uAC8C
+        \uB420\uAE4C?"
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 6
+      Text: "\uB8E8\uC774\uC2A4 \uACC1\uC5D0 \uB0B4\uAC00 \uC11C\uACA0\uB2E4. \uB370\uC6B0\uC2A4\uAC00
+        \uB0A8\uAE34 \uBE48\uC790\uB9AC\uB97C \uBC29\uCE58\uD558\uC9C0 \uC54A\uACA0\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uD55C\uACF3\uC5D0 \uB108\uBB34 \uB9CE\uC740 \uBB34\uAC8C\uB97C \uC2E4\uC73C\uBA74,
+        \uB0A8\uC740 \uCABD\uC740 \uC11C \uC788\uB294 \uBC95\uBD80\uD130 \uC78A\uC5B4\uBC84\uB9AC\uAC8C
+        \uB3FC."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 4
+      Text: "\uB370\uC6B0\uC2A4\uAC00 \uC5C6\uC73C\uBA74\u2026 \uC5EC\uAE34 \uB108\uBB34
+        \uC2DC\uB044\uB7FD\uACE0, \uB108\uBB34 \uBC1D\uC544."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 1
+      Text: "\uB8E8\uC774\uC2A4, \uC9C0\uAE08\uC740 \uC5EC\uAE30 \uC788\uC5B4\uC694.
+        \uB204\uAD70\uAC00\uC758 \uBE48\uC790\uB9AC\uB97C \uB354 \uD06C\uAC8C \uB9CC\uB4E4
+        \uD544\uC694\uB294 \uC5C6\uC796\uC544\uC694."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 2
+      Text: "\uB8E8\uC774\uC2A4\uB97C \uBD99\uC7A1\uC544. \uC9C0\uAE08 \uBB34\uB108\uC9C0\uBA74
+        \uC804\uBD80 \uC783\uB294\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 6
+      Text: "\uB0B4\uAC00 \uACC1\uC5D0 \uC11C\uACA0\uB2E4. \uAE30\uB300\uB3C4 \uB41C\uB2E4.
+        \uADF8\uB7EC\uB2C8 \uC9C0\uAE08\uC740 \uC228\uB9CC \uC26C\uC5B4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uBE48\uC790\uB9AC\uB97C \uB9D0\uB85C \uBA54\uC6B8 \uC218\uB294 \uC5C6\uC5B4.
+        \uADF8\uB798\uB3C4 \uB193\uC544\uBC84\uB9AC\uAC8C \uB450\uBA74 \uC548 \uB3FC."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 5
+      Text: "\uC624\uB298\uC740 \uC7A5\uB09C\uCE58\uBA74 \uC548 \uB418\uB294 \uB0A0
+        \uAC19\uC544. \uB8E8\uC774\uC2A4 \uC5B8\uB2C8, \uB208 \uAC10\uC9C0 \uB9C8."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_1_2_4_5_6_7_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 010000000300000004000000050000000600000007000000
+    Lines:
+    - SpeakerId: 1
+      Text: "\uB2E4\uB4E4 \uAC19\uC740 \uAE38\uC744 \uBCF4\uB294 \uCC99\uD558\uC9C0\uB9CC,
+        \uC2DC\uC120\uC774 \uD5A5\uD55C \uB05D\uC740 \uC804\uBD80 \uB2E4\uB974\uB124."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 3
+      Text: "\uB05D\uC744 \uB17C\uD558\uAE30 \uC804\uC5D0, \uB204\uAC00 \uBA3C\uC800
+        \uC0C1\uCC98 \uC785\uB294\uC9C0\uBD80\uD130 \uBCF4\uC544\uC57C \uD558\uC9C0
+        \uC54A\uACA0\uC2B5\uB2C8\uAE4C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 4
+      Text: "\uC774\uB807\uAC8C \uB2E4 \uBAA8\uC5EC\uC11C \uAC19\uC740 \uB05D\uC744
+        \uBCF8\uB2E4\uB294 \uB9D0, \uC194\uC9C1\uD788 \uB09C \uC544\uC9C1\uB3C4 \uC798
+        \uBAA8\uB974\uACA0\uC5B4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 5
+      Text: "\uB2E4\uB4E4 \uC785\uC73C\uB85C\uB294 \uACB0\uB9D0\uC744 \uB9D0\uD558\uC9C0\uB9CC,
+        \uC18D\uC5D0\uC120 \uC804\uBD80 \uB2E4\uB978 \uD5C8\uAE30\uB97C \uD0A4\uC6B0\uACE0
+        \uC788\uAD70."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 6
+      Text: "\uB204\uAD70\uAC00 \uBA3C\uC800 \uC4F0\uB7EC\uC838\uC57C \uD55C\uB2E4\uBA74
+        \uADF8\uAC74 \uB098\uC5EC\uC57C\uC9C0, \uB108\uD76C\uAC00 \uB420 \uC21C \uC5C6\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uB2E4\uB4E4 \uC790\uAE30 \uC774\uC720\uB294 \uBD84\uBA85\uD574. \uBB38\uC81C\uB294
+        \uADF8\uB7F0 \uC774\uC720\uAC00 \uB298 \uB204\uAD70\uAC00\uB97C \uBC00\uC5B4\uB0B8\uB2E4\uB294
+        \uAC70\uC57C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 1
+      Text: "\uBA54\uC774\uAC00 \uBA48\uCDC4\uC5B4\uC694. \uB204\uAD6C\uBCF4\uB2E4
+        \uB05D\uC744 \uBCF4\uB824 \uD558\uB358 \uC0AC\uB78C\uC774\u2026"
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 3
+      Text: "\uADF8\uC758 \uBC29\uC2DD\uC774 \uBD88\uC548\uD558\uAE34 \uD588\uC9C0\uB9CC,
+        \uC774\uB7F0 \uACB0\uACFC\uAE4C\uC9C0 \uBC14\uB780 \uC801\uC740 \uC5C6\uC2B5\uB2C8\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 4
+      Text: "\uC774\uC81C \uB354 \uAC00\uC790\uACE0 \uB9D0\uD560 \uC0AC\uB78C\uC774
+        \uC904\uC5C8\uB124. \uADF8\uB7F0\uB370 \uC65C \uD558\uB098\uB3C4 \uAC00\uBCCD\uC9C0
+        \uC54A\uC9C0."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 5
+      Text: "\uBA54\uC774 \uC5B8\uB2C8\uC758 \uBD88\uAF43\uC774 \uAEBC\uC84C\uC5B4.
+        \uC774\uB807\uAC8C \uBE68\uB9AC \uC2DD\uC744 \uC904\uC740 \uBAB0\uB790\uB294\uB370."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 6
+      Text: "\uBA54\uC774\uAC00 \uC9CA\uC5B4\uC9C4 \uACB0\uB9D0\uC744 \uB0B4\uAC00
+        \uB300\uC2E0 \uB05D\uAE4C\uC9C0 \uAC00\uC838\uAC00\uACA0\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uACB0\uB9D0\uB9CC \uBCF4\uB358 \uC0AC\uB78C\uC774 \uACB0\uAD6D \uACFC\uC815\uC5D0\uC11C
+        \uC0AC\uB77C\uC84C\uC5B4. \uADF8\uB798\uC11C \uB0B4\uAC00 \uACC4\uC18D \uBB3C\uC5C8\uB358
+        \uAC70\uC57C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_1_3_4_5_6_7_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 020000000300000004000000050000000600000007000000
+    Lines:
+    - SpeakerId: 2
+      Text: "\uB204\uAC00 \uC5B4\uB5A4 \uB9C8\uC74C\uC73C\uB85C \uC11C \uC788\uB4E0
+        \uC0C1\uAD00\uC5C6\uC5B4. \uB9C8\uC9C0\uB9C9\uAE4C\uC9C0 \uAC00\uB294 \uAC83\uB9CC\uC740
+        \uD3EC\uAE30\uD558\uC9C0 \uC54A\uB294\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 3
+      Text: "\uBAA8\uB450\uC758 \uB73B\uC774 \uB2E4\uB974\uB2E4\uB294 \uAC74 \uC555\uB2C8\uB2E4.
+        \uD558\uC9C0\uB9CC \uB8E8\uC774\uC2A4\uB9CC\uC740 \uC774 \uC18C\uB780\uC5D0\uC11C
+        \uBE7C \uB450\uACE0 \uC2F6\uAD70\uC694."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 4
+      Text: "\uB2E4\uB4E4 \uB108\uBB34 \uB9CE\uC740 \uAC78 \uC9CA\uC5B4\uC9C0\uACE0
+        \uC788\uB124. \uB09C \uADF8\uB0E5 \uC870\uC6A9\uD788 \uB05D\uB0AC\uC73C\uBA74
+        \uC88B\uACA0\uC5B4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 5
+      Text: "\uC774 \uC815\uB3C4\uBA74 \uCF54\uC2A4\uAC00 \uC544\uB2C8\uB77C \uC5F0\uD68C\uC9C0.
+        \uB204\uAC00 \uBA3C\uC800 \uBB34\uB108\uC9C8\uC9C0 \uAE30\uB300\uB418\uB294\uB370?"
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 6
+      Text: "\uACB0\uC815\uC774 \uD544\uC694\uD558\uB2E4\uBA74 \uB0B4\uAC00 \uAC10\uB2F9\uD558\uACA0\uB2E4.
+        \uB2E4\uB9CC \uB05D\uAE4C\uC9C0 \uC0B4\uC544\uB0A8\uC544 \uB2EC\uB77C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uC88B\uC544, \uB2E4\uB4E4 \uB9D0\uC740 \uBA4B\uC9C0\uB124. \uADF8\uB798\uC11C
+        \uADF8 \uBA4B\uC9C4 \uACB0\uB9D0 \uC544\uB798 \uB204\uAC00 \uBA3C\uC800 \uAE54\uB9AC\uB294\uB370?"
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 2
+      Text: "\uC5D4\uBE44\uAC00 \uC774\uB807\uAC8C \uC0AC\uB77C\uC9C8 \uC904\uC740
+        \uBAB0\uB790\uC5B4. \uBBFF\uC5C8\uB358 \uB9CC\uD07C, \uBE48\uC790\uB9AC\uAC00
+        \uB354 \uC704\uD5D8\uD558\uAC8C \uB290\uAEF4\uC9C4\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 3
+      Text: "\uB8E8\uC774\uC2A4, \uC7A0\uAE50 \uC5EC\uAE30 \uC788\uC5B4\uC694. \uC9C0\uAE08\uC740
+        \uB9C8\uC74C\uC774 \uD750\uD2B8\uB7EC\uC9C0\uC9C0 \uC54A\uAC8C \uD558\uB294
+        \uAC8C \uBA3C\uC800\uC785\uB2C8\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 4
+      Text: "\uC5D4\uBE44\uB294 \uC870\uC6A9\uD574\uC11C \uD3B8\uD588\uB294\uB370\u2026
+        \uC870\uC6A9\uD55C \uC0AC\uB78C\uB3C4 \uC774\uB807\uAC8C \uC0AC\uB77C\uC9C0\uB294\uAD6C\uB098."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 5
+      Text: "\uC5D4\uBE44 \uC5B8\uB2C8\uB294 \uB298 \uD55C\uBC1C \uC55E\uC11C \uC788\uB294
+        \uAC83 \uAC19\uC558\uB294\uB370\u2026 \uC774\uB7F0 \uC2DD\uC73C\uB85C \uBE44\uAC8C
+        \uB420 \uC904\uC740 \uBAB0\uB790\uB124."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 6
+      Text: "\uB0B4\uAC00 \uBA3C\uC800 \uB9C9\uC558\uC5B4\uC57C \uD588\uB2E4. \uC5D4\uBE44\uAC00
+        \uB0A8\uAE34 \uCE68\uBB35\uAE4C\uC9C0 \uB0B4\uAC00 \uC9CA\uC5B4\uC9C0\uACA0\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uBD80\uB4DC\uB7EC\uC6B4 \uB9D0 \uB4A4\uC5D0 \uBB50\uAC00 \uC788\uC5C8\uB294\uC9C0\uB294
+        \uC774\uC81C \uBABB \uBB3B\uACA0\uB124. \uADF8\uB798\uB3C4 \uB204\uAC00 \uB0A8\uACBC\uB294\uC9C0\uB294
+        \uBD10\uC57C \uD574."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_2_3_4_5_6_7_frag0
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ParticipantIds: 01000000020000000300000004000000050000000600000007000000
+    Lines:
+    - SpeakerId: 1
+      Text: "\uC774\uB807\uAC8C \uBAA8\uC774\uBA74 \uB204\uAC00 \uBB34\uB108\uC9C8\uC9C0\uBCF4\uB2E4,
+        \uB204\uAC00 \uB05D\uAE4C\uC9C0 \uC228\uAE38\uC9C0\uAC00 \uB354 \uAD81\uAE08\uD574\uC838."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 2
+      Text: "\uB204\uAC00 \uC5B4\uB5A4 \uB9C8\uC74C\uC73C\uB85C \uC11C \uC788\uB4E0
+        \uC0C1\uAD00\uC5C6\uC5B4. \uB9C8\uC9C0\uB9C9\uAE4C\uC9C0 \uAC00\uB294 \uAC83\uB9CC\uC740
+        \uD3EC\uAE30\uD558\uC9C0 \uC54A\uB294\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 3
+      Text: "\uBAA8\uB450\uC758 \uB73B\uC774 \uB2E4\uB974\uB2E4\uB294 \uAC74 \uC555\uB2C8\uB2E4.
+        \uD558\uC9C0\uB9CC \uB8E8\uC774\uC2A4\uB9CC\uC740 \uC774 \uC18C\uB780\uC5D0\uC11C
+        \uBE7C \uB450\uACE0 \uC2F6\uAD70\uC694."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 4
+      Text: "\uB2E4\uB4E4 \uB108\uBB34 \uB9CE\uC740 \uAC78 \uC9CA\uC5B4\uC9C0\uACE0
+        \uC788\uB124. \uB09C \uADF8\uB0E5 \uC870\uC6A9\uD788 \uB05D\uB0AC\uC73C\uBA74
+        \uC88B\uACA0\uC5B4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 5
+      Text: "\uC774 \uC815\uB3C4\uBA74 \uCF54\uC2A4\uAC00 \uC544\uB2C8\uB77C \uC5F0\uD68C\uC9C0.
+        \uB204\uAC00 \uBA3C\uC800 \uBB34\uB108\uC9C8\uC9C0 \uAE30\uB300\uB418\uB294\uB370?"
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 6
+      Text: "\uACB0\uC815\uC774 \uD544\uC694\uD558\uB2E4\uBA74 \uB0B4\uAC00 \uAC10\uB2F9\uD558\uACA0\uB2E4.
+        \uB2E4\uB9CC \uB05D\uAE4C\uC9C0 \uC0B4\uC544\uB0A8\uC544 \uB2EC\uB77C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uC88B\uC544, \uB2E4\uB4E4 \uB9D0\uC740 \uBA4B\uC9C0\uB124. \uADF8\uB798\uC11C
+        \uADF8 \uBA4B\uC9C4 \uACB0\uB9D0 \uC544\uB798 \uB204\uAC00 \uBA3C\uC800 \uAE54\uB9AC\uB294\uB370?"
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 2
+      Text: "\uC624\uB298\uC740 \uC5EC\uAE30\uC11C \uC815\uBE44\uD558\uACE0, \uB0B4\uC77C
+        \uC544\uCE68 \uBC14\uB85C \uC774\uB3D9\uD55C\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 4
+      Text: "\u2026\uC870\uAE08\uB9CC \uB354 \uC26C\uBA74 \uC548 \uB3FC? \uBC1C\uC774
+        \uBB34\uAC70\uC6CC."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 3
+      Text: "\uB8E8\uC774\uC2A4\uC758 \uC0C1\uD0DC\uB97C \uACE0\uB824\uD574\uC57C
+        \uD569\uB2C8\uB2E4. \uBB34\uB9AC\uD55C \uC774\uB3D9\uC740 \uC704\uD5D8\uD569\uB2C8\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 6
+      Text: "\uB458 \uB2E4 \uB9DE\uB294 \uB9D0\uC774\uB2E4. \uC815\uBE44\uC640 \uD734\uC2DD\uC744
+        \uBCD1\uD589\uD558\uC790."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 5
+      Text: "\uADF8\uB7FC \uC800\uB141\uC740 \uB530\uB73B\uD55C \uAC70\uC57C? \uD1A0\uB2C8\uB294
+        \uAD6D\uBB3C\uC774 \uC788\uB294 \uAC8C \uC88B\uC544!"
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 1
+      Text: "\uC2DD\uC0AC\uBD80\uD130 \uD558\uC8E0. \uB2E4\uB4E4 \uC9C0\uCCD0 \uC788\uC73C\uB2C8\uAE4C\uC694."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uC6C0\uC9C1\uC774\uAE30 \uC804\uC5D0 \uB4A4\uC5D0 \uB0A8\uB294 \uC0AC\uB78C\uC774
+        \uC5C6\uB294\uC9C0 \uD655\uC778\uD574. \uB298 \uADF8\uAC8C \uBB38\uC81C\uC600\uC73C\uB2C8\uAE4C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 5
+      Text: "\uC640\uC544, \uC624\uB298 \uBE75\uC740 \uC870\uAE08 \uB531\uB531\uD574!
+        \uADFC\uB370 \uC539\uB2E4 \uBCF4\uBA74 \uACE0\uC18C\uD574\uC838."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 4
+      Text: "\u2026\uADF8\uB7F0 \uAC78 \uC798\uB3C4 \uB290\uB07C\uB124."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 1
+      Text: "\uD1A0\uB2C8\uB294 \uC791\uC740 \uCC28\uC774\uB3C4 \uC798 \uC54C\uC544\uCC28\uB9AC\uB2C8\uAE4C\uC694."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 2
+      Text: "\uC2DD\uC0AC\uAC00 \uB05D\uB098\uBA74 \uC7A5\uBE44 \uC810\uAC80\uC774\uB2E4.
+        \uB0B4\uC77C\uC740 \uB354 \uD5D8\uD574\uC9C8 \uAC70\uC57C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 3
+      Text: "\uB8E8\uC774\uC2A4\uB294 \uBA3C\uC800 \uC26C\uAC8C \uD558\uACA0\uC2B5\uB2C8\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 7
+      Text: "\uB610 \uB530\uB85C \uB5BC\uC5B4\uB193\uB294\uAD70."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    - SpeakerId: 6
+      Text: "\uC9C0\uAE08\uC740 \uB2E4\uD234 \uB54C\uAC00 \uC544\uB2C8\uB2E4. \uD544\uC694\uD55C
+        \uC900\uBE44\uBD80\uD130 \uB05D\uB0B4\uC790."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+    FragmentId: Stage_1_Phase2_group_1_2_3_4_5_6_7_frag0
     Condition:
       RequiredFragmentId: 
       MinLoopCount: 0
