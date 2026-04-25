@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using HTH.Campaign;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -211,6 +212,16 @@ public class FinalDecisionUI : MonoBehaviour
         {
             if (_preDialogueObject != null) _preDialogueObject.SetActive(true);
             gfc.SubmitFinalDecision(true);
+
+            // [캠패인모드]
+            // 1회차 전부 정답 → 캠페인 2회차 진입 알림
+            // CampaignModeManager가 없으면 (일반 스테이지 플레이) 무시됨
+            if (HTH.Campaign.CampaignModeManager.Instance != null)
+            {
+                string stageId = GameLogger.Instance?.CurrentStageId
+                              ?? GameFlowController.Instance?.StageId;
+                HTH.Campaign.CampaignModeManager.Instance.OnFirstRunCleared(stageId);
+            }
         }
     }
     private void FinalizeAndUploadLog(bool isWin)

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 /// <summary>
 /// 게임 전체 루프 흐름을 관리하는 최상위 상태머신입니다.
@@ -205,6 +206,22 @@ public class LoopStateMachine : StateMachine
     public void AdvanceLoop()
     {
         LoopCount++;
+
+        // Phase2에서는 루프 제한 없이 무한 반복
+        if (HTH.Campaign.CampaignModeManager.IsPhase2Active)
+        {
+            // MaxLoops 도달 시 LoopCount 리셋 후 계속 진행
+            if (LoopCount >= MaxLoops)
+            {
+                LoopCount = 0;
+                Debug.Log("[LoopStateMachine] Phase2 — 루프 리셋 후 계속 진행");
+            }
+            CurrentState = LoopStateType.GameSetup;
+            ChangeState(_gameSetup);
+            return;
+        }
+
+        // Phase1 (기존 동작) — MaxLoops 도달 시 최종 추리
         if (LoopCount >= MaxLoops)
             EnterAwaitingFinalDecision();
         else

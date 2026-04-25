@@ -30,6 +30,11 @@ public class GameFlowController : SingletonMonobehaviour<GameFlowController>
     /// <summary>이 씬의 스테이지 식별자입니다. 클리어 기록 저장 및 다음 스테이지 해금에 사용됩니다.</summary>
     [SerializeField] private string _stageId;
 
+    /// <summary>[캠패인모드] 외부에서 스테이지 ID를 읽기 위한 프로퍼티입니다. CampaignModeManager에서 사용합니다.</summary>
+    public string StageId => !string.IsNullOrEmpty(_stageId)
+        ? _stageId
+        : UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
+
     [Tooltip("이 스테이지를 클리어하면 로비에서 엔딩 다이얼로그를 재생합니다.")]
     [SerializeField] private bool _triggerEndingDialogueOnWin;
 

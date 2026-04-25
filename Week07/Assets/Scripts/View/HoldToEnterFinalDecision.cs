@@ -40,6 +40,11 @@ public class HoldToEnterFinalDecision : MonoBehaviour
 
     [Header("확인 패널 메시지")]
     [SerializeField] private string _confirmMessage = "최종 추리를 시작하시겠습니까?";
+    [SerializeField] private string _confirmMessagePhase2 = "인물 추리를 시작하시겠습니까?";
+
+    [Header("Phase2 연결")]
+    [Tooltip("Phase2에서 최종 추리 대신 표시할 프로파일 추리 UI")]
+    [SerializeField] private HTH.Campaign.ProfileInquiryAllUI _profileInquiryAllUI;
 
     private Vector3 _fullScale;
     private bool _triggered;
@@ -98,30 +103,42 @@ public class HoldToEnterFinalDecision : MonoBehaviour
     {
         _triggered = true;
 
-        ConfirmPanel.Instance?.Show(
-            _confirmMessage,
-             onConfirm: () =>
-             {
-                 _triggered = false;
-                 HideFill();
+        // Phase2 여부에 따라 메시지 분기
+        string message = HTH.Campaign.CampaignModeManager.IsPhase2Active
+            ? _confirmMessagePhase2
+            : _confirmMessage;
 
-                 // 튜토리얼 중에는 최종 추리 진입 차단
-                 if (TutorialManager.IsActive)
-                 {
-                     Debug.Log("[HoldToEnterFinalDecision] 튜토리얼 중 — 최종 추리 진입 차단");
-                     // ConfirmPanel 닫힌 후 다시 책 클릭 가능하도록 SetClickAdvance 복원
-                     TutorialManager.Instance?.RestoreClickAdvanceAfterBlock();
-                     return;
-                 }
+        ConfirmPanel.Instance?.Show(message, onConfirm: () =>
+            {
+                _triggered = false;
+                HideFill();
 
-                 GameFlowController.Instance?.EnterFinalDecision();
-             },
+                // 튜토리얼 중에는 최종 추리 진입 차단
+                if (TutorialManager.IsActive)
+                {
+                    Debug.Log("[HoldToEnterFinalDecision] 튜토리얼 중 — 최종 추리 진입 차단");
+                    TutorialManager.Instance?.RestoreClickAdvanceAfterBlock();
+                    return;
+                }
+
+                // Phase2: 프로파일 추리 UI 표시
+                if (HTH.Campaign.CampaignModeManager.IsPhase2Active)
+                {
+                    if (_profileInquiryAllUI != null)
+                        _profileInquiryAllUI.Show();
+                    else
+                        Debug.LogWarning("[HoldToEnterFinalDecision] ProfileInquiryAllUI가 연결되지 않았습니다.");
+                    return;
+                }
+
+                // Phase1: 기존 최종 추리
+                GameFlowController.Instance?.EnterFinalDecision();
+            },
             onCancel: () =>
             {
                 _triggered = false;
                 HideFill();
 
-                // 튜토리얼 FinalDecisionBookGuide 단계에서 취소 시 → DateUIGuide 진입
                 if (TutorialManager.IsActive)
                     TutorialManager.Instance?.NotifyFinalDecisionCancelled();
             });

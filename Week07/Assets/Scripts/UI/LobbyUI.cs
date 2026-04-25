@@ -24,6 +24,9 @@ using UnityEngine.UI;
 /// </summary>
 public class LobbyUI : MonoBehaviour
 {
+    [Header("캠페인 보상")]
+    [SerializeField] private HTH.Campaign.RewardGalleryUI _rewardGalleryUI;
+
     [Header("씬 이름")]
     [SerializeField] private string _gameSceneName         = "GameScene";
     [SerializeField] private string _tutorialSceneName     = "TutorialScene";
@@ -129,5 +132,9 @@ public class LobbyUI : MonoBehaviour
         if (_newGamePanel != null) _newGamePanel.SetActive(false);
     }
 
-
+    // 버튼 onClick에 연결
+    public void OnRewardGalleryButtonClicked()
+    {
+        _rewardGalleryUI?.Show();
+    }
 }
