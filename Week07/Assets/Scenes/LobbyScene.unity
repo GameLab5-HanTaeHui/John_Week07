@@ -255,7 +255,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LobbyPresetSeedButton
   _seed: 12399397
-  _stageId: 1_1
+  _stageId: Stage_1_1
   _gameSceneName: Stage_1
   _label: {fileID: 0}
 --- !u!114 &63321702
@@ -2012,6 +2012,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a7b3934df71e63458edcd20110f740b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LobbyUI
+  _rewardGalleryUI: {fileID: 0}
   _gameSceneName: Stage_1
   _tutorialSceneName: TutorialScene
   _tutorialRetrySceneName: TutorialRetryScene
@@ -4613,7 +4614,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LobbyPresetSeedButton
   _seed: 34237518
-  _stageId: 2_1
+  _stageId: Stage_2_1
   _gameSceneName: Stage_3
   _label: {fileID: 0}
 --- !u!114 &974203998
@@ -5422,7 +5423,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LobbyPresetSeedButton
   _seed: 26044171
-  _stageId: 2_2
+  _stageId: Stage_2_2
   _gameSceneName: Stage_3
   _label: {fileID: 0}
 --- !u!114 &1129571362
@@ -6547,7 +6548,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LobbyPresetSeedButton
   _seed: 7520
-  _stageId: 0
+  _stageId: Tutorial
   _gameSceneName: Tutorial
   _label: {fileID: 0}
 --- !u!114 &1400545859
@@ -6782,7 +6783,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LobbyPresetSeedButton
   _seed: 52635548
-  _stageId: 1_3
+  _stageId: Stage_1_3
   _gameSceneName: Stage_1
   _label: {fileID: 0}
 --- !u!114 &1401699223
@@ -8094,7 +8095,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LobbyPresetSeedButton
   _seed: 15905396
-  _stageId: 1_2
+  _stageId: Stage_1_2
   _gameSceneName: Stage_1
   _label: {fileID: 0}
 --- !u!114 &1675106416

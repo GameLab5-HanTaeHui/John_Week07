@@ -31,9 +31,11 @@ public class GameFlowController : SingletonMonobehaviour<GameFlowController>
     [SerializeField] private string _stageId;
 
     /// <summary>[캠패인모드] 외부에서 스테이지 ID를 읽기 위한 프로퍼티입니다. CampaignModeManager에서 사용합니다.</summary>
-    public string StageId => !string.IsNullOrEmpty(_stageId)
-        ? _stageId
-        : UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
+    public string StageId => !string.IsNullOrEmpty(NewGameConfig.StageId)
+       ? NewGameConfig.StageId
+       : !string.IsNullOrEmpty(_stageId)
+           ? _stageId
+           : UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
 
     [Tooltip("이 스테이지를 클리어하면 로비에서 엔딩 다이얼로그를 재생합니다.")]
     [SerializeField] private bool _triggerEndingDialogueOnWin;
@@ -99,10 +101,14 @@ public class GameFlowController : SingletonMonobehaviour<GameFlowController>
     private void Start()
     {
         // ★ [HTH추가] 스테이지 로깅 시작
-        // _stageId가 비어있으면 씬 이름으로 폴백
-        string loggingStageId = !string.IsNullOrEmpty(_stageId)
-            ? _stageId
-            : SceneManager.GetActiveScene().name;
+        // 우선순위: NewGameConfig.StageId → Inspector._stageId → 씬 이름
+        // NewGameConfig.StageId = LobbyPresetSeedButton에서 설정한 챕터 ID (예: 1_1, 1_2)
+        // Inspector._stageId   = 씬에 하드코딩된 기본값 (예: Stage_1) — 폴백용
+        string loggingStageId = !string.IsNullOrEmpty(NewGameConfig.StageId)
+            ? NewGameConfig.StageId
+            : !string.IsNullOrEmpty(_stageId)
+                ? _stageId
+                : SceneManager.GetActiveScene().name;
 
         GameLogger.Instance?.StartStageLogging(loggingStageId);
         Debug.Log($"[GameFlowController] StartStageLogging — stageId={loggingStageId}");
@@ -205,9 +211,13 @@ public class GameFlowController : SingletonMonobehaviour<GameFlowController>
     private void HandleGameEnded(bool isWin)
     {
         // ★ [HTH추가] 게임 결과 로그
+        // Phase2 중 중도 포기 시에도 mode 필드로 구별 가능
         GameLogger.Instance?.LogEvent("game_end", new Dictionary<string, object>
         {
             { "result",      isWin ? "win" : "lose" },
+            { "mode",        HTH.Campaign.CampaignModeManager.IsPhase2Active
+                                 ? "phase2_campaign"
+                                 : "phase1_normal" },
             { "total_loops", _loopSM?.LoopCount ?? 0 },
             { "total_turns", _loopSM?.TurnCount ?? 0 },
         });

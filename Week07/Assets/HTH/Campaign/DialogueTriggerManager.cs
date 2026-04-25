@@ -248,9 +248,7 @@ namespace HTH.Campaign
         /// 그룹 대사를 재생합니다.
         /// 완료 후 출력 기록, 조각 수집, 이름 공개를 처리합니다.
         /// </summary>
-        private void PlayGroupDialogue(GroupDialogueEntry entry,
-                                       HashSet<int> characterIds,
-                                       Action onComplete = null)
+        private void PlayGroupDialogue(GroupDialogueEntry entry, HashSet<int> characterIds, Action onComplete = null)
         {
             if (_dialoguePlayer == null)
             {
@@ -260,20 +258,125 @@ namespace HTH.Campaign
 
             _dialoguePlayer.Play(entry.Lines, onComplete: () =>
             {
-                // 이번 씬에서 이 조합의 대사가 다시 나오지 않도록 기록합니다.
                 _progressTracker.MarkGroupPlayed(characterIds);
 
-                // 대화 조각 수집 (영구 저장)
                 if (!string.IsNullOrEmpty(entry.FragmentId))
-                    _fragmentCollector?.TryCollectFragment(entry.FragmentId);
+                    _progressTracker.MarkFragmentPlayed(entry.FragmentId);
 
-                // 이름 공개
-                RevealCharacterNamesFromLines(entry.Lines);
+                // 조각 수집
+                bool fragmentCollected = false;
+                if (!string.IsNullOrEmpty(entry.FragmentId))
+                    fragmentCollected = TryCollectAndCheck(entry.FragmentId);
+
+                // 이름 공개 처리 및 공개된 이름 목록 수집
+                var revealedNames = CollectRevealedNames(entry.Lines);
+                RegisterRevealedNames(revealedNames);
+
+                // 획득 알림 메시지 생성
+                var notifications = BuildNotifications(entry.FragmentId, fragmentCollected, revealedNames);
 
                 Debug.Log($"[DialogueTriggerManager] 그룹 대사 완료 — {string.Join(",", characterIds)}");
-                onComplete?.Invoke();
+
+                if (notifications.Count > 0)
+                {
+                    // 알림 표시 후 onComplete
+                    _dialoguePlayer.PlayNotification(notifications, onComplete);
+                }
+                else
+                {
+                    onComplete?.Invoke();
+                }
             });
         }
+        /// <summary>조각 수집을 시도하고 실제로 수집됐는지 반환합니다.</summary>
+        private bool TryCollectAndCheck(string fragmentId)
+        {
+            if (_fragmentCollector == null) return false;
+            if (_fragmentCollector.HasFragment(fragmentId)) return false; // 이미 수집됨
+
+            _fragmentCollector.TryCollectFragment(fragmentId);
+            return true; // 새로 수집됨
+        }
+
+        /// <summary>대사 줄에서 공개될 이름 목록을 수집합니다.</summary>
+        private List<(int characterId, string name)> CollectRevealedNames(List<DialogueLine> lines)
+        {
+            var result = new List<(int, string)>();
+            if (lines == null) return result;
+
+            foreach (var line in lines)
+            {
+                if (line == null) continue;
+                if (line.RevealCharacterId < 0) continue;
+                if (string.IsNullOrEmpty(line.RevealCharacterName)) continue;
+
+                // 이미 수집된 이름은 제외
+                string existing = _characterRecordBook?.GetCollectedName(line.RevealCharacterId);
+                if (!string.IsNullOrEmpty(existing)) continue;
+
+                // 중복 방지
+                bool alreadyInList = false;
+                foreach (var r in result)
+                    if (r.Item1 == line.RevealCharacterId) { alreadyInList = true; break; }
+                if (!alreadyInList)
+                    result.Add((line.RevealCharacterId, line.RevealCharacterName));
+            }
+
+            return result;
+        }
+
+        /// <summary>수집된 이름을 CharacterRecordBook에 등록합니다.</summary>
+        private void RegisterRevealedNames(List<(int characterId, string name)> revealedNames)
+        {
+            foreach (var (id, name) in revealedNames)
+                _characterRecordBook?.RegisterCharacterName(id, name);
+        }
+
+        /// <summary>
+        /// 획득 알림 메시지 목록을 생성합니다.
+        /// 이름 공개 + 대화 조각 수집 정보를 포함합니다.
+        /// </summary>
+        private List<string> BuildNotifications(string fragmentId,
+                                                 bool fragmentCollected,
+                                                 List<(int characterId, string name)> revealedNames)
+        {
+            var messages = new List<string>();
+
+            // 이름 공개 알림
+            foreach (var (id, name) in revealedNames)
+                messages.Add($"'{name}'의 이름을 알게 됐습니다.\n인물 기록장에서 확인할 수 있습니다.");
+
+            // 대화 조각 수집 알림
+            if (fragmentCollected && !string.IsNullOrEmpty(fragmentId))
+            {
+                int charId = ParseCharacterIdFromFragment(fragmentId);
+                string charLabel = charId >= 0 ? $"#{charId}" : "캐릭터";
+
+                // CharacterRecordBook에서 이름 가져오기 (수집됐으면 실제 이름)
+                string charName = _characterRecordBook?.GetCollectedName(charId);
+                if (!string.IsNullOrEmpty(charName))
+                    charLabel = $"'{charName}'";
+
+                messages.Add($"{charLabel}의 대화 조각을 획득했습니다.\n인물 기록장에서 확인할 수 있습니다.");
+            }
+
+            return messages;
+        }
+
+        /// <summary>FragmentId에서 캐릭터 ID를 파싱합니다.</summary>
+        private int ParseCharacterIdFromFragment(string fragmentId)
+        {
+            if (string.IsNullOrEmpty(fragmentId)) return -1;
+            const string marker = "_char";
+            int startIdx = fragmentId.IndexOf(marker, System.StringComparison.Ordinal);
+            if (startIdx < 0) return -1;
+            startIdx += marker.Length;
+            int endIdx = fragmentId.IndexOf('_', startIdx);
+            if (endIdx < 0) endIdx = fragmentId.Length;
+            string idStr = fragmentId.Substring(startIdx, endIdx - startIdx);
+            return int.TryParse(idStr, out int id) ? id : -1;
+        }
+
 
         /// <summary>단독 대사를 재생합니다.</summary>
         private void PlaySoloDialogue(SoloDialogueEntry entry)

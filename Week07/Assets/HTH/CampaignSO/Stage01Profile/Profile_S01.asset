@@ -15,7 +15,10 @@ MonoBehaviour:
   _stageId: Stage_1_Phase2
   _characterProfiles:
   - CharacterId: 1
-    RequiredFragmentCount: 3
+    RequiredFragmentCount: 5
+    CharacterFullName: "\uC5D4\uBE44"
+    CharacterRole: "(\uC8FC\uC778\uACF5)"
+    CharacterIcon: {fileID: 21300000, guid: da951ff8cc869324ca09cf422bfaee91, type: 3}
     ProfileItems:
     - Question: "\uC9C8\uBB381"
       Choices:
@@ -31,8 +34,11 @@ MonoBehaviour:
       GimmickRelevance: "\uBB54\uB370 \uC774\uAC74"
       CardIllustration: {fileID: 21300000, guid: da951ff8cc869324ca09cf422bfaee91, type: 3}
     EpilogueText: "\uC644\uC131 \u3145\u3131"
-  - CharacterId: 1
-    RequiredFragmentCount: 3
+  - CharacterId: 2
+    RequiredFragmentCount: 5
+    CharacterFullName: "\uBA54\uC774"
+    CharacterRole: "(\uBCF5\uC218\uC790)"
+    CharacterIcon: {fileID: 21300000, guid: 49d5c9344013d52468fc4b0aa647f216, type: 3}
     ProfileItems:
     - Question: "\uC9C8\uBB381"
       Choices:
@@ -48,8 +54,11 @@ MonoBehaviour:
       GimmickRelevance: "\uBB54\uB370 \uC774\uAC74"
       CardIllustration: {fileID: 21300000, guid: da951ff8cc869324ca09cf422bfaee91, type: 3}
     EpilogueText: "\uC644\uC131 \u3145\u3131"
-  - CharacterId: 1
-    RequiredFragmentCount: 3
+  - CharacterId: 3
+    RequiredFragmentCount: 5
+    CharacterFullName: "\uB370\uC6B0\uC2A4"
+    CharacterRole: "(\uC5F0\uC778A)"
+    CharacterIcon: {fileID: 21300000, guid: 859cd977bab22f14cabf057c28090b48, type: 3}
     ProfileItems:
     - Question: "\uC9C8\uBB381"
       Choices:
@@ -65,8 +74,11 @@ MonoBehaviour:
       GimmickRelevance: "\uBB54\uB370 \uC774\uAC74"
       CardIllustration: {fileID: 21300000, guid: da951ff8cc869324ca09cf422bfaee91, type: 3}
     EpilogueText: "\uC644\uC131 \u3145\u3131"
-  - CharacterId: 1
-    RequiredFragmentCount: 3
+  - CharacterId: 4
+    RequiredFragmentCount: 5
+    CharacterFullName: "\uB8E8\uC774\uC2A4"
+    CharacterRole: "(\uC5F0\uC778B)"
+    CharacterIcon: {fileID: 21300000, guid: e8d4725a36678d8438abfd72b2cf7dbe, type: 3}
     ProfileItems:
     - Question: "\uC9C8\uBB381"
       Choices:
@@ -82,8 +94,11 @@ MonoBehaviour:
       GimmickRelevance: "\uBB54\uB370 \uC774\uAC74"
       CardIllustration: {fileID: 21300000, guid: da951ff8cc869324ca09cf422bfaee91, type: 3}
     EpilogueText: "\uC644\uC131 \u3145\u3131"
-  - CharacterId: 1
-    RequiredFragmentCount: 3
+  - CharacterId: 5
+    RequiredFragmentCount: 5
+    CharacterFullName: "\uD1A0\uB2C8"
+    CharacterRole: "(\uC0B4\uC778\uC790)"
+    CharacterIcon: {fileID: 21300000, guid: fd455a31920dbd14599f71f978299db0, type: 3}
     ProfileItems:
     - Question: "\uC9C8\uBB381"
       Choices:
@@ -99,8 +114,11 @@ MonoBehaviour:
       GimmickRelevance: "\uBB54\uB370 \uC774\uAC74"
       CardIllustration: {fileID: 21300000, guid: da951ff8cc869324ca09cf422bfaee91, type: 3}
     EpilogueText: "\uC644\uC131 \u3145\u3131"
-  - CharacterId: 1
-    RequiredFragmentCount: 3
+  - CharacterId: 6
+    RequiredFragmentCount: 5
+    CharacterFullName: "\uD504\uB9AC\uB4DC"
+    CharacterRole: "\uD76C\uC0DD\uC790"
+    CharacterIcon: {fileID: 21300000, guid: 7275a075e9214a743b7effd72d988284, type: 3}
     ProfileItems:
     - Question: "\uC9C8\uBB381"
       Choices:
@@ -116,8 +134,11 @@ MonoBehaviour:
       GimmickRelevance: "\uBB54\uB370 \uC774\uAC74"
       CardIllustration: {fileID: 21300000, guid: da951ff8cc869324ca09cf422bfaee91, type: 3}
     EpilogueText: "\uC644\uC131 \u3145\u3131"
-  - CharacterId: 1
-    RequiredFragmentCount: 3
+  - CharacterId: 7
+    RequiredFragmentCount: 5
+    CharacterFullName: "\uC0C8"
+    CharacterRole: "(\uBC30\uD68C\uC790)"
+    CharacterIcon: {fileID: 21300000, guid: 7b96f54915c9bcc4c9cfdd2f8a6182c7, type: 3}
     ProfileItems:
     - Question: "\uC9C8\uBB381"
       Choices:

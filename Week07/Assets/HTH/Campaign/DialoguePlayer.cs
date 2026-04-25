@@ -202,45 +202,98 @@ namespace HTH.Campaign
 
             FinishPlay();
         }
+        /// <summary>
+        /// 획득 알림 텍스트를 순서대로 표시합니다.
+        /// DialogueTriggerManager에서 대사 완료 후 호출합니다.
+        /// 화자 이미지 없이 텍스트만 표시합니다.
+        /// </summary>
+        public void PlayNotification(List<string> messages, Action onComplete = null)
+        {
+            if (messages == null || messages.Count == 0)
+            {
+                onComplete?.Invoke();
+                return;
+            }
+
+            StartCoroutine(NotificationCoroutine(messages, onComplete));
+        }
+
+        private IEnumerator NotificationCoroutine(List<string> messages, Action onComplete)
+        {
+            // 패널이 닫혀있으면 열기
+            if (_dialoguePanel != null)
+                _dialoguePanel.SetActive(true);
+
+            // 화자 이미지 숨김
+            if (_characterImage != null)
+                _characterImage.enabled = false;
+
+            // 이름 텍스트 비움
+            if (_nameText != null)
+                _nameText.text = "";
+
+            // 클릭 차단 (이전 클릭 잔여 방지)
+            _clickBlocked = true;
+            yield return new WaitForSeconds(0.3f);
+            _clickBlocked = false;
+
+            foreach (var message in messages)
+            {
+                if (string.IsNullOrEmpty(message)) continue;
+
+                if (_dialogueText != null)
+                    _dialogueText.text = message;
+
+                _waitingForClick = true;
+                yield return new WaitUntil(() => !_waitingForClick);
+            }
+
+            if (_dialoguePanel != null)
+                _dialoguePanel.SetActive(false);
+
+            onComplete?.Invoke();
+        }
 
         // ── Private — 재생 코루틴 ─────────────────────────────────────────
 
         private IEnumerator PlayCoroutine(List<DialogueLine> lines)
         {
-            // 패널 활성화 전에 첫 번째 줄을 먼저 세팅합니다.
-            // 패널이 열리는 순간 Line 0이 표시됩니다.
+            // 패널 활성화 전 첫 번째 줄을 미리 세팅합니다.
             var firstLine = lines[0];
             if (firstLine != null)
             {
                 UpdateCharacterImage(firstLine.SpeakerId);
-
-                if (_nameText != null)
-                    _nameText.text = BuildNameText(firstLine.SpeakerId);
-                if (_dialogueText != null)
-                    _dialogueText.text = BuildDialogueText(firstLine.Text);
+                if (_nameText != null) _nameText.text = BuildNameText(firstLine.SpeakerId);
+                if (_dialogueText != null) _dialogueText.text = BuildDialogueText(firstLine.Text);
             }
 
             if (_dialoguePanel != null)
                 _dialoguePanel.SetActive(true);
 
-            // 마우스 버튼이 완전히 떼어질 때까지 대기합니다.
             yield return new WaitUntil(() => !Input.GetMouseButton(0));
-
-            // 추가로 _clickBlockDuration 동안 클릭을 차단합니다.
             _clickBlocked = true;
             yield return new WaitForSeconds(_clickBlockDuration);
             _clickBlocked = false;
 
+            // 첫 번째 줄은 이미 세팅됐으므로 클릭 대기만 합니다.
+            // 이후 줄부터 정상 출력합니다.
+            bool isFirst = true;
             foreach (var line in lines)
             {
                 if (line == null) continue;
 
-                UpdateCharacterImage(line.SpeakerId);
-
-                if (_nameText != null)
-                    _nameText.text = BuildNameText(line.SpeakerId);
-                if (_dialogueText != null)
-                    _dialogueText.text = BuildDialogueText(line.Text);
+                if (isFirst)
+                {
+                    // 첫 줄: 텍스트는 이미 세팅됨, 클릭 대기만
+                    isFirst = false;
+                }
+                else
+                {
+                    // 두 번째 줄부터 정상 처리
+                    UpdateCharacterImage(line.SpeakerId);
+                    if (_nameText != null) _nameText.text = BuildNameText(line.SpeakerId);
+                    if (_dialogueText != null) _dialogueText.text = BuildDialogueText(line.Text);
+                }
 
                 if (_clickToAdvance)
                 {

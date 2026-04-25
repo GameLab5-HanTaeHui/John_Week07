@@ -122,11 +122,10 @@ namespace HTH.Campaign
         public void TryCollectFragment(string fragmentId)
         {
             if (string.IsNullOrEmpty(fragmentId)) return;
-            if (_collectedFragmentIds.Contains(fragmentId)) return; // 중복 방지
+            if (_collectedFragmentIds.Contains(fragmentId)) return;
 
             _collectedFragmentIds.Add(fragmentId);
 
-            // FragmentId에서 캐릭터 ID를 파싱해 캐릭터별 카운트를 증가시킵니다.
             int charId = ParseCharacterIdFromFragment(fragmentId);
             if (charId >= 0)
             {
@@ -137,6 +136,16 @@ namespace HTH.Campaign
             Save();
 
             Debug.Log($"[FragmentCollector] 조각 수집 — {fragmentId} (캐릭터 {charId})");
+
+            // 대화 조각 수집 로그
+            GameLogger.Instance?.LogEvent("fragment_collected",
+                new System.Collections.Generic.Dictionary<string, object>
+                {
+                    { "fragment_id",    fragmentId },
+                    { "character_id",   charId },
+                    { "total_count",    _collectedFragmentIds.Count },
+                });
+
             OnFragmentCollected?.Invoke(fragmentId);
 
             if (charId >= 0)
@@ -283,9 +292,12 @@ namespace HTH.Campaign
         {
             int count = GetFragmentCount(characterId);
 
+            // RequiredFragmentCount와 동일하게 맞춰야 하므로
+            // ProfileDataSO를 참조하는 대신 _conceptCardMinFragments를
+            // Inspector에서 캐릭터별 RequiredFragmentCount와 동일하게 설정합니다.
+            // 예: RequiredFragmentCount = 5 → _conceptCardMinFragments = 5
             if (count >= _conceptCardMinFragments)
             {
-                Debug.Log($"[FragmentCollector] 컨셉 카드 해금 가능 — 캐릭터 {characterId} ({count}개)");
                 OnConceptCardUnlockable?.Invoke(characterId);
             }
         }

@@ -304,8 +304,22 @@ namespace HTH.Campaign
 
             int correctCount = _currentProfile.CountCorrect(answers);
             bool allCorrect = _currentProfile.IsAllCorrect(answers);
+            int total = _currentProfile.ProfileItems.Count;
 
             Debug.Log($"[ProfileInquiryUI] 제출 — {correctCount}/{_currentProfile.ProfileItems.Count} 정답");
+
+            // 프로파일 추리 제출 로그
+            GameLogger.Instance?.LogEvent("profile_submitted",
+                new System.Collections.Generic.Dictionary<string, object>
+                {
+                    { "character_id",   _currentCharacterId },
+                    { "correct_count",  correctCount },
+                    { "total_count",    total },
+                    { "all_correct",    allCorrect },
+                    { "concept_card",   correctCount > 0 },
+                    { "epilogue",       allCorrect },
+                });
+
             ShowResult(correctCount, allCorrect);
         }
 

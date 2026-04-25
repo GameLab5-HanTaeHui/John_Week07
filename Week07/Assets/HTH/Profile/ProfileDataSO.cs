@@ -103,6 +103,16 @@ namespace HTH.Campaign
         [Tooltip("프로파일 추리 가능 최소 대화 조각 수")]
         public int RequiredFragmentCount = 3;
 
+        [Header("인물 기록장 표시 정보")]
+        [Tooltip("캐릭터 이름\n예: 엔비")]
+        public string CharacterFullName;
+
+        [Tooltip("캐릭터 역할\n예: (주인공)")]
+        public string CharacterRole;
+
+        [Tooltip("좌측 그리드에 표시할 캐릭터 아이콘 스프라이트")]
+        public Sprite CharacterIcon;
+
         [Header("프로파일 항목 (4개 고정)")]
         [Tooltip("각 인물마다 4개의 프로파일 항목")]
         public List<ProfileItem> ProfileItems = new();

@@ -13,12 +13,22 @@ public class LobbyPresetSeedButton : MonoBehaviour
     [SerializeField] private string _stageId;
     [SerializeField] private string _gameSceneName = "Stage_1";
 
+    [Header("스테이지 활성화")]
+    [Tooltip("false로 설정하면 버튼이 비활성화됩니다.\n" +
+             "기획상 미개방 스테이지를 막을 때 사용합니다.")]
+    [SerializeField] private bool _isEnabled = true;
+
     [Header("클리어 취소선")]
     [SerializeField] private TMP_Text _label;
 
     private void Start()
     {
-        GetComponent<Button>().onClick.AddListener(OnClicked);
+        var btn = GetComponent<Button>();
+        btn.onClick.AddListener(OnClicked);
+
+        // 비활성화 스테이지는 버튼을 잠급니다.
+        btn.interactable = _isEnabled;
+
         RefreshLabel();
     }
 

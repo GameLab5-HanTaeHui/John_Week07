@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -64,6 +65,10 @@ namespace HTH.Campaign
         [Tooltip("1회차 StageId 뒤에 붙는 접미사입니다.\n" +
                  "예: 'Stage_1' + '_Phase2' = 'Stage_1_Phase2'")]
         [SerializeField] private string _phase2Suffix = "_Phase2";
+
+        [Header("2페이즈 Zone 설정 변경")]
+        [SerializeField] private SpriteRenderer _zone;
+        [SerializeField] private TextMeshPro _zoneText;
 
         // ── 상태 ─────────────────────────────────────────────────────────
 
@@ -181,6 +186,9 @@ namespace HTH.Campaign
 
             GameLogger.Instance?.StartStageLogging(phase2StageId);
 
+            _zone.color = Color.white;
+            _zoneText.gameObject.SetActive(false);
+
             // Phase2가 시작된 시점에 FragmentCollector의 엔딩 이벤트를 구독합니다.
             // Start()에서 구독하면 Phase2가 아직 시작 안 됐을 때도 구독되므로 여기서 처리합니다.
             SubscribeFragmentCollectorEvents();
@@ -236,6 +244,13 @@ namespace HTH.Campaign
             Debug.Log("[CampaignModeManager] 캠페인 엔딩 조건 달성 — 모든 캐릭터 기록 완수");
             OnCampaignEnding?.Invoke();
 
+            // Phase2 완료 로그
+            GameLogger.Instance?.LogEvent("game_end", new System.Collections.Generic.Dictionary<string, object>
+            {
+                { "result",  "win" },
+                { "mode",    "phase2_campaign" },
+            });
+
             string targetScene = string.IsNullOrEmpty(_endingSceneName)
                 ? _lobbySceneName
                 : _endingSceneName;
@@ -251,6 +266,26 @@ namespace HTH.Campaign
         private IEnumerator EndingTransitionCoroutine(string sceneName)
         {
             yield return new WaitForSeconds(1f);
+
+            // Phase2 세션 로그 업로드
+            var logger = GameLogger.Instance;
+            if (logger != null)
+            {
+                string fileName = logger.BuildUploadFileName();
+                string stageId = logger.CurrentStageId;
+                logger.StopStageLogging();
+                byte[] bytes = logger.ExtractCurrentSessionBytes();
+
+                if (bytes != null && LogUploader.Instance != null)
+                {
+                    // Phase2 클리어는 항상 isWin = true
+                    LogUploader.Instance.UploadSessionBytes(
+                        bytes, fileName, isWin: true, stageId: stageId,
+                        onComplete: () => SceneManager.LoadScene(sceneName));
+                    yield break; // 업로드 완료 후 씬 전환
+                }
+            }
+
             SceneManager.LoadScene(sceneName);
         }
     }

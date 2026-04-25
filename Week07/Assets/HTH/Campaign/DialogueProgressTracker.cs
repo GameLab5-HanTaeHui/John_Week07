@@ -32,6 +32,7 @@ namespace HTH.Campaign
 
         private readonly HashSet<string> _playedGroupKeys = new();
         private readonly HashSet<int> _playedSoloIds = new();
+        private readonly HashSet<string> _playedFragmentIds = new();  // 이번 세션에서 출력된 FragmentId
 
         private string _currentStageId;
 
@@ -47,6 +48,7 @@ namespace HTH.Campaign
             _currentStageId = stageId;
             _playedGroupKeys.Clear();
             _playedSoloIds.Clear();
+            _playedFragmentIds.Clear();
             Debug.Log($"[DialogueProgressTracker] 초기화 완료 — {stageId} (출력 기록 리셋)");
         }
 
@@ -87,6 +89,23 @@ namespace HTH.Campaign
         {
             _playedSoloIds.Add(characterId);
             Debug.Log($"[DialogueProgressTracker] 단독 대사 기록 — ID:{characterId}");
+        }
+        /// <summary>
+        /// FragmentId 출력 완료를 기록합니다.
+        /// 이번 세션에서 이미 대사가 나온 FragmentId를 추적합니다.
+        /// 씬 재시작(로비 이동, 게임 종료) 시 리셋됩니다.
+        /// </summary>
+        public void MarkFragmentPlayed(string fragmentId)
+        {
+            if (!string.IsNullOrEmpty(fragmentId))
+                _playedFragmentIds.Add(fragmentId);
+        }
+
+        /// <summary>이번 세션에서 해당 FragmentId의 대사가 출력됐는지 확인합니다.</summary>
+        public bool HasPlayedFragment(string fragmentId)
+        {
+            if (string.IsNullOrEmpty(fragmentId)) return false;
+            return _playedFragmentIds.Contains(fragmentId);
         }
 
         // ── Private ──────────────────────────────────────────────────────

@@ -79,10 +79,9 @@ namespace HTH.Campaign
             // 이미 출력된 캐릭터인지 체크
             if (tracker != null && tracker.HasPlayedSolo(entry.CharacterId)) return false;
 
-            // 대화 조각이 이미 수집된 경우 스킵
-            if (!string.IsNullOrEmpty(entry.FragmentId)
-                && collector != null
-                && collector.HasFragment(entry.FragmentId))
+            // 이번 세션에서 이미 대사가 출력된 FragmentId 스킵
+            // (세션 기반 — 로비/종료 시 리셋)
+            if (tracker != null && tracker.HasPlayedFragment(entry.FragmentId))
                 return false;
 
             // 추가 조건 체크
