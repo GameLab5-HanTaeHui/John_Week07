@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2750608b252f9dd409bf0a650bf70a3f, type: 3}
   m_Name: ProfileHint_S01
   m_EditorClassIdentifier: Assembly-CSharp::HTH.Campaign.FragmentHintDataSO
-  _stageId: 
+  _stageId: Stage_1_Phase2
   _characterHints:
   - CharacterId: 1
     Hints:
@@ -115,9 +115,10 @@ MonoBehaviour:
       \uAC00\uC7A5 \uC120\uBA85\uD574\uC9C8 \uAC83 \uAC19\uB2E4."
   - CharacterId: 7
     Hints:
-    - "\uB370\uC6B0\uC2A4\uC5D0\uAC8C\uB294 \uBB34\uAC70\uC6B4 \uC77C\uB3C4 \uB9D0\uD560
-      \uC218 \uC788\uB2E4. \uC0C8\uD134\uC774 \uC9C0\uB098\uC628 \uC790\uB9AC\uC5D0
-      \uBB34\uC5C7\uC774 \uB0A8\uB294\uC9C0\uB97C \uBCF4\uC790."
+    - "\uB370\uC6B0\uC2A4\uC5D0\uAC8C\uB294 \uBB34\uAC70\uC6B4 \uC77C\uB3C4 \uACE0\uD574\uD558\uB4EF
+      \uB9D0\uD560 \uC218 \uC788\uC744\uC9C0 \uBAA8\uB978\uB2E4. \uC0C8\uD134\uC774
+      \uC9C0\uB098\uC628 \uC790\uB9AC\uC5D0 \uBB34\uC2A8 \uC77C\uC774 \uB0A8\uB294\uC9C0
+      \uBCF4\uC790."
     - "\uBA54\uC774\uC640 \uC0C8\uD134\uC744 \uB458\uB9CC \uB450\uBA74, \uB05D\uACFC
       \uACFC\uC815\uC758 \uCC28\uC774\uAC00 \uAC00\uC7A5 \uC9C1\uC811\uC801\uC73C\uB85C
       \uBCF4\uC77C \uAC83 \uAC19\uB2E4."

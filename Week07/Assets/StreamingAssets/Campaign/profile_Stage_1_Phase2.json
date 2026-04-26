@@ -1,0 +1,285 @@
+{
+  "stageId": "Stage_1_Phase2",
+  "characters": [
+    {
+      "characterId": 1,
+      "requiredFragmentCount": 5,
+      "characterFullName": "엔비",
+      "characterRole": "(주인공)",
+      "profileItems": [
+        {
+          "question": "가장 두려워하는 것",
+          "choices": ["버려지는 것", "관계를 망치는 것", "진실이 드러나는 것"],
+          "correctChoiceIndex": 0,
+          "requiredFragmentId": ""
+        },
+        {
+          "question": "다정함의 본질",
+          "choices": ["진심 어린 감정", "습득된 기술", "목적을 위한 수단"],
+          "correctChoiceIndex": 1,
+          "requiredFragmentId": ""
+        },
+        {
+          "question": "관계에서 원하는 것",
+          "choices": ["소속감", "인정", "온기"],
+          "correctChoiceIndex": 2,
+          "requiredFragmentId": ""
+        },
+        {
+          "question": "자신을 바라보는 시선",
+          "choices": ["지키는 자", "흔드는 자", "관찰하는 자"],
+          "correctChoiceIndex": 1,
+          "requiredFragmentId": ""
+        }
+      ],
+      "conceptCard": {
+        "catchphrase": "모두에게 봄이 온다면, 나는 왜 늘 문밖에서 그 온도만 훔쳐봐야 하는 걸까.",
+        "appearance": "갈색 머리, 온화한 미소. 늘 중간에 서 있는 것처럼 보인다.",
+        "narrativeBackground": "결핍 속에서 다정함을 배웠으나 진심으로 다가가는 법은 끝내 배우지 못했다.",
+        "personality": "부드럽고 관찰력이 뛰어나다. 관계의 틈을 본능적으로 감지한다.",
+        "gimmickRelevance": "주인공으로서 플레이어의 시선을 대리하는 동시에 스스로도 관찰 대상이 된다."
+      },
+      "epilogueText": "나는 언제나 그 봄의 바깥에 있었다. 그런데도, 손을 뻗고 싶었다."
+    },
+    {
+      "characterId": 2,
+      "requiredFragmentCount": 5,
+      "characterFullName": "메이",
+      "characterRole": "(복수자)",
+      "profileItems": [
+        {
+          "question": "끝을 향해 달리는 이유",
+          "choices": ["사명감", "두려움", "증명하려는 욕구"],
+          "correctChoiceIndex": 2,
+          "requiredFragmentId": ""
+        },
+        {
+          "question": "동료를 대하는 방식",
+          "choices": ["함께 가는 동반자", "끌고 가야 할 존재", "지켜야 할 대상"],
+          "correctChoiceIndex": 1,
+          "requiredFragmentId": ""
+        },
+        {
+          "question": "멈춤에 대한 인식",
+          "choices": ["필요한 휴식", "사명 이탈", "나약함의 증거"],
+          "correctChoiceIndex": 1,
+          "requiredFragmentId": ""
+        },
+        {
+          "question": "가장 집착하는 것",
+          "choices": ["가문의 이름", "마지막 증명", "동료의 생존"],
+          "correctChoiceIndex": 1,
+          "requiredFragmentId": ""
+        }
+      ],
+      "conceptCard": {
+        "catchphrase": "누군가는 끝까지 가야 한다. 나는 그 자리를 피하지 않겠다.",
+        "appearance": "단정하고 강인한 인상. 항상 앞을 향해 서 있다.",
+        "narrativeBackground": "가문의 이름을 짊어지고 마왕 토벌을 사명으로 삼아왔다.",
+        "personality": "결단력이 강하고 의지가 확고하다. 멈춤을 사명 이탈로 인식한다.",
+        "gimmickRelevance": "전진을 강요하는 구조 속에서 희생과 책임의 경계를 흐린다."
+      },
+      "epilogueText": "여기서 멈추면 지금까지 버텨 온 시간마저 흐려질 것 같아."
+    },
+    {
+      "characterId": 3,
+      "requiredFragmentCount": 5,
+      "characterFullName": "데우스",
+      "characterRole": "(연인A)",
+      "profileItems": [
+        {
+          "question": "루이스에 대한 감정",
+          "choices": ["우정", "사랑", "책임"],
+          "correctChoiceIndex": 1,
+          "requiredFragmentId": ""
+        },
+        {
+          "question": "타인을 대하는 방식",
+          "choices": ["평등하게", "루이스 중심으로", "역할에 따라"],
+          "correctChoiceIndex": 1,
+          "requiredFragmentId": ""
+        },
+        {
+          "question": "보호의 본질",
+          "choices": ["안전을 위한 선택", "소유에 가까운 집착", "사랑의 표현"],
+          "correctChoiceIndex": 1,
+          "requiredFragmentId": ""
+        },
+        {
+          "question": "루이스 없이 세계를 유지할 수 있는가",
+          "choices": ["할 수 있다", "할 수 없다", "시도해본 적 없다"],
+          "correctChoiceIndex": 1,
+          "requiredFragmentId": ""
+        }
+      ],
+      "conceptCard": {
+        "catchphrase": "말의 이름이 무엇이든, 제가 지켜야 한다는 사실은 변하지 않습니다.",
+        "appearance": "조용하고 단정한 외모. 루이스를 바라볼 때만 눈빛이 달라진다.",
+        "narrativeBackground": "루이스를 삶의 의미이자 구원으로 신성화하며 살아왔다.",
+        "personality": "차분하고 예의 바르나 루이스에 관해서는 타협이 없다.",
+        "gimmickRelevance": "보호라는 이름의 고립을 구현하는 캐릭터."
+      },
+      "epilogueText": "루이스가 숨을 고르는 소리만 들리면, 세상의 소란은 잠시 멀어진다."
+    },
+    {
+      "characterId": 4,
+      "requiredFragmentCount": 5,
+      "characterFullName": "루이스",
+      "characterRole": "(연인B)",
+      "profileItems": [
+        {
+          "question": "지금 가장 원하는 것",
+          "choices": ["전진", "정지", "도피"],
+          "correctChoiceIndex": 1,
+          "requiredFragmentId": ""
+        },
+        {
+          "question": "데우스에 대한 의존의 이유",
+          "choices": ["사랑", "안전장치", "습관"],
+          "correctChoiceIndex": 1,
+          "requiredFragmentId": ""
+        },
+        {
+          "question": "갈등 앞에서의 태도",
+          "choices": ["적극 개입", "침묵과 관찰", "회피"],
+          "correctChoiceIndex": 1,
+          "requiredFragmentId": ""
+        },
+        {
+          "question": "스스로에 대한 인식",
+          "choices": ["버티는 사람", "기대는 사람", "잊혀지는 사람"],
+          "correctChoiceIndex": 1,
+          "requiredFragmentId": ""
+        }
+      ],
+      "conceptCard": {
+        "catchphrase": "아무 일도 안 일어났으면 좋겠다. 아무도 묻지 않고, 아무도 재촉하지 않는 곳에서.",
+        "appearance": "조용하고 창백한 인상. 존재감이 옅어 보인다.",
+        "narrativeBackground": "반복되는 루프 속에서 정신적으로 소진되어가고 있다.",
+        "personality": "내향적이고 피로에 익숙하다. 현재의 안정에 머무르려 한다.",
+        "gimmickRelevance": "기대어 버티는 선택이 얼마나 위태로운지를 보여준다."
+      },
+      "epilogueText": "아무 일도 일어나지 않는 시간이 필요하다."
+    },
+    {
+      "characterId": 5,
+      "requiredFragmentCount": 5,
+      "characterFullName": "토니",
+      "characterRole": "(살인자)",
+      "profileItems": [
+        {
+          "question": "미소의 본질",
+          "choices": ["순수한 즐거움", "계산된 연기", "관찰의 도구"],
+          "correctChoiceIndex": 1,
+          "requiredFragmentId": ""
+        },
+        {
+          "question": "사건을 바라보는 시각",
+          "choices": ["해결해야 할 문제", "완성되어가는 과정", "흥미로운 재료"],
+          "correctChoiceIndex": 1,
+          "requiredFragmentId": ""
+        },
+        {
+          "question": "갈등에 개입하지 않는 이유",
+          "choices": ["두려움", "무관심", "관찰을 위해"],
+          "correctChoiceIndex": 2,
+          "requiredFragmentId": ""
+        },
+        {
+          "question": "진짜 목표",
+          "choices": ["생존", "과정의 완성", "결과의 쾌감"],
+          "correctChoiceIndex": 1,
+          "requiredFragmentId": ""
+        }
+      ],
+      "conceptCard": {
+        "catchphrase": "겉은 달콤해야 해. 그래야 아무도 안 놀라니까.",
+        "appearance": "밝고 앳된 외모. 웃음이 끊이지 않는다.",
+        "narrativeBackground": "사람을 맛으로 분류하고 사건을 요리로 인식하는 독특한 세계관을 가졌다.",
+        "personality": "해맑고 관찰력이 예리하다. 극적인 결과를 선호한다.",
+        "gimmickRelevance": "아이처럼 보이는 표면 아래 냉정한 관찰자가 숨어있다."
+      },
+      "epilogueText": "사람은 절망할 때 가장 솔직한 향을 낸다."
+    },
+    {
+      "characterId": 6,
+      "requiredFragmentCount": 5,
+      "characterFullName": "프리드",
+      "characterRole": "(희생양)",
+      "profileItems": [
+        {
+          "question": "희생의 본질",
+          "choices": ["자발적 선택", "선의의 강요", "책임의 독점"],
+          "correctChoiceIndex": 2,
+          "requiredFragmentId": ""
+        },
+        {
+          "question": "먼저 나서는 이유",
+          "choices": ["두려움", "신념", "습관"],
+          "correctChoiceIndex": 1,
+          "requiredFragmentId": ""
+        },
+        {
+          "question": "타인의 선택권에 대한 인식",
+          "choices": ["존중한다", "대신 결정하는 것이 낫다", "상황에 따라 다르다"],
+          "correctChoiceIndex": 1,
+          "requiredFragmentId": ""
+        },
+        {
+          "question": "내가 결정해야 모두가 산다는 확신",
+          "choices": ["확신한다", "의심하기 시작했다", "확신했지만 틀렸다"],
+          "correctChoiceIndex": 0,
+          "requiredFragmentId": ""
+        }
+      ],
+      "conceptCard": {
+        "catchphrase": "누군가 앞에 서야 한다면, 나는 자꾸 그게 내 몫이라고 생각하게 된다.",
+        "appearance": "크고 듬직한 체구. 항상 앞에 서려는 자세를 취한다.",
+        "narrativeBackground": "대신 짊어지는 것을 신념으로 삼아왔다.",
+        "personality": "책임감이 강하고 헌신적이다. 타인의 선택권을 무의식적으로 침해한다.",
+        "gimmickRelevance": "희생양 효과를 가진 캐릭터. 선의와 독단의 경계를 흐린다."
+      },
+      "epilogueText": "좋은 의도라는 말 아래에서도, 누군가의 몫은 쉽게 가려질 수 있다."
+    },
+    {
+      "characterId": 7,
+      "requiredFragmentCount": 5,
+      "characterFullName": "새턴",
+      "characterRole": "(배회자)",
+      "profileItems": [
+        {
+          "question": "분노의 대상",
+          "choices": ["특정 인물", "희생 구조 자체", "자기 자신"],
+          "correctChoiceIndex": 1,
+          "requiredFragmentId": ""
+        },
+        {
+          "question": "공동체에 대한 태도",
+          "choices": ["신뢰한다", "불신한다", "선택적으로 신뢰한다"],
+          "correctChoiceIndex": 1,
+          "requiredFragmentId": ""
+        },
+        {
+          "question": "승리보다 중시하는 것",
+          "choices": ["과정의 희생", "결과의 정당성", "남겨진 사람"],
+          "correctChoiceIndex": 2,
+          "requiredFragmentId": ""
+        },
+        {
+          "question": "이동이 남긴 것",
+          "choices": ["생존", "죄책감", "기억"],
+          "correctChoiceIndex": 1,
+          "requiredFragmentId": ""
+        }
+      ],
+      "conceptCard": {
+        "catchphrase": "먼저 움직인 사람은 산다. 뒤에 남은 사람은 기억이 된다.",
+        "appearance": "날카로운 눈빛. 항상 뒤를 확인하는 습관이 있다.",
+        "narrativeBackground": "이동이 남긴 죽음의 기억을 안고 살아간다.",
+        "personality": "의심이 많고 직접적이다. 희생 구조 자체에 분노한다.",
+        "gimmickRelevance": "배회자 효과와 연관된 캐릭터. 뒤에 남겨지는 사람의 시선을 대표한다."
+      },
+      "epilogueText": "나는 화가 난 게 아니다. 다만 또 누군가를 남겨 두고 가는 발걸음을 견딜 수 없을 뿐이다."
+    }
+  ]
+}

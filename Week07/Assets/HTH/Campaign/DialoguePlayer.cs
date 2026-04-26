@@ -61,38 +61,20 @@ namespace HTH.Campaign
         [Tooltip("화자의 이미지를 표시하는 Image 컴포넌트입니다.\n항상 보입니다.")]
         [SerializeField] private Image _characterImage;
 
+        [Tooltip("화자의 ID를 표시하는 TMP_Text입니다.\n예: '#1'")]
+        [SerializeField] private TMP_Text _idText;
+
         [Tooltip("화자의 이름을 표시하는 TMP_Text입니다.\n예: '#1' 또는 '새턴'")]
         [SerializeField] private TMP_Text _nameText;
 
         [Tooltip("대사 내용을 표시하는 TMP_Text입니다.")]
         [SerializeField] private TMP_Text _dialogueText;
 
-        [Header("캐릭터 정보")]
-        [Tooltip("수집된 캐릭터 이름을 가져오는 인물 기록장입니다.\n" +
-                 "_CampaignSystem/CharacterRecordBook을 연결합니다.\n" +
-                 "연결하지 않으면 '#1' 형식으로 표시됩니다.")]
-        [SerializeField] private CharacterRecordBook _characterRecordBook;
-
         [Header("캐릭터 스프라이트 (인덱스 = CharacterId)")]
         [Tooltip("캐릭터 ID를 인덱스로 사용해 스프라이트를 가져옵니다.\n" +
                  "[0]은 비워두고 [1]부터 캐릭터 스프라이트를 넣습니다.\n" +
                  "예: [1]=#1 스프라이트, [2]=#2 스프라이트, ..., [7]=#7 스프라이트")]
         [SerializeField] private List<Sprite> _characterSprites = new();
-
-        [Header("글리치 설정")]
-        [Tooltip("true이면 수집되지 않은 캐릭터 이름을 글리치 문자로 표시합니다.\n" +
-                 "CharacterRecordBook에서 이름이 수집된 경우 실제 이름을 표시합니다.\n" +
-                 "수집 전: '█▓▒' / 수집 후: '새턴'\n" +
-                 "Phase2에서는 true로 설정하는 것을 권장합니다.")]
-        [SerializeField] private bool _glitchName = true;
-
-        [Tooltip("true이면 대사 텍스트 전체를 글리치 문자로 표시합니다.\n" +
-                 "1회차 연출용으로 현재 Phase2에서는 false로 유지합니다.")]
-        [SerializeField] private bool _glitchDialogue = false;
-
-        [Tooltip("글리치 처리 시 사용할 대체 문자들입니다.\n" +
-                 "각 문자를 70% 확률로 원본 문자 대신 표시합니다.")]
-        [SerializeField] private string _glitchChars = "█▓▒░▄▀?#@&*";
 
         [Header("진행 설정")]
         [Tooltip("true이면 마우스 클릭으로 다음 줄로 진행합니다.\n" +
@@ -109,6 +91,22 @@ namespace HTH.Campaign
                  "기본값 1.5초.")]
         [SerializeField] private float _clickBlockDuration = 1.5f;
 
+        /// <summary>
+        /// 캐릭터별 퍼스널 컬러입니다.
+        /// 인덱스 = CharacterId (0은 사용 안 함)
+        /// </summary>
+        private static readonly Color[] PersonalColors = new Color[]
+        {
+            Color.white,                                    // [0] 미사용
+            new Color(0xC8/255f, 0xA8/255f, 0x88/255f),   // [1] 엔비  #C8A888
+            new Color(0x48/255f, 0x78/255f, 0x48/255f),   // [2] 메이  #487848
+            new Color(0x58/255f, 0x58/255f, 0x88/255f),   // [3] 데우스 #585888
+            new Color(0xD8/255f, 0xD8/255f, 0xE8/255f),   // [4] 루이스 #D8D8E8
+            new Color(0xE8/255f, 0xD8/255f, 0x98/255f),   // [5] 토니  #E8D898
+            new Color(0xE8/255f, 0x88/255f, 0x68/255f),   // [6] 프리드 #E88868
+            new Color(0x98/255f, 0x88/255f, 0x68/255f),   // [7] 새턴  #988868
+        };
+
         // ── 내부 상태 ─────────────────────────────────────────────────────
 
         private bool _isPlaying;
@@ -119,26 +117,6 @@ namespace HTH.Campaign
 
         /// <summary>현재 대사를 재생 중인지 여부입니다.</summary>
         public bool IsPlaying => _isPlaying;
-
-        /// <summary>
-        /// 이름 글리치 모드 활성화 여부입니다.
-        /// 외부에서 동적으로 변경할 수 있습니다.
-        /// </summary>
-        public bool GlitchName
-        {
-            get => _glitchName;
-            set => _glitchName = value;
-        }
-
-        /// <summary>
-        /// 대사 텍스트 글리치 모드 활성화 여부입니다.
-        /// 외부에서 동적으로 변경할 수 있습니다.
-        /// </summary>
-        public bool GlitchDialogue
-        {
-            get => _glitchDialogue;
-            set => _glitchDialogue = value;
-        }
 
         // ── Unity ────────────────────────────────────────────────────────
 
@@ -262,9 +240,9 @@ namespace HTH.Campaign
             var firstLine = lines[0];
             if (firstLine != null)
             {
-                UpdateCharacterImage(firstLine.SpeakerId);
-                if (_nameText != null) _nameText.text = BuildNameText(firstLine.SpeakerId);
-                if (_dialogueText != null) _dialogueText.text = BuildDialogueText(firstLine.Text);
+                UpdateCharacterDisplay(firstLine.SpeakerId);
+                if (_dialogueText != null)
+                    _dialogueText.text = BuildDialogueText(firstLine.Text);
             }
 
             if (_dialoguePanel != null)
@@ -289,10 +267,9 @@ namespace HTH.Campaign
                 }
                 else
                 {
-                    // 두 번째 줄부터 정상 처리
-                    UpdateCharacterImage(line.SpeakerId);
-                    if (_nameText != null) _nameText.text = BuildNameText(line.SpeakerId);
-                    if (_dialogueText != null) _dialogueText.text = BuildDialogueText(line.Text);
+                    UpdateCharacterDisplay(line.SpeakerId);
+                    if (_dialogueText != null)
+                        _dialogueText.text = BuildDialogueText(line.Text);
                 }
 
                 if (_clickToAdvance)
@@ -327,89 +304,73 @@ namespace HTH.Campaign
         // ── Private — 텍스트 빌드 ─────────────────────────────────────────
 
         /// <summary>
+        /// 화자 ID 텍스트를 생성합니다.
+        /// 항상 '#번호' 형식으로 퍼스널 컬러와 함께 표시합니다.
+        /// </summary>
+        private string BuildIdText(int speakerId) => $"#{speakerId}";
+
+        /// <summary>
         /// 화자 이름 텍스트를 생성합니다.
-        ///
-        /// GlitchName = true인 경우:
-        ///   이름 수집됨 → 실제 이름 표시 ("새턴")
-        ///   이름 미수집 → 글리치 문자 표시 ("█▓▒")
-        ///
-        /// GlitchName = false인 경우:
-        ///   이름 수집됨 → 실제 이름 표시 ("새턴")
-        ///   이름 미수집 → "#번호" 표시 ("#2")
+        /// 수집된 이름이 있으면 실제 이름, 없으면 빈 문자열을 반환합니다.
         /// </summary>
         private string BuildNameText(int speakerId)
         {
-            string collectedName = _characterRecordBook?.GetCollectedName(speakerId);
-            bool hasName = !string.IsNullOrEmpty(collectedName);
+            string collectedName = CharacterRecordPanelManager.Instance?
+                .GetCollectedName(speakerId);
 
-            if (hasName)
-            {
-                // 이름 수집됨 → 항상 실제 이름 표시 (글리치 없음)
-                return collectedName;
-            }
-
-            if (_glitchName)
-            {
-                // 이름 미수집 + 글리치 모드 → 글리치 문자 표시
-                // "#번호"를 글리치 처리해 번호도 숨깁니다.
-                return ApplyGlitch($"#{speakerId}");
-            }
-
-            // 이름 미수집 + 글리치 없음 → "#번호" 표시
-            return $"#{speakerId}";
+            return collectedName ?? "";
         }
 
-        /// <summary>
-        /// 대사 텍스트를 생성합니다.
-        ///
-        /// GlitchDialogue = true  → 대사 전체 글리치 처리
-        /// GlitchDialogue = false → 원본 대사 그대로 표시
-        /// </summary>
-        private string BuildDialogueText(string text)
-        {
-            if (_glitchDialogue)
-                return ApplyGlitch(text);
-
-            return text ?? "";
-        }
-
-        // ── Private — 글리치 처리 ─────────────────────────────────────────
+        /// <summary>대사 텍스트를 반환합니다.</summary>
+        private string BuildDialogueText(string text) => text ?? "";
 
         /// <summary>
-        /// 텍스트에 글리치 문자를 혼합합니다.
-        /// 공백은 유지하고 나머지는 70% 확률로 대체합니다.
+        /// 캐릭터 ID에 해당하는 퍼스널 컬러를 반환합니다.
+        /// 범위 밖이면 흰색을 반환합니다.
         /// </summary>
-        private string ApplyGlitch(string text)
+        private Color GetPersonalColor(int characterId)
         {
-            if (string.IsNullOrEmpty(text) || string.IsNullOrEmpty(_glitchChars))
-                return text;
-
-            var sb = new System.Text.StringBuilder(text.Length);
-            foreach (char c in text)
-            {
-                if (c == ' ' || UnityEngine.Random.value > 0.7f)
-                    sb.Append(c);
-                else
-                    sb.Append(_glitchChars[UnityEngine.Random.Range(0, _glitchChars.Length)]);
-            }
-            return sb.ToString();
+            if (characterId < 0 || characterId >= PersonalColors.Length)
+                return Color.white;
+            return PersonalColors[characterId];
         }
 
         // ── Private — 이미지 처리 ─────────────────────────────────────────
 
-        private void UpdateCharacterImage(int characterId)
+        /// <summary>
+        /// 화자 ID, 이름, 이미지, 퍼스널 컬러를 한 번에 업데이트합니다.
+        /// </summary>
+        private void UpdateCharacterDisplay(int characterId)
         {
-            if (_characterImage == null) return;
+            Color color = GetPersonalColor(characterId);
 
-            Sprite sprite = GetSpriteById(characterId);
-            if (sprite != null)
+            // ID 텍스트
+            if (_idText != null)
             {
-                _characterImage.sprite = sprite;
-                _characterImage.enabled = true;
+                _idText.text = BuildIdText(characterId);
+                _idText.color = color;
             }
-            else
+
+            // 이름 텍스트
+            if (_nameText != null)
             {
-                _characterImage.enabled = false;
+                _nameText.text = BuildNameText(characterId);
+                _nameText.color = color;
+            }
+
+            // 캐릭터 이미지
+            if (_characterImage != null)
+            {
+                Sprite sprite = GetSpriteById(characterId);
+                if (sprite != null)
+                {
+                    _characterImage.sprite = sprite;
+                    _characterImage.enabled = true;
+                }
+                else
+                {
+                    _characterImage.enabled = false;
+                }
             }
         }
 

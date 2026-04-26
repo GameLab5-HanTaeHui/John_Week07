@@ -7,19 +7,21 @@ namespace HTH.Campaign
     /// 캠페인 2회차 다이얼로그 데이터 ScriptableObject입니다.
     ///
     /// ─── 데이터 구조 ─────────────────────────────────────────────────────
-    ///   단독 대사   : 캐릭터 1명 (구현해두되 사용 여부 미확정)
-    ///   조우 대사   : 2~7명 조합 (참여 캐릭터 ID 집합으로 식별)
-    ///   대화 조각   : 조우/단독 대사 수집 시 해금되는 프래그먼트 연결
+    ///   GroupDialogue: 조합별 대사 (1~7명 조합, 총 216개)
+    ///     - 일반 조합 대사 (생존 조합, 2인/3인 대화, 사망 반응 등)
+    ///     - 프로파일 핵심문장 (IsProfileClue=True, fragmentId=P01_01 형식)
     ///
-    /// ─── Inspector 설정 ──────────────────────────────────────────────────
-    ///   StageId        → 이 SO가 속한 스테이지 ID (예: Stage_1_Phase2)
-    ///   SoloDialogues  → 단독 대사 목록 (사용 여부 미확정)
-    ///   GroupDialogues → 조우 대사 목록 (2~7명 조합)
+    ///   SoloDialogue: 단독 대사 (기능 구현만, 사용 여부 미확정)
     ///
-    /// ─── 조합 키 규칙 ────────────────────────────────────────────────────
-    ///   ParticipantIds를 오름차순 정렬 후 쉼표로 연결
-    ///   예: {1, 3, 5} → "1,3,5"
-    ///   DialogueTriggerManager에서 구역 내 캐릭터 조합과 매칭합니다.
+    /// ─── FragmentId 형식 ────────────────────────────────────────────────
+    ///   P{CharId:00}_{ClueIndex:00} — 예: P01_01, P07_05
+    ///   FragmentId가 없는 일반 대사는 빈 문자열
+    ///
+    /// ─── SituationType 목록 ─────────────────────────────────────────────
+    ///   생존 조합 대사  / 2인 대화 / 3인 대화 / 전체 파티 대화
+    ///   개인 독백 / 사망 반응 / 사망 반응/연인 연쇄
+    ///   사망 반응/배회자 / 사망 반응/살인자 / 사망 반응/복수자
+    ///   사망 반응/희생양 / 프로파일 핵심문장 / 프로파일 유도대사
     ///
     /// ─── 생성 방법 ───────────────────────────────────────────────────────
     ///   Project 우클릭 → Create → HTH → Campaign → DialogueData
@@ -30,32 +32,32 @@ namespace HTH.Campaign
     {
         [SerializeField] private string _stageId;
 
-        [Header("단독 대사 (사용 여부 미확정 — 기능만 구현)")]
+        [Header("단독 대사 (사용 여부 미확정)")]
         [SerializeField] private List<SoloDialogueEntry> _soloDialogues = new();
 
-        [Header("조우 대사 (2~7명 조합)")]
+        [Header("조합별 대사 (1~7명 조합, 총 216개)")]
         [SerializeField] private List<GroupDialogueEntry> _groupDialogues = new();
 
         // ── 공개 프로퍼티 ─────────────────────────────────────────────────
 
+        /// <summary>스테이지 ID입니다.</summary>
         public string StageId => _stageId;
 
-        /// <summary>단독 대사 목록입니다. (읽기 전용)</summary>
+        /// <summary>단독 대사 목록입니다.</summary>
         public IReadOnlyList<SoloDialogueEntry> SoloDialogues => _soloDialogues;
 
-        /// <summary>조우 대사 목록입니다. (읽기 전용)</summary>
+        /// <summary>조합별 대사 목록입니다.</summary>
         public IReadOnlyList<GroupDialogueEntry> GroupDialogues => _groupDialogues;
 
         // ── 검색 API ──────────────────────────────────────────────────────
 
         /// <summary>
-        /// 캐릭터 조합으로 조우 대사를 검색합니다.
+        /// 참가자 조합으로 조우 대사를 검색합니다.
         /// 정확히 일치하는 조합이 없으면 null을 반환합니다.
         /// </summary>
-        /// <param name="characterIds">구역 내 캐릭터 ID 집합</param>
         public GroupDialogueEntry FindGroupDialogue(HashSet<int> characterIds)
         {
-            if (characterIds == null || characterIds.Count < 2) return null;
+            if (characterIds == null || characterIds.Count == 0) return null;
 
             foreach (var entry in _groupDialogues)
             {
@@ -65,61 +67,78 @@ namespace HTH.Campaign
                 bool allMatch = true;
                 foreach (int id in entry.ParticipantIds)
                 {
-                    if (!characterIds.Contains(id))
-                    {
-                        allMatch = false;
-                        break;
-                    }
+                    if (!characterIds.Contains(id)) { allMatch = false; break; }
                 }
 
                 if (allMatch) return entry;
             }
-
             return null;
         }
 
         /// <summary>
-        /// 캐릭터 ID로 단독 대사를 검색합니다.
-        /// 없으면 null을 반환합니다.
+        /// ComboId로 조우 대사를 검색합니다.
+        /// 예: "#1", "C001", "COND_P01_01"
         /// </summary>
-        /// <param name="characterId">캐릭터 ID</param>
-        public SoloDialogueEntry FindSoloDialogue(int characterId)
+        public GroupDialogueEntry FindGroupDialogueByComboId(string comboId)
         {
-            foreach (var entry in _soloDialogues)
-            {
-                if (entry != null && entry.CharacterId == characterId)
+            if (string.IsNullOrEmpty(comboId)) return null;
+
+            foreach (var entry in _groupDialogues)
+                if (entry != null && entry.ComboId == comboId)
                     return entry;
-            }
             return null;
         }
 
         /// <summary>
-        /// 특정 대화 조각 ID를 포함하는 조우 대사를 검색합니다.
+        /// SituationType으로 조우 대사 목록을 검색합니다.
+        /// 예: "사망 반응", "프로파일 핵심문장"
+        /// </summary>
+        public List<GroupDialogueEntry> FindGroupDialoguesBySituation(string situationType)
+        {
+            var result = new List<GroupDialogueEntry>();
+            if (string.IsNullOrEmpty(situationType)) return result;
+
+            foreach (var entry in _groupDialogues)
+                if (entry != null && entry.SituationType == situationType)
+                    result.Add(entry);
+            return result;
+        }
+
+        /// <summary>
+        /// FragmentId(P01_01 형식)로 조우 대사를 검색합니다.
+        /// ProfileClue와 연결된 대사 조회에 사용합니다.
         /// </summary>
         public GroupDialogueEntry FindGroupDialogueByFragment(string fragmentId)
         {
             if (string.IsNullOrEmpty(fragmentId)) return null;
 
             foreach (var entry in _groupDialogues)
-            {
                 if (entry != null && entry.FragmentId == fragmentId)
                     return entry;
-            }
             return null;
         }
 
         /// <summary>
-        /// 특정 대화 조각 ID를 포함하는 단독 대사를 검색합니다.
+        /// FragmentId로 단독 대사를 검색합니다.
         /// </summary>
         public SoloDialogueEntry FindSoloDialogueByFragment(string fragmentId)
         {
             if (string.IsNullOrEmpty(fragmentId)) return null;
 
             foreach (var entry in _soloDialogues)
-            {
                 if (entry != null && entry.FragmentId == fragmentId)
                     return entry;
-            }
+            return null;
+        }
+
+        /// <summary>
+        /// 캐릭터 ID로 단독 대사를 검색합니다.
+        /// </summary>
+        public SoloDialogueEntry FindSoloDialogue(int characterId)
+        {
+            foreach (var entry in _soloDialogues)
+                if (entry != null && entry.CharacterId == characterId)
+                    return entry;
             return null;
         }
 
@@ -130,21 +149,6 @@ namespace HTH.Campaign
         {
             if (string.IsNullOrEmpty(_stageId))
                 Debug.LogWarning($"[CampaignDialogueSO] {name}: StageId가 비어있습니다.");
-
-            for (int i = 0; i < _groupDialogues.Count; i++)
-            {
-                var entry = _groupDialogues[i];
-                if (entry == null) continue;
-
-                if (entry.ParticipantIds == null || entry.ParticipantIds.Count < 2)
-                    Debug.LogWarning($"[CampaignDialogueSO] {name}: GroupDialogue[{i}]의 참여 캐릭터가 2명 미만입니다.");
-
-                if (entry.ParticipantIds != null && entry.ParticipantIds.Count > 7)
-                    Debug.LogWarning($"[CampaignDialogueSO] {name}: GroupDialogue[{i}]의 참여 캐릭터가 7명을 초과합니다.");
-
-                if (entry.Lines == null || entry.Lines.Count == 0)
-                    Debug.LogWarning($"[CampaignDialogueSO] {name}: GroupDialogue[{i}]의 대사가 없습니다.");
-            }
         }
 #endif
     }
@@ -154,9 +158,63 @@ namespace HTH.Campaign
     // ═══════════════════════════════════════════════════════════════════════
 
     /// <summary>
+    /// 조합별 대사 1개 단위입니다.
+    /// 1~7명 조합에 해당하는 대사를 포함합니다.
+    /// </summary>
+    [System.Serializable]
+    public class GroupDialogueEntry
+    {
+        [Header("식별")]
+        [Tooltip("조합 ID입니다.\n" +
+                 "단독: #1~#7\n" +
+                 "일반 조합: C001~C215\n" +
+                 "프로파일 조건: COND_P01_01~COND_P07_05")]
+        public string ComboId;
+
+        [Tooltip("조합 키입니다. 예: '#1|#2|#7', '#1|ANY'")]
+        public string ComboKey;
+
+        [Tooltip("참가 캐릭터 ID 목록 (파싱된 정수 목록)")]
+        public List<int> ParticipantIds = new();
+
+        [Header("상황")]
+        [Tooltip("대사 상황 타입입니다.\n" +
+                 "생존 조합 대사 / 2인 대화 / 3인 대화 / 전체 파티 대화\n" +
+                 "개인 독백 / 사망 반응 / 프로파일 핵심문장 / 프로파일 유도대사 등")]
+        public string SituationType;
+
+        [Tooltip("트리거 조건입니다. 예: 'after_death', 'always'")]
+        public string Trigger;
+
+        [Tooltip("공개 범위입니다. 예: 'all', 'zone_only'")]
+        public string Visibility;
+
+        [Header("ProfileClue 연결")]
+        [Tooltip("이 대사 수집 시 해금되는 ProfileClue ID입니다.\n" +
+                 "P01_01 형식. 일반 대사는 빈 문자열.")]
+        public string FragmentId;
+
+        [Tooltip("사망 트리거 캐릭터 ID 목록입니다.\n" +
+                 "SituationType이 '사망 반응' 계열일 때 사용합니다.")]
+        public List<int> TriggerDeadIds = new();
+
+        [Header("조건")]
+        [Tooltip("해금 조건 ID입니다.")]
+        public string UnlockConditionId;
+
+        [Tooltip("힌트 조건 ID입니다.")]
+        public string HintOfConditionId;
+
+        [Header("대사")]
+        [Tooltip("대사 줄 목록 (순서대로 재생)")]
+        public List<DialogueLine> Lines = new();
+
+        /// <summary>출력 조건 (하위 호환)입니다.</summary>
+        public DialogueConditionData Condition;
+    }
+
+    /// <summary>
     /// 단독 대사 1개 단위입니다.
-    /// 캐릭터 1명이 특정 상황에서 출력하는 대사입니다.
-    /// 사용 여부 미확정 — 기능만 구현합니다.
     /// </summary>
     [System.Serializable]
     public class SoloDialogueEntry
@@ -164,69 +222,55 @@ namespace HTH.Campaign
         [Tooltip("대사를 출력할 캐릭터 ID")]
         public int CharacterId;
 
-        [Tooltip("대사 줄 목록 (순서대로 재생)")]
+        [Tooltip("대사 줄 목록")]
         public List<DialogueLine> Lines = new();
 
-        [Tooltip("이 대사 수집 시 해금되는 대화 조각 ID (없으면 빈 문자열)")]
+        [Tooltip("해금되는 FragmentId (없으면 빈 문자열)")]
         public string FragmentId;
 
-        [Tooltip("출력 조건 (없으면 항상 출력 가능)")]
-        public DialogueConditionData Condition;
-    }
-
-    /// <summary>
-    /// 조우 대사 1개 단위입니다.
-    /// 2~7명의 캐릭터가 같은 구역에 모였을 때 출력되는 대사입니다.
-    /// </summary>
-    [System.Serializable]
-    public class GroupDialogueEntry
-    {
-        [Tooltip("이 대사에 참여하는 캐릭터 ID 목록 (2~7명)")]
-        public List<int> ParticipantIds = new();
-
-        [Tooltip("대사 줄 목록 (순서대로 재생)")]
-        public List<DialogueLine> Lines = new();
-
-        [Tooltip("이 대사 수집 시 해금되는 대화 조각 ID (없으면 빈 문자열)")]
-        public string FragmentId;
-
-        [Tooltip("출력 조건 (없으면 항상 출력 가능)")]
+        [Tooltip("출력 조건")]
         public DialogueConditionData Condition;
     }
 
     /// <summary>
     /// 대사 한 줄입니다.
-    /// 화자 ID와 텍스트로 구성됩니다.
     /// </summary>
     [System.Serializable]
     public class DialogueLine
     {
-        [Tooltip("대사를 출력할 캐릭터 ID (화자)")]
+        [Tooltip("화자 캐릭터 ID")]
         public int SpeakerId;
 
         [Tooltip("대사 내용")]
         [TextArea(2, 5)]
         public string Text;
 
-        [Header("이름 공개 (선택)")]
         [Tooltip("이 대사 출력 시 공개할 캐릭터 ID. -1이면 공개 없음.")]
         public int RevealCharacterId = -1;
 
-        [Tooltip("공개할 캐릭터 이름. RevealCharacterId >= 0일 때 유효.")]
+        [Tooltip("공개할 캐릭터 이름")]
         public string RevealCharacterName;
+
+        [Tooltip("이 라인이 ProfileClue 핵심문장인지 여부")]
+        public bool IsProfileClue;
+
+        [Tooltip("연결된 ProfileClue ID (P01_01 형식)")]
+        public string ProfileClueId;
+
+        [Tooltip("프로파일 카테고리")]
+        public string ProfileCategory;
     }
 
     /// <summary>
     /// 다이얼로그 출력 조건 데이터입니다.
-    /// DialogueConditionEvaluator에서 사용합니다.
     /// </summary>
     [System.Serializable]
     public class DialogueConditionData
     {
-        [Tooltip("이 대화 조각이 수집된 이후에만 출력 (비어있으면 조건 없음)")]
+        [Tooltip("이 FragmentId 수집 후에만 출력 (비어있으면 조건 없음)")]
         public string RequiredFragmentId;
 
-        [Tooltip("최소 루프 횟수 조건 (0이면 항상)")]
+        [Tooltip("최소 루프 횟수 (0이면 항상)")]
         public int MinLoopCount;
 
         /// <summary>조건이 하나도 설정되지 않았는지 여부입니다.</summary>

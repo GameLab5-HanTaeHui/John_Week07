@@ -35,16 +35,20 @@ namespace HTH.Campaign
         [Header("컴포넌트 참조")]
         [SerializeField] private FragmentCollector _fragmentCollector;
 
-        // 수집된 캐릭터 이름 (characterId → 이름)
-        // DialogueTriggerManager.RevealCharacterNamesFromLines()에서 등록됩니다.
-        private readonly Dictionary<int, string> _collectedNames = new();
-
         // ── 내부 상태 ─────────────────────────────────────────────────────
 
-        // characterId → Panel 매핑
+        /// <summary>characterId → Panel 매핑입니다.</summary>
         private readonly Dictionary<int, CharacterRecordPanel> _panelMap = new();
 
+        /// <summary>현재 열린 패널입니다.</summary>
         private CharacterRecordPanel _currentPanel;
+
+        /// <summary>
+        /// 수집된 캐릭터 이름 캐시입니다.
+        /// 대화 중 이름이 공개되면 RegisterCharacterName()으로 등록합니다.
+        /// </summary>
+        private readonly Dictionary<int, string> _collectedNames = new();
+
 
         // ── Unity ────────────────────────────────────────────────────────
 
@@ -127,26 +131,28 @@ namespace HTH.Campaign
             _currentPanel = null;
         }
         /// <summary>
-        /// 캐릭터 이름을 등록합니다.
-        /// DialogueTriggerManager에서 이름 공개 시 호출합니다.
+        /// 캐릭터 이름을 수집 목록에 등록합니다.
+        /// 대화 중 RevealCharacterId가 있을 때 DialogueTriggerManager에서 호출합니다.
         /// </summary>
+        /// <param name="characterId">공개된 캐릭터 ID</param>
+        /// <param name="name">공개된 이름</param>
         public void RegisterCharacterName(int characterId, string name)
         {
             if (string.IsNullOrEmpty(name)) return;
-            if (_collectedNames.ContainsKey(characterId)) return;
-
             _collectedNames[characterId] = name;
 
-            // 현재 열려있는 패널이 해당 캐릭터면 헤더 갱신
-            if (_currentPanel != null && _currentPanel.IsOpen)
-                _currentPanel.RefreshIfCurrent(characterId);
+            // 현재 열린 패널이 해당 캐릭터면 즉시 갱신
+            _currentPanel?.RefreshIfCurrent(characterId);
         }
 
-        /// <summary>수집된 캐릭터 이름을 반환합니다. 미수집 시 null.</summary>
+        /// <summary>
+        /// 수집된 캐릭터 이름을 반환합니다.
+        /// 미수집이면 빈 문자열을 반환합니다.
+        /// </summary>
+        /// <param name="characterId">조회할 캐릭터 ID</param>
         public string GetCollectedName(int characterId)
         {
-            _collectedNames.TryGetValue(characterId, out string name);
-            return name;
+            return _collectedNames.TryGetValue(characterId, out var name) ? name : "";
         }
 
         // ── Private ──────────────────────────────────────────────────────
@@ -167,34 +173,28 @@ namespace HTH.Campaign
             _currentPanel.RefreshIfCurrent(charId);
         }
 
+        /// <summary>
+        /// P01_01 형식의 FragmentId에서 캐릭터 ID를 파싱합니다.
+        /// 예: "P01_01" → 1 / "P07_05" → 7
+        /// </summary>
         private int ParseCharacterIdFromFragment(string fragmentId)
         {
             if (string.IsNullOrEmpty(fragmentId)) return -1;
 
-            // char{id} 형식
-            const string charMarker = "_char";
-            int charIdx = fragmentId.IndexOf(charMarker, System.StringComparison.Ordinal);
-            if (charIdx >= 0)
+            // P{cc}_{ii} 형식 — 예: P01_01, P07_05
+            if (fragmentId.Length >= 3 && fragmentId[0] == 'P')
             {
-                int start = charIdx + charMarker.Length;
-                int end = fragmentId.IndexOf('_', start);
-                if (end < 0) end = fragmentId.Length;
-                if (int.TryParse(fragmentId.Substring(start, end - start), out int charId))
-                    return charId;
+                int underscoreIdx = fragmentId.IndexOf('_');
+                if (underscoreIdx > 1)
+                {
+                    string charPart = fragmentId.Substring(1, underscoreIdx - 1);
+                    if (int.TryParse(charPart, out int charId))
+                        return charId;
+                }
             }
 
-            // group_{첫번째Id}_... 형식 폴백
-            const string groupMarker = "_group_";
-            int groupIdx = fragmentId.IndexOf(groupMarker, System.StringComparison.Ordinal);
-            if (groupIdx >= 0)
-            {
-                int start = groupIdx + groupMarker.Length;
-                int end = fragmentId.IndexOf('_', start);
-                if (end < 0) end = fragmentId.Length;
-                if (int.TryParse(fragmentId.Substring(start, end - start), out int groupId))
-                    return groupId;
-            }
-
+            Debug.LogWarning($"[CharacterRecordPanelManager] FragmentId 파싱 실패 — {fragmentId}\n" +
+                             "P{{cc}}_{{ii}} 형식을 사용해야 합니다. 예: P01_01");
             return -1;
         }
     }

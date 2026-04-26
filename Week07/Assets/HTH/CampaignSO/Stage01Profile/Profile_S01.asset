@@ -18,139 +18,350 @@ MonoBehaviour:
     RequiredFragmentCount: 5
     CharacterFullName: "\uC5D4\uBE44"
     CharacterRole: "(\uC8FC\uC778\uACF5)"
-    CharacterIcon: {fileID: 21300000, guid: da951ff8cc869324ca09cf422bfaee91, type: 3}
+    CharacterIcon: {fileID: 21300000, guid: b68ce7ee735957f46aac983d4fca0803, type: 3}
     ProfileItems:
-    - Question: "\uC9C8\uBB381"
+    - Question: "\uAC00\uC7A5 \uB450\uB824\uC6CC\uD558\uB294 \uAC83"
       Choices:
-      - "\uC120\uD0DD1"
-      - "\uC120\uD0DD2"
+      - "\uBC84\uB824\uC9C0\uB294 \uAC83"
+      - "\uAD00\uACC4\uB97C \uB9DD\uCE58\uB294 \uAC83"
+      - "\uC9C4\uC2E4\uC774 \uB4DC\uB7EC\uB098\uB294 \uAC83"
       CorrectChoiceIndex: 0
       RequiredFragmentId: 
+    - Question: "\uB2E4\uC815\uD568\uC758 \uBCF8\uC9C8"
+      Choices:
+      - "\uC9C4\uC2EC \uC5B4\uB9B0 \uAC10\uC815"
+      - "\uC2B5\uB4DD\uB41C \uAE30\uC220"
+      - "\uBAA9\uC801\uC744 \uC704\uD55C \uC218\uB2E8"
+      CorrectChoiceIndex: 1
+      RequiredFragmentId: 
+    - Question: "\uAD00\uACC4\uC5D0\uC11C \uC6D0\uD558\uB294 \uAC83"
+      Choices:
+      - "\uC18C\uC18D\uAC10"
+      - "\uC778\uC815"
+      - "\uC628\uAE30"
+      CorrectChoiceIndex: 2
+      RequiredFragmentId: 
+    - Question: "\uC790\uC2E0\uC744 \uBC14\uB77C\uBCF4\uB294 \uC2DC\uC120"
+      Choices:
+      - "\uC9C0\uD0A4\uB294 \uC790"
+      - "\uD754\uB4DC\uB294 \uC790"
+      - "\uAD00\uCC30\uD558\uB294 \uC790"
+      CorrectChoiceIndex: 1
+      RequiredFragmentId: 
     ConceptCard:
-      Catchphrase: "\uC640 \uC0CC\uC988!"
-      Appearance: "\uBF08\uB2E4\uADC0\uC774\uB2E4"
-      NarrativeBackground: "\uC5B8\uB354\uD14C\uC77C"
-      Personality: "\uC720\uC5F0\uD558\uB2E4"
-      GimmickRelevance: "\uBB54\uB370 \uC774\uAC74"
-      CardIllustration: {fileID: 21300000, guid: da951ff8cc869324ca09cf422bfaee91, type: 3}
-    EpilogueText: "\uC644\uC131 \u3145\u3131"
+      Catchphrase: "\uBAA8\uB450\uC5D0\uAC8C \uBD04\uC774 \uC628\uB2E4\uBA74, \uB098\uB294
+        \uC65C \uB298 \uBB38\uBC16\uC5D0\uC11C \uADF8 \uC628\uB3C4\uB9CC \uD6D4\uCCD0\uBD10\uC57C
+        \uD558\uB294 \uAC78\uAE4C."
+      Appearance: "\uAC08\uC0C9 \uBA38\uB9AC, \uC628\uD654\uD55C \uBBF8\uC18C. \uB298
+        \uC911\uAC04\uC5D0 \uC11C \uC788\uB294 \uAC83\uCC98\uB7FC \uBCF4\uC778\uB2E4."
+      NarrativeBackground: "\uACB0\uD54D \uC18D\uC5D0\uC11C \uB2E4\uC815\uD568\uC744
+        \uBC30\uC6E0\uC73C\uB098 \uC9C4\uC2EC\uC73C\uB85C \uB2E4\uAC00\uAC00\uB294
+        \uBC95\uC740 \uB05D\uB0B4 \uBC30\uC6B0\uC9C0 \uBABB\uD588\uB2E4."
+      Personality: "\uBD80\uB4DC\uB7FD\uACE0 \uAD00\uCC30\uB825\uC774 \uB6F0\uC5B4\uB098\uB2E4.
+        \uAD00\uACC4\uC758 \uD2C8\uC744 \uBCF8\uB2A5\uC801\uC73C\uB85C \uAC10\uC9C0\uD55C\uB2E4."
+      GimmickRelevance: "\uC8FC\uC778\uACF5\uC73C\uB85C\uC11C \uD50C\uB808\uC774\uC5B4\uC758
+        \uC2DC\uC120\uC744 \uB300\uB9AC\uD558\uB294 \uB3D9\uC2DC\uC5D0 \uC2A4\uC2A4\uB85C\uB3C4
+        \uAD00\uCC30 \uB300\uC0C1\uC774 \uB41C\uB2E4."
+      CardIllustration: {fileID: 21300000, guid: b68ce7ee735957f46aac983d4fca0803, type: 3}
+    EpilogueText: "\uB098\uB294 \uC5B8\uC81C\uB098 \uADF8 \uBD04\uC758 \uBC14\uAE65\uC5D0
+      \uC788\uC5C8\uB2E4. \uADF8\uB7F0\uB370\uB3C4, \uC190\uC744 \uBED7\uACE0 \uC2F6\uC5C8\uB2E4."
   - CharacterId: 2
     RequiredFragmentCount: 5
     CharacterFullName: "\uBA54\uC774"
     CharacterRole: "(\uBCF5\uC218\uC790)"
-    CharacterIcon: {fileID: 21300000, guid: 49d5c9344013d52468fc4b0aa647f216, type: 3}
+    CharacterIcon: {fileID: 21300000, guid: ac9088d1bf1998a44a8eeec403dd264d, type: 3}
     ProfileItems:
-    - Question: "\uC9C8\uBB381"
+    - Question: "\uB05D\uC744 \uD5A5\uD574 \uB2EC\uB9AC\uB294 \uC774\uC720"
       Choices:
-      - "\uC120\uD0DD1"
-      - "\uC120\uD0DD2"
-      CorrectChoiceIndex: 0
+      - "\uC0AC\uBA85\uAC10"
+      - "\uB450\uB824\uC6C0"
+      - "\uC99D\uBA85\uD558\uB824\uB294 \uC695\uAD6C"
+      CorrectChoiceIndex: 2
+      RequiredFragmentId: 
+    - Question: "\uB3D9\uB8CC\uB97C \uB300\uD558\uB294 \uBC29\uC2DD"
+      Choices:
+      - "\uD568\uAED8 \uAC00\uB294 \uB3D9\uBC18\uC790"
+      - "\uB04C\uACE0 \uAC00\uC57C \uD560 \uC874\uC7AC"
+      - "\uC9C0\uCF1C\uC57C \uD560 \uB300\uC0C1"
+      CorrectChoiceIndex: 1
+      RequiredFragmentId: 
+    - Question: "\uBA48\uCDA4\uC5D0 \uB300\uD55C \uC778\uC2DD"
+      Choices:
+      - "\uD544\uC694\uD55C \uD734\uC2DD"
+      - "\uC0AC\uBA85 \uC774\uD0C8"
+      - "\uB098\uC57D\uD568\uC758 \uC99D\uAC70"
+      CorrectChoiceIndex: 1
+      RequiredFragmentId: 
+    - Question: "\uAC00\uC7A5 \uC9D1\uCC29\uD558\uB294 \uAC83"
+      Choices:
+      - "\uAC00\uBB38\uC758 \uC774\uB984"
+      - "\uB9C8\uC9C0\uB9C9 \uC99D\uBA85"
+      - "\uB3D9\uB8CC\uC758 \uC0DD\uC874"
+      CorrectChoiceIndex: 1
       RequiredFragmentId: 
     ConceptCard:
-      Catchphrase: "\uC640 \uC0CC\uC988!"
-      Appearance: "\uBF08\uB2E4\uADC0\uC774\uB2E4"
-      NarrativeBackground: "\uC5B8\uB354\uD14C\uC77C"
-      Personality: "\uC720\uC5F0\uD558\uB2E4"
-      GimmickRelevance: "\uBB54\uB370 \uC774\uAC74"
-      CardIllustration: {fileID: 21300000, guid: da951ff8cc869324ca09cf422bfaee91, type: 3}
-    EpilogueText: "\uC644\uC131 \u3145\u3131"
+      Catchphrase: "\uB204\uAD70\uAC00\uB294 \uB05D\uAE4C\uC9C0 \uAC00\uC57C \uD55C\uB2E4.
+        \uB098\uB294 \uADF8 \uC790\uB9AC\uB97C \uD53C\uD558\uC9C0 \uC54A\uACA0\uB2E4."
+      Appearance: "\uB2E8\uC815\uD558\uACE0 \uAC15\uC778\uD55C \uC778\uC0C1. \uD56D\uC0C1
+        \uC55E\uC744 \uD5A5\uD574 \uC11C \uC788\uB2E4."
+      NarrativeBackground: "\uAC00\uBB38\uC758 \uC774\uB984\uC744 \uC9CA\uC5B4\uC9C0\uACE0
+        \uB9C8\uC655 \uD1A0\uBC8C\uC744 \uC0AC\uBA85\uC73C\uB85C \uC0BC\uC544\uC654\uB2E4."
+      Personality: "\uACB0\uB2E8\uB825\uC774 \uAC15\uD558\uACE0 \uC758\uC9C0\uAC00
+        \uD655\uACE0\uD558\uB2E4. \uBA48\uCDA4\uC744 \uC0AC\uBA85 \uC774\uD0C8\uB85C
+        \uC778\uC2DD\uD55C\uB2E4."
+      GimmickRelevance: "\uC804\uC9C4\uC744 \uAC15\uC694\uD558\uB294 \uAD6C\uC870
+        \uC18D\uC5D0\uC11C \uD76C\uC0DD\uACFC \uCC45\uC784\uC758 \uACBD\uACC4\uB97C
+        \uD750\uB9B0\uB2E4."
+      CardIllustration: {fileID: 21300000, guid: ac9088d1bf1998a44a8eeec403dd264d, type: 3}
+    EpilogueText: "\uC5EC\uAE30\uC11C \uBA48\uCD94\uBA74 \uC9C0\uAE08\uAE4C\uC9C0
+      \uBC84\uD168 \uC628 \uC2DC\uAC04\uB9C8\uC800 \uD750\uB824\uC9C8 \uAC83 \uAC19\uC544."
   - CharacterId: 3
     RequiredFragmentCount: 5
     CharacterFullName: "\uB370\uC6B0\uC2A4"
     CharacterRole: "(\uC5F0\uC778A)"
-    CharacterIcon: {fileID: 21300000, guid: 859cd977bab22f14cabf057c28090b48, type: 3}
+    CharacterIcon: {fileID: 21300000, guid: 484145e7050ecd2428f736cb1261a825, type: 3}
     ProfileItems:
-    - Question: "\uC9C8\uBB381"
+    - Question: "\uB8E8\uC774\uC2A4\uC5D0 \uB300\uD55C \uAC10\uC815"
       Choices:
-      - "\uC120\uD0DD1"
-      - "\uC120\uD0DD2"
-      CorrectChoiceIndex: 0
+      - "\uC6B0\uC815"
+      - "\uC0AC\uB791"
+      - "\uCC45\uC784"
+      CorrectChoiceIndex: 1
+      RequiredFragmentId: 
+    - Question: "\uD0C0\uC778\uC744 \uB300\uD558\uB294 \uBC29\uC2DD"
+      Choices:
+      - "\uD3C9\uB4F1\uD558\uAC8C"
+      - "\uB8E8\uC774\uC2A4 \uC911\uC2EC\uC73C\uB85C"
+      - "\uC5ED\uD560\uC5D0 \uB530\uB77C"
+      CorrectChoiceIndex: 1
+      RequiredFragmentId: 
+    - Question: "\uBCF4\uD638\uC758 \uBCF8\uC9C8"
+      Choices:
+      - "\uC548\uC804\uC744 \uC704\uD55C \uC120\uD0DD"
+      - "\uC18C\uC720\uC5D0 \uAC00\uAE4C\uC6B4 \uC9D1\uCC29"
+      - "\uC0AC\uB791\uC758 \uD45C\uD604"
+      CorrectChoiceIndex: 1
+      RequiredFragmentId: 
+    - Question: "\uB8E8\uC774\uC2A4 \uC5C6\uC774 \uC138\uACC4\uB97C \uC720\uC9C0\uD560
+        \uC218 \uC788\uB294\uAC00"
+      Choices:
+      - "\uD560 \uC218 \uC788\uB2E4"
+      - "\uD560 \uC218 \uC5C6\uB2E4"
+      - "\uC2DC\uB3C4\uD574\uBCF8 \uC801 \uC5C6\uB2E4"
+      CorrectChoiceIndex: 1
       RequiredFragmentId: 
     ConceptCard:
-      Catchphrase: "\uC640 \uC0CC\uC988!"
-      Appearance: "\uBF08\uB2E4\uADC0\uC774\uB2E4"
-      NarrativeBackground: "\uC5B8\uB354\uD14C\uC77C"
-      Personality: "\uC720\uC5F0\uD558\uB2E4"
-      GimmickRelevance: "\uBB54\uB370 \uC774\uAC74"
-      CardIllustration: {fileID: 21300000, guid: da951ff8cc869324ca09cf422bfaee91, type: 3}
-    EpilogueText: "\uC644\uC131 \u3145\u3131"
+      Catchphrase: "\uB9D0\uC758 \uC774\uB984\uC774 \uBB34\uC5C7\uC774\uB4E0, \uC81C\uAC00
+        \uC9C0\uCF1C\uC57C \uD55C\uB2E4\uB294 \uC0AC\uC2E4\uC740 \uBCC0\uD558\uC9C0
+        \uC54A\uC2B5\uB2C8\uB2E4."
+      Appearance: "\uC870\uC6A9\uD558\uACE0 \uB2E8\uC815\uD55C \uC678\uBAA8. \uB8E8\uC774\uC2A4\uB97C
+        \uBC14\uB77C\uBCFC \uB54C\uB9CC \uB208\uBE5B\uC774 \uB2EC\uB77C\uC9C4\uB2E4."
+      NarrativeBackground: "\uB8E8\uC774\uC2A4\uB97C \uC0B6\uC758 \uC758\uBBF8\uC774\uC790
+        \uAD6C\uC6D0\uC73C\uB85C \uC2E0\uC131\uD654\uD558\uBA70 \uC0B4\uC544\uC654\uB2E4."
+      Personality: "\uCC28\uBD84\uD558\uACE0 \uC608\uC758 \uBC14\uB974\uB098 \uB8E8\uC774\uC2A4\uC5D0
+        \uAD00\uD574\uC11C\uB294 \uD0C0\uD611\uC774 \uC5C6\uB2E4."
+      GimmickRelevance: "\uBCF4\uD638\uB77C\uB294 \uC774\uB984\uC758 \uACE0\uB9BD\uC744
+        \uAD6C\uD604\uD558\uB294 \uCE90\uB9AD\uD130."
+      CardIllustration: {fileID: 21300000, guid: 484145e7050ecd2428f736cb1261a825, type: 3}
+    EpilogueText: "\uB8E8\uC774\uC2A4\uAC00 \uC228\uC744 \uACE0\uB974\uB294 \uC18C\uB9AC\uB9CC
+      \uB4E4\uB9AC\uBA74, \uC138\uC0C1\uC758 \uC18C\uB780\uC740 \uC7A0\uC2DC \uBA40\uC5B4\uC9C4\uB2E4."
   - CharacterId: 4
     RequiredFragmentCount: 5
     CharacterFullName: "\uB8E8\uC774\uC2A4"
     CharacterRole: "(\uC5F0\uC778B)"
-    CharacterIcon: {fileID: 21300000, guid: e8d4725a36678d8438abfd72b2cf7dbe, type: 3}
+    CharacterIcon: {fileID: 21300000, guid: 99bb6781bae90764faec8614b21f7e33, type: 3}
     ProfileItems:
-    - Question: "\uC9C8\uBB381"
+    - Question: "\uC9C0\uAE08 \uAC00\uC7A5 \uC6D0\uD558\uB294 \uAC83"
       Choices:
-      - "\uC120\uD0DD1"
-      - "\uC120\uD0DD2"
-      CorrectChoiceIndex: 0
+      - "\uC804\uC9C4"
+      - "\uC815\uC9C0"
+      - "\uB3C4\uD53C"
+      CorrectChoiceIndex: 1
+      RequiredFragmentId: 
+    - Question: "\uB370\uC6B0\uC2A4\uC5D0 \uB300\uD55C \uC758\uC874\uC758 \uC774\uC720"
+      Choices:
+      - "\uC0AC\uB791"
+      - "\uC548\uC804\uC7A5\uCE58"
+      - "\uC2B5\uAD00"
+      CorrectChoiceIndex: 1
+      RequiredFragmentId: 
+    - Question: "\uAC08\uB4F1 \uC55E\uC5D0\uC11C\uC758 \uD0DC\uB3C4"
+      Choices:
+      - "\uC801\uADF9 \uAC1C\uC785"
+      - "\uCE68\uBB35\uACFC \uAD00\uCC30"
+      - "\uD68C\uD53C"
+      CorrectChoiceIndex: 1
+      RequiredFragmentId: 
+    - Question: "\uC2A4\uC2A4\uB85C\uC5D0 \uB300\uD55C \uC778\uC2DD"
+      Choices:
+      - "\uBC84\uD2F0\uB294 \uC0AC\uB78C"
+      - "\uAE30\uB300\uB294 \uC0AC\uB78C"
+      - "\uC78A\uD600\uC9C0\uB294 \uC0AC\uB78C"
+      CorrectChoiceIndex: 1
       RequiredFragmentId: 
     ConceptCard:
-      Catchphrase: "\uC640 \uC0CC\uC988!"
-      Appearance: "\uBF08\uB2E4\uADC0\uC774\uB2E4"
-      NarrativeBackground: "\uC5B8\uB354\uD14C\uC77C"
-      Personality: "\uC720\uC5F0\uD558\uB2E4"
-      GimmickRelevance: "\uBB54\uB370 \uC774\uAC74"
-      CardIllustration: {fileID: 21300000, guid: da951ff8cc869324ca09cf422bfaee91, type: 3}
-    EpilogueText: "\uC644\uC131 \u3145\u3131"
+      Catchphrase: "\uC544\uBB34 \uC77C\uB3C4 \uC548 \uC77C\uC5B4\uB0AC\uC73C\uBA74
+        \uC88B\uACA0\uB2E4. \uC544\uBB34\uB3C4 \uBB3B\uC9C0 \uC54A\uACE0, \uC544\uBB34\uB3C4
+        \uC7AC\uCD09\uD558\uC9C0 \uC54A\uB294 \uACF3\uC5D0\uC11C."
+      Appearance: "\uC870\uC6A9\uD558\uACE0 \uCC3D\uBC31\uD55C \uC778\uC0C1. \uC874\uC7AC\uAC10\uC774
+        \uC605\uC5B4 \uBCF4\uC778\uB2E4."
+      NarrativeBackground: "\uBC18\uBCF5\uB418\uB294 \uB8E8\uD504 \uC18D\uC5D0\uC11C
+        \uC815\uC2E0\uC801\uC73C\uB85C \uC18C\uC9C4\uB418\uC5B4\uAC00\uACE0 \uC788\uB2E4."
+      Personality: "\uB0B4\uD5A5\uC801\uC774\uACE0 \uD53C\uB85C\uC5D0 \uC775\uC219\uD558\uB2E4.
+        \uD604\uC7AC\uC758 \uC548\uC815\uC5D0 \uBA38\uBB34\uB974\uB824 \uD55C\uB2E4."
+      GimmickRelevance: "\uAE30\uB300\uC5B4 \uBC84\uD2F0\uB294 \uC120\uD0DD\uC774
+        \uC5BC\uB9C8\uB098 \uC704\uD0DC\uB85C\uC6B4\uC9C0\uB97C \uBCF4\uC5EC\uC900\uB2E4."
+      CardIllustration: {fileID: 21300000, guid: 99bb6781bae90764faec8614b21f7e33, type: 3}
+    EpilogueText: "\uC544\uBB34 \uC77C\uB3C4 \uC77C\uC5B4\uB098\uC9C0 \uC54A\uB294
+      \uC2DC\uAC04\uC774 \uD544\uC694\uD558\uB2E4."
   - CharacterId: 5
     RequiredFragmentCount: 5
     CharacterFullName: "\uD1A0\uB2C8"
     CharacterRole: "(\uC0B4\uC778\uC790)"
-    CharacterIcon: {fileID: 21300000, guid: fd455a31920dbd14599f71f978299db0, type: 3}
+    CharacterIcon: {fileID: 21300000, guid: b084f8f70a654704f8aac460b6217ca0, type: 3}
     ProfileItems:
-    - Question: "\uC9C8\uBB381"
+    - Question: "\uBBF8\uC18C\uC758 \uBCF8\uC9C8"
       Choices:
-      - "\uC120\uD0DD1"
-      - "\uC120\uD0DD2"
-      CorrectChoiceIndex: 0
+      - "\uC21C\uC218\uD55C \uC990\uAC70\uC6C0"
+      - "\uACC4\uC0B0\uB41C \uC5F0\uAE30"
+      - "\uAD00\uCC30\uC758 \uB3C4\uAD6C"
+      CorrectChoiceIndex: 1
+      RequiredFragmentId: 
+    - Question: "\uC0AC\uAC74\uC744 \uBC14\uB77C\uBCF4\uB294 \uC2DC\uAC01"
+      Choices:
+      - "\uD574\uACB0\uD574\uC57C \uD560 \uBB38\uC81C"
+      - "\uC644\uC131\uB418\uC5B4\uAC00\uB294 \uACFC\uC815"
+      - "\uD765\uBBF8\uB85C\uC6B4 \uC7AC\uB8CC"
+      CorrectChoiceIndex: 1
+      RequiredFragmentId: 
+    - Question: "\uAC08\uB4F1\uC5D0 \uAC1C\uC785\uD558\uC9C0 \uC54A\uB294 \uC774\uC720"
+      Choices:
+      - "\uB450\uB824\uC6C0"
+      - "\uBB34\uAD00\uC2EC"
+      - "\uAD00\uCC30\uC744 \uC704\uD574"
+      CorrectChoiceIndex: 2
+      RequiredFragmentId: 
+    - Question: "\uC9C4\uC9DC \uBAA9\uD45C"
+      Choices:
+      - "\uC0DD\uC874"
+      - "\uACFC\uC815\uC758 \uC644\uC131"
+      - "\uACB0\uACFC\uC758 \uCF8C\uAC10"
+      CorrectChoiceIndex: 1
       RequiredFragmentId: 
     ConceptCard:
-      Catchphrase: "\uC640 \uC0CC\uC988!"
-      Appearance: "\uBF08\uB2E4\uADC0\uC774\uB2E4"
-      NarrativeBackground: "\uC5B8\uB354\uD14C\uC77C"
-      Personality: "\uC720\uC5F0\uD558\uB2E4"
-      GimmickRelevance: "\uBB54\uB370 \uC774\uAC74"
-      CardIllustration: {fileID: 21300000, guid: da951ff8cc869324ca09cf422bfaee91, type: 3}
-    EpilogueText: "\uC644\uC131 \u3145\u3131"
+      Catchphrase: "\uAC89\uC740 \uB2EC\uCF64\uD574\uC57C \uD574. \uADF8\uB798\uC57C
+        \uC544\uBB34\uB3C4 \uC548 \uB180\uB77C\uB2C8\uAE4C."
+      Appearance: "\uBC1D\uACE0 \uC573\uB41C \uC678\uBAA8. \uC6C3\uC74C\uC774 \uB04A\uC774\uC9C0
+        \uC54A\uB294\uB2E4."
+      NarrativeBackground: "\uC0AC\uB78C\uC744 \uB9DB\uC73C\uB85C \uBD84\uB958\uD558\uACE0
+        \uC0AC\uAC74\uC744 \uC694\uB9AC\uB85C \uC778\uC2DD\uD558\uB294 \uB3C5\uD2B9\uD55C
+        \uC138\uACC4\uAD00\uC744 \uAC00\uC84C\uB2E4."
+      Personality: "\uD574\uB9D1\uACE0 \uAD00\uCC30\uB825\uC774 \uC608\uB9AC\uD558\uB2E4.
+        \uADF9\uC801\uC778 \uACB0\uACFC\uB97C \uC120\uD638\uD55C\uB2E4."
+      GimmickRelevance: "\uC544\uC774\uCC98\uB7FC \uBCF4\uC774\uB294 \uD45C\uBA74
+        \uC544\uB798 \uB0C9\uC815\uD55C \uAD00\uCC30\uC790\uAC00 \uC228\uC5B4\uC788\uB2E4."
+      CardIllustration: {fileID: 21300000, guid: b084f8f70a654704f8aac460b6217ca0, type: 3}
+    EpilogueText: "\uC0AC\uB78C\uC740 \uC808\uB9DD\uD560 \uB54C \uAC00\uC7A5 \uC194\uC9C1\uD55C
+      \uD5A5\uC744 \uB0B8\uB2E4."
   - CharacterId: 6
     RequiredFragmentCount: 5
     CharacterFullName: "\uD504\uB9AC\uB4DC"
-    CharacterRole: "\uD76C\uC0DD\uC790"
-    CharacterIcon: {fileID: 21300000, guid: 7275a075e9214a743b7effd72d988284, type: 3}
+    CharacterRole: "(\uD76C\uC0DD\uC591)"
+    CharacterIcon: {fileID: 21300000, guid: 80338f499f9f79640aa74de2ef72030c, type: 3}
     ProfileItems:
-    - Question: "\uC9C8\uBB381"
+    - Question: "\uD76C\uC0DD\uC758 \uBCF8\uC9C8"
       Choices:
-      - "\uC120\uD0DD1"
-      - "\uC120\uD0DD2"
+      - "\uC790\uBC1C\uC801 \uC120\uD0DD"
+      - "\uC120\uC758\uC758 \uAC15\uC694"
+      - "\uCC45\uC784\uC758 \uB3C5\uC810"
+      CorrectChoiceIndex: 2
+      RequiredFragmentId: 
+    - Question: "\uBA3C\uC800 \uB098\uC11C\uB294 \uC774\uC720"
+      Choices:
+      - "\uB450\uB824\uC6C0"
+      - "\uC2E0\uB150"
+      - "\uC2B5\uAD00"
+      CorrectChoiceIndex: 1
+      RequiredFragmentId: 
+    - Question: "\uD0C0\uC778\uC758 \uC120\uD0DD\uAD8C\uC5D0 \uB300\uD55C \uC778\uC2DD"
+      Choices:
+      - "\uC874\uC911\uD55C\uB2E4"
+      - "\uB300\uC2E0 \uACB0\uC815\uD558\uB294 \uAC83\uC774 \uB0AB\uB2E4"
+      - "\uC0C1\uD669\uC5D0 \uB530\uB77C \uB2E4\uB974\uB2E4"
+      CorrectChoiceIndex: 1
+      RequiredFragmentId: 
+    - Question: "\uB0B4\uAC00 \uACB0\uC815\uD574\uC57C \uBAA8\uB450\uAC00 \uC0B0\uB2E4\uB294
+        \uD655\uC2E0"
+      Choices:
+      - "\uD655\uC2E0\uD55C\uB2E4"
+      - "\uC758\uC2EC\uD558\uAE30 \uC2DC\uC791\uD588\uB2E4"
+      - "\uD655\uC2E0\uD588\uC9C0\uB9CC \uD2C0\uB838\uB2E4"
       CorrectChoiceIndex: 0
       RequiredFragmentId: 
     ConceptCard:
-      Catchphrase: "\uC640 \uC0CC\uC988!"
-      Appearance: "\uBF08\uB2E4\uADC0\uC774\uB2E4"
-      NarrativeBackground: "\uC5B8\uB354\uD14C\uC77C"
-      Personality: "\uC720\uC5F0\uD558\uB2E4"
-      GimmickRelevance: "\uBB54\uB370 \uC774\uAC74"
-      CardIllustration: {fileID: 21300000, guid: da951ff8cc869324ca09cf422bfaee91, type: 3}
-    EpilogueText: "\uC644\uC131 \u3145\u3131"
+      Catchphrase: "\uB204\uAD70\uAC00 \uC55E\uC5D0 \uC11C\uC57C \uD55C\uB2E4\uBA74,
+        \uB098\uB294 \uC790\uAFB8 \uADF8\uAC8C \uB0B4 \uBAAB\uC774\uB77C\uACE0 \uC0DD\uAC01\uD558\uAC8C
+        \uB41C\uB2E4."
+      Appearance: "\uD06C\uACE0 \uB4EC\uC9C1\uD55C \uCCB4\uAD6C. \uD56D\uC0C1 \uC55E\uC5D0
+        \uC11C\uB824\uB294 \uC790\uC138\uB97C \uCDE8\uD55C\uB2E4."
+      NarrativeBackground: "\uB300\uC2E0 \uC9CA\uC5B4\uC9C0\uB294 \uAC83\uC744 \uC2E0\uB150\uC73C\uB85C
+        \uC0BC\uC544\uC654\uB2E4."
+      Personality: "\uCC45\uC784\uAC10\uC774 \uAC15\uD558\uACE0 \uD5CC\uC2E0\uC801\uC774\uB2E4.
+        \uD0C0\uC778\uC758 \uC120\uD0DD\uAD8C\uC744 \uBB34\uC758\uC2DD\uC801\uC73C\uB85C
+        \uCE68\uD574\uD55C\uB2E4."
+      GimmickRelevance: "\uD76C\uC0DD\uC591 \uD6A8\uACFC\uB97C \uAC00\uC9C4 \uCE90\uB9AD\uD130.
+        \uC120\uC758\uC640 \uB3C5\uB2E8\uC758 \uACBD\uACC4\uB97C \uD750\uB9B0\uB2E4."
+      CardIllustration: {fileID: 21300000, guid: 80338f499f9f79640aa74de2ef72030c, type: 3}
+    EpilogueText: "\uC88B\uC740 \uC758\uB3C4\uB77C\uB294 \uB9D0 \uC544\uB798\uC5D0\uC11C\uB3C4,
+      \uB204\uAD70\uAC00\uC758 \uBAAB\uC740 \uC27D\uAC8C \uAC00\uB824\uC9C8 \uC218
+      \uC788\uB2E4."
   - CharacterId: 7
     RequiredFragmentCount: 5
-    CharacterFullName: "\uC0C8"
+    CharacterFullName: "\uC0C8\uD134"
     CharacterRole: "(\uBC30\uD68C\uC790)"
-    CharacterIcon: {fileID: 21300000, guid: 7b96f54915c9bcc4c9cfdd2f8a6182c7, type: 3}
+    CharacterIcon: {fileID: 21300000, guid: 8808ade9a103ff54891d0fb0c80bdd0e, type: 3}
     ProfileItems:
-    - Question: "\uC9C8\uBB381"
+    - Question: "\uBD84\uB178\uC758 \uB300\uC0C1"
       Choices:
-      - "\uC120\uD0DD1"
-      - "\uC120\uD0DD2"
-      CorrectChoiceIndex: 0
+      - "\uD2B9\uC815 \uC778\uBB3C"
+      - "\uD76C\uC0DD \uAD6C\uC870 \uC790\uCCB4"
+      - "\uC790\uAE30 \uC790\uC2E0"
+      CorrectChoiceIndex: 1
+      RequiredFragmentId: 
+    - Question: "\uACF5\uB3D9\uCCB4\uC5D0 \uB300\uD55C \uD0DC\uB3C4"
+      Choices:
+      - "\uC2E0\uB8B0\uD55C\uB2E4"
+      - "\uBD88\uC2E0\uD55C\uB2E4"
+      - "\uC120\uD0DD\uC801\uC73C\uB85C \uC2E0\uB8B0\uD55C\uB2E4"
+      CorrectChoiceIndex: 1
+      RequiredFragmentId: 
+    - Question: "\uC2B9\uB9AC\uBCF4\uB2E4 \uC911\uC2DC\uD558\uB294 \uAC83"
+      Choices:
+      - "\uACFC\uC815\uC758 \uD76C\uC0DD"
+      - "\uACB0\uACFC\uC758 \uC815\uB2F9\uC131"
+      - "\uB0A8\uACA8\uC9C4 \uC0AC\uB78C"
+      CorrectChoiceIndex: 2
+      RequiredFragmentId: 
+    - Question: "\uC774\uB3D9\uC774 \uB0A8\uAE34 \uAC83"
+      Choices:
+      - "\uC0DD\uC874"
+      - "\uC8C4\uCC45\uAC10"
+      - "\uAE30\uC5B5"
+      CorrectChoiceIndex: 1
       RequiredFragmentId: 
     ConceptCard:
-      Catchphrase: "\uC640 \uC0CC\uC988!"
-      Appearance: "\uBF08\uB2E4\uADC0\uC774\uB2E4"
-      NarrativeBackground: "\uC5B8\uB354\uD14C\uC77C"
-      Personality: "\uC720\uC5F0\uD558\uB2E4"
-      GimmickRelevance: "\uBB54\uB370 \uC774\uAC74"
-      CardIllustration: {fileID: 21300000, guid: da951ff8cc869324ca09cf422bfaee91, type: 3}
-    EpilogueText: "\uC644\uC131 \u3145\u3131"
+      Catchphrase: "\uBA3C\uC800 \uC6C0\uC9C1\uC778 \uC0AC\uB78C\uC740 \uC0B0\uB2E4.
+        \uB4A4\uC5D0 \uB0A8\uC740 \uC0AC\uB78C\uC740 \uAE30\uC5B5\uC774 \uB41C\uB2E4."
+      Appearance: "\uB0A0\uCE74\uB85C\uC6B4 \uB208\uBE5B. \uD56D\uC0C1 \uB4A4\uB97C
+        \uD655\uC778\uD558\uB294 \uC2B5\uAD00\uC774 \uC788\uB2E4."
+      NarrativeBackground: "\uC774\uB3D9\uC774 \uB0A8\uAE34 \uC8FD\uC74C\uC758 \uAE30\uC5B5\uC744
+        \uC548\uACE0 \uC0B4\uC544\uAC04\uB2E4."
+      Personality: "\uC758\uC2EC\uC774 \uB9CE\uACE0 \uC9C1\uC811\uC801\uC774\uB2E4.
+        \uD76C\uC0DD \uAD6C\uC870 \uC790\uCCB4\uC5D0 \uBD84\uB178\uD55C\uB2E4."
+      GimmickRelevance: "\uBC30\uD68C\uC790 \uD6A8\uACFC\uC640 \uC5F0\uAD00\uB41C
+        \uCE90\uB9AD\uD130. \uB4A4\uC5D0 \uB0A8\uACA8\uC9C0\uB294 \uC0AC\uB78C\uC758
+        \uC2DC\uC120\uC744 \uB300\uD45C\uD55C\uB2E4."
+      CardIllustration: {fileID: 21300000, guid: 8808ade9a103ff54891d0fb0c80bdd0e, type: 3}
+    EpilogueText: "\uB098\uB294 \uD654\uAC00 \uB09C \uAC8C \uC544\uB2C8\uB2E4. \uB2E4\uB9CC
+      \uB610 \uB204\uAD70\uAC00\uB97C \uB0A8\uACA8 \uB450\uACE0 \uAC00\uB294 \uBC1C\uAC78\uC74C\uC744
+      \uACAC\uB51C \uC218 \uC5C6\uC744 \uBFD0\uC774\uB2E4."

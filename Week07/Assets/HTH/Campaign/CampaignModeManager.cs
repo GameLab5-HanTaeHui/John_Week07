@@ -46,6 +46,12 @@ namespace HTH.Campaign
     {
         // ── Inspector ────────────────────────────────────────────────────
 
+        [Header("캠페인 모드 활성화")]
+        [Tooltip("true  = 1회차 클리어 시 Phase2 캠페인 모드로 진입합니다.\n" +
+                 "false = 1회차 클리어 시 로비로 바로 이동합니다.\n" +
+                 "캠페인 모드 준비가 완료될 때까지 false로 유지합니다.")]
+        [SerializeField] private bool _campaignModeEnabled = false;
+
         [Header("씬 전환 방식")]
         [Tooltip("false = A방식: 같은 씬에서 컨텐츠 교체 (현재 사용)\n" +
                  "true  = B방식: 로비를 거쳐서 2회차 씬으로 진입 (추후 구현)")]
@@ -136,6 +142,15 @@ namespace HTH.Campaign
                 return;
             }
 
+            // 캠페인 모드 비활성화 시 로비로 바로 이동합니다.
+            // 캠페인 모드 준비 완료 후 Inspector에서 true로 변경하세요.
+            if (!_campaignModeEnabled)
+            {
+                Debug.Log($"[CampaignModeManager] 캠페인 모드 비활성화 — 로비로 이동합니다.");
+                SceneManager.LoadScene(_lobbySceneName);
+                return;
+            }
+
             string phase2StageId = phase1StageId + _phase2Suffix;
             Debug.Log($"[CampaignModeManager] 1회차 클리어 — {phase1StageId} → {phase2StageId}");
 
@@ -186,8 +201,9 @@ namespace HTH.Campaign
 
             GameLogger.Instance?.StartStageLogging(phase2StageId);
 
-            _zone.color = Color.white;
-            _zoneText.gameObject.SetActive(false);
+            _zone.color = Color.green;
+            _zoneText.color = Color.green;
+            _zoneText.text = "조사 지정 구역";
 
             // Phase2가 시작된 시점에 FragmentCollector의 엔딩 이벤트를 구독합니다.
             // Start()에서 구독하면 Phase2가 아직 시작 안 됐을 때도 구독되므로 여기서 처리합니다.

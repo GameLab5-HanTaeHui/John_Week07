@@ -51,6 +51,10 @@ public class FinalDecisionUI : MonoBehaviour
     private bool        _blockContinueUntilUpload; // [HTH추가]
     private Coroutine   _wrongAnswerCo;
 
+    // 다이얼로그 완료 후 캠패인 전환 처리를 위한 임시 저장 필드
+    private bool _pendingCampaignTransition;
+    private string _pendingStageId;
+
     // ── Unity ────────────────────────────────────────────────────────────────
 
     private void Awake()
@@ -114,6 +118,13 @@ public class FinalDecisionUI : MonoBehaviour
         {
             _awaitingContinueClick = false;
             GameFlowController.Instance?.FinishGameEndDialogue();
+
+            // 다이얼로그 완료 후 캠패인 전환 처리
+            if (_pendingCampaignTransition)
+            {
+                _pendingCampaignTransition = false;
+                HTH.Campaign.CampaignModeManager.Instance?.OnFirstRunCleared(_pendingStageId);
+            }
         }
     }
 
@@ -212,16 +223,6 @@ public class FinalDecisionUI : MonoBehaviour
         {
             if (_preDialogueObject != null) _preDialogueObject.SetActive(true);
             gfc.SubmitFinalDecision(true);
-
-            // [캠패인모드]
-            // 1회차 전부 정답 → 캠페인 2회차 진입 알림
-            // CampaignModeManager가 없으면 (일반 스테이지 플레이) 무시됨
-            if (HTH.Campaign.CampaignModeManager.Instance != null)
-            {
-                string stageId = GameLogger.Instance?.CurrentStageId
-                              ?? GameFlowController.Instance?.StageId;
-                HTH.Campaign.CampaignModeManager.Instance.OnFirstRunCleared(stageId);
-            }
         }
     }
     private void FinalizeAndUploadLog(bool isWin)
@@ -287,6 +288,17 @@ public class FinalDecisionUI : MonoBehaviour
     {
         var resultText = isWin ? _winText : _loseText;
         if (resultText != null) resultText.gameObject.SetActive(true);
+
+        // 1회차 승리 시 캠패인 모드 전환을 알립니다.
+        // CampaignModeManager 내부에서 활성화 여부에 따라 Phase2 또는 로비로 이동합니다.
+        // 단, 로비 이동은 플레이어 클릭(Continue) 이후에 처리되도록
+        // 여기서는 저장만 하고 실제 호출은 클릭 시점에 합니다.
+        if (isWin && HTH.Campaign.CampaignModeManager.Instance != null)
+        {
+            _pendingCampaignTransition = true;
+            _pendingStageId = GameLogger.Instance?.CurrentStageId
+                           ?? GameFlowController.Instance?.StageId;
+        }
 
         DOVirtual.DelayedCall(_continueDelay, () =>
         {

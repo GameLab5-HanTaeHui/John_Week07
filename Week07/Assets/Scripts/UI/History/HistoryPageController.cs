@@ -92,11 +92,33 @@ public class HistoryPageController : MonoBehaviour
         // 디스크에서 복구된 기존 기록 반영 (게임 재시작 시)
         foreach (var record in TurnHistoryRepository.Instance.GetAllRecords())
             HandleRecordCommitted(record);
+
+        // Phase2 진입 시 이벤트 구독 해제
+        if (HTH.Campaign.CampaignModeManager.Instance != null)
+            HTH.Campaign.CampaignModeManager.Instance.OnPhase2Entered += OnPhase2Entered;
     }
 
     private void OnDestroy()
     {
         TurnHistoryRepository.Instance.OnRecordCommitted -= HandleRecordCommitted;
+
+        if (HTH.Campaign.CampaignModeManager.Instance != null)
+            HTH.Campaign.CampaignModeManager.Instance.OnPhase2Entered -= OnPhase2Entered;
+
+    }
+    /// <summary>
+    /// Phase2 진입 시 호출됩니다.
+    /// TurnHistoryRepository 이벤트 구독을 해제해
+    /// 비활성화된 HistoryPanel에 접근하는 것을 방지합니다.
+    /// </summary>
+    private void OnPhase2Entered(string stageId)
+    {
+        TurnHistoryRepository.Instance.OnRecordCommitted -= HandleRecordCommitted;
+
+        // 열려있는 패널도 닫기
+        CollapseExpanded();
+
+        Debug.Log("[HistoryPageController] Phase2 진입 — 이벤트 구독 해제");
     }
 
     // ── 초기화 ────────────────────────────────────────────────────────────────

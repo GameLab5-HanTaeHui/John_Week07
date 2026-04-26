@@ -28,6 +28,12 @@ namespace HTH.Campaign
 
         private Button _button;
 
+        /// <summary>버튼 클릭 후 재클릭을 막을 시간(초)입니다.</summary>
+        [SerializeField] private float _clickCooldown = 0.5f;
+
+        /// <summary>현재 쿨다운 중인지 여부입니다.</summary>
+        private bool _isCoolingDown;
+
         private void Awake()
         {
             _button = GetComponent<Button>();
@@ -62,7 +68,20 @@ namespace HTH.Campaign
 
         private void OnClicked()
         {
+            // 애니메이션 진행 중 재클릭 방지
+            if (_isCoolingDown) return;
+            StartCoroutine(ClickCooldownCoroutine());
             CharacterRecordPanelManager.Instance?.OpenPanel(_characterId);
+        }
+        /// <summary>
+        /// 클릭 후 _clickCooldown 동안 재클릭을 차단합니다.
+        /// 애니메이션 duration과 동일하거나 약간 길게 설정하세요.
+        /// </summary>
+        private System.Collections.IEnumerator ClickCooldownCoroutine()
+        {
+            _isCoolingDown = true;
+            yield return new WaitForSeconds(_clickCooldown);
+            _isCoolingDown = false;
         }
     }
 }
