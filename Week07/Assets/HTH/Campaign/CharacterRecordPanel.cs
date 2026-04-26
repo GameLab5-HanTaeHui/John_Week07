@@ -66,7 +66,6 @@ namespace HTH.Campaign
         [Header("헤더")]
         [SerializeField] private TMP_Text _characterIdText;
         [SerializeField] private TMP_Text _characterNameText;
-        [SerializeField] private Button _closeButton;
 
         [Header("탭")]
         [SerializeField] private RecordBookTabController _tabController;
@@ -93,8 +92,8 @@ namespace HTH.Campaign
         [SerializeField] private string _glitchChars = "█▓▒░?#@&*";
 
         [Header("슬라이드 애니메이션")]
-        [Tooltip("아래에서 등장할 때 오리진에서 얼마나 아래에서 시작할지 (px)")]
-        [SerializeField] private float _spawnBelowOffset = 400f;
+        [Tooltip("버튼 클릭 시 패널이 위로 올라가는 거리 (px)")]
+        [SerializeField] private float _openOffset = 400f;
         [SerializeField] private float _animDuration = 0.35f;
         [SerializeField] private Ease _expandEase = Ease.OutCubic;
         [SerializeField] private Ease _collapseEase = Ease.InCubic;
@@ -102,7 +101,8 @@ namespace HTH.Campaign
         // ── 내부 상태 ─────────────────────────────────────────────────────
 
         private RectTransform _rect;
-        private float _originY;
+        private float _closedY;   // 닫힌 상태 Y (버튼 위치)
+        private float _openedY;   // 열린 상태 Y (올라간 위치)
         private Tweener _currentTween;
         private int _currentCharacterId = -1;
         private CharacterProfileData _currentProfile;
@@ -115,10 +115,12 @@ namespace HTH.Campaign
         private void Awake()
         {
             _rect = GetComponent<RectTransform>();
-            _originY = _rect.anchoredPosition.y;
 
-            gameObject.SetActive(false);
-            _closeButton?.onClick.AddListener(Close);
+            // 닫힌 상태 Y = 씬에 배치된 현재 위치
+            _closedY = _rect.anchoredPosition.y;
+
+            // 열린 상태 Y = 닫힌 위치에서 위로 올라간 위치
+            _openedY = _closedY + _openOffset;
 
             if (_tabController != null)
                 _tabController.OnTabChanged += OnTabChanged;
@@ -127,7 +129,6 @@ namespace HTH.Campaign
         private void OnDestroy()
         {
             _currentTween?.Kill();
-            _closeButton?.onClick.RemoveListener(Close);
 
             if (_tabController != null)
                 _tabController.OnTabChanged -= OnTabChanged;
@@ -151,8 +152,7 @@ namespace HTH.Campaign
 
             RefreshAll();
 
-            gameObject.SetActive(true);
-            SpawnIn();
+            SlideTo(_openedY, _expandEase);
             IsOpen = true;
         }
 
@@ -351,21 +351,13 @@ namespace HTH.Campaign
 
         // ── Private — 슬라이드 애니메이션 ────────────────────────────────
 
-        /// <summary>오리진 아래에서 시작해 슬라이드업으로 등장합니다.</summary>
-        private void SpawnIn()
-        {
-            SnapTo(_originY - _spawnBelowOffset);
-            SlideTo(_originY, _expandEase);
-        }
-
         /// <summary>아래로 슬라이드한 후 비활성화합니다.</summary>
         private void SlideDown()
         {
             _currentTween?.Kill();
             _currentTween = _rect
-                .DOAnchorPosY(_originY - _spawnBelowOffset, _animDuration)
-                .SetEase(_collapseEase)
-                .OnComplete(() => gameObject.SetActive(false));
+                .DOAnchorPosY(_closedY, _animDuration)
+                .SetEase(_collapseEase);
         }
 
         private void SlideTo(float targetY, Ease ease)

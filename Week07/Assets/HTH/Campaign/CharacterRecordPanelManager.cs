@@ -35,6 +35,10 @@ namespace HTH.Campaign
         [Header("컴포넌트 참조")]
         [SerializeField] private FragmentCollector _fragmentCollector;
 
+        // 수집된 캐릭터 이름 (characterId → 이름)
+        // DialogueTriggerManager.RevealCharacterNamesFromLines()에서 등록됩니다.
+        private readonly Dictionary<int, string> _collectedNames = new();
+
         // ── 내부 상태 ─────────────────────────────────────────────────────
 
         // characterId → Panel 매핑
@@ -121,6 +125,28 @@ namespace HTH.Campaign
             if (_currentPanel == null || !_currentPanel.IsOpen) return;
             _currentPanel.Close();
             _currentPanel = null;
+        }
+        /// <summary>
+        /// 캐릭터 이름을 등록합니다.
+        /// DialogueTriggerManager에서 이름 공개 시 호출합니다.
+        /// </summary>
+        public void RegisterCharacterName(int characterId, string name)
+        {
+            if (string.IsNullOrEmpty(name)) return;
+            if (_collectedNames.ContainsKey(characterId)) return;
+
+            _collectedNames[characterId] = name;
+
+            // 현재 열려있는 패널이 해당 캐릭터면 헤더 갱신
+            if (_currentPanel != null && _currentPanel.IsOpen)
+                _currentPanel.RefreshIfCurrent(characterId);
+        }
+
+        /// <summary>수집된 캐릭터 이름을 반환합니다. 미수집 시 null.</summary>
+        public string GetCollectedName(int characterId)
+        {
+            _collectedNames.TryGetValue(characterId, out string name);
+            return name;
         }
 
         // ── Private ──────────────────────────────────────────────────────

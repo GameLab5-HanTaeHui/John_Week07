@@ -329,7 +329,7 @@ namespace HTH.Campaign
         private void RegisterRevealedNames(List<(int characterId, string name)> revealedNames)
         {
             foreach (var (id, name) in revealedNames)
-                _characterRecordBook?.RegisterCharacterName(id, name);
+                CharacterRecordPanelManager.Instance?.RegisterCharacterName(id, name);
         }
 
         /// <summary>
