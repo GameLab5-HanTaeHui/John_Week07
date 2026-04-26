@@ -145,6 +145,7 @@ namespace HTH.Campaign
                     continue;
 
                 var characterIds = GetCharactersInZone(zoneId);
+                Debug.Log($"[DTM] Zone{zoneId} 캐릭터: [{string.Join(",", characterIds)}]");
                 if (characterIds.Count == 0) continue;
 
                 var candidates = FindCandidateEntries(characterIds);
@@ -218,30 +219,124 @@ namespace HTH.Campaign
         }
 
         /// <summary>
-        /// 구역 캐릭터 조합에 맞는 GroupDialogueEntry 후보 목록을 반환합니다.
+        /// 구역 캐릭터 조합에 맞는 후보를 전부 반환합니다.
+        /// 우선순위 정렬은 여기서 하고, 상황 조건 필터링은 CanPlay()에서 처리합니다.
+        ///
+        /// 우선순위
+        ///   1. 프로파일 핵심문장 (fragmentId 있음, 미수집)
+        ///   2. 사망 반응 계열
+        ///   3. 생존 조합 대사 / 2인 대화 / 3인 대화 (일반 대화, 정확한 조합 우선)
+        ///   4. 개인 독백
+        ///   5. 프로파일 유도대사
         /// </summary>
         private List<GroupDialogueEntry> FindCandidateEntries(HashSet<int> characterIds)
         {
-            var result = new List<GroupDialogueEntry>();
-            if (_dialogueData == null) return result;
+            if (_dialogueData == null) return new List<GroupDialogueEntry>();
+
+            var priority1 = new List<GroupDialogueEntry>(); // 프로파일 핵심문장
+            var priority2 = new List<GroupDialogueEntry>(); // 사망 반응 계열
+            var priority3 = new List<GroupDialogueEntry>(); // 일반 대화
+            var priority4 = new List<GroupDialogueEntry>(); // 개인 독백
+            var priority5 = new List<GroupDialogueEntry>(); // 프로파일 유도대사
 
             foreach (var entry in _dialogueData.GroupDialogues)
             {
                 if (entry == null) continue;
+                if (!MatchesAnyComboKey(entry.ComboKey, characterIds)) continue;
 
-                // 프로파일 계열은 별도 처리
-                if (entry.SituationType == "프로파일 핵심문장" ||
-                    entry.SituationType == "프로파일 유도대사") continue;
+                switch (entry.SituationType)
+                {
+                    case "프로파일 핵심문장":
+                        if (!string.IsNullOrEmpty(entry.FragmentId) &&
+                            !(_fragmentCollector?.HasFragment(entry.FragmentId) ?? false))
+                            priority1.Add(entry);
+                        break;
 
-                // 참가자가 모두 구역에 있는지 확인
-                bool allPresent = true;
-                foreach (int pid in entry.ParticipantIds)
-                    if (!characterIds.Contains(pid)) { allPresent = false; break; }
+                    case "사망 반응":
+                    case "사망 반응 / 연인 연쇄":
+                    case "사망 반응 / 배회자":
+                    case "사망 반응 / 살인자":
+                    case "사망 반응 / 복수자":
+                    case "사망 반응 / 희생양":
+                        priority2.Add(entry);
+                        break;
 
-                if (allPresent) result.Add(entry);
+                    case "개인 독백":
+                        priority4.Add(entry);
+                        break;
+
+                    case "프로파일 유도대사":
+                        priority5.Add(entry);
+                        break;
+
+                    default: // 생존 조합 대사, 2인 대화, 3인 대화, 전체 파티 대화
+                        priority3.Add(entry);
+                        break;
+                }
             }
 
+            // 정확한 조합 우선 정렬 (participantIds.Count == characterIds.Count)
+            SortByMatchScore(priority1, characterIds);
+            SortByMatchScore(priority2, characterIds);
+            SortByMatchScore(priority3, characterIds);
+
+            // 우선순위 순서대로 합쳐서 반환
+            // TriggerDialoguesForAllZones에서 CanPlay()로 상황 조건 필터링 후 첫 번째 사용
+            var result = new List<GroupDialogueEntry>();
+            result.AddRange(priority1);
+            result.AddRange(priority2);
+            result.AddRange(priority3);
+            result.AddRange(priority4);
+            result.AddRange(priority5);
             return result;
+        }
+
+        private void SortByMatchScore(List<GroupDialogueEntry> list, HashSet<int> characterIds)
+        {
+            list.Sort((a, b) =>
+            {
+                int scoreA = a.ParticipantIds.Count == characterIds.Count ? 2 : 1;
+                int scoreB = b.ParticipantIds.Count == characterIds.Count ? 2 : 1;
+                return scoreB.CompareTo(scoreA);
+            });
+        }
+
+        private bool MatchesAnyComboKey(string comboKey, HashSet<int> characterIds)
+        {
+            if (string.IsNullOrEmpty(comboKey)) return false;
+
+            string[] orKeys = comboKey.Split(
+                new[] { " 또는 " }, System.StringSplitOptions.RemoveEmptyEntries);
+
+            foreach (string key in orKeys)
+                if (MatchesComboKey(key.Trim(), characterIds)) return true;
+
+            return false;
+        }
+
+        private bool MatchesComboKey(string comboKey, HashSet<int> characterIds)
+        {
+            if (string.IsNullOrEmpty(comboKey)) return false;
+
+            bool hasAny = comboKey.Contains("ANY");
+            var parts = comboKey.Split('|');
+            var requiredIds = new List<int>();
+
+            foreach (string part in parts)
+            {
+                string p = part.Trim().Replace("#", "");
+                if (p == "ANY") continue;
+                if (int.TryParse(p, out int id))
+                    requiredIds.Add(id);
+            }
+
+            foreach (int rid in requiredIds)
+                if (!characterIds.Contains(rid)) return false;
+
+            if (!hasAny && requiredIds.Count == 1)
+                return characterIds.Count == 1;
+
+            return true;
         }
 
         /// <summary>
@@ -292,10 +387,7 @@ namespace HTH.Campaign
 
             _dialoguePlayer.Play(entry.Lines, onComplete: () =>
             {
-                _progressTracker.MarkGroupPlayed(characterIds);
-
-                if (!string.IsNullOrEmpty(entry.FragmentId))
-                    _progressTracker.MarkFragmentPlayed(entry.FragmentId);
+                _progressTracker.MarkComboPlayed(entry.ComboId);
 
                 // 조각 수집
                 bool fragmentCollected = !string.IsNullOrEmpty(entry.FragmentId)

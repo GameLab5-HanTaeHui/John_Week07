@@ -14,11 +14,10 @@ namespace HTH.Campaign
     ///   모든 캐릭터의 시점 완결문이 해금되면 엔딩 이벤트를 발생시킵니다.
     ///
     /// ─── FragmentId 명명 규칙 ────────────────────────────────────────────
-    ///   반드시 이 규칙을 따라야 캐릭터 ID 파싱이 정상 동작합니다.
-    ///   형식: "{stageId}_char{characterId}_frag{index}"
-    ///   예시: "Stage_1_Phase2_char1_frag0" → 캐릭터 #1의 첫 번째 조각
-    ///         "Stage_1_Phase2_char3_frag2" → 캐릭터 #3의 세 번째 조각
-    ///   CampaignDialogueSO의 GroupDialogueEntry.FragmentId 필드에 이 형식으로 입력합니다.
+    ///   형식: "P{characterId:00}_{clueIndex:00}"
+    ///   예시: "P01_01" → 캐릭터 #1의 첫 번째 조각
+    ///         "P07_05" → 캐릭터 #7의 다섯 번째 조각
+    ///   ProfileClueDataSO의 ProfileClueEntry.ProfileClueId 필드와 동일한 형식입니다.
     ///
     /// ─── 보상 해금 흐름 ──────────────────────────────────────────────────
     ///   조각 수집 → 캐릭터별 카운트 증가
@@ -106,7 +105,27 @@ namespace HTH.Campaign
         public void Initialize(string stageId)
         {
             _currentStageId = stageId;
-            Load(stageId);
+            _collectedFragmentIds.Clear();
+            _fragmentCountPerChar.Clear();
+
+            // JSON 저장에서 로드
+            var saveData = CampaignSaveManager.Instance?.Load(stageId);
+            if (saveData != null)
+            {
+                foreach (var fragmentId in saveData.collectedFragmentIds)
+                {
+                    if (string.IsNullOrEmpty(fragmentId)) continue;
+                    _collectedFragmentIds.Add(fragmentId);
+
+                    int charId = ParseCharacterIdFromFragment(fragmentId);
+                    if (charId >= 0)
+                    {
+                        _fragmentCountPerChar.TryGetValue(charId, out int count);
+                        _fragmentCountPerChar[charId] = count + 1;
+                    }
+                }
+            }
+
             Debug.Log($"[FragmentCollector] 초기화 완료 — {stageId} ({_collectedFragmentIds.Count}개 수집됨)");
         }
 
@@ -220,22 +239,14 @@ namespace HTH.Campaign
         public void Save()
         {
             if (string.IsNullOrEmpty(_currentStageId)) return;
-            Save(_currentStageId);
-        }
 
-        /// <summary>
-        /// 수집 기록을 PlayerPrefs에 저장합니다.
-        /// 모든 FragmentId를 '|'로 연결한 문자열로 저장합니다.
-        /// 저장 키: "hth_frag_{stageId}"
-        /// </summary>
-        public void Save(string stageId)
-        {
-            if (string.IsNullOrEmpty(stageId)) return;
+            var saveData = CampaignSaveManager.Instance?.CurrentSave;
+            if (saveData == null) return;
 
-            string data = string.Join("|", _collectedFragmentIds);
-            string prefKey = $"hth_frag_{stageId}";
-            PlayerPrefs.SetString(prefKey, data);
-            PlayerPrefs.Save();
+            saveData.collectedFragmentIds.Clear();
+            saveData.collectedFragmentIds.AddRange(_collectedFragmentIds);
+
+            CampaignSaveManager.Instance.Save(saveData);
         }
 
         /// <summary>
@@ -275,11 +286,7 @@ namespace HTH.Campaign
         {
             _collectedFragmentIds.Clear();
             _fragmentCountPerChar.Clear();
-
-            PlayerPrefs.DeleteKey($"hth_frag_{stageId}");
-            PlayerPrefs.Save();
-
-            Debug.Log($"[FragmentCollector] 수집 기록 초기화 — {stageId}");
+            CampaignSaveManager.Instance?.Delete(stageId);
         }
 
         // ── Private ──────────────────────────────────────────────────────
@@ -319,26 +326,27 @@ namespace HTH.Campaign
 
         /// <summary>
         /// FragmentId에서 캐릭터 ID를 파싱합니다.
-        /// 명명 규칙 "_char{id}_"을 기준으로 파싱합니다.
-        /// 파싱 실패 시 -1을 반환합니다.
-        ///
-        /// 예: "Stage_1_Phase2_char3_frag0" → 3
-        ///     "conceptcard_5"             → -1 (규칙 불일치)
+        /// P01_01 형식: 'P' 다음 언더바 전까지의 숫자
+        /// 예: "P01_01" → 1 / "P07_05" → 7
+        /// conceptcard_5, epilogue_5 등은 -1 반환
         /// </summary>
         private int ParseCharacterIdFromFragment(string fragmentId)
         {
             if (string.IsNullOrEmpty(fragmentId)) return -1;
 
-            const string marker = "_char";
-            int startIdx = fragmentId.IndexOf(marker, StringComparison.Ordinal);
-            if (startIdx < 0) return -1;
+            // P{cc}_{ii} 형식 (신규)
+            if (fragmentId.Length >= 3 && fragmentId[0] == 'P')
+            {
+                int underscoreIdx = fragmentId.IndexOf('_');
+                if (underscoreIdx > 1)
+                {
+                    string charPart = fragmentId.Substring(1, underscoreIdx - 1);
+                    if (int.TryParse(charPart, out int charId))
+                        return charId;
+                }
+            }
 
-            startIdx += marker.Length;
-            int endIdx = fragmentId.IndexOf('_', startIdx);
-            if (endIdx < 0) endIdx = fragmentId.Length;
-
-            string idStr = fragmentId.Substring(startIdx, endIdx - startIdx);
-            return int.TryParse(idStr, out int id) ? id : -1;
+            return -1;
         }
     }
 }

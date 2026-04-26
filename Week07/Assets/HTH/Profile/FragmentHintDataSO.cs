@@ -21,6 +21,7 @@ namespace HTH.Campaign
     [CreateAssetMenu(fileName = "FragmentHintDataSO",
                      menuName = "HTH/Campaign/FragmentHintData")]
     public class FragmentHintDataSO : ScriptableObject
+
     {
         [SerializeField] private string _stageId;
 

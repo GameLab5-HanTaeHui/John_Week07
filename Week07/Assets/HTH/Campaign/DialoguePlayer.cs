@@ -54,6 +54,10 @@ namespace HTH.Campaign
     {
         // ── Inspector ────────────────────────────────────────────────────
 
+        [Header("캐릭터 데이터")]
+        [Tooltip("캐릭터 이름을 가져올 ProfileDataSO 에셋입니다.")]
+        [SerializeField] private ProfileDataSO _profileData;
+
         [Header("UI 참조")]
         [Tooltip("다이얼로그 전체 패널입니다.\nCanvas/DialoguePanel을 연결합니다.")]
         [SerializeField] private GameObject _dialoguePanel;
@@ -315,10 +319,19 @@ namespace HTH.Campaign
         /// </summary>
         private string BuildNameText(int speakerId)
         {
+            // 수집된 이름 우선
             string collectedName = CharacterRecordPanelManager.Instance?
                 .GetCollectedName(speakerId);
+            if (!string.IsNullOrEmpty(collectedName))
+                return collectedName;
 
-            return collectedName ?? "";
+            // 미수집 시 ProfileDataSO에서 실제 이름 표시
+            var profile = _profileData?.FindProfile(speakerId);
+            if (profile != null && !string.IsNullOrEmpty(profile.CharacterFullName))
+                return profile.CharacterFullName;
+
+            // 최후 폴백
+            return $"#{speakerId}";
         }
 
         /// <summary>대사 텍스트를 반환합니다.</summary>

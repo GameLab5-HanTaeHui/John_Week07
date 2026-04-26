@@ -75,14 +75,11 @@ namespace HTH.Campaign
             if (!CampaignModeManager.IsPhase2Active) return false;
 
             // 이미 출력된 조합 스킵
-            if (tracker != null && tracker.HasPlayedGroup(zoneCharacterIds)) return false;
+            if (tracker != null && tracker.HasPlayedCombo(entry.ComboId)) return false;
 
-            // FragmentId가 있으면 이미 수집/출력된 조각 스킵
+            // FragmentId 있으면 이미 수집된 조각 스킵
             if (!string.IsNullOrEmpty(entry.FragmentId))
-            {
                 if (collector != null && collector.HasFragment(entry.FragmentId)) return false;
-                if (tracker != null && tracker.HasPlayedFragment(entry.FragmentId)) return false;
-            }
 
             // SituationType 기반 ConditionType 평가
             if (!string.IsNullOrEmpty(entry.SituationType))
@@ -114,8 +111,12 @@ namespace HTH.Campaign
             if (entry == null) return false;
             if (!CampaignModeManager.IsPhase2Active) return false;
 
+            // 이미 재생된 단독 대사 스킵
             if (tracker != null && tracker.HasPlayedSolo(entry.CharacterId)) return false;
-            if (tracker != null && tracker.HasPlayedFragment(entry.FragmentId)) return false;
+
+            // FragmentId 있으면 이미 수집된 조각 스킵
+            if (!string.IsNullOrEmpty(entry.FragmentId))
+                if (collector != null && collector.HasFragment(entry.FragmentId)) return false;
 
             if (entry.Condition != null && !entry.Condition.IsEmpty)
                 if (!EvaluateLegacyCondition(entry.Condition, collector)) return false;

@@ -42,6 +42,11 @@ namespace HTH.Campaign
     ///     ],
     ///     "soloDialogues": []
     ///   }
+    ///
+    /// ─── 주의사항 ─────────────────────────────────────────────────────────
+    ///   revealCharacterId는 JSON에 없으면 -1(공개 없음)로 처리됩니다.
+    ///   JsonUtility가 누락 필드를 0으로 초기화하기 때문에
+    ///   임포트 시 0 → -1 변환을 명시적으로 처리합니다.
     /// </summary>
     [CustomEditor(typeof(CampaignDialogueSO))]
     public class CampaignDialogueImporter : Editor
@@ -81,8 +86,9 @@ namespace HTH.Campaign
 
             EditorGUILayout.Space(6);
             EditorGUILayout.HelpBox(
-                "FragmentId 형식: P01_01 (group_1_3_5_frag0 폐기)\n" +
-                "총 216개 GroupDialogue 임포트 지원",
+                "FragmentId 형식: P01_01\n" +
+                "총 216개 GroupDialogue 임포트 지원\n" +
+                "revealCharacterId: JSON 누락 시 -1(공개 없음) 처리",
                 MessageType.Info);
         }
 
@@ -193,10 +199,14 @@ namespace HTH.Campaign
                                     = ld.speakerId;
                                 lineProp.FindPropertyRelative("Text").stringValue
                                     = ld.text ?? "";
+
+                                // JSON에 revealCharacterId가 없으면 JsonUtility가 0으로 초기화
+                                // DialogueLine의 기본값은 -1(공개 없음)이므로 0 → -1 변환
                                 lineProp.FindPropertyRelative("RevealCharacterId").intValue
-                                    = ld.revealCharacterId;
+                                    = ld.revealCharacterId == 0 ? -1 : ld.revealCharacterId;
                                 lineProp.FindPropertyRelative("RevealCharacterName").stringValue
                                     = ld.revealCharacterName ?? "";
+
                                 lineProp.FindPropertyRelative("IsProfileClue").boolValue
                                     = ld.isProfileClue;
                                 lineProp.FindPropertyRelative("ProfileClueId").stringValue
@@ -225,8 +235,10 @@ namespace HTH.Campaign
                         soloProp.InsertArrayElementAtIndex(i);
                         var elem = soloProp.GetArrayElementAtIndex(i);
 
-                        elem.FindPropertyRelative("CharacterId").intValue = sd.characterId;
-                        elem.FindPropertyRelative("FragmentId").stringValue = sd.fragmentId ?? "";
+                        elem.FindPropertyRelative("CharacterId").intValue
+                            = sd.characterId;
+                        elem.FindPropertyRelative("FragmentId").stringValue
+                            = sd.fragmentId ?? "";
 
                         var linesProp = elem.FindPropertyRelative("Lines");
                         linesProp.ClearArray();
@@ -238,13 +250,23 @@ namespace HTH.Campaign
                                 linesProp.InsertArrayElementAtIndex(j);
                                 var lineProp = linesProp.GetArrayElementAtIndex(j);
 
-                                lineProp.FindPropertyRelative("SpeakerId").intValue = ld.speakerId;
-                                lineProp.FindPropertyRelative("Text").stringValue = ld.text ?? "";
-                                lineProp.FindPropertyRelative("RevealCharacterId").intValue = ld.revealCharacterId;
-                                lineProp.FindPropertyRelative("RevealCharacterName").stringValue = ld.revealCharacterName ?? "";
-                                lineProp.FindPropertyRelative("IsProfileClue").boolValue = ld.isProfileClue;
-                                lineProp.FindPropertyRelative("ProfileClueId").stringValue = ld.profileClueId ?? "";
-                                lineProp.FindPropertyRelative("ProfileCategory").stringValue = ld.profileCategory ?? "";
+                                lineProp.FindPropertyRelative("SpeakerId").intValue
+                                    = ld.speakerId;
+                                lineProp.FindPropertyRelative("Text").stringValue
+                                    = ld.text ?? "";
+
+                                // JSON에 revealCharacterId가 없으면 0 → -1 변환
+                                lineProp.FindPropertyRelative("RevealCharacterId").intValue
+                                    = ld.revealCharacterId == 0 ? -1 : ld.revealCharacterId;
+                                lineProp.FindPropertyRelative("RevealCharacterName").stringValue
+                                    = ld.revealCharacterName ?? "";
+
+                                lineProp.FindPropertyRelative("IsProfileClue").boolValue
+                                    = ld.isProfileClue;
+                                lineProp.FindPropertyRelative("ProfileClueId").stringValue
+                                    = ld.profileClueId ?? "";
+                                lineProp.FindPropertyRelative("ProfileCategory").stringValue
+                                    = ld.profileCategory ?? "";
                             }
                         }
                     }
@@ -334,8 +356,13 @@ namespace HTH.Campaign
     {
         public int speakerId;
         public string text;
-        public int revealCharacterId = -1;
-        public string revealCharacterName = "";
+
+        /// <summary>
+        /// JSON에 없으면 JsonUtility가 0으로 초기화합니다.
+        /// ImportFromStreamingAssets()에서 0 → -1 변환을 처리합니다.
+        /// </summary>
+        public int revealCharacterId;
+        public string revealCharacterName;
         public bool isProfileClue;
         public string profileClueId;
         public string profileCategory;

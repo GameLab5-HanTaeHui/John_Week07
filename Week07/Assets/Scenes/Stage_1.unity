@@ -3779,26 +3779,49 @@ MonoBehaviour:
   _characterIdText: {fileID: 2105943195}
   _characterNameText: {fileID: 35639723}
   _fragmentCountText: {fileID: 1345615535}
+  _mixMode: 1
   _trueFragmentSlots:
   - {fileID: 174387063}
   - {fileID: 449381899}
   - {fileID: 1459448319}
   - {fileID: 244804310}
   - {fileID: 570840932}
-  _trueFragmentIds: []
   _falseFragmentSlots:
   - {fileID: 2146760925}
   - {fileID: 2023396596}
   - {fileID: 1516741366}
   - {fileID: 670283144}
   - {fileID: 1740376754}
-  _falseFragmentIds: []
+  _mixedFragmentSlots:
+  - {fileID: 174387063}
+  - {fileID: 449381899}
+  - {fileID: 1459448319}
+  - {fileID: 244804310}
+  - {fileID: 570840932}
+  - {fileID: 2146760925}
+  - {fileID: 2023396596}
+  - {fileID: 1516741366}
+  - {fileID: 670283144}
+  - {fileID: 1740376754}
+  _trueFragmentIds:
+  - 
+  - 
+  - 
+  - 
+  - 
+  _falseFragmentIds:
+  - 
+  - 
+  - 
+  - 
+  - 
   _hintPanel: {fileID: 1473163834}
   _flipToBackButton: {fileID: 963238982}
   _flipToFrontButton: {fileID: 887283679}
   _collectedColor: {r: 0.1, g: 0.1, b: 0.1, a: 1}
   _hintColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   _glitchChars: "\u2588\u2593\u2592\u2591?#@&*"
+  _glitchLength: 24
   _openOffset: 670
   _animDuration: 0.5
   _expandEase: 9
@@ -5462,7 +5485,7 @@ MonoBehaviour:
   - {fileID: 685291562}
   - {fileID: 92300006}
   - {fileID: 1012015947}
-  _smallPos: {x: -140, y: 52.5}
+  _smallPos: {x: -140, y: 70}
   _smallSize: {x: 200, y: 150}
   _smallRotationZ: 8
   _largePos: {x: 0, y: 0}
@@ -8291,7 +8314,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 321175536}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -0.000167246}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -8300,11 +8323,11 @@ RectTransform:
   - {fileID: 350172233}
   - {fileID: 1634299470}
   - {fileID: 784114287}
-  m_Father: {fileID: 601396893}
+  m_Father: {fileID: 1742176682}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 70}
+  m_AnchoredPosition: {x: 0, y: 70.00009}
   m_SizeDelta: {x: 1700, y: 300}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &321175538
@@ -14388,26 +14411,49 @@ MonoBehaviour:
   _characterIdText: {fileID: 1097849537}
   _characterNameText: {fileID: 911448597}
   _fragmentCountText: {fileID: 1771423914}
+  _mixMode: 1
   _trueFragmentSlots:
   - {fileID: 1689886074}
   - {fileID: 2054471086}
   - {fileID: 2087601122}
   - {fileID: 1479577407}
   - {fileID: 951377144}
-  _trueFragmentIds: []
   _falseFragmentSlots:
   - {fileID: 672238952}
   - {fileID: 1579669615}
   - {fileID: 1655348009}
   - {fileID: 1444809501}
   - {fileID: 1718752851}
-  _falseFragmentIds: []
+  _mixedFragmentSlots:
+  - {fileID: 1689886074}
+  - {fileID: 2054471086}
+  - {fileID: 2087601122}
+  - {fileID: 1479577407}
+  - {fileID: 951377144}
+  - {fileID: 672238952}
+  - {fileID: 1579669615}
+  - {fileID: 1655348009}
+  - {fileID: 1444809501}
+  - {fileID: 1718752851}
+  _trueFragmentIds:
+  - 
+  - 
+  - 
+  - 
+  - 
+  _falseFragmentIds:
+  - 
+  - 
+  - 
+  - 
+  - 
   _hintPanel: {fileID: 185005795}
   _flipToBackButton: {fileID: 919242416}
   _flipToFrontButton: {fileID: 991993072}
   _collectedColor: {r: 0.1, g: 0.1, b: 0.1, a: 1}
   _hintColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   _glitchChars: "\u2588\u2593\u2592\u2591?#@&*"
+  _glitchLength: 24
   _openOffset: 690
   _animDuration: 0.5
   _expandEase: 9
@@ -17245,42 +17291,6 @@ MonoBehaviour:
   _showEase: 9
   _hideEase: 8
   _drawerButton: {fileID: 379880813}
---- !u!1 &601396892
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 601396893}
-  m_Layer: 5
-  m_Name: ProFileUI
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &601396893
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 601396892}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 321175537}
-  m_Father: {fileID: 1742176682}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &601513485
 GameObject:
   m_ObjectHideFlags: 0
@@ -17349,26 +17359,49 @@ MonoBehaviour:
   _characterIdText: {fileID: 1514254896}
   _characterNameText: {fileID: 450794261}
   _fragmentCountText: {fileID: 780422903}
+  _mixMode: 1
   _trueFragmentSlots:
   - {fileID: 1511106680}
   - {fileID: 1777815420}
   - {fileID: 136805757}
   - {fileID: 264766933}
   - {fileID: 2036942751}
-  _trueFragmentIds: []
   _falseFragmentSlots:
   - {fileID: 937820626}
   - {fileID: 1891681003}
   - {fileID: 137830737}
   - {fileID: 1735590380}
   - {fileID: 1766179983}
-  _falseFragmentIds: []
+  _mixedFragmentSlots:
+  - {fileID: 1511106680}
+  - {fileID: 1777815420}
+  - {fileID: 136805757}
+  - {fileID: 264766933}
+  - {fileID: 2036942751}
+  - {fileID: 937820626}
+  - {fileID: 1891681003}
+  - {fileID: 137830737}
+  - {fileID: 1735590380}
+  - {fileID: 1766179983}
+  _trueFragmentIds:
+  - 
+  - 
+  - 
+  - 
+  - 
+  _falseFragmentIds:
+  - 
+  - 
+  - 
+  - 
+  - 
   _hintPanel: {fileID: 1515345315}
   _flipToBackButton: {fileID: 1086753155}
   _flipToFrontButton: {fileID: 1386920850}
   _collectedColor: {r: 0.1, g: 0.1, b: 0.1, a: 1}
   _hintColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   _glitchChars: "\u2588\u2593\u2592\u2591?#@&*"
+  _glitchLength: 24
   _openOffset: 700
   _animDuration: 0.5
   _expandEase: 9
@@ -17438,7 +17471,7 @@ MonoBehaviour:
   - {fileID: 1043058701}
   - {fileID: 1093509685}
   - {fileID: 184418384}
-  _smallPos: {x: -140, y: 52.5}
+  _smallPos: {x: -140, y: 70}
   _smallSize: {x: 200, y: 150}
   _smallRotationZ: 8
   _largePos: {x: 0, y: 0}
@@ -25087,26 +25120,49 @@ MonoBehaviour:
   _characterIdText: {fileID: 579222286}
   _characterNameText: {fileID: 791943158}
   _fragmentCountText: {fileID: 564484888}
+  _mixMode: 1
   _trueFragmentSlots:
   - {fileID: 520324220}
   - {fileID: 1613612628}
   - {fileID: 1468079692}
   - {fileID: 650721216}
   - {fileID: 455909284}
-  _trueFragmentIds: []
   _falseFragmentSlots:
   - {fileID: 861424683}
   - {fileID: 943764252}
   - {fileID: 168953425}
   - {fileID: 348444422}
   - {fileID: 1154083666}
-  _falseFragmentIds: []
+  _mixedFragmentSlots:
+  - {fileID: 520324220}
+  - {fileID: 1613612628}
+  - {fileID: 1468079692}
+  - {fileID: 650721216}
+  - {fileID: 455909284}
+  - {fileID: 861424683}
+  - {fileID: 943764252}
+  - {fileID: 168953425}
+  - {fileID: 348444422}
+  - {fileID: 1154083666}
+  _trueFragmentIds:
+  - 
+  - 
+  - 
+  - 
+  - 
+  _falseFragmentIds:
+  - 
+  - 
+  - 
+  - 
+  - 
   _hintPanel: {fileID: 604167253}
   _flipToBackButton: {fileID: 478941860}
   _flipToFrontButton: {fileID: 1374154404}
   _collectedColor: {r: 0.1, g: 0.1, b: 0.1, a: 1}
   _hintColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   _glitchChars: "\u2588\u2593\u2592\u2591?#@&*"
+  _glitchLength: 24
   _openOffset: 675
   _animDuration: 0.5
   _expandEase: 9
@@ -25429,26 +25485,49 @@ MonoBehaviour:
   _characterIdText: {fileID: 685862885}
   _characterNameText: {fileID: 937610861}
   _fragmentCountText: {fileID: 366824109}
+  _mixMode: 1
   _trueFragmentSlots:
   - {fileID: 561225287}
   - {fileID: 44304165}
   - {fileID: 352788136}
   - {fileID: 407135795}
   - {fileID: 2002421201}
-  _trueFragmentIds: []
   _falseFragmentSlots:
   - {fileID: 316929468}
   - {fileID: 1699828747}
   - {fileID: 1316862367}
   - {fileID: 1266793867}
   - {fileID: 1086775411}
-  _falseFragmentIds: []
+  _mixedFragmentSlots:
+  - {fileID: 561225287}
+  - {fileID: 44304165}
+  - {fileID: 352788136}
+  - {fileID: 407135795}
+  - {fileID: 2002421201}
+  - {fileID: 316929468}
+  - {fileID: 1699828747}
+  - {fileID: 1316862367}
+  - {fileID: 1266793867}
+  - {fileID: 1086775411}
+  _trueFragmentIds:
+  - 
+  - 
+  - 
+  - 
+  - 
+  _falseFragmentIds:
+  - 
+  - 
+  - 
+  - 
+  - 
   _hintPanel: {fileID: 1511928618}
   _flipToBackButton: {fileID: 2073261910}
   _flipToFrontButton: {fileID: 1251265172}
   _collectedColor: {r: 0.1, g: 0.1, b: 0.1, a: 1}
   _hintColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   _glitchChars: "\u2588\u2593\u2592\u2591?#@&*"
+  _glitchLength: 24
   _openOffset: 695
   _animDuration: 0.5
   _expandEase: 9
@@ -29151,7 +29230,7 @@ MonoBehaviour:
   - {fileID: 1607479230}
   - {fileID: 791607812}
   - {fileID: 1235714497}
-  _smallPos: {x: -140, y: 52.5}
+  _smallPos: {x: -140, y: 70}
   _smallSize: {x: 200, y: 150}
   _smallRotationZ: 8
   _largePos: {x: 0, y: 0}
@@ -41696,7 +41775,7 @@ MonoBehaviour:
   - {fileID: 662890515}
   - {fileID: 1210488270}
   - {fileID: 200595841}
-  _smallPos: {x: -140, y: 52.5}
+  _smallPos: {x: -140, y: 70}
   _smallSize: {x: 200, y: 150}
   _smallRotationZ: 8
   _largePos: {x: 0, y: 0}
@@ -49075,7 +49154,7 @@ RectTransform:
   - {fileID: 1683849173}
   - {fileID: 931349647}
   - {fileID: 122150704}
-  - {fileID: 601396893}
+  - {fileID: 321175537}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -50885,26 +50964,49 @@ MonoBehaviour:
   _characterIdText: {fileID: 1581789561}
   _characterNameText: {fileID: 739881454}
   _fragmentCountText: {fileID: 265181749}
+  _mixMode: 1
   _trueFragmentSlots:
   - {fileID: 742374658}
   - {fileID: 849492696}
   - {fileID: 577329140}
   - {fileID: 1701949484}
   - {fileID: 571970194}
-  _trueFragmentIds: []
   _falseFragmentSlots:
   - {fileID: 712881236}
   - {fileID: 878604273}
   - {fileID: 1877102636}
   - {fileID: 1549089438}
   - {fileID: 1690255432}
-  _falseFragmentIds: []
+  _mixedFragmentSlots:
+  - {fileID: 742374658}
+  - {fileID: 849492696}
+  - {fileID: 577329140}
+  - {fileID: 1701949484}
+  - {fileID: 571970194}
+  - {fileID: 712881236}
+  - {fileID: 878604273}
+  - {fileID: 1877102636}
+  - {fileID: 1549089438}
+  - {fileID: 1690255432}
+  _trueFragmentIds:
+  - 
+  - 
+  - 
+  - 
+  - 
+  _falseFragmentIds:
+  - 
+  - 
+  - 
+  - 
+  - 
   _hintPanel: {fileID: 986461550}
   _flipToBackButton: {fileID: 1176755431}
   _flipToFrontButton: {fileID: 48401797}
   _collectedColor: {r: 0.1, g: 0.1, b: 0.1, a: 1}
   _hintColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   _glitchChars: "\u2588\u2593\u2592\u2591?#@&*"
+  _glitchLength: 24
   _openOffset: 685
   _animDuration: 0.5
   _expandEase: 9
@@ -53968,7 +54070,7 @@ MonoBehaviour:
   - {fileID: 2035936601}
   - {fileID: 1430017124}
   - {fileID: 2121232314}
-  _smallPos: {x: -140, y: 52.5}
+  _smallPos: {x: -140, y: 70}
   _smallSize: {x: 200, y: 150}
   _smallRotationZ: 8
   _largePos: {x: 0, y: 0}
@@ -54831,26 +54933,49 @@ MonoBehaviour:
   _characterIdText: {fileID: 182999393}
   _characterNameText: {fileID: 1196260839}
   _fragmentCountText: {fileID: 476987113}
+  _mixMode: 1
   _trueFragmentSlots:
   - {fileID: 561446083}
   - {fileID: 1289937738}
   - {fileID: 2006709895}
   - {fileID: 854561717}
   - {fileID: 1485221868}
-  _trueFragmentIds: []
   _falseFragmentSlots:
   - {fileID: 1701059259}
   - {fileID: 1826675839}
   - {fileID: 2017102649}
   - {fileID: 488735659}
   - {fileID: 1085879968}
-  _falseFragmentIds: []
+  _mixedFragmentSlots:
+  - {fileID: 561446083}
+  - {fileID: 1289937738}
+  - {fileID: 2006709895}
+  - {fileID: 854561717}
+  - {fileID: 1485221868}
+  - {fileID: 1701059259}
+  - {fileID: 1826675839}
+  - {fileID: 2017102649}
+  - {fileID: 488735659}
+  - {fileID: 1085879968}
+  _trueFragmentIds:
+  - 
+  - 
+  - 
+  - 
+  - 
+  _falseFragmentIds:
+  - 
+  - 
+  - 
+  - 
+  - 
   _hintPanel: {fileID: 1992056397}
   _flipToBackButton: {fileID: 496849153}
   _flipToFrontButton: {fileID: 2143527053}
   _collectedColor: {r: 0.1, g: 0.1, b: 0.1, a: 1}
   _hintColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   _glitchChars: "\u2588\u2593\u2592\u2591?#@&*"
+  _glitchLength: 24
   _openOffset: 680
   _animDuration: 0.5
   _expandEase: 9
@@ -56209,6 +56334,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f020a46257c78a499417c32d01f8733, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HTH.Campaign.DialoguePlayer
+  _profileData: {fileID: 11400000, guid: 70849e93ff6cd624fa6b74f08b617d1c, type: 2}
   _dialoguePanel: {fileID: 321175536}
   _characterImage: {fileID: 1224340404}
   _idText: {fileID: 610868181}

@@ -93,20 +93,26 @@ namespace HTH.Campaign
                  "진실 5개 + 거짓 5개 = 총 10개 기준입니다.")]
         [SerializeField] private TMP_Text _fragmentCountText;
 
-        [Header("앞면 — 진실 문장 조각")]
-        [Tooltip("진실 문장 조각 TMP_Text 슬롯 5개입니다.\n" +
-                 "미수집 → 회색 힌트 / 수집됨 → 검은색 실제 대사")]
+        [Header("앞면 — 문장 조각 슬롯")]
+        [Tooltip("혼합 모드 여부입니다.\n" +
+                 "false: 진실(왼쪽 5개) / 거짓(오른쪽 5개) 분리 배치\n" +
+                 "true:  진실+거짓 섞어서 랜덤 배치 + 랜덤 위치 해금")]
+        [SerializeField] private bool _mixMode = false;
+
+        [Tooltip("분리 모드(mixMode=false)의 진실 슬롯 5개입니다. (왼쪽)")]
         [SerializeField] private TMP_Text[] _trueFragmentSlots = new TMP_Text[5];
+
+        [Tooltip("분리 모드(mixMode=false)의 거짓 슬롯 5개입니다. (오른쪽)")]
+        [SerializeField] private TMP_Text[] _falseFragmentSlots = new TMP_Text[5];
+
+        [Tooltip("혼합 모드(mixMode=true)의 통합 슬롯 10개입니다.\n" +
+                 "진실+거짓이 섞여 랜덤 배치됩니다.")]
+        [SerializeField] private TMP_Text[] _mixedFragmentSlots = new TMP_Text[10];
 
         [Tooltip("진실 조각 FragmentId 목록입니다.\n" +
                  "ProfileClueDataSO 연결 시 자동 채워집니다. (P01_01 형식)\n" +
                  "수동 입력 불필요.")]
         [SerializeField] private string[] _trueFragmentIds = new string[5];
-
-        [Header("앞면 — 거짓 문장 조각")]
-        [Tooltip("거짓 문장 조각 TMP_Text 슬롯 5개입니다.\n" +
-                 "미수집 → 회색 힌트 / 수집됨 → 검은색 실제 대사")]
-        [SerializeField] private TMP_Text[] _falseFragmentSlots = new TMP_Text[5];
 
         [Tooltip("거짓 조각 FragmentId 목록입니다.\n" +
              "ProfileClueDataSO 연결 시 자동 채워집니다. (P01_01 형식)\n" +
@@ -135,6 +141,9 @@ namespace HTH.Campaign
 
         [Tooltip("글리치 대체 문자 목록입니다.")]
         [SerializeField] private string _glitchChars = "█▓▒░?#@&*";
+
+        [Tooltip("미수집 슬롯에 표시할 글리치 텍스트 고정 길이입니다.")]
+        [SerializeField] private int _glitchLength = 16;
 
         [Header("슬라이드 애니메이션")]
         [Tooltip("버튼 클릭 시 패널이 위로 올라가는 거리 (px)")]
@@ -188,11 +197,23 @@ namespace HTH.Campaign
         /// </summary>
         private List<ProfileClueEntry> _currentClues;
 
+        /// <summary>
+        /// 혼합 모드 슬롯 배치입니다.
+        /// 최초 1회만 셔플되고 이후 Open() 시 재사용됩니다.
+        /// </summary>
+        private (string profileClueId, bool isClue)[] _slotAssignments;
+
+        /// <summary>슬롯 배치가 이미 초기화됐는지 여부입니다.</summary>
+        private bool _slotsInitialized;
+
         /// <summary>현재 뒷면(컨셉 카드)이 표시 중인지 여부입니다.</summary>
         private bool _isBackFaceShowing;
 
         /// <summary>현재 패널이 열려있는지 여부입니다.</summary>
         public bool IsOpen { get; private set; }
+
+        /// <summary>슬롯 배치가 초기화됐는지 여부입니다.</summary>
+        public bool IsSlotsInitialized => _slotsInitialized;
 
         // ── Unity ────────────────────────────────────────────────────────
 
@@ -253,38 +274,19 @@ namespace HTH.Campaign
 
         /// <summary>
         /// 특정 캐릭터의 기록장을 슬라이드업으로 엽니다.
-        /// CharacterRecordPanelManager.OpenPanel()에서 호출합니다.
+        /// 슬롯 초기화는 Phase2 진입 시 InitializeSlots()에서 이미 완료됩니다.
         /// </summary>
-        /// <param name="characterId">열 캐릭터 ID (1~7)</param>
         public void Open(int characterId)
         {
-            // ProfileClueDataSO에서 조각 조회 및 FragmentId 자동 채우기
-            if (_profileClueData == null)
+            // 슬롯 미초기화 시 방어 처리 (정상이라면 Phase2 진입 시 이미 완료)
+            if (!_slotsInitialized)
             {
-                Debug.LogWarning("[CharacterRecordPanel] ProfileClueDataSO가 연결되지 않았습니다.");
+                Debug.LogWarning($"[CharacterRecordPanel] 슬롯 미초기화 — CharacterId={characterId}");
                 return;
-            }
-
-            _currentClues = _profileClueData.GetCluesByCharacter(characterId);
-            if (_currentClues == null || _currentClues.Count == 0)
-            {
-                Debug.LogWarning($"[CharacterRecordPanel] CharacterId={characterId} ProfileClue 없음");
-                return;
-            }
-
-            // FragmentId 배열 자동 채우기 (P01_01 형식)
-            for (int i = 0; i < 5; i++)
-            {
-                string pid = i < _currentClues.Count
-                    ? _currentClues[i].ProfileClueId
-                    : "";
-                if (i < _trueFragmentIds.Length) _trueFragmentIds[i] = pid;
-                if (i < _falseFragmentIds.Length) _falseFragmentIds[i] = pid;
             }
 
             // ProfileDataSO에서 이름/컨셉카드 조회
             _currentProfile = _profileData?.FindProfile(characterId);
-
             _currentCharacterId = characterId;
 
             ShowFrontFaceInstant();
@@ -294,6 +296,59 @@ namespace HTH.Campaign
 
             SlideTo(_openedY, _expandEase);
             IsOpen = true;
+        }
+
+        /// <summary>
+        /// Phase2 진입 시 1회 호출됩니다.
+        /// ProfileClueDataSO에서 조각을 로드하고 슬롯 배치를 결정합니다.
+        /// Open()과 완전히 분리되어 있으며 열람 여부와 무관하게 동작합니다.
+        /// </summary>
+        public void InitializeSlots(int characterId)
+        {
+            if (_slotsInitialized) return;
+            if (_profileClueData == null)
+            {
+                Debug.LogWarning("[CharacterRecordPanel] ProfileClueDataSO 미연결");
+                return;
+            }
+
+            // ProfileClue 로드
+            _currentClues = _profileClueData.GetCluesByCharacter(characterId);
+            if (_currentClues == null || _currentClues.Count == 0)
+            {
+                Debug.LogWarning($"[CharacterRecordPanel] CharacterId={characterId} ProfileClue 없음\n" +
+                                 $"ProfileClueDataSO 에셋에 데이터가 있는지 확인하세요.\n" +
+                                 $"SO 에셋명: {_profileClueData.name}");
+                return;
+            }
+
+            Debug.Log($"[CharacterRecordPanel] CharacterId={characterId} " +
+                      $"ProfileClue {_currentClues.Count}개 로드\n" +
+                      $"[0]: {_currentClues[0].ProfileClueId} / " +
+                      $"ClueText: {_currentClues[0].ClueText?.Substring(0, Mathf.Min(10, _currentClues[0].ClueText?.Length ?? 0))}...");
+
+            // 캐릭터 ID 저장 (Open() 전에도 RefreshIfCurrent 동작 보장)
+            _currentCharacterId = characterId;
+
+            if (!_mixMode)
+            {
+                // 분리 모드: FragmentId 배열 채우기
+                for (int i = 0; i < 5; i++)
+                {
+                    string pid = i < _currentClues.Count
+                        ? _currentClues[i].ProfileClueId : "";
+                    if (i < _trueFragmentIds.Length) _trueFragmentIds[i] = pid;
+                    if (i < _falseFragmentIds.Length) _falseFragmentIds[i] = pid;
+                }
+            }
+            else
+            {
+                // 혼합 모드: 1회 셔플
+                InitMixedSlots();
+            }
+
+            _slotsInitialized = true;
+            Debug.Log($"[CharacterRecordPanel] 슬롯 초기화 완료 — CharacterId={characterId}");
         }
 
         /// <summary>
@@ -383,8 +438,10 @@ namespace HTH.Campaign
         {
             if (_fragmentCountText == null) return;
 
-            // 총 슬롯 수: 진실 5 + 거짓 5 = 10
-            int total = _trueFragmentSlots.Length + _falseFragmentSlots.Length;
+            int total = _mixMode
+                ? _mixedFragmentSlots.Length
+                : _trueFragmentSlots.Length + _falseFragmentSlots.Length;
+
             int collected = 0;
 
             if (_currentClues != null)
@@ -393,36 +450,40 @@ namespace HTH.Campaign
                 {
                     if (clue == null || string.IsNullOrEmpty(clue.ProfileClueId)) continue;
                     bool isCollected = _fragmentCollector?.HasFragment(clue.ProfileClueId) ?? false;
-
-                    // 수집 1개 → 진실 슬롯 1 + 거짓 슬롯 1 = 2 카운트
+                    // 수집 1개 → 진실+거짓 2슬롯 해금
                     if (isCollected) collected += 2;
                 }
             }
 
             _fragmentCountText.text = $"획득한 대화조각 ({collected}/{total})";
 
-            // 10개 전부 수집 시 컨셉 카드 보기 버튼 활성화
             if (_flipToBackButton != null)
                 _flipToBackButton.gameObject.SetActive(collected >= total);
         }
 
         /// <summary>
-        /// 진실/거짓 문장 조각 슬롯을 갱신합니다.
-        /// ProfileClueDataSO에서 자동으로 CLUE/HINT 텍스트를 가져옵니다.
-        ///   진실 슬롯[i] → clues[i].ClueText (수집 시) / 글리치 (미수집)
-        ///   거짓 슬롯[i] → clues[i].HintText (수집 시) / 글리치 (미수집)
+        /// 모드에 따라 문장 조각 슬롯을 갱신합니다.
+        /// 분리 모드: 진실(왼쪽)/거짓(오른쪽) 5개씩
+        /// 혼합 모드: 10개 슬롯에 랜덤 배치
         /// </summary>
         private void RefreshFragmentSlots()
+        {
+            if (_mixMode)
+                RefreshMixedSlots();
+            else
+                RefreshSeparatedSlots();
+        }
+
+        /// <summary>분리 모드 — 진실(왼쪽) / 거짓(오른쪽) 5개씩 갱신합니다.</summary>
+        private void RefreshSeparatedSlots()
         {
             for (int i = 0; i < _trueFragmentSlots.Length; i++)
             {
                 var clue = (_currentClues != null && i < _currentClues.Count)
                     ? _currentClues[i] : null;
                 string pid = clue?.ProfileClueId ?? "";
-                string clueText = clue?.ClueText ?? "";
-
-                // 진실 슬롯 → CLUE 텍스트
-                RefreshSlot(_trueFragmentSlots[i], pid, clueText);
+                string text = clue?.ClueText ?? "";
+                RefreshSlot(_trueFragmentSlots[i], pid, text);
             }
 
             for (int i = 0; i < _falseFragmentSlots.Length; i++)
@@ -430,10 +491,27 @@ namespace HTH.Campaign
                 var clue = (_currentClues != null && i < _currentClues.Count)
                     ? _currentClues[i] : null;
                 string pid = clue?.ProfileClueId ?? "";
-                string hintText = clue?.HintText ?? "";
+                string text = clue?.HintText ?? "";
+                RefreshSlot(_falseFragmentSlots[i], pid, text);
+            }
+        }
 
-                // 거짓 슬롯 → HINT 텍스트
-                RefreshSlot(_falseFragmentSlots[i], pid, hintText);
+        /// <summary>혼합 모드 — 섞인 슬롯 10개를 갱신합니다.</summary>
+        private void RefreshMixedSlots()
+        {
+            if (_slotAssignments == null) return;
+
+            for (int i = 0; i < _mixedFragmentSlots.Length; i++)
+            {
+                if (i >= _slotAssignments.Length) break;
+
+                var (pid, isClue) = _slotAssignments[i];
+                var clue = _currentClues?.Find(c => c.ProfileClueId == pid);
+                string text = isClue
+                    ? (clue?.ClueText ?? "")
+                    : (clue?.HintText ?? "");
+
+                RefreshSlot(_mixedFragmentSlots[i], pid, text);
             }
         }
 
@@ -614,24 +692,47 @@ namespace HTH.Campaign
         // ── Private — 글리치 처리 ─────────────────────────────────────────
 
         /// <summary>
-        /// 텍스트에 글리치 문자를 혼합합니다.
-        /// 공백은 유지하고 나머지는 70% 확률로 대체합니다.
+        /// 혼합 모드에서 진실(5개)+거짓(5개) 총 10개 항목을
+        /// 랜덤 셔플해 _slotAssignments에 배치합니다.
+        /// Open() 시 1회 호출됩니다.
         /// </summary>
-        /// <param name="text">원본 텍스트</param>
-        /// <returns>글리치 처리된 텍스트</returns>
-        private string ApplyGlitch(string text)
+        private void InitMixedSlots()
         {
-            if (string.IsNullOrEmpty(text) || string.IsNullOrEmpty(_glitchChars))
-                return text;
+            // 10개 항목 생성 (CLUE 5개 + HINT 5개)
+            var items = new List<(string profileClueId, bool isClue)>();
 
-            var sb = new System.Text.StringBuilder(text.Length);
-            foreach (char c in text)
+            if (_currentClues != null)
             {
-                if (c == ' ' || UnityEngine.Random.value > 0.7f)
-                    sb.Append(c);
-                else
-                    sb.Append(_glitchChars[UnityEngine.Random.Range(0, _glitchChars.Length)]);
+                foreach (var clue in _currentClues)
+                {
+                    items.Add((clue.ProfileClueId, true));   // CLUE (진실)
+                    items.Add((clue.ProfileClueId, false));  // HINT (거짓)
+                }
             }
+
+            // Fisher-Yates 셔플
+            for (int i = items.Count - 1; i > 0; i--)
+            {
+                int j = UnityEngine.Random.Range(0, i + 1);
+                (items[i], items[j]) = (items[j], items[i]);
+            }
+
+            _slotAssignments = items.ToArray();
+        }
+
+        /// <summary>
+        /// 고정 길이의 100% 글리치 텍스트를 생성합니다.
+        /// 원본 텍스트와 무관하게 _glitchLength 길이로 생성해
+        /// 원문 유추를 방지합니다.
+        /// </summary>
+        private string ApplyGlitch(string _ = null)
+        {
+            if (string.IsNullOrEmpty(_glitchChars)) return "????????????????";
+
+            var sb = new System.Text.StringBuilder(_glitchLength);
+            for (int i = 0; i < _glitchLength; i++)
+                sb.Append(_glitchChars[UnityEngine.Random.Range(0, _glitchChars.Length)]);
+
             return sb.ToString();
         }
     }

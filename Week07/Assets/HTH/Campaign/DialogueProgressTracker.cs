@@ -7,59 +7,67 @@ namespace HTH.Campaign
     /// <summary>
     /// 다이얼로그 출력 기록을 관리합니다.
     ///
-    /// ─── 관리 데이터 ─────────────────────────────────────────────────────
-    ///   출력된 GroupDialogue 키 목록 (조합 키: "1,3,5" 형식)
-    ///   출력된 SoloDialogue 캐릭터 ID 목록
-    ///   PlayerPrefs를 통한 세이브/로드
+    /// ─── 기록 단위 ───────────────────────────────────────────────────────
+    ///   ComboId 기준으로 기록합니다. (C001, COND_P01_01 등)
+    ///   같은 캐릭터 조합이라도 ComboId가 다르면 별개로 관리됩니다.
+    ///   예: [1,2,7] 구역에서 C026이 재생됐어도
+    ///       COND_P01_01은 아직 미출력 → 다음 턴에 재생 가능
     ///
-    /// ─── 1회차 규칙 ──────────────────────────────────────────────────────
-    ///   각 캐릭터가 한 번씩 출력되면 이후 스킵
-    ///   (기획서: "각 캐릭터가 한 번씩 다이얼로그를 출력하면 그 이후에는 출력하지 않도록")
+    /// ─── FragmentId 기록 ─────────────────────────────────────────────────
+    ///   FragmentId 수집 여부는 FragmentCollector에서 영구 관리합니다.
+    ///   ProgressTracker는 FragmentId를 별도 추적하지 않습니다.
     ///
-    /// ─── 조합 키 규칙 ────────────────────────────────────────────────────
-    ///   캐릭터 ID를 오름차순 정렬 후 쉼표로 연결
-    ///   예: {1, 3, 5} → "1,3,5"
-    ///   같은 조합은 항상 같은 키를 가집니다.
+    /// ─── 저장 정책 ───────────────────────────────────────────────────────
+    ///   씬 진입마다 메모리 초기화 (PlayerPrefs 저장 없음)
+    ///   같은 씬 내에서는 출력된 ComboId를 누적 관리합니다.
+    ///   씬 재시작 시 리셋되므로 같은 씬에서 중복 재생만 방지합니다.
     ///
-    /// ─── PlayerPrefs 키 규칙 ─────────────────────────────────────────────
-    ///   그룹 대사: "hth_campaign_{stageId}_group_{groupKey}"
-    ///   단독 대사: "hth_campaign_{stageId}_solo_{characterId}"
+    /// ─── 단독 대사 ───────────────────────────────────────────────────────
+    ///   SoloDialogue는 캐릭터 ID 기준으로 씬 내 1회만 재생합니다.
     /// </summary>
     public class DialogueProgressTracker
     {
-        private const string GROUP_KEY_PREFIX = "hth_campaign_{0}_group_{1}";
-        private const string SOLO_KEY_PREFIX = "hth_campaign_{0}_solo_{1}";
+        /// <summary>
+        /// 이번 씬 진입 이후 재생된 ComboId 집합입니다.
+        /// 씬 재시작 시 리셋됩니다.
+        /// </summary>
+        private readonly HashSet<string> _playedComboIds = new();
 
-        private readonly HashSet<string> _playedGroupKeys = new();
+        /// <summary>이번 씬에서 재생된 단독 대사 캐릭터 ID 집합입니다.</summary>
         private readonly HashSet<int> _playedSoloIds = new();
-        private readonly HashSet<string> _playedFragmentIds = new();  // 이번 세션에서 출력된 FragmentId
 
         private string _currentStageId;
 
         // ── 초기화 ───────────────────────────────────────────────────────
 
-        /// <summary>
-        /// 스테이지 ID를 설정하고 저장된 기록을 로드합니다.
-        /// CampaignModeManager.OnPhase2Entered 이벤트 수신 시 호출합니다.
-        /// </summary>
         public void Initialize(string stageId)
         {
-            // 스테이지 진입마다 초기화 — 메모리에만 유지, PlayerPrefs 저장 안 함
             _currentStageId = stageId;
-            _playedGroupKeys.Clear();
+            _playedComboIds.Clear();
             _playedSoloIds.Clear();
-            _playedFragmentIds.Clear();
-            Debug.Log($"[DialogueProgressTracker] 초기화 완료 — {stageId} (출력 기록 리셋)");
+
+            // JSON 저장에서 재생된 ComboId 로드 (이어하기)
+            var saveData = CampaignSaveManager.Instance?.CurrentSave;
+            if (saveData != null)
+            {
+                foreach (var comboId in saveData.playedComboIds)
+                    if (!string.IsNullOrEmpty(comboId))
+                        _playedComboIds.Add(comboId);
+            }
+
+            Debug.Log($"[DialogueProgressTracker] 초기화 완료 — {stageId} " +
+                      $"(ComboId {_playedComboIds.Count}개 복원)");
         }
 
         // ── 출력 여부 확인 ────────────────────────────────────────────────
 
-        /// <summary>해당 캐릭터 조합의 그룹 대사가 이미 출력됐는지 확인합니다.</summary>
-        public bool HasPlayedGroup(HashSet<int> characterIds)
+        /// <summary>
+        /// 해당 ComboId의 대사가 이번 씬에서 이미 출력됐는지 확인합니다.
+        /// </summary>
+        public bool HasPlayedCombo(string comboId)
         {
-            if (characterIds == null || characterIds.Count == 0) return false;
-            string key = BuildGroupKey(characterIds);
-            return _playedGroupKeys.Contains(key);
+            if (string.IsNullOrEmpty(comboId)) return false;
+            return _playedComboIds.Contains(comboId);
         }
 
         /// <summary>해당 캐릭터의 단독 대사가 이미 출력됐는지 확인합니다.</summary>
@@ -69,63 +77,31 @@ namespace HTH.Campaign
         // ── 출력 기록 ─────────────────────────────────────────────────────
 
         /// <summary>
-        /// 그룹 대사 출력 완료를 기록합니다.
-        /// DialogueTriggerManager에서 DialoguePlayer 재생 완료 후 호출합니다.
+        /// ComboId 기준으로 대사 출력 완료를 기록합니다.
+        /// DialogueTriggerManager.PlayGroupDialogue() 완료 후 호출합니다.
         /// </summary>
-        public void MarkGroupPlayed(HashSet<int> characterIds)
+        public void MarkComboPlayed(string comboId)
         {
-            if (characterIds == null || characterIds.Count == 0) return;
+            if (string.IsNullOrEmpty(comboId)) return;
+            if (!_playedComboIds.Add(comboId)) return;
 
-            string key = BuildGroupKey(characterIds);
-            if (_playedGroupKeys.Add(key))
-                Debug.Log($"[DialogueProgressTracker] 그룹 대사 기록 — {key}");
+            Debug.Log($"[DialogueProgressTracker] 대사 기록 — ComboId:{comboId}");
+
+            // JSON 저장 업데이트
+            var saveData = CampaignSaveManager.Instance?.CurrentSave;
+            if (saveData == null) return;
+
+            if (!saveData.playedComboIds.Contains(comboId))
+                saveData.playedComboIds.Add(comboId);
+
+            CampaignSaveManager.Instance.Save(saveData);
         }
 
-        /// <summary>
-        /// 단독 대사 출력 완료를 기록합니다.
-        /// DialogueTriggerManager에서 DialoguePlayer 재생 완료 후 호출합니다.
-        /// </summary>
+        /// <summary>단독 대사 출력 완료를 기록합니다.</summary>
         public void MarkSoloPlayed(int characterId)
         {
             _playedSoloIds.Add(characterId);
             Debug.Log($"[DialogueProgressTracker] 단독 대사 기록 — ID:{characterId}");
-        }
-        /// <summary>
-        /// FragmentId 출력 완료를 기록합니다.
-        /// 이번 세션에서 이미 대사가 나온 FragmentId를 추적합니다.
-        /// 씬 재시작(로비 이동, 게임 종료) 시 리셋됩니다.
-        /// </summary>
-        public void MarkFragmentPlayed(string fragmentId)
-        {
-            if (!string.IsNullOrEmpty(fragmentId))
-                _playedFragmentIds.Add(fragmentId);
-        }
-
-        /// <summary>이번 세션에서 해당 FragmentId의 대사가 출력됐는지 확인합니다.</summary>
-        public bool HasPlayedFragment(string fragmentId)
-        {
-            if (string.IsNullOrEmpty(fragmentId)) return false;
-            return _playedFragmentIds.Contains(fragmentId);
-        }
-
-        // ── Private ──────────────────────────────────────────────────────
-
-        /// <summary>
-        /// 캐릭터 ID 집합으로 조합 키를 생성합니다.
-        /// 정렬 후 쉼표로 연결: {1,3,5} → "1,3,5"
-        /// </summary>
-        private string BuildGroupKey(HashSet<int> characterIds)
-        {
-            var sorted = new List<int>(characterIds);
-            sorted.Sort();
-
-            var sb = new StringBuilder();
-            for (int i = 0; i < sorted.Count; i++)
-            {
-                if (i > 0) sb.Append(',');
-                sb.Append(sorted[i]);
-            }
-            return sb.ToString();
         }
     }
 }

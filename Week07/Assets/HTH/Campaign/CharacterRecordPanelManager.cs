@@ -140,9 +140,26 @@ namespace HTH.Campaign
         {
             if (string.IsNullOrEmpty(name)) return;
             _collectedNames[characterId] = name;
-
-            // 현재 열린 패널이 해당 캐릭터면 즉시 갱신
             _currentPanel?.RefreshIfCurrent(characterId);
+
+            // JSON 저장 업데이트
+            var saveData = CampaignSaveManager.Instance?.CurrentSave;
+            if (saveData == null) return;
+
+            // 기존 항목 업데이트 또는 추가
+            bool found = false;
+            foreach (var entry in saveData.collectedNames)
+            {
+                if (entry.characterId != characterId) continue;
+                entry.name = name;
+                found = true;
+                break;
+            }
+            if (!found)
+                saveData.collectedNames.Add(new CollectedNameEntry
+                { characterId = characterId, name = name });
+
+            CampaignSaveManager.Instance.Save(saveData);
         }
 
         /// <summary>
@@ -159,8 +176,60 @@ namespace HTH.Campaign
 
         private void OnPhase2Entered(string stageId)
         {
-            // Phase2 진입 시 모든 패널 초기화
             CloseCurrentPanel();
+
+            // 저장된 이름 복원
+            var saveData = CampaignSaveManager.Instance?.CurrentSave;
+            if (saveData != null)
+            {
+                foreach (var entry in saveData.collectedNames)
+                    if (!string.IsNullOrEmpty(entry.name))
+                        _collectedNames[entry.characterId] = entry.name;
+            }
+
+            StartCoroutine(InitializeSlotsAfterActivation());
+        }
+        /// <summary>
+        /// 패널 오브젝트가 활성화될 때까지 대기 후 슬롯을 초기화합니다.
+        /// Phase2UITransition의 슬라이드업 애니메이션 완료를 기다립니다.
+        /// </summary>
+        private System.Collections.IEnumerator InitializeSlotsAfterActivation()
+        {
+            // 모든 패널이 활성화될 때까지 대기
+            // Phase2UITransition에서 SetActive(true) 후 슬라이드업하므로
+            // 한 프레임 대기로 Awake() 실행 보장
+            yield return null;
+
+            // 패널이 활성화 상태가 될 때까지 추가 대기 (최대 3초)
+            float timeout = 3f;
+            float elapsed = 0f;
+
+            bool allReady = false;
+            while (!allReady && elapsed < timeout)
+            {
+                allReady = true;
+                foreach (var kvp in _panelMap)
+                {
+                    if (!kvp.Value.gameObject.activeInHierarchy)
+                    {
+                        allReady = false;
+                        break;
+                    }
+                }
+
+                if (!allReady)
+                {
+                    yield return null;
+                    elapsed += Time.deltaTime;
+                }
+            }
+
+            // 슬롯 초기화
+            foreach (var kvp in _panelMap)
+                kvp.Value.InitializeSlots(kvp.Key);
+
+            Debug.Log($"[CharacterRecordPanelManager] 전체 패널 슬롯 초기화 완료 " +
+                      $"(대기 시간: {elapsed:F2}초)");
         }
 
         private void OnFragmentCollected(string fragmentId)
