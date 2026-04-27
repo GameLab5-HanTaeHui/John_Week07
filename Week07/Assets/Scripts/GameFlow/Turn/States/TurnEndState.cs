@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 /// <summary>
 /// 턴 종료 단계입니다.
@@ -11,6 +12,9 @@ public class TurnEndState : IState
 
     private IReadOnlyList<string> _eventLog;
     private bool                  _isLoopCondition;
+
+    // ★ 추가 — 자체 턴 카운터
+    private int _turnCount = 0;
 
     public TurnEndState(TurnStateMachine turnSM)
     {
@@ -37,10 +41,31 @@ public class TurnEndState : IState
     /// </summary>
     public void Finish()
     {
+        Debug.Log($"[TurnEndState] Finish — isLoopCondition={_isLoopCondition}");
+
         if (_isLoopCondition)
+        {
+            _turnCount = 0; // 강제 퇴고 시 리셋
             _turnSM.TriggerLoopCondition();
-        else
-            _turnSM.CompleteTurn();
+            return;
+        }
+
+        // ★ 캠페인 모드에서 자체 턴 카운터로 3턴 체크
+        if (HTH.Campaign.CampaignModeManager.IsPhase2Active)
+        {
+            _turnCount++;
+            Debug.Log($"[TurnEndState] Phase2 턴 카운트={_turnCount}");
+
+            if (_turnCount >= LoopStateMachine.TurnsPerLoop)
+            {
+                _turnCount = 0; // 퇴고 후 리셋
+                Debug.Log("[TurnEndState] Phase2 — 3턴 완료, 퇴고 발동");
+                _turnSM.TriggerLoopCondition();
+                return;
+            }
+        }
+
+        _turnSM.CompleteTurn();
     }
 
     public void Tick() { }

@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 using System.Collections.Generic;
 
 /// <summary>
@@ -124,7 +125,11 @@ public class TurnStateMachine : StateMachine
     public void FinishTurnEnd() => _turnEnd.Finish();
 
     /// <summary>TurnEndState에서 정리 완료 후 마지막으로 호출합니다. LoopStateMachine에 턴 완료를 알립니다.</summary>
-    public void CompleteTurn() => OnTurnCompleted?.Invoke();
+    public void CompleteTurn()
+    {
+        Debug.Log("[TurnSM] CompleteTurn 호출");
+        OnTurnCompleted?.Invoke();
+    }
 
     /// <summary>루프 종료 조건 달성 시 호출합니다. LoopStateMachine이 다음 루프로 진행합니다.</summary>
     public void TriggerLoopCondition() => OnLoopConditionTriggered?.Invoke();

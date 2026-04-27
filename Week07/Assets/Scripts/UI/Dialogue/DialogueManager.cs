@@ -121,6 +121,9 @@ public class DialogueManager : MonoBehaviour
                     _lines.Add(line);
 
         if (_lines.Count == 0) return;
+
+        // ★ 완료 콜백 없어도 FinishDialogue()에서 패널은 닫힘
+        // 단, 게임이 이미 Start()에서 진행 중이므로 별도 콜백 불필요
         BeginPlay(onComplete: null);
     }
 
@@ -265,6 +268,8 @@ public class DialogueManager : MonoBehaviour
         _currentDisplay  = "";
         _inputEnabled    = false;
         _isTyping        = true;
+
+        Debug.Log($"[DialogueManager] ShowLine — lineIndex:{_lineIndex} activeText:{_activeText != null} line:{_lines[_lineIndex]}");
 
         bool isLastLine = _isGameEndDialogue && (_lineIndex == _lines.Count - 1);
         float postDelay = isLastLine ? _gameEndLastLineDelay : 0f;

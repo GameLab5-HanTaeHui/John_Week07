@@ -54,23 +54,29 @@ public class PauseManager : MonoBehaviour
     /// <summary>인게임 저장을 취소하고 로비로 나갑니다. 현재 진행은 사라지며 이어하기 불가.</summary>
     public void ExitToLobby()
     {
-        // ★ [HTH추가] 이탈 로그 (지표 #14)
         var gfc = GameFlowController.Instance;
         GameLogger.Instance?.LogEvent("forfeit", new Dictionary<string, object>
+    {
+        { "reason",      "exit_to_lobby" },
+        { "loop",        gfc != null ? gfc.LoopCount : 0 },
+        { "turn",        gfc != null ? gfc.TurnCount : 0 },
+        { "day",         gfc?.CurrentDay ?? 0 },
+        { "time_of_day", gfc?.CurrentTimeOfDay ?? "" },
+    });
+
+        // ★ 캠페인 모드에서 로비 이탈 시 수집된 조각 강제 저장
+        if (HTH.Campaign.CampaignModeManager.IsPhase2Active)
         {
-            { "reason",      "exit_to_lobby" },
-            { "loop",        gfc != null ? gfc.LoopCount : 0 },
-            { "turn",        gfc != null ? gfc.TurnCount : 0 },
-            { "day",         gfc?.CurrentDay ?? 0 },
-            { "time_of_day", gfc?.CurrentTimeOfDay ?? "" },
-        });
+            var fragmentCollector = FindObjectOfType<HTH.Campaign.FragmentCollector>();
+            fragmentCollector?.Save();
+            Debug.Log("[PauseManager] 캠페인 모드 — 로비 이탈 전 조각 데이터 저장");
+        }
 
         string fileName = GameLogger.Instance?.BuildUploadFileName();
         string stageId = GameLogger.Instance?.CurrentStageId;
         GameLogger.Instance?.StopStageLogging();
         byte[] bytes = GameLogger.Instance?.ExtractCurrentSessionBytes();
 
-        // [HTH추가] 업로드 완료 후 씬 전환
         if (LogUploader.Instance != null)
         {
             LogUploader.Instance.UploadSessionBytes(bytes, fileName, false, stageId,
@@ -82,7 +88,6 @@ public class PauseManager : MonoBehaviour
         }
         else
         {
-            // 기존 코드
             TurnHistoryRepository.Instance.ClearAll();
             LeaveToPaused();
         }

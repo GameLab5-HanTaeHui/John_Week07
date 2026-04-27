@@ -211,13 +211,16 @@ public class LoopStateMachine : StateMachine
     public void AdvanceTurn()
     {
         TurnCount++;
+        Debug.Log($"[LoopSM] AdvanceTurn — TurnCount={TurnCount}, TurnsPerLoop={TurnsPerLoop}, Phase2={HTH.Campaign.CampaignModeManager.IsPhase2Active}");
         if (TurnCount >= TurnsPerLoop)
         {
+            Debug.Log("[LoopSM] 3턴 완료 → LoopEnd 진입");
             CurrentState = LoopStateType.LoopEnd;
             ChangeState(_loopEnd);
         }
         else
         {
+            Debug.Log($"[LoopSM] 다음 턴 시작 — TurnCount={TurnCount}");
             _turnSM.StartTurn();
         }
     }
@@ -229,22 +232,21 @@ public class LoopStateMachine : StateMachine
     public void AdvanceLoop()
     {
         LoopCount++;
+        Debug.Log($"[LoopSM] AdvanceLoop — LoopCount={LoopCount}, Phase2={HTH.Campaign.CampaignModeManager.IsPhase2Active}");
 
-        // Phase2에서는 루프 제한 없이 무한 반복
         if (HTH.Campaign.CampaignModeManager.IsPhase2Active)
         {
-            // MaxLoops 도달 시 LoopCount 리셋 후 계속 진행
             if (LoopCount >= MaxLoops)
             {
-                LoopCount = 0;
-                Debug.Log("[LoopStateMachine] Phase2 — 루프 리셋 후 계속 진행");
+                LoopCount = 1;
+                Debug.Log("[LoopSM] Phase2 — MaxLoops 도달, LoopCount=1로 리셋");
             }
+            Debug.Log("[LoopSM] Phase2 → GameSetup 진입 (캐릭터 부활)");
             CurrentState = LoopStateType.GameSetup;
             ChangeState(_gameSetup);
             return;
         }
 
-        // Phase1 (기존 동작) — MaxLoops 도달 시 최종 추리
         if (LoopCount >= MaxLoops)
             EnterAwaitingFinalDecision();
         else

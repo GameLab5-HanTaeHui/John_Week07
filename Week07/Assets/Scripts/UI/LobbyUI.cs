@@ -144,25 +144,19 @@ public class LobbyUI : MonoBehaviour
         }
         TurnHistoryRepository.Instance.ClearAll();
         NewGameConfig.SetSeed(seed, _stageId);
-        NewGameConfig.ForceStartAsPhase2 = ShouldSkipToPhase2();
+        NewGameConfig.ForceStartAsPhase2 = false; // ★ 항상 기본모드부터
         SceneManager.LoadScene(_gameSceneName);
     }
 
     private void OnStartRandomClicked()
     {
-        NewGameConfig.SetTutorial(_tutorialFixedSeed);
-        // ★ ForceStartAsPhase2 명시적 초기화
-        NewGameConfig.ForceStartAsPhase2 = false;
-        SceneManager.LoadScene(_tutorialRetrySceneName);
+        TurnHistoryRepository.Instance.ClearAll();
+        NewGameConfig.SetRandom(_stageId);
+        NewGameConfig.ForceStartAsPhase2 = false; // ★ 항상 기본모드부터
+        SceneManager.LoadScene(_gameSceneName);
     }
 
     // ── Private ──────────────────────────────────────────────────────────────
-    private bool ShouldSkipToPhase2()
-    {
-        if (_alwaysStartAsPhase2) return true;
-        return StageClearRepository.Instance.HasCleared(_stageId);
-    }
-
     public void ShowMain()
     {
         if (_mainPanel != null)    _mainPanel.SetActive(true);

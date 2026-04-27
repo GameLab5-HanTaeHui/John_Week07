@@ -1123,7 +1123,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 10, y: 10, z: 10, w: 10}
+  m_margin: {x: 70, y: 50, z: 70, w: 50}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -1843,143 +1843,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HTH.ButtonColor
   _buttonText: {fileID: 1741159762}
   _ChangeColor: {r: 0, g: 1, b: 0, a: 1}
---- !u!1 &264991411
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 264991412}
-  - component: {fileID: 264991414}
-  - component: {fileID: 264991413}
-  m_Layer: 5
-  m_Name: StageText
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &264991412
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 264991411}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1851041430}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &264991413
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 264991411}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_text: "\uC774\uC57C\uAE30 \uB2E4\uC2DC \uC4F0\uAE30"
-  m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 45461fa7f3c562f458fc696e4c6c4008, type: 2}
-  m_sharedMaterial: {fileID: 5040206823531127963, guid: 45461fa7f3c562f458fc696e4c6c4008, type: 2}
-  m_fontSharedMaterials: []
-  m_fontMaterial: {fileID: 0}
-  m_fontMaterials: []
-  m_fontColor32:
-    serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
-  m_enableVertexGradient: 0
-  m_colorMode: 3
-  m_fontColorGradient:
-    topLeft: {r: 1, g: 1, b: 1, a: 1}
-    topRight: {r: 1, g: 1, b: 1, a: 1}
-    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
-    bottomRight: {r: 1, g: 1, b: 1, a: 1}
-  m_fontColorGradientPreset: {fileID: 0}
-  m_spriteAsset: {fileID: 0}
-  m_tintAllSprites: 0
-  m_StyleSheet: {fileID: 0}
-  m_TextStyleHashCode: -1183493901
-  m_overrideHtmlColors: 0
-  m_faceColor:
-    serializedVersion: 2
-    rgba: 4294967295
-  m_fontSize: 30
-  m_fontSizeBase: 30
-  m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
-  m_fontStyle: 5
-  m_HorizontalAlignment: 2
-  m_VerticalAlignment: 512
-  m_textAlignment: 65535
-  m_characterSpacing: 0
-  m_characterHorizontalScale: 1
-  m_wordSpacing: 0
-  m_lineSpacing: 0
-  m_lineSpacingMax: 0
-  m_paragraphSpacing: 0
-  m_charWidthMaxAdj: 0
-  m_TextWrappingMode: 1
-  m_wordWrappingRatios: 0.4
-  m_overflowMode: 0
-  m_linkedTextComponent: {fileID: 0}
-  parentLinkedComponent: {fileID: 0}
-  m_enableKerning: 0
-  m_ActiveFontFeatures: 6e72656b
-  m_enableExtraPadding: 0
-  checkPaddingRequired: 0
-  m_isRichText: 1
-  m_EmojiFallbackSupport: 1
-  m_parseCtrlCharacters: 1
-  m_isOrthographic: 1
-  m_isCullingEnabled: 0
-  m_horizontalMapping: 0
-  m_verticalMapping: 0
-  m_uvLineOffset: 0
-  m_geometrySortingOrder: 0
-  m_IsTextObjectScaleStatic: 0
-  m_VertexBufferAutoSizeReduction: 0
-  m_useMaxVisibleDescender: 1
-  m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
-  m_isUsingLegacyAnimationComponent: 0
-  m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
-  m_baseMaterial: {fileID: 0}
-  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!222 &264991414
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 264991411}
-  m_CullTransparentMesh: 1
 --- !u!1 &278492655
 GameObject:
   m_ObjectHideFlags: 0
@@ -2610,7 +2473,7 @@ MonoBehaviour:
   _epilogueText: {fileID: 865633509}
   _smallSize: {x: 150, y: 100}
   _largePos: {x: 0, y: 0}
-  _largeSize: {x: 1600, y: 1200}
+  _largeSize: {x: 1400, y: 1000}
   _expandDuration: 0.3
   _hoverOffsetY: 10
   _hoverDuration: 0.15
@@ -3675,7 +3538,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 10, y: 10, z: 10, w: 10}
+  m_margin: {x: 70, y: 50, z: 70, w: 50}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -4001,7 +3864,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 340, y: -204}
+  m_AnchoredPosition: {x: 385.9, y: -205.7}
   m_SizeDelta: {x: 180, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &733747677
@@ -4030,12 +3893,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 422071be77b653743b44560620f33608, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LobbyPresetSeedButton
-  _seed: 7777
+  _seed: 7474
   _stageId: Stage_1
   _gameSceneName: Stage_1
   _isEnabled: 1
   _label: {fileID: 0}
-  _isCampaignContinue: 1
   _isTutorial: 0
   _tutorialFixedSeed: 0
 --- !u!114 &733747679
@@ -4659,7 +4521,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 10, y: 10, z: 10, w: 10}
+  m_margin: {x: 70, y: 50, z: 70, w: 50}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -5197,7 +5059,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 10, y: 10, z: 10, w: 10}
+  m_margin: {x: 70, y: 50, z: 70, w: 50}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -5678,7 +5540,6 @@ MonoBehaviour:
   _gameSceneName: Stage_3
   _isEnabled: 1
   _label: {fileID: 0}
-  _isCampaignContinue: 0
   _isTutorial: 0
   _tutorialFixedSeed: 0
 --- !u!114 &974203998
@@ -6710,12 +6571,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 422071be77b653743b44560620f33608, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LobbyPresetSeedButton
-  _seed: 7777
+  _seed: 7474
   _stageId: Stage_1
   _gameSceneName: Stage_1
   _isEnabled: 1
   _label: {fileID: 0}
-  _isCampaignContinue: 0
   _isTutorial: 0
   _tutorialFixedSeed: 0
 --- !u!1 &1116647861
@@ -6855,7 +6715,7 @@ MonoBehaviour:
   _epilogueText: {fileID: 2132757655}
   _smallSize: {x: 150, y: 100}
   _largePos: {x: 0, y: 0}
-  _largeSize: {x: 1600, y: 1200}
+  _largeSize: {x: 1400, y: 1000}
   _expandDuration: 0.3
   _hoverOffsetY: 10
   _hoverDuration: 0.15
@@ -6990,7 +6850,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 10, y: 10, z: 10, w: 10}
+  m_margin: {x: 70, y: 50, z: 70, w: 50}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -7210,7 +7070,6 @@ MonoBehaviour:
   _gameSceneName: Stage_3
   _isEnabled: 1
   _label: {fileID: 0}
-  _isCampaignContinue: 0
   _isTutorial: 0
   _tutorialFixedSeed: 0
 --- !u!114 &1129571362
@@ -7583,7 +7442,7 @@ MonoBehaviour:
   _epilogueText: {fileID: 1822699509}
   _smallSize: {x: 150, y: 100}
   _largePos: {x: 0, y: 0}
-  _largeSize: {x: 1600, y: 1200}
+  _largeSize: {x: 1400, y: 1000}
   _expandDuration: 0.3
   _hoverOffsetY: 10
   _hoverDuration: 0.15
@@ -7798,7 +7657,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uBCF8\uD3B8 \uC2A4\uD1A0\uB9AC"
+  m_text: "\uC774\uC5B4 \uC4F0\uAE30"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 45461fa7f3c562f458fc696e4c6c4008, type: 2}
   m_sharedMaterial: {fileID: 5040206823531127963, guid: 45461fa7f3c562f458fc696e4c6c4008, type: 2}
@@ -7964,17 +7823,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73f39d29c0fe072469ad879fe21f574a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HTH.Campaign.LobbyPage1Controller
-  _campaignModeButton: {fileID: 1073418580}
-  _buttonLabel: {fileID: 1378618862}
-  _resetButton: {fileID: 1851041429}
+  _newGameButton: {fileID: 1073418580}
+  _continueButton: {fileID: 733747679}
   _nextPageButton: {fileID: 423510021}
   _warningDialog: {fileID: 1688536673}
   _rewardSaveData: {fileID: 11400000, guid: a9a937f157d7ba24abcb1607e860d056, type: 2}
   _stageId: Stage_1_Phase2
   _campaignSceneName: Stage_1
-  _requiredClearStageId: Stage_1
-  _newGameLabel: "\uC0C8\uB85C \uC4F0\uAE30"
-  _continueLabel: "\uC774\uC5B4 \uC4F0\uAE30"
 --- !u!1 &1334182448
 GameObject:
   m_ObjectHideFlags: 0
@@ -8305,7 +8160,6 @@ RectTransform:
   - {fileID: 1400545857}
   - {fileID: 1073418577}
   - {fileID: 733747676}
-  - {fileID: 1851041430}
   - {fileID: 423510022}
   - {fileID: 1339040862}
   - {fileID: 629817742}
@@ -8556,7 +8410,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uBCF8\uD3B8 \uC2A4\uD1A0\uB9AC"
+  m_text: "\uC0C8\uB85C \uC4F0\uAE30"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 45461fa7f3c562f458fc696e4c6c4008, type: 2}
   m_sharedMaterial: {fileID: 5040206823531127963, guid: 45461fa7f3c562f458fc696e4c6c4008, type: 2}
@@ -8788,7 +8642,6 @@ MonoBehaviour:
   _gameSceneName: Tutorial
   _isEnabled: 1
   _label: {fileID: 0}
-  _isCampaignContinue: 0
   _isTutorial: 1
   _tutorialFixedSeed: 0
 --- !u!114 &1400545859
@@ -9630,7 +9483,7 @@ MonoBehaviour:
   _epilogueText: {fileID: 665097797}
   _smallSize: {x: 150, y: 100}
   _largePos: {x: 0, y: 0}
-  _largeSize: {x: 1600, y: 1200}
+  _largeSize: {x: 1400, y: 1000}
   _expandDuration: 0.3
   _hoverOffsetY: 10
   _hoverDuration: 0.15
@@ -11312,7 +11165,7 @@ MonoBehaviour:
   _epilogueText: {fileID: 113160245}
   _smallSize: {x: 150, y: 100}
   _largePos: {x: 0, y: 0}
-  _largeSize: {x: 1600, y: 1200}
+  _largeSize: {x: 1400, y: 1000}
   _expandDuration: 0.3
   _hoverOffsetY: 10
   _hoverDuration: 0.15
@@ -11496,7 +11349,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 10, y: 10, z: 10, w: 10}
+  m_margin: {x: 70, y: 50, z: 70, w: 50}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -11509,142 +11362,6 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1822699507}
-  m_CullTransparentMesh: 1
---- !u!1 &1851041429
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1851041430}
-  - component: {fileID: 1851041435}
-  - component: {fileID: 1851041434}
-  - component: {fileID: 1851041433}
-  - component: {fileID: 1851041431}
-  m_Layer: 5
-  m_Name: ResetButton
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1851041430
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1851041429}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 264991412}
-  m_Father: {fileID: 1340914225}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 257, y: -261}
-  m_SizeDelta: {x: 200, y: 30}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1851041431
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1851041429}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c739c77caf5a8ef4b928596a56eff427, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::HTH.ButtonColor
-  _buttonText: {fileID: 264991413}
-  _ChangeColor: {r: 0, g: 1, b: 0, a: 1}
---- !u!114 &1851041433
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1851041429}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
-  m_Navigation:
-    m_Mode: 3
-    m_WrapAround: 0
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
-  m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
-    m_ColorMultiplier: 1
-    m_FadeDuration: 0.1
-  m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 0}
-    m_SelectedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 0}
-  m_AnimationTriggers:
-    m_NormalTrigger: Normal
-    m_HighlightedTrigger: Highlighted
-    m_PressedTrigger: Pressed
-    m_SelectedTrigger: Selected
-    m_DisabledTrigger: Disabled
-  m_Interactable: 1
-  m_TargetGraphic: {fileID: 1851041434}
-  m_OnClick:
-    m_PersistentCalls:
-      m_Calls: []
---- !u!114 &1851041434
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1851041429}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &1851041435
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1851041429}
   m_CullTransparentMesh: 1
 --- !u!1 &1852232389
 GameObject:
@@ -12356,7 +12073,7 @@ MonoBehaviour:
   _epilogueText: {fileID: 1126494857}
   _smallSize: {x: 150, y: 100}
   _largePos: {x: 0, y: 0}
-  _largeSize: {x: 1600, y: 1200}
+  _largeSize: {x: 1400, y: 1000}
   _expandDuration: 0.3
   _hoverOffsetY: 10
   _hoverDuration: 0.15
@@ -12565,7 +12282,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a091c781fc913f94b8a7035afbe53d6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HTH.Campaign.SaveDataVersionManager
-  _currentVersion: 0.1.5
+  _currentVersion: 0.1.6
   _rewardSaveData: {fileID: 11400000, guid: a9a937f157d7ba24abcb1607e860d056, type: 2}
 --- !u!114 &2012912115
 MonoBehaviour:
@@ -12990,7 +12707,7 @@ MonoBehaviour:
   _epilogueText: {fileID: 793782935}
   _smallSize: {x: 150, y: 100}
   _largePos: {x: 0, y: 0}
-  _largeSize: {x: 1600, y: 1200}
+  _largeSize: {x: 1400, y: 1000}
   _expandDuration: 0.3
   _hoverOffsetY: 10
   _hoverDuration: 0.15
@@ -13793,7 +13510,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 10, y: 10, z: 10, w: 10}
+  m_margin: {x: 70, y: 50, z: 70, w: 50}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0

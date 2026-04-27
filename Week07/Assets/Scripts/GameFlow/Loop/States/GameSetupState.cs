@@ -66,9 +66,13 @@ public class GameSetupState : IState
             gameState.SetCharacterInitialZone(characterStates[i].CharacterId, zones[i]);
 
         // ── 5. 뷰 동기화 (2루프 이상) + 다음 단계로 전환 ────────────────
+        Debug.Log($"[GameSetupState] Enter — LoopCount={_loopSM.LoopCount}");
+        // ... 기존 코드
         if (_loopSM.LoopCount > 0)
+        {
+            Debug.Log("[GameSetupState] FireLoopReset 호출 — 캐릭터 부활");
             _loopSM.FireLoopReset();
-
+        }
         _loopSM.EnterLoopStart();
     }
 
@@ -91,11 +95,20 @@ public class GameSetupState : IState
             if (!string.IsNullOrEmpty(NewGameConfig.StageId))
                 _loopSM.StageId = NewGameConfig.StageId;
 
-            // ★ 튜토리얼이면 NewGameConfig.Seed 무시하고 StageSetupConfig 시드 우선 사용
+            // ★ 튜토리얼이면 SO 고정 시드 사용
             if (NewGameConfig.IsTutorial && _setupConfig != null && !_setupConfig.UseRandomSeed)
             {
                 _sessionSeed = Mathf.Clamp(_setupConfig.Seed, 0, maxSeed - 1);
-                Debug.Log($"[GameSetupState] 튜토리얼 고정 시드 사용 — {_sessionSeed}");
+                Debug.Log($"[GameSetupState] 튜토리얼 고정 시드 — {_sessionSeed}");
+                NewGameConfig.Clear();
+                return _sessionSeed;
+            }
+
+            // ★ 일반/캠페인 모드도 SetupConfig가 있고 UseRandomSeed=false면 SO 시드 우선
+            if (!NewGameConfig.UseRandom && _setupConfig != null && !_setupConfig.UseRandomSeed)
+            {
+                _sessionSeed = Mathf.Clamp(_setupConfig.Seed, 0, maxSeed - 1);
+                Debug.Log($"[GameSetupState] StageSetupConfig 고정 시드 — {_sessionSeed}");
                 NewGameConfig.Clear();
                 return _sessionSeed;
             }

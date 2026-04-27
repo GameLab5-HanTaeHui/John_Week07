@@ -171,6 +171,9 @@ public class RoleActivationState : IState
     /// </summary>
     private bool CheckLoopEndCondition(GameState gameState)
     {
+        // ★ 캠페인 모드(Phase2)에서는 강제 퇴고 조건 비활성
+        if (HTH.Campaign.CampaignModeManager.IsPhase2Active) return false;
+
         var condition = _getLoopCondition?.Invoke();
         return condition != null && condition.ShouldLoop(gameState);
     }

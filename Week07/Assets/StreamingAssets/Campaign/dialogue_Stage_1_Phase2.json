@@ -7512,7 +7512,7 @@
       "trigger": "엔비(#1)가 조사 지정 구역에 혼자 있고, 모든 구역에서 사망 사건이 일어나지 않을 시",
       "triggerDeadIds": [],
       "fragmentId": "P01_01",
-      "profileCategory": "",
+      "profileCategory": "유기 / 결핍",
       "unlockConditionId": "",
       "hintOfConditionId": "",
       "lines": [
@@ -7541,12 +7541,18 @@
       "trigger": "엔비(#1)와 토니(#5), 2명만 조사 지정 구역에 함께 있고, 조사 지정 구역에서 아무도 사망하지 않았을 시",
       "triggerDeadIds": [],
       "fragmentId": "P01_02",
-      "profileCategory": "",
+      "profileCategory": "스파이 / 임무",
       "unlockConditionId": "",
       "hintOfConditionId": "",
       "lines": [
         {
-          "speakerId": 2,
+          "speakerId": 5,
+          "text": "엔비는 참 다정하게 웃어!",
+          "revealCharacterId": -1,
+          "revealCharacterName": ""
+        },
+        {
+          "speakerId": 1,
           "text": "고마워 토니. 토니도 웃음이 참 따뜻해.",
           "revealCharacterId": -1,
           "revealCharacterName": ""
@@ -7583,7 +7589,7 @@
       "trigger": "엔비(#1),데우스(#3),루이스(#4), 3명만 조사 지정 구역에 함께 있고, 조사 지정 구역에서 아무도 사망하지 않았을 시",
       "triggerDeadIds": [],
       "fragmentId": "P01_03",
-      "profileCategory": "",
+      "profileCategory": "관계와 온기 동경",
       "unlockConditionId": "",
       "hintOfConditionId": "",
       "lines": [
@@ -7640,10 +7646,10 @@
         7
       ],
       "situationType": "프로파일 핵심문장",
-      "trigger": "P07_02 또는 P07_03을 획득 한 상태에서 엔비(#1),메이(#2),새턴(#7), 3명만 조사 지정 구역에 있을 시 ",
+      "trigger": "P07_02 또는 P07_03을 획득 한 상태에서 엔비(#1),메이(#2),새턴(#7), 3명만 조사 지정 구역에 있을 시",
       "triggerDeadIds": [],
       "fragmentId": "P01_04",
-      "profileCategory": "",
+      "profileCategory": "관계를 무너뜨릴 존재라는 자각",
       "unlockConditionId": "P07_02 또는 P07_03",
       "hintOfConditionId": "",
       "lines": [
@@ -7678,13 +7684,13 @@
           "revealCharacterName": ""
         },
         {
-          "speakerId": 2,
+          "speakerId": 7,
           "text": "아니, 나는... 그게 아니라.. 메이, 내 말은...",
           "revealCharacterId": -1,
           "revealCharacterName": ""
         },
         {
-          "speakerId": 1,
+          "speakerId": 2,
           "text": "다음에 얘기해 새턴.",
           "revealCharacterId": -1,
           "revealCharacterName": ""
@@ -7704,8 +7710,8 @@
       "trigger": "엔비(#1), 데우스(#3),루이스(#4), 토니(#5), 4명이 조사 구역에 있을 때",
       "triggerDeadIds": [],
       "fragmentId": "P01_05",
-      "profileCategory": "",
-      "unlockConditionId": "P05_01",
+      "profileCategory": "지키고 흔드는 자기모순",
+      "unlockConditionId": "",
       "hintOfConditionId": "",
       "lines": [
         {
@@ -7716,7 +7722,7 @@
         },
         {
           "speakerId": 3,
-          "text": "앗! 깜짝 놀랐잖아요.  토니, 장난감이라도 칼을 그렇게 휘두르면 위험합니다.",
+          "text": "앗! 깜짝 놀랐잖아요. 토니, 장난감이라도 칼을 그렇게 휘두르면 위험합니다.",
           "revealCharacterId": -1,
           "revealCharacterName": ""
         },
@@ -7750,7 +7756,7 @@
       "trigger": "사망 사건이 발생한 상태에서, 메이(#2) 조사 지정 구역에 혼자 있고, 메이가 사망하지 않을 시",
       "triggerDeadIds": [],
       "fragmentId": "P02_01",
-      "profileCategory": "",
+      "profileCategory": "생존자 강박",
       "unlockConditionId": "",
       "hintOfConditionId": "",
       "lines": [
@@ -7775,8 +7781,8 @@
         5
       ],
       "fragmentId": "P02_02",
-      "profileCategory": "",
-      "unlockConditionId": "P05_04",
+      "profileCategory": "메이의 증명 방식",
+      "unlockConditionId": "",
       "hintOfConditionId": "",
       "lines": [
         {
@@ -7829,7 +7835,7 @@
       "trigger": "엔비(#1),메이(#2),루이스(#4), 3명만 조사 지정 구역에 함께 있고, 조사 지정 구역에서 아무도 사망하지 않았을 시",
       "triggerDeadIds": [],
       "fragmentId": "P02_03",
-      "profileCategory": "",
+      "profileCategory": "동료 = 증인",
       "unlockConditionId": "",
       "hintOfConditionId": "",
       "lines": [
@@ -7864,7 +7870,7 @@
       "trigger": "메이(#2),루이스(#4)가 조사 지정 구역에 둘만 있고, 조사 지정 구역에서 아무도 사망하지 않았을 시",
       "triggerDeadIds": [],
       "fragmentId": "P02_04",
-      "profileCategory": "",
+      "profileCategory": "멈춤 = 의미 붕괴",
       "unlockConditionId": "",
       "hintOfConditionId": "",
       "lines": [
@@ -7894,13 +7900,13 @@
       "trigger": "P02_03을 획득한 상태에서 메이(#2),프리드(#6),새턴(#7) 3명만 조사 지정 구역에 함께 있을 시",
       "triggerDeadIds": [],
       "fragmentId": "P02_05",
-      "profileCategory": "",
+      "profileCategory": "모두를 끌고 가는 위험성",
       "unlockConditionId": "P02_03",
       "hintOfConditionId": "",
       "lines": [
         {
           "speakerId": 6,
-          "text": "누군가 희생하기 위해 남아야 한다면, 제가 남겠습니다",
+          "text": "누군가 희생하기 위해 남아야 한다면, 제가 남겠습니다.",
           "revealCharacterId": -1,
           "revealCharacterName": ""
         },
@@ -7912,7 +7918,7 @@
         },
         {
           "speakerId": 2,
-          "text": "아니. 아무도 남기지 않아. 대신 죽겠다는 말도 멈추자는 말도 필요 없어. 끝까지 함께 가.  그래야 우리가 여기까지 온 이유가 사라지지 않아.",
+          "text": "아니. 아무도 남기지 않아. 대신 죽겠다는 말도 멈추자는 말도 필요 없어. 끝까지 함께 가. 그래야 우리가 여기까지 온 이유가 사라지지 않아.",
           "revealCharacterId": -1,
           "revealCharacterName": ""
         }
@@ -7928,13 +7934,13 @@
       "trigger": "데우스(#3)가 조사 지정 구역에 혼자 있고, 루이스(#4)가 생존해 있으며, 조사 지정 구역에서 아무도 사망하지 않았을 시",
       "triggerDeadIds": [],
       "fragmentId": "P03_01",
-      "profileCategory": "",
+      "profileCategory": "사랑의 신성화",
       "unlockConditionId": "",
       "hintOfConditionId": "",
       "lines": [
         {
           "speakerId": 3,
-          "text": "여신님, 루이스를 향한 이 마음은 결코 욕망이 아닙니다. 그저 불쌍한 자를 가엾게 여기는 헌신일 뿐입니다.  여신님의 이름 아래 그분 곁에 머물겠습니다.",
+          "text": "여신님, 루이스를 향한 이 마음은 결코 욕망이 아닙니다. 그저 불쌍한 자를 가엾게 여기는 헌신일 뿐입니다. 여신님의 이름 아래 그분 곁에 머물겠습니다.",
           "revealCharacterId": -1,
           "revealCharacterName": ""
         }
@@ -7951,7 +7957,7 @@
       "trigger": "데우스(#3),루이스(#4)가 조사 지정 구역에 둘만 있고, 조사 지정 구역에서 아무도 사망하지 않았을 시",
       "triggerDeadIds": [],
       "fragmentId": "P03_02",
-      "profileCategory": "",
+      "profileCategory": "루이스 = 삶의 의미 / 구원",
       "unlockConditionId": "",
       "hintOfConditionId": "",
       "lines": [
@@ -7963,7 +7969,19 @@
         },
         {
           "speakerId": 3,
-          "text": "루이스, 당신에게 헌신하는 것이 저의 의무이자 기쁨입니다.  루이스를 대신해 사냥을 하는 것도 제겐 힘든 기도나 수행과 같아요. 그러니 루이스는 아무것도 하지 않아도 괜찮습니다.",
+          "text": "루이스는 쉬고 계세요. 제가 대신 다녀오겠습니다.",
+          "revealCharacterId": -1,
+          "revealCharacterName": ""
+        },
+        {
+          "speakerId": 4,
+          "text": "하지만 데우스는 사냥 해본 적 없잖아? 힘들고 위험할거야. 내가 갈게.",
+          "revealCharacterId": -1,
+          "revealCharacterName": ""
+        },
+        {
+          "speakerId": 3,
+          "text": "루이스, 당신에게 헌신하는 것이 저의 의무이자 기쁨입니다. 루이스를 대신해 사냥을 하는 것도 제겐 힘든 기도나 수행과 같아요. 그러니 루이스는 아무것도 하지 않아도 괜찮습니다.",
           "revealCharacterId": -1,
           "revealCharacterName": ""
         },
@@ -7987,7 +8005,7 @@
       "trigger": "엔비(#1),데우스(#3),루이스(#4), 3명만 조사 지정 구역에 함께 있고, 조사 지정 구역에서 아무도 사망하지 않았을 시",
       "triggerDeadIds": [],
       "fragmentId": "P03_03",
-      "profileCategory": "",
+      "profileCategory": "타인 배제 / 관계 통제",
       "unlockConditionId": "",
       "hintOfConditionId": "",
       "lines": [
@@ -8017,7 +8035,7 @@
         },
         {
           "speakerId": 3,
-          "text": "위험할 수도 있으니 제가 데우스와 다녀오겠습니다. 데우스, 가시죠.",
+          "text": "위험할 수도 있으니 제가 루이스와 다녀오겠습니다. 루이스, 가시죠.",
           "revealCharacterId": -1,
           "revealCharacterName": ""
         },
@@ -8046,7 +8064,7 @@
       "trigger": "P07_02를 획득한 상태에서 데우스(#3),새턴(#7)이 조사 지정 구역에 둘만 있고, 조사 지정 구역에서 아무도 사망하지 않았을 시",
       "triggerDeadIds": [],
       "fragmentId": "P03_04",
-      "profileCategory": "",
+      "profileCategory": "보호라는 이름의 고립",
       "unlockConditionId": "P07_02",
       "hintOfConditionId": "",
       "lines": [
@@ -8088,7 +8106,7 @@
       "trigger": "P03_02와 P03_04를 획득한 상태에서 데우스(#3),루이스(#4),새턴(#7), 3명만 조사 지정 구역에 있고, 조사 지정 구역에서 아무도 사망하지 않았을 시",
       "triggerDeadIds": [],
       "fragmentId": "P03_05",
-      "profileCategory": "",
+      "profileCategory": "토벌 이후의 속박",
       "unlockConditionId": "P03_02 또는 P03_04",
       "hintOfConditionId": "",
       "lines": [
@@ -8122,7 +8140,7 @@
       "trigger": "루프가 2회 이상 진행된 상태에서 루이스(#4)가 조사 지정 구역에 혼자 있고, 조사 지정 구역에서 아무도 사망하지 않았을 시",
       "triggerDeadIds": [],
       "fragmentId": "P04_01",
-      "profileCategory": "",
+      "profileCategory": "정신적 소진",
       "unlockConditionId": "",
       "hintOfConditionId": "",
       "lines": [
@@ -8146,7 +8164,7 @@
       "trigger": "P02_04 또는 P07_02를 획득한 상태에서 메이(#2),루이스(#4),새턴(#7), 3명만 조사 지정 구역에 있고, 조사 지정 구역에서 아무도 사망하지 않았을 시",
       "triggerDeadIds": [],
       "fragmentId": "P04_02",
-      "profileCategory": "",
+      "profileCategory": "인지하지만 개입하지 않음",
       "unlockConditionId": "P02_04 또는 P07_02",
       "hintOfConditionId": "",
       "lines": [
@@ -8181,7 +8199,7 @@
       "trigger": "메이(#2),루이스(#4)가 조사 지정 구역에 둘만 있고, 조사 지정 구역에서 아무도 사망하지 않았을 시",
       "triggerDeadIds": [],
       "fragmentId": "P04_03",
-      "profileCategory": "",
+      "profileCategory": "현재 안정에 머무르려 함",
       "unlockConditionId": "",
       "hintOfConditionId": "",
       "lines": [
@@ -8210,7 +8228,7 @@
       "trigger": "데우스(#3),루이스(#4)가 조사 지정 구역에 둘만 있고, 조사 지정 구역에서 아무도 사망하지 않았을 시",
       "triggerDeadIds": [],
       "fragmentId": "P04_04",
-      "profileCategory": "",
+      "profileCategory": "데우스 = 불안정한 버팀목",
       "unlockConditionId": "",
       "hintOfConditionId": "",
       "lines": [
@@ -8222,7 +8240,19 @@
         },
         {
           "speakerId": 3,
-          "text": "루이스, 당신에게 헌신하는 것이 저의 의무이자 기쁨입니다.  루이스를 대신해 사냥을 하는 것도 제겐 힘든 기도나 수행과 같아요. 그러니 루이스는 아무것도 하지 않아도 괜찮습니다.",
+          "text": "루이스는 쉬고 계세요. 제가 대신 다녀오겠습니다.",
+          "revealCharacterId": -1,
+          "revealCharacterName": ""
+        },
+        {
+          "speakerId": 4,
+          "text": "하지만 데우스, 사냥 해본 적 없잖아? 힘들고 위험할거야.",
+          "revealCharacterId": -1,
+          "revealCharacterName": ""
+        },
+        {
+          "speakerId": 3,
+          "text": "루이스, 당신에게 헌신하는 것이 저의 의무이자 기쁨입니다. 루이스를 대신해 사냥을 하는 것도 제겐 힘든 기도나 수행과 같아요. 그러니 루이스는 아무것도 하지 않아도 괜찮습니다.",
           "revealCharacterId": -1,
           "revealCharacterName": ""
         },
@@ -8236,10 +8266,11 @@
     },
     {
       "comboId": "COND_P04_05",
-      "comboKey": "#3|#4",
+      "comboKey": "#3|#4|#5",
       "participantIds": [
         3,
-        4
+        4,
+        5
       ],
       "situationType": "사망 반응 / 연인 연쇄",
       "trigger": "조사지정 구역에서 데우스(#3)의 사망으로 루이스(#4)도 사망할 시",
@@ -8248,13 +8279,13 @@
         4
       ],
       "fragmentId": "P04_05",
-      "profileCategory": "",
+      "profileCategory": "기대어 버티는 선택",
       "unlockConditionId": "",
       "hintOfConditionId": "",
       "lines": [
         {
           "speakerId": 4,
-          "text": "데우스... 당신 없는 세상은 너무나 차갑고 두려운 곳이더군요.",
+          "text": "데우스... 당신 없는 세상은 너무나 차갑고 두려운 곳이었군요.",
           "revealCharacterId": -1,
           "revealCharacterName": ""
         },
@@ -8282,7 +8313,7 @@
       "trigger": "토니(#5) 조사 지정 구역에서 혼자 있고, 조사 지정 구역이 아닌 다른 구역에서 사망 사건이 발생했을 시",
       "triggerDeadIds": [],
       "fragmentId": "P05_01",
-      "profileCategory": "",
+      "profileCategory": "마왕성 주방 / 금기 요리",
       "unlockConditionId": "",
       "hintOfConditionId": "",
       "lines": [
@@ -8301,13 +8332,13 @@
         5,
         6
       ],
-      "situationType": "사망 반응 / 살인자",
+      "situationType": "사망 반응 / 희생양",
       "trigger": "토니(#5)가 프리드(#6)를 둘만 있는 조사 지정 구역에서 살해할 시",
       "triggerDeadIds": [
         6
       ],
       "fragmentId": "P05_02",
-      "profileCategory": "",
+      "profileCategory": "귀여운 표면 연기",
       "unlockConditionId": "",
       "hintOfConditionId": "",
       "lines": [
@@ -8333,7 +8364,7 @@
         3
       ],
       "fragmentId": "P05_03",
-      "profileCategory": "",
+      "profileCategory": "관찰 후 살인",
       "unlockConditionId": "P03_04",
       "hintOfConditionId": "",
       "lines": [
@@ -8377,7 +8408,7 @@
     },
     {
       "comboId": "COND_P05_04",
-      "comboKey": "#5|ANY",
+      "comboKey": "#5",
       "participantIds": [
         5
       ],
@@ -8385,7 +8416,7 @@
       "trigger": "조사 구역에 토니(#5)를 포함한 3명 이상의 캐릭터가 존재하는 상태에서, 토니(#5)가 다른 캐릭터를 사망시켰을 시 .",
       "triggerDeadIds": [],
       "fragmentId": "P05_04",
-      "profileCategory": "",
+      "profileCategory": "죽음 이후의 변화 중시",
       "unlockConditionId": "",
       "hintOfConditionId": "",
       "lines": [
@@ -8415,8 +8446,8 @@
       "trigger": "엔비(#1),토니(#5),프리드(#6), 3명만 조사 지정 구역에 있고, 조사 지정 구역에서 아무도 사망하지 않았을 시",
       "triggerDeadIds": [],
       "fragmentId": "P05_05",
-      "profileCategory": "",
-      "unlockConditionId": "P05_04",
+      "profileCategory": "절망한 심장에 대한 욕망",
+      "unlockConditionId": "",
       "hintOfConditionId": "",
       "lines": [
         {
@@ -8449,7 +8480,7 @@
       "trigger": "프리드(#6)가 조사 지정 구역에 혼자 있고, 조사 지정 구역에서 아무도 사망하지 않았을 시",
       "triggerDeadIds": [],
       "fragmentId": "P06_01",
-      "profileCategory": "",
+      "profileCategory": "모든 일을 직접 짊어지는 신념",
       "unlockConditionId": "",
       "hintOfConditionId": "",
       "lines": [
@@ -8472,7 +8503,7 @@
       "trigger": "메이(#2),프리드(#6)가 조사 지정 구역에 둘만 있고, 조사 지정 구역에서 아무도 사망하지 않았을 시",
       "triggerDeadIds": [],
       "fragmentId": "P06_02",
-      "profileCategory": "",
+      "profileCategory": "스스로 희생하려 함",
       "unlockConditionId": "",
       "hintOfConditionId": "",
       "lines": [
@@ -8519,7 +8550,7 @@
       "trigger": "엔비(#1),프리드(#6)가 조사 지정 구역에 둘만 있고, 조사 지정 구역에서 아무도 사망하지 않았을 시",
       "triggerDeadIds": [],
       "fragmentId": "P06_03",
-      "profileCategory": "",
+      "profileCategory": "책임 독점에 익숙해짐",
       "unlockConditionId": "",
       "hintOfConditionId": "",
       "lines": [
@@ -8548,13 +8579,37 @@
       "trigger": "P07_02를 획득한 상태에서 프리드(#6),새턴(#7)이 조사 지정 구역에 둘만 있고, 조사 지정 구역에서 아무도 사망하지 않았을 시",
       "triggerDeadIds": [],
       "fragmentId": "P06_04",
-      "profileCategory": "",
+      "profileCategory": "타인의 선택권까지 대신함",
       "unlockConditionId": "P07_02",
       "hintOfConditionId": "",
       "lines": [
         {
+          "speakerId": 7,
+          "text": "프리드, 주변에 마물이 나타났어. 그렇게 강한 것 같지는 않으니 내가 처리하고 올게.",
+          "revealCharacterId": -1,
+          "revealCharacterName": ""
+        },
+        {
           "speakerId": 6,
-          "text": "프리드, 주변에 마물이 나타났어. 그렇게 강한 것 같지는 않으니 내가 처리하고 올게.  2. #6 프리드 뭐라고요? 위험해요!  제가 해치우고 올테니 새턴은 안전한 곳에서 기다리고 계세요.  3. #7 새턴 아냐, 나도 슬슬 경험치를 얻어서 레벨을 올려야 해. 내가 잡을테니 엄호만 부탁할게.  4. #8 프리드 아뇨!! 용사로서 제가 책임질 문제입니다. 술잔이 식기 전에 돌아올 테니 기다리세요!  5. #7 새턴 프리드!! 하... 가버렸잖아...",
+          "text": "뭐라고요? 위험해요! 제가 해치우고 올테니 새턴은 안전한 곳에서 기다리고 계세요.",
+          "revealCharacterId": -1,
+          "revealCharacterName": ""
+        },
+        {
+          "speakerId": 7,
+          "text": "아냐, 나도 슬슬 경험치를 얻어서 레벨을 올려야 해. 내가 잡을테니 엄호만 부탁할게.",
+          "revealCharacterId": -1,
+          "revealCharacterName": ""
+        },
+        {
+          "speakerId": 6,
+          "text": "아뇨!! 용사로서 제가 책임질 문제입니다. 술잔이 식기 전에 돌아올 테니 기다리세요!",
+          "revealCharacterId": -1,
+          "revealCharacterName": ""
+        },
+        {
+          "speakerId": 7,
+          "text": "프리드!! 하... 가버렸잖아...",
           "revealCharacterId": -1,
           "revealCharacterName": ""
         }
@@ -8562,8 +8617,10 @@
     },
     {
       "comboId": "COND_P06_05",
-      "comboKey": "#6",
+      "comboKey": "#4|#5|#6",
       "participantIds": [
+        4,
+        5,
         6
       ],
       "situationType": "사망 반응 / 희생양",
@@ -8572,7 +8629,7 @@
         6
       ],
       "fragmentId": "P06_05",
-      "profileCategory": "",
+      "profileCategory": "내가 희생해야 모두가 산다는 확신",
       "unlockConditionId": "",
       "hintOfConditionId": "",
       "lines": [
@@ -8618,7 +8675,7 @@
       "trigger": "새턴(#7)이 이동하며 이전 칸에 남은 인물이 배회자 효과로 사망 / 이동 후 조사 지정 구역에서 새턴이 혼자 남았을 시",
       "triggerDeadIds": [],
       "fragmentId": "P07_01",
-      "profileCategory": "",
+      "profileCategory": "뒤에 남겨야 했던 생존 기억",
       "unlockConditionId": "",
       "hintOfConditionId": "",
       "lines": [
@@ -8641,7 +8698,7 @@
       "trigger": "새턴(#7)이 이동하며 이동 전 칸에 남은 인물이 배회자 효과로 사망하고, 새턴(#7)의 이동 목적지에는 데우스(#3) 혼자 있어야 하며, 이동 후 조사 지정 구역에는 새턴(#7),데우스(#3) 2명만 존재할 시",
       "triggerDeadIds": [],
       "fragmentId": "P07_02",
-      "profileCategory": "",
+      "profileCategory": "누가 버려지는가를 먼저 봄",
       "unlockConditionId": "",
       "hintOfConditionId": "",
       "lines": [
@@ -8677,13 +8734,13 @@
       "trigger": "P02_03을 획득한 상태에서 메이(#2),프리드(#6),새턴(#7) 3명만 조사 지정 구역에 함께 있을 시",
       "triggerDeadIds": [],
       "fragmentId": "P07_03",
-      "profileCategory": "",
+      "profileCategory": "승리보다 과정의 희생을 중시",
       "unlockConditionId": "P02_03",
       "hintOfConditionId": "",
       "lines": [
         {
           "speakerId": 6,
-          "text": "누군가 남아야 한다면, 제가 남겠습니다",
+          "text": "누군가 남아야 한다면, 제가 남겠습니다.",
           "revealCharacterId": -1,
           "revealCharacterName": ""
         },
@@ -8712,8 +8769,8 @@
       "trigger": "엔비(#1),새턴(#7)이 조사 지정 구역에 둘만 있고, 조사 지정 구역에서 아무도 사망하지 않았을 시",
       "triggerDeadIds": [],
       "fragmentId": "P07_04",
-      "profileCategory": "",
-      "unlockConditionId": "P01_02",
+      "profileCategory": "공동체 불신 / 거리두기",
+      "unlockConditionId": "",
       "hintOfConditionId": "",
       "lines": [
         {
@@ -8742,7 +8799,7 @@
       "trigger": "사망 사건이 발생한 직후, 메이(#2),프리드(#6),새턴(#7) 3명만 조사 지정 구역에 있고, 세 캐릭터가 모두 생존해 있을 시",
       "triggerDeadIds": [],
       "fragmentId": "P07_05",
-      "profileCategory": "",
+      "profileCategory": "희생 구조 자체에 대한 분노",
       "unlockConditionId": "",
       "hintOfConditionId": "",
       "lines": [

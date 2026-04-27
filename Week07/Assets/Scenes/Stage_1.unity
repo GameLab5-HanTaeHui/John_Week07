@@ -15953,7 +15953,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameFlowController
   _orderConfig: {fileID: 11400000, guid: 0a2ea068f8191d64ea3dd18190f8d869, type: 2}
   _characterRegistry: {fileID: 11400000, guid: dcdbf53e1737d8942bf440fd67969e0b, type: 2}
-  _stageRoleConfig: {fileID: 11400000, guid: 7de2320d69c1495488b124ad199d4bb0, type: 2}
+  _stageRoleConfig: {fileID: 11400000, guid: 3bd9053afae9ed349aff93cfd356731b, type: 2}
   _setupConfig: {fileID: 11400000, guid: c8b4f5edc20791e46b21e19fb9387ca5, type: 2}
   _characterSpawner: {fileID: 1589347838}
   _lobbySceneName: LobbyScene
@@ -47994,7 +47994,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1606167512
 RectTransform:
   m_ObjectHideFlags: 0
