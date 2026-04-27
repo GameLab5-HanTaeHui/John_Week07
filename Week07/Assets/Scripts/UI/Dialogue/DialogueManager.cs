@@ -128,7 +128,12 @@ public class DialogueManager : MonoBehaviour
     {
         _isGameEndDialogue = false;
         BuildLines(eventLog, isLoopCondition);
-        BeginPlay(() => GameFlowController.Instance.FinishTurnEnd());
+        BeginPlay(() =>
+        {
+            // ★ 페이드 아웃 완료 이벤트 발생 — DialogueTriggerManager가 구독
+            _turnSM.FireTurnEndDialogueFinished();
+            GameFlowController.Instance.FinishTurnEnd();
+        });
     }
 
     private void HandleGameEndDialogueRequested(bool isWin)

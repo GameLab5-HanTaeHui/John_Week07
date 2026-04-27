@@ -44,6 +44,8 @@ public class GameFlowController : SingletonMonobehaviour<GameFlowController>
     /// <summary>characterId → CharacterView. SpawnAll 이후 유효합니다.</summary>
     public IReadOnlyDictionary<int, CharacterView> CharacterViews => _characterViews;
 
+    public CharacterSpawner GetCharacterSpawner() => _characterSpawner;
+
     /// <summary>
     /// 루프 리셋(GameState 재생성 완료) 시 발생합니다.
     /// PlayerTurnInputHandler 등 외부 컴포넌트가 구독해 내부 상태를 동기화할 수 있습니다.
@@ -257,19 +259,20 @@ public class GameFlowController : SingletonMonobehaviour<GameFlowController>
 
         if (isWin)
         {
-            string idToRecord = !string.IsNullOrEmpty(NewGameConfig.StageId) ? NewGameConfig.StageId : _stageId;
+            string idToRecord = !string.IsNullOrEmpty(NewGameConfig.StageId)
+                ? NewGameConfig.StageId : _stageId;
             if (!string.IsNullOrEmpty(idToRecord))
                 StageClearRepository.Instance.RecordClear(idToRecord);
 
             if (_triggerEndingDialogueOnWin)
                 LobbyDialogueManager.PendingEndingDialogue = true;
 
-            // [HTH추가] CampaignModeManager가 있으면 씬 전환 위임
-            if (HTH.Campaign.CampaignModeManager.Instance != null)
+            // ★ 튜토리얼이면 캠페인 분기 무조건 스킵
+            if (!NewGameConfig.IsTutorial &&
+                HTH.Campaign.CampaignModeManager.Instance != null)
             {
                 string phase1StageId = !string.IsNullOrEmpty(NewGameConfig.StageId)
-                    ? NewGameConfig.StageId
-                    : _stageId;
+                    ? NewGameConfig.StageId : _stageId;
                 HTH.Campaign.CampaignModeManager.Instance.OnFirstRunCleared(phase1StageId);
                 return;
             }

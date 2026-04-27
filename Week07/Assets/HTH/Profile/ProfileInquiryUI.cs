@@ -415,16 +415,14 @@ namespace HTH.Campaign
 
         private IEnumerator HandleCorrectAnswer()
         {
-            // 보상 해금
             string charName = CharacterRecordPanelManager.Instance?
-                .GetCollectedName(_currentCharacterId);
+            .GetCollectedName(_currentCharacterId);
 
             _fragmentCollector?.UnlockConceptCard(_currentCharacterId);
             _fragmentCollector?.UnlockEpilogue(_currentCharacterId);
             _rewardSaveData?.SaveConceptCardUnlock(_currentCharacterId, charName);
             _rewardSaveData?.SaveEpilogueUnlock(_currentCharacterId, charName);
 
-            // Submit 버튼 비활성화 (중복 클릭 방지)
             if (_submitButton != null)
             {
                 _submitButton.interactable = false;
@@ -432,19 +430,21 @@ namespace HTH.Campaign
             }
 
             // 검은 화면 FadeIn + 정답 문구 표시
-            // FadeOut은 하지 않음 — 에필로그 후 알림까지 검은 화면 유지
             yield return StartCoroutine(FadeInResultPanel(_correctAnswerLine,
                                                           _correctAnswerDisplayTime));
 
-            // 패널 닫기
+            // ★ 추가 — 클릭 유도 문구 표시 후 클릭 대기
+            if (_wrongAnswerText != null)
+                _wrongAnswerText.text = _correctAnswerLine + "\n\n[ 클릭하여 계속 ]";
+
+            yield return new WaitUntil(() => Input.GetMouseButtonDown(0));
+
             Hide();
             _selectPanel?.Hide();
 
-            // 첫 해금 여부 확인 (에필로그 수 = 1이면 첫 번째)
             bool isFirstUnlock = _rewardSaveData != null
                 && _rewardSaveData.GetUnlockedEpilogueCount() == 1;
 
-            // 에필로그 다이얼로그 재생 → 완료 후 알림/로비 이동
             StartCoroutine(PlayEpilogueAndNotify(isFirstUnlock));
         }
 
@@ -520,6 +520,12 @@ namespace HTH.Campaign
 
         private void LoadLobbyScene()
         {
+            // ★ 로비 이동 전 현재 세이브 데이터 강제 저장
+            var saveData = CampaignSaveManager.Instance?.CurrentSave;
+            if (saveData != null)
+                CampaignSaveManager.Instance.Save(saveData);
+
+
             SceneManager.LoadScene(_lobbySceneName);
         }
 

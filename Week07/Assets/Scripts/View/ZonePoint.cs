@@ -29,6 +29,12 @@ public class ZonePoint : MonoBehaviour
     public bool             DisableAbilities => _disableAbilities;
     public ZoneEffectConfig ZoneEffect       => _zoneEffect;
 
+    // ✅ 추가 — DisableAbilities 런타임 제어용
+    public void SetDisableAbilities(bool value)
+    {
+        _disableAbilities = value;
+    }
+
     public void SetDropIndicator(bool active)
     {
         if (_dropIndicator != null)

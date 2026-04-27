@@ -27,6 +27,12 @@ public class TurnStateMachine : StateMachine
     /// </summary>
     public event Action OnLoopConditionTriggered;
 
+    // ✅ 추가 — 기존 이벤트 선언 아래에
+    /// <summary>턴 종료 다이얼로그(페이드 아웃 포함)가 완전히 끝난 직후 발생합니다.</summary>
+    public event Action OnTurnEndDialogueFinished;
+
+    internal void FireTurnEndDialogueFinished() => OnTurnEndDialogueFinished?.Invoke();
+
     public TurnStateType CurrentState { get; private set; }
 
     /// <summary>현재 PlayerActionState 인스턴스입니다. PlayerTurnInputHandler에서 이벤트 구독에 사용합니다.</summary>

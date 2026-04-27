@@ -108,14 +108,32 @@ public class CharacterSpawner : MonoBehaviour
     public void ApplyZoneRulesToGameState(GameState gameState)
     {
         var disabled = new bool[GameState.ZoneCount];
-        var effects  = new ZoneEffectConfig[GameState.ZoneCount];
+        var effects = new ZoneEffectConfig[GameState.ZoneCount];
+
+        bool isPhase2 = HTH.Campaign.CampaignModeManager.IsPhase2Active;
+
         for (int i = 0; i < GameState.ZoneCount; i++)
         {
-            disabled[i] = _zoneLayout != null && _zoneLayout.IsAbilityDisabled(i);
-            effects[i]  = _zoneLayout?.GetZonePoint(i)?.ZoneEffect;
+            var zone = _zoneLayout?.GetZonePoint(i);
+            // ★ zone null 이면 그냥 false/null (튜토리얼 3존 대응)
+            disabled[i] = !isPhase2 && zone != null && zone.DisableAbilities;
+            effects[i] = zone?.ZoneEffect;
         }
         gameState.InitZoneRules(disabled);
         gameState.InitZoneEffects(effects);
+    }
+
+    // ★ 추가 — Phase2 진입 시 CampaignModeManager에서 호출
+    public void DisableAllAbilityZones(bool disable)
+    {
+        if (_zoneLayout == null) return;
+        for (int i = 0; i < GameState.ZoneCount; i++)
+        {
+            var zone = _zoneLayout.GetZonePoint(i);
+            if (zone == null) continue; // ★ null 스킵 (튜토리얼 3존 대응)
+            if (zone.DisableAbilities)
+                zone.SetDisableAbilities(false);
+        }
     }
 
     // ── Private ──────────────────────────────────────────────────────────────

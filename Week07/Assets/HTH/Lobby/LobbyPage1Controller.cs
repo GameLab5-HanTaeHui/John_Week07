@@ -96,23 +96,26 @@ namespace HTH.Campaign
         /// </summary>
         public void Refresh()
         {
-            bool cleared = StageClearRepository.Instance.HasCleared(_requiredClearStageId);
             bool hasSave = CampaignSaveManager.Instance != null &&
-                           CampaignSaveManager.Instance.HasSave(_stageId);
+                            CampaignSaveManager.Instance.HasSave(_stageId);
             bool hasCodex = CheckCodexUnlocked();
 
-            // 캠페인 모드 버튼
             if (_campaignModeButton != null)
-                _campaignModeButton.interactable = cleared;
+            {
+                _campaignModeButton.interactable = true;
+                Debug.Log($"[LobbyPage1] 버튼 interactable 설정 완료 — 현재값: {_campaignModeButton.interactable}");
+            }
+            else
+            {
+                Debug.LogWarning("[LobbyPage1] _campaignModeButton이 null입니다. Inspector 연결 확인 필요");
+            }
 
             if (_buttonLabel != null)
                 _buttonLabel.text = hasSave ? _continueLabel : _newGameLabel;
 
-            // 이야기 초기화 버튼: 저장 데이터 있을 때만 표시
             if (_resetButton != null)
                 _resetButton.SetActive(hasSave);
 
-            // 도감 페이지 버튼: 시점 완결문 1개 이상 해금 시 활성화
             if (_nextPageButton != null)
                 _nextPageButton.SetActive(hasCodex);
         }
@@ -122,7 +125,26 @@ namespace HTH.Campaign
         private void OnCampaignModeClicked()
         {
             TurnHistoryRepository.Instance.ClearAll();
-            NewGameConfig.SetSeed(0, _stageId);
+
+            bool hasSave = CampaignSaveManager.Instance != null &&
+                           CampaignSaveManager.Instance.HasSave(_stageId);
+
+            // ★ 저장 데이터 있으면 이어하기 (ForceStartAsPhase2), 없으면 새로 시작 (기본모드부터)
+            if (hasSave)
+            {
+                // Phase2 이어하기 — stageId에서 Phase2 접미사 제거해서 기본 스테이지 ID 추출
+                string baseStageId = _stageId.Replace("_Phase2", "");
+                NewGameConfig.SetRandom(baseStageId);
+                NewGameConfig.ForceStartAsPhase2 = true;
+            }
+            else
+            {
+                // 새로 시작 — 기본모드부터
+                string baseStageId = _stageId.Replace("_Phase2", "");
+                NewGameConfig.SetRandom(baseStageId);
+                NewGameConfig.ForceStartAsPhase2 = false;
+            }
+
             UnityEngine.SceneManagement.SceneManager.LoadScene(_campaignSceneName);
         }
 

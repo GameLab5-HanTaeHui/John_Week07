@@ -55,6 +55,16 @@ namespace HTH.Campaign
             Instance = this;
             DontDestroyOnLoad(gameObject);
         }
+        // ★ 추가 — 씬에 없을 때 자동 생성용 static 접근자
+        public static CampaignSaveManager GetOrCreate()
+        {
+            if (Instance != null) return Instance;
+
+            var go = new GameObject("CampaignSaveManager");
+            var mgr = go.AddComponent<CampaignSaveManager>();
+            DontDestroyOnLoad(go);
+            return mgr;
+        }
 
         private void OnDestroy()
         {

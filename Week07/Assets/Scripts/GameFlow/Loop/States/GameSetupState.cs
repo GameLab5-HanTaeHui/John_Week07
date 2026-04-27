@@ -45,7 +45,7 @@ public class GameSetupState : IState
         }
 
         // ── 2. 시드 획득 및 디코딩 ─────────────────────────────────────────
-        int seed = GetSeed(characterStates.Count, roles.Count);
+        int seed = GetSeed(characterStates.Count, roles.Count, GameState.ZoneCount);
         _loopSM.CurrentSeed = seed;
 
         SeedEncoder.Decode(seed, characterStates.Count, roles.Count, GameState.ZoneCount,
@@ -81,16 +81,25 @@ public class GameSetupState : IState
     private int  _sessionSeed     = -1;
     private bool _startedFromLobby;
 
-    private int GetSeed(int characterCount, int roleCount)
+    private int GetSeed(int characterCount, int roleCount, int zoneCount)
     {
-        int maxSeed = SeedEncoder.GetMaxSeed(characterCount, roleCount, GameState.ZoneCount);
+        int maxSeed = SeedEncoder.GetMaxSeed(characterCount, roleCount, zoneCount);
 
-        // 로비에서 새 게임 설정이 전달된 경우 최우선 적용 (최초 1회)
         if (NewGameConfig.IsSet)
         {
             _startedFromLobby = true;
             if (!string.IsNullOrEmpty(NewGameConfig.StageId))
                 _loopSM.StageId = NewGameConfig.StageId;
+
+            // ★ 튜토리얼이면 NewGameConfig.Seed 무시하고 StageSetupConfig 시드 우선 사용
+            if (NewGameConfig.IsTutorial && _setupConfig != null && !_setupConfig.UseRandomSeed)
+            {
+                _sessionSeed = Mathf.Clamp(_setupConfig.Seed, 0, maxSeed - 1);
+                Debug.Log($"[GameSetupState] 튜토리얼 고정 시드 사용 — {_sessionSeed}");
+                NewGameConfig.Clear();
+                return _sessionSeed;
+            }
+
             _sessionSeed = NewGameConfig.UseRandom
                 ? Random.Range(0, maxSeed)
                 : Mathf.Clamp(NewGameConfig.Seed, 0, maxSeed - 1);
@@ -98,17 +107,15 @@ public class GameSetupState : IState
             return _sessionSeed;
         }
 
-        // 세션 시드가 이미 결정됐으면 루프가 바뀌어도 동일 시드 반환
         if (_sessionSeed >= 0)
             return _sessionSeed;
 
-        // 에디터 직접 실행 등 로비를 거치지 않은 경우 StageSetupConfig로 시드 결정 (1회)
         if (_setupConfig != null)
         {
             int configSeed = _setupConfig.GetOrGenerateSeed(characterCount, roleCount);
             if (configSeed < 0 || configSeed >= maxSeed)
             {
-                Debug.LogWarning($"[GameSetupState] StageSetupConfig 시드({configSeed})가 유효 범위(0~{maxSeed - 1})를 벗어났습니다. 랜덤 시드로 대체합니다.");
+                Debug.LogWarning($"[GameSetupState] StageSetupConfig 시드({configSeed})가 유효 범위를 벗어났습니다. 랜덤으로 대체합니다.");
                 configSeed = Random.Range(0, maxSeed);
             }
             _sessionSeed = configSeed;

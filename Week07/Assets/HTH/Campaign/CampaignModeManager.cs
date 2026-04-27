@@ -99,18 +99,33 @@ namespace HTH.Campaign
 
         private void Start()
         {
+            if (NewGameConfig.IsTutorial) return;
+
             if (NewGameConfig.ForceStartAsPhase2)
             {
                 string phase2StageId = NewGameConfig.StageId + _phase2Suffix;
-                Debug.Log($"[CampaignModeManager] ForceStartAsPhase2 — {phase2StageId}");
                 NewGameConfig.ForceStartAsPhase2 = false;
-                // 전환 연출 없이 즉시 Phase2 상태 세팅
                 CurrentPhase = CampaignPhase.Phase2;
                 CurrentPhase2StageId = phase2StageId;
                 GameLogger.Instance?.StartStageLogging(phase2StageId);
                 SubscribeFragmentCollectorEvents();
-                OnPhase2Entered?.Invoke(phase2StageId);
+                StartCoroutine(InvokePhase2EnteredNextFrame(phase2StageId)); // ★
             }
+        }
+        private IEnumerator InvokePhase2EnteredNextFrame(string phase2StageId)
+        {
+            yield return null;
+            Debug.Log($"[CampaignModeManager] ForceStartAsPhase2 — {phase2StageId}");
+
+            CampaignSaveManager.GetOrCreate().Load(phase2StageId);
+
+            // ★ Phase2에서 능력 무효화 구역 비활성
+            GameFlowController.Instance?.GetCharacterSpawner()?.DisableAllAbilityZones(false);
+            var gameState2 = GameFlowController.Instance?.GameState as GameState;
+            if (gameState2 != null)
+                GameFlowController.Instance.GetCharacterSpawner()?.ApplyZoneRulesToGameState(gameState2);
+
+            OnPhase2Entered?.Invoke(phase2StageId);
         }
 
         public void OnFirstRunCleared(string phase1StageId)
@@ -219,14 +234,18 @@ namespace HTH.Campaign
             // ── 5. Phase2 상태 설정 ───────────────────────────────────────
             CurrentPhase = CampaignPhase.Phase2;
             CurrentPhase2StageId = phase2StageId;
-
             GameLogger.Instance?.StartStageLogging(phase2StageId);
 
-            // Phase2 역할 재배정 (기본모드 역할 → 캠페인 모드 역할)
+            CampaignSaveManager.GetOrCreate().Load(phase2StageId);
+
             if (_phase2RoleConfig != null)
                 GameFlowController.Instance?.ReassignRolesForPhase2(_phase2RoleConfig);
-            else
-                Debug.LogWarning("[CampaignModeManager] Phase2 Role Config 미연결 — 역할 재배정 건너뜀");
+
+            // ★ Phase2에서 능력 무효화 구역 비활성
+            GameFlowController.Instance?.GetCharacterSpawner()?.DisableAllAbilityZones(false);
+            var gameState1 = GameFlowController.Instance?.GameState as GameState;
+            if (gameState1 != null)
+                GameFlowController.Instance.GetCharacterSpawner()?.ApplyZoneRulesToGameState(gameState1);
 
             if (_zone != null) _zone.color = Color.green;
             if (_zoneText != null) { _zoneText.color = Color.green; _zoneText.text = "조사 지정 구역"; }

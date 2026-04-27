@@ -35,6 +35,7 @@ namespace HTH.Campaign
     [DisallowMultipleComponent]
     public class DialogueTriggerManager : MonoBehaviour
     {
+        public static DialogueTriggerManager Instance { get; private set; }
         // ── Inspector ────────────────────────────────────────────────────
 
         [Header("데이터")]
@@ -61,13 +62,25 @@ namespace HTH.Campaign
         /// <summary>대사 출력 조건을 판별합니다.</summary>
         private DialogueConditionEvaluator _conditionEvaluator;
 
+        // ✅ 추가 — 필드
+        /// <summary>캠페인 대사 트리거 대기 중 클릭 차단 여부</summary>
+        public bool IsWaitingForDialogue { get; private set; }
+
         /// <summary>Phase2가 활성화되고 초기화가 완료됐는지 여부입니다.</summary>
         private bool _isInitialized;
+
+        // ✅ 추가
+        private HashSet<int> _cachedDeadThisTurn = new HashSet<int>();
+        private bool _cachedWandererKill;
+        private bool _cachedSacrifice;
+        private int _cachedTotalDeathCount;
 
         // ── Unity ────────────────────────────────────────────────────────
 
         private void Awake()
         {
+            Instance = this;
+
             _progressTracker = new DialogueProgressTracker();
             _conditionEvaluator = new DialogueConditionEvaluator();
         }
@@ -79,17 +92,27 @@ namespace HTH.Campaign
 
             var turnSM = GameFlowController.Instance?.GetTurnSM();
             if (turnSM != null)
+            {
                 turnSM.OnPlayerActionStarted += OnPlayerActionStarted;
+                turnSM.OnTurnEndEntered += OnTurnEndEntered;
+                turnSM.OnTurnEndDialogueFinished += OnTurnEndDialogueFinished; // ★ 추가
+            }
         }
 
         private void OnDestroy()
         {
+            if (Instance == this) Instance = null;
+
             if (CampaignModeManager.Instance != null)
                 CampaignModeManager.Instance.OnPhase2Entered -= OnPhase2Entered;
 
             var turnSM = GameFlowController.Instance?.GetTurnSM();
             if (turnSM != null)
+            {
                 turnSM.OnPlayerActionStarted -= OnPlayerActionStarted;
+                turnSM.OnTurnEndEntered -= OnTurnEndEntered;
+                turnSM.OnTurnEndDialogueFinished -= OnTurnEndDialogueFinished; // ★ 추가
+            }
         }
 
         // ── 이벤트 핸들러 ─────────────────────────────────────────────────
@@ -114,16 +137,61 @@ namespace HTH.Campaign
             Debug.Log($"[DialogueTriggerManager] Phase2 활성화 — {stageId}");
         }
 
+        // ✅ 추가
+        private void OnTurnEndEntered(IReadOnlyList<string> roleLog, bool isLastTurn)
+        {
+            if (!_isInitialized) return;
+
+            var gameState = GameFlowController.Instance?.GameState;
+            _cachedDeadThisTurn = new HashSet<int>();
+            _cachedWandererKill = false;
+            _cachedSacrifice = false;
+
+            if (gameState != null)
+            {
+                foreach (int id in gameState.GetAllCharacterIds())
+                {
+                    if (!gameState.IsMarkedForDeath(id)) continue;
+                    _cachedDeadThisTurn.Add(id);
+                    _cachedTotalDeathCount++;
+                }
+
+                int saturnPrev = gameState.GetPreviousZone(7);
+                int saturnCurrent = gameState.GetZone(7);
+                if (saturnPrev != saturnCurrent)
+                    foreach (int deadId in _cachedDeadThisTurn)
+                        if (gameState.GetZone(deadId) == saturnPrev)
+                        { _cachedWandererKill = true; break; }
+
+                _cachedSacrifice = gameState.IsMarkedForDeath(6);
+            }
+
+            Debug.Log($"[DTM] TurnEnd 캐싱 — [{string.Join(",", _cachedDeadThisTurn)}] 배회자={_cachedWandererKill} 희생양={_cachedSacrifice}");
+        }
+        // ✅ 추가 — 페이드 아웃 완료 후 1초 뒤 트리거
+        private void OnTurnEndDialogueFinished()
+        {
+            if (!_isInitialized) return;
+            if (!CampaignModeManager.IsPhase2Active) return;
+
+            StartCoroutine(TriggerDialoguesDelayed(1f));
+        }
+
+        private IEnumerator TriggerDialoguesDelayed(float delay)
+        {
+            IsWaitingForDialogue = true;  // ★ 클릭 차단 시작
+            yield return new WaitForSeconds(delay);
+            IsWaitingForDialogue = false; // ★ 클릭 차단 해제
+            TriggerDialoguesForAllZones();
+        }
+
         /// <summary>
         /// 다음 턴 PlayerAction이 시작될 때 호출됩니다.
         /// 이전 턴의 캐릭터 배치를 기준으로 대사를 트리거합니다.
         /// </summary>
         private void OnPlayerActionStarted()
         {
-            if (!_isInitialized) return;
-            if (!CampaignModeManager.IsPhase2Active) return;
-
-            TriggerDialoguesForAllZones();
+            Debug.Log($"[DTM] OnPlayerActionStarted — isInitialized={_isInitialized}, IsPhase2={CampaignModeManager.IsPhase2Active}");
         }
 
         // ── Private — 전체 구역 순회 ─────────────────────────────────────
@@ -168,53 +236,12 @@ namespace HTH.Campaign
         /// <summary>현재 턴의 ConditionContext를 생성합니다.</summary>
         private ConditionContext BuildConditionContext()
         {
-            var gameState = GameFlowController.Instance?.GameState;
-            var deadThisTurn = new HashSet<int>();
-            int totalDeathCount = 0;
-
-            if (gameState != null)
-            {
-                foreach (int id in gameState.GetAllCharacterIds())
-                {
-                    if (gameState.GetCharacter(id) == null) continue;
-                    if (!gameState.IsMarkedForDeath(id)) continue;
-
-                    deadThisTurn.Add(id);
-                    totalDeathCount++;
-                }
-            }
-
-            // Phase2 역할 기믹은 캐릭터 ID로 판별
-            // 새턴(#7) = 배회자 / 프리드(#6) = 희생양
-            bool wandererKill = false;
-            bool sacrifice = false;
-
-            if (gameState != null)
-            {
-                int saturnPrev = gameState.GetPreviousZone(7);
-                int saturnCurrent = gameState.GetZone(7);
-
-                if (saturnPrev != saturnCurrent)
-                {
-                    foreach (int deadId in deadThisTurn)
-                    {
-                        if (gameState.GetZone(deadId) == saturnPrev)
-                        {
-                            wandererKill = true;
-                            break;
-                        }
-                    }
-                }
-
-                sacrifice = gameState.IsMarkedForDeath(6);
-            }
-
             return new ConditionContext
             {
-                AllDeadThisTurn = deadThisTurn,
-                TotalDeathCount = totalDeathCount,
-                WandererKillOccurred = wandererKill,
-                SacrificeOccurred = sacrifice,
+                AllDeadThisTurn = _cachedDeadThisTurn,
+                TotalDeathCount = _cachedTotalDeathCount,
+                WandererKillOccurred = _cachedWandererKill,
+                SacrificeOccurred = _cachedSacrifice,
             };
         }
 
@@ -231,6 +258,7 @@ namespace HTH.Campaign
         /// </summary>
         private List<GroupDialogueEntry> FindCandidateEntries(HashSet<int> characterIds)
         {
+            Debug.Log($"[DTM] FindCandidateEntries — 캐릭터: [{string.Join(",", characterIds)}], 전체 엔트리 수: {_dialogueData?.GroupDialogues?.Count ?? 0}");
             if (_dialogueData == null) return new List<GroupDialogueEntry>();
 
             var priority1 = new List<GroupDialogueEntry>(); // 프로파일 핵심문장
@@ -244,12 +272,27 @@ namespace HTH.Campaign
                 if (entry == null) continue;
                 if (!MatchesAnyComboKey(entry.ComboKey, characterIds)) continue;
 
+                // ★ 추가
+                Debug.Log($"[DTM] 후보 엔트리 — ComboId:{entry.ComboId} SituationType:{entry.SituationType} FragmentId:{entry.FragmentId} UnlockConditionId:{entry.UnlockConditionId}");
+
                 switch (entry.SituationType)
                 {
+                    // ✅ 수정 — FragmentId 없어도 프로파일 핵심문장이면 priority1
                     case "프로파일 핵심문장":
-                        if (!string.IsNullOrEmpty(entry.FragmentId) &&
-                            !(_fragmentCollector?.HasFragment(entry.FragmentId) ?? false))
+                        if (string.IsNullOrEmpty(entry.FragmentId))
+                        {
+                            // FragmentId 없는 프로파일 핵심문장도 우선순위 1로 처리
                             priority1.Add(entry);
+                        }
+                        else if (!(_fragmentCollector?.HasFragment(entry.FragmentId) ?? false))
+                        {
+                            priority1.Add(entry);
+                        }
+                        // 이미 수집된 건 priority3(일반대화)으로 폴백
+                        else
+                        {
+                            priority3.Add(entry);
+                        }
                         break;
 
                     case "사망 반응":

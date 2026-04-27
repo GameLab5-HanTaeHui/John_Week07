@@ -1,3 +1,4 @@
+using HTH.Campaign;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -112,8 +113,12 @@ public class PlayerTurnInputHandler : MonoBehaviour
         if (loopState == LoopStateType.FinalDecision ||
             loopState == LoopStateType.AwaitingFinalDecision) return;
 
-        if (Mouse.current.leftButton.wasPressedThisFrame)  OnPress();
-        if (Mouse.current.leftButton.isPressed)            OnHold();
+        // ★ 캠페인 대사 대기 중 클릭 차단
+        if (DialogueTriggerManager.Instance != null &&
+            DialogueTriggerManager.Instance.IsWaitingForDialogue) return;
+
+        if (Mouse.current.leftButton.wasPressedThisFrame) OnPress();
+        if (Mouse.current.leftButton.isPressed) OnHold();
         if (Mouse.current.leftButton.wasReleasedThisFrame) OnRelease();
     }
 

@@ -15,8 +15,8 @@ MonoBehaviour:
   _stageId: 0
   roles:
   - {fileID: 11400000, guid: 1ee73209c45f7104a810e56cc9c464c6, type: 2}
-  - {fileID: 11400000, guid: 4ea50a4ecce8aa6488315e8d9157ec33, type: 2}
   - {fileID: 11400000, guid: f038699cb723aab4f8979673e711c5b2, type: 2}
-  - {fileID: 11400000, guid: 1786fc53ae6c5064591c0c765eb18e31, type: 2}
+  - {fileID: 11400000, guid: 4ea50a4ecce8aa6488315e8d9157ec33, type: 2}
   - {fileID: 11400000, guid: d7ff040d2f02c02468a5e1637830dff2, type: 2}
+  - {fileID: 11400000, guid: 1786fc53ae6c5064591c0c765eb18e31, type: 2}
   _loopCondition: {fileID: 11400000, guid: b9069795f645c1b4ab1930c5eb0f4ee9, type: 2}

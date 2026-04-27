@@ -1,3 +1,4 @@
+using HTH.Campaign;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -53,6 +54,10 @@ public class LobbyUI : MonoBehaviour
     [Tooltip("true = 처음부터 기본 모드 없이 캠페인 모드만 실행")]
     [SerializeField] private bool _alwaysStartAsPhase2 = false;
 
+    // ✅ 추가 — 필드
+    [Header("캠페인 이어하기")]
+    [SerializeField] private Button _campaignContinueButton;
+
     // ── Unity ────────────────────────────────────────────────────────────────
 
     private void Start()
@@ -87,6 +92,26 @@ public class LobbyUI : MonoBehaviour
         _startSeedButton?.onClick.AddListener(OnStartWithSeedClicked);
         _startRandomButton?.onClick.AddListener(OnStartRandomClicked);
         _backButton?.onClick.AddListener(ShowMain);
+
+        // ★ 캠페인 이어하기 버튼 — Phase2 저장 데이터 있을 때만 표시
+        string phase2StageId = _stageId + "_Phase2";
+        bool hasCampaignSave = CampaignSaveManager.Instance != null
+            && CampaignSaveManager.Instance.HasSave(phase2StageId);
+
+        if (_campaignContinueButton != null)
+        {
+            _campaignContinueButton.gameObject.SetActive(hasCampaignSave);
+            _campaignContinueButton.onClick.AddListener(OnCampaignContinueClicked);
+        }
+    }
+
+    // ✅ 추가 — 캠페인 이어하기 버튼 콜백
+    private void OnCampaignContinueClicked()
+    {
+        TurnHistoryRepository.Instance.ClearAll();
+        NewGameConfig.SetRandom(_stageId);
+        NewGameConfig.ForceStartAsPhase2 = true;
+        SceneManager.LoadScene(_gameSceneName);
     }
 
     // ── 버튼 콜백 ─────────────────────────────────────────────────────────────
@@ -125,10 +150,10 @@ public class LobbyUI : MonoBehaviour
 
     private void OnStartRandomClicked()
     {
-        TurnHistoryRepository.Instance.ClearAll();
-        NewGameConfig.SetRandom(_stageId);
-        NewGameConfig.ForceStartAsPhase2 = ShouldSkipToPhase2();
-        SceneManager.LoadScene(_gameSceneName);
+        NewGameConfig.SetTutorial(_tutorialFixedSeed);
+        // ★ ForceStartAsPhase2 명시적 초기화
+        NewGameConfig.ForceStartAsPhase2 = false;
+        SceneManager.LoadScene(_tutorialRetrySceneName);
     }
 
     // ── Private ──────────────────────────────────────────────────────────────
