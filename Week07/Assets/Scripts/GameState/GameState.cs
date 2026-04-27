@@ -488,6 +488,13 @@ public class GameState : IGameState
     // Private
     // ══════════════════════════════════════════════════════════════════════
 
+    // ── Private 섹션 마지막 ──────────────────────────────────
+    /// <summary>
+    /// [HTH추가] 역할 배정 테이블을 반환합니다.
+    /// GameFlowController.ReassignRolesForPhase2()에서 사용합니다.
+    /// </summary>
+    public RoleAssignmentTable GetRoleTable() => _roleTable;
+
     private CharacterState GetCharacterInternal(int characterId)
         => _characters.Find(c => c.CharacterId == characterId);
 }

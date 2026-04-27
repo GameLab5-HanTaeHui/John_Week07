@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
-using HTH.Campaign;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -37,7 +36,7 @@ public class FinalDecisionUI : MonoBehaviour
 
     [Header("연출 설정")]
     [SerializeField] private float _fadeInDuration = 0.6f;
-    [SerializeField] private float _continueDelay  = 2f;
+    [SerializeField] private float _continueDelay = 2f;
 
     [Header("오답 정답 표시")]
     [Tooltip("정답 카드 표시 후 입력을 막을 시간(초)")]
@@ -46,10 +45,10 @@ public class FinalDecisionUI : MonoBehaviour
     [SerializeField] private Color _wrongTextColor = Color.red;
 
     private CanvasGroup _canvasGroup;
-    private bool        _awaitingContinueClick;
-    private bool        _awaitingWrongAnswerClick;
-    private bool        _blockContinueUntilUpload; // [HTH추가]
-    private Coroutine   _wrongAnswerCo;
+    private bool _awaitingContinueClick;
+    private bool _awaitingWrongAnswerClick;
+    private bool _blockContinueUntilUpload; // [HTH추가]
+    private Coroutine _wrongAnswerCo;
 
     // 다이얼로그 완료 후 캠패인 전환 처리를 위한 임시 저장 필드
     private bool _pendingCampaignTransition;
@@ -66,8 +65,8 @@ public class FinalDecisionUI : MonoBehaviour
         var gfc = GameFlowController.Instance;
         if (gfc != null)
         {
-            gfc.OnFinalDecisionEntered    += Show;
-            gfc.OnFinalDecisionExited     += Hide;
+            gfc.OnFinalDecisionEntered += Show;
+            gfc.OnFinalDecisionExited += Hide;
             gfc.OnGameEndDialogueComplete += HandleGameEndDialogueComplete;
         }
 
@@ -86,8 +85,8 @@ public class FinalDecisionUI : MonoBehaviour
     {
         var gfc = GameFlowController.Instance;
         if (gfc == null) return;
-        gfc.OnFinalDecisionEntered    -= Show;
-        gfc.OnFinalDecisionExited     -= Hide;
+        gfc.OnFinalDecisionEntered -= Show;
+        gfc.OnFinalDecisionExited -= Hide;
         gfc.OnGameEndDialogueComplete -= HandleGameEndDialogueComplete;
     }
 
@@ -152,7 +151,7 @@ public class FinalDecisionUI : MonoBehaviour
 
     private void Hide()
     {
-        _awaitingContinueClick    = false;
+        _awaitingContinueClick = false;
         _awaitingWrongAnswerClick = false;
         if (_wrongAnswerCo != null) { StopCoroutine(_wrongAnswerCo); _wrongAnswerCo = null; }
         DOTween.Kill(gameObject);
@@ -289,15 +288,13 @@ public class FinalDecisionUI : MonoBehaviour
         var resultText = isWin ? _winText : _loseText;
         if (resultText != null) resultText.gameObject.SetActive(true);
 
-        // 1회차 승리 시 캠패인 모드 전환을 알립니다.
-        // CampaignModeManager 내부에서 활성화 여부에 따라 Phase2 또는 로비로 이동합니다.
-        // 단, 로비 이동은 플레이어 클릭(Continue) 이후에 처리되도록
-        // 여기서는 저장만 하고 실제 호출은 클릭 시점에 합니다.
+        // 1회차 승리 시 캠패인 전환 준비
+        // StopStageLogging()이 FinalizeAndUploadLog()에서 이미 호출됐으므로
+        // CurrentStageId 대신 GameFlowController.Instance.StageId를 사용
         if (isWin && HTH.Campaign.CampaignModeManager.Instance != null)
         {
             _pendingCampaignTransition = true;
-            _pendingStageId = GameLogger.Instance?.CurrentStageId
-                           ?? GameFlowController.Instance?.StageId;
+            _pendingStageId = GameFlowController.Instance?.StageId ?? string.Empty;
         }
 
         DOVirtual.DelayedCall(_continueDelay, () =>

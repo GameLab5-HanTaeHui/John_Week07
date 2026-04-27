@@ -312,6 +312,8 @@ MonoBehaviour:
   _impactDuration: 0.09
   _settleUpHeight: 0.28
   _settleDuration: 0.14
+  _landEffect: {fileID: 0}
+  _landEffectDuration: 0.5
 --- !u!114 &7346644055445421678
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -337,6 +339,8 @@ MonoBehaviour:
   _impactDuration: 0.09
   _settleUpHeight: 0.28
   _settleDuration: 0.14
+  _landEffect: {fileID: 0}
+  _landEffectDuration: 0.5
 --- !u!1 &2113636492307795603
 GameObject:
   m_ObjectHideFlags: 0
@@ -851,8 +855,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4280745728
-  m_fontColor: {r: 0, g: 1, b: 0.15068698, a: 1}
+    rgba: 4287125592
+  m_fontColor: {r: 0.34509805, g: 0.34509805, b: 0.53333336, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:

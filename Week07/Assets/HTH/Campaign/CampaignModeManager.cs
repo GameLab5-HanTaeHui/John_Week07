@@ -1,139 +1,102 @@
-﻿using System;
+﻿using DG.Tweening;
+using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 namespace HTH.Campaign
 {
     /// <summary>
     /// 캠페인 전체 상태를 관리하는 싱글톤입니다.
     ///
-    /// ─── 이 스크립트의 역할 ──────────────────────────────────────────────
-    ///   캠페인 모드의 시작과 끝을 총괄합니다.
-    ///   1회차(역할 추리)와 2회차(인물 추리) 사이의 전환을 담당하고,
-    ///   Phase2가 끝났을 때 엔딩 씬으로 이동하는 역할을 합니다.
+    /// ─── 1회차 → 2회차 전환 흐름 ────────────────────────────────────────
+    ///   GameFlowController.HandleGameEnded(isWin=true)
+    ///   → OnFirstRunCleared("Stage_1")
+    ///   → EnterPhase2SameScene()
+    ///   → Phase2TransitionCoroutine()
+    ///       1. 검은 화면 FadeIn
+    ///       2. _DiaText에 전환 문구 FadeIn 표시
+    ///       3. DialoguePlayer 클릭 대기 또는 2초 자동 대기
+    ///       4. _DiaText FadeOut
+    ///       5. Phase2 상태 설정
+    ///       6. 검은 화면 FadeOut
+    ///       7. OnPhase2Entered 이벤트 발생
     ///
-    /// ─── 1회차 → 2회차 진입 흐름 ────────────────────────────────────────
-    ///   FinalDecisionUI에서 역할을 전부 정답으로 맞춤
-    ///   → FinalDecisionUI.OnSubmitClicked()에서 OnFirstRunCleared() 호출
-    ///   → Phase2 StageId 생성 (예: "Stage_1" → "Stage_1_Phase2")
-    ///   → _useSceneTransition 값에 따라:
-    ///       false(현재): EnterPhase2SameScene() → 같은 씬에서 컨텐츠 교체
-    ///       true(추후): EnterPhase2ViaLobby() → 로비 경유 후 2회차 진입
-    ///   → OnPhase2Entered 이벤트 발생
-    ///   → DialogueTriggerManager, FragmentCollector 등이 이벤트를 수신해 초기화
-    ///
-    /// ─── 엔딩 흐름 ───────────────────────────────────────────────────────
-    ///   모든 캐릭터(#1~#7)의 시점 완결문이 해금됨
-    ///   → FragmentCollector.OnAllCharactersCompleted 이벤트 발생
-    ///   → CampaignModeManager가 이벤트 수신
-    ///   → OnCampaignEnding 이벤트 발생
-    ///   → _endingSceneName이 비어있으면 로비로, 있으면 엔딩 씬으로 이동
-    ///
-    /// ─── 씬 배치 ─────────────────────────────────────────────────────────
-    ///   _CampaignSystem 하위 GameObject에 컴포넌트로 추가합니다.
-    ///   싱글톤이므로 씬에 1개만 배치합니다.
-    ///
-    /// ─── Inspector 설정 ──────────────────────────────────────────────────
-    ///   Use Scene Transition → false (현재 A방식 유지)
-    ///   Lobby Scene Name     → "LobbyScene"
-    ///   Ending Scene Name    → "" (비워두면 로비로 이동, 추후 엔딩 씬 이름 입력)
-    ///   Phase2 Suffix        → "_Phase2"
+    /// ─── Inspector 연결 ──────────────────────────────────────────────────
+    ///   Dia Text                  → 검은 화면 위 TMP_Text (필수)
+    ///   Phase2 Transition Lines   → 표시 문구
+    ///   Transition Black Panel    → 검은 화면 패널 (CanvasGroup 필요)
+    ///   Transition Fade Duration  → 페이드 시간 (초)
+    ///   Phase2 Transition Player  → DialoguePlayer (선택, 없으면 2초 대기)
     /// </summary>
     [DisallowMultipleComponent]
     public class CampaignModeManager : SingletonMonobehaviour<CampaignModeManager>
     {
         // ── Inspector ────────────────────────────────────────────────────
 
-        [Header("캠페인 모드 활성화")]
-        [Tooltip("true  = 1회차 클리어 시 Phase2 캠페인 모드로 진입합니다.\n" +
-                 "false = 1회차 클리어 시 로비로 바로 이동합니다.\n" +
-                 "캠페인 모드 준비가 완료될 때까지 false로 유지합니다.")]
-        [SerializeField] private bool _campaignModeEnabled = false;
-
         [Header("씬 전환 방식")]
         [Tooltip("false = A방식: 같은 씬에서 컨텐츠 교체 (현재 사용)\n" +
                  "true  = B방식: 로비를 거쳐서 2회차 씬으로 진입 (추후 구현)")]
         [SerializeField] private bool _useSceneTransition = false;
 
-        [Tooltip("로비 씬 이름입니다.\n" +
-                 "B방식 전환 시 이동할 씬 이름과 엔딩 씬이 없을 때 이동할 씬 이름에 사용됩니다.")]
+        [Tooltip("로비 씬 이름입니다.")]
         [SerializeField] private string _lobbySceneName = "LobbyScene";
 
         [Header("엔딩")]
-        [Tooltip("엔딩 씬 이름입니다.\n" +
-                 "비워두면 모든 캐릭터 완수 시 로비로 이동합니다.\n" +
-                 "추후 엔딩 씬을 만들면 여기에 씬 이름을 입력합니다.")]
+        [Tooltip("엔딩 씬 이름입니다. 비워두면 로비로 이동합니다.")]
         [SerializeField] private string _endingSceneName = "";
 
         [Header("Phase2 스테이지 ID 접미사")]
-        [Tooltip("1회차 StageId 뒤에 붙는 접미사입니다.\n" +
-                 "예: 'Stage_1' + '_Phase2' = 'Stage_1_Phase2'")]
+        [Tooltip("예: 'Stage_1' + '_Phase2' = 'Stage_1_Phase2'")]
         [SerializeField] private string _phase2Suffix = "_Phase2";
 
-        [Header("2페이즈 Zone 설정 변경")]
+        [Header("Phase2 전환 연출")]
+        [Tooltip("검은 화면 위에 표시할 TMP_Text입니다. (필수)")]
+        [SerializeField] private TextMeshProUGUI _DiaText;
+
+        [Tooltip("검은 화면 위에 표시할 전환 문구입니다.")]
+        [SerializeField] private string _phase2TransitionLines = "이대로 이야기를 끝낼 순 없어...";
+
+        [Tooltip("검은 화면 패널입니다. CanvasGroup 컴포넌트 필요.")]
+        [SerializeField] private GameObject _transitionBlackPanel;
+
+        [Tooltip("검은 화면 / 문구 페이드 시간 (초)")]
+        [SerializeField] private float _transitionFadeDuration = 0.5f;
+
+        [Tooltip("전환 다이얼로그를 재생할 DialoguePlayer입니다. (선택)\n" +
+                 "연결 시 클릭으로 진행, 미연결 시 2초 자동 대기합니다.")]
+        [SerializeField] private DialoguePlayer _phase2TransitionPlayer;
+
+        [Tooltip("전환 화자 ID입니다. (0 = 내레이션)")]
+        [SerializeField] private int _transitionSpeakerId = 0;
+
+        [Header("Phase2 역할 배정")]
+        [Tooltip("Phase2에서 사용할 StageRoleConfig 에셋입니다." +
+                 "기본모드 역할을 제거하고 캠페인 모드 역할로 재배정합니다.")]
+        [SerializeField] private StageRoleConfig _phase2RoleConfig;
+
+        [Header("Zone 설정")]
         [SerializeField] private SpriteRenderer _zone;
         [SerializeField] private TextMeshPro _zoneText;
 
         // ── 상태 ─────────────────────────────────────────────────────────
 
-        /// <summary>
-        /// 현재 진행 중인 캠페인 회차입니다.
-        /// None = 일반 플레이 / Phase1 = 1회차 / Phase2 = 2회차
-        /// </summary>
         public CampaignPhase CurrentPhase { get; private set; } = CampaignPhase.None;
-
-        /// <summary>
-        /// 현재 진행 중인 Phase2 StageId입니다.
-        /// Phase2가 아니면 null입니다.
-        /// 예: "Stage_1_Phase2"
-        /// </summary>
         public string CurrentPhase2StageId { get; private set; }
 
-        /// <summary>
-        /// Phase2가 현재 활성화됐는지 여부입니다.
-        /// 다른 스크립트에서 Phase2 여부를 확인할 때 사용합니다.
-        /// 예: if (CampaignModeManager.IsPhase2Active) { ... }
-        /// </summary>
         public static bool IsPhase2Active
             => Instance != null && Instance.CurrentPhase == CampaignPhase.Phase2;
 
         // ── 이벤트 ───────────────────────────────────────────────────────
 
-        /// <summary>
-        /// Phase2 진입이 완료되면 발생합니다.
-        /// string 파라미터: Phase2 StageId (예: "Stage_1_Phase2")
-        ///
-        /// 구독하는 곳:
-        ///   DialogueTriggerManager → 초기화 및 활성화
-        ///   CharacterRecordBook    → 인물 기록장 초기화
-        ///   FragmentCollector      → 수집 기록 로드
-        /// </summary>
         public event Action<string> OnPhase2Entered;
-
-        /// <summary>
-        /// Phase2에서 다시 Phase1으로 돌아갈 때 발생합니다.
-        /// 현재 미사용 — 추후 구현 예정입니다.
-        /// </summary>
         public event Action OnPhase2Exited;
-
-        /// <summary>
-        /// 캠페인 엔딩 조건 달성 시 발생합니다.
-        /// 모든 캐릭터(#1~#7)의 시점 완결문이 해금됐을 때 발생합니다.
-        /// </summary>
         public event Action OnCampaignEnding;
 
         // ── 외부 API ─────────────────────────────────────────────────────
 
-        /// <summary>
-        /// 1회차에서 역할을 전부 정답으로 맞췄을 때 호출합니다.
-        /// FinalDecisionUI.OnSubmitClicked()에서 isWin = true일 때 호출합니다.
-        ///
-        /// Phase2 StageId를 생성하고 _useSceneTransition 값에 따라
-        /// A방식(같은 씬 교체) 또는 B방식(로비 경유)으로 2회차에 진입합니다.
-        /// </summary>
-        /// <param name="phase1StageId">1회차 스테이지 ID (예: "Stage_1")</param>
         public void OnFirstRunCleared(string phase1StageId)
         {
             if (string.IsNullOrEmpty(phase1StageId))
@@ -142,37 +105,16 @@ namespace HTH.Campaign
                 return;
             }
 
-            // 캠페인 모드 비활성화 시 로비로 바로 이동합니다.
-            // 캠페인 모드 준비 완료 후 Inspector에서 true로 변경하세요.
-            if (!_campaignModeEnabled)
-            {
-                Debug.Log($"[CampaignModeManager] 캠페인 모드 비활성화 — 로비로 이동합니다.");
-                SceneManager.LoadScene(_lobbySceneName);
-                return;
-            }
-
             string phase2StageId = phase1StageId + _phase2Suffix;
             Debug.Log($"[CampaignModeManager] 1회차 클리어 — {phase1StageId} → {phase2StageId}");
 
-            if (_useSceneTransition)
-                EnterPhase2ViaLobby(phase2StageId);
-            else
-                EnterPhase2SameScene(phase2StageId);
+            if (_useSceneTransition) EnterPhase2ViaLobby(phase2StageId);
+            else EnterPhase2SameScene(phase2StageId);
         }
 
-        /// <summary>
-        /// 로비에서 2회차 스테이지를 선택했을 때 호출합니다. (B방식 전용)
-        /// _useSceneTransition = true로 설정된 경우에 사용됩니다.
-        /// 로비의 스테이지 선택 버튼에서 Phase2 StageId가 설정된 경우 호출합니다.
-        /// </summary>
-        /// <param name="phase2StageId">Phase2 StageId (예: "Stage_1_Phase2")</param>
         public void EnterPhase2FromLobby(string phase2StageId)
         {
-            if (string.IsNullOrEmpty(phase2StageId))
-            {
-                Debug.LogWarning("[CampaignModeManager] EnterPhase2FromLobby — StageId가 비어있습니다.");
-                return;
-            }
+            if (string.IsNullOrEmpty(phase2StageId)) return;
 
             CurrentPhase = CampaignPhase.Phase2;
             CurrentPhase2StageId = phase2StageId;
@@ -183,89 +125,138 @@ namespace HTH.Campaign
 
         // ── Private — Phase2 진입 ─────────────────────────────────────────
 
-        /// <summary>
-        /// A방식: 같은 씬에서 컨텐츠를 교체해 2회차로 진입합니다.
-        /// 씬 이동 없이 CurrentPhase를 Phase2로 변경하고 OnPhase2Entered 이벤트를 발생시킵니다.
-        ///
-        /// 처리 순서:
-        ///   1. CurrentPhase = Phase2 설정
-        ///   2. GameLogger에 Phase2 로깅 시작
-        ///   3. FragmentCollector 엔딩 이벤트 구독
-        ///   4. OnPhase2Entered 이벤트 발생
-        ///      → DialogueTriggerManager, CharacterRecordBook 등이 이를 수신해 초기화
-        /// </summary>
         private void EnterPhase2SameScene(string phase2StageId)
         {
+            StartCoroutine(Phase2TransitionCoroutine(phase2StageId));
+        }
+
+        /// <summary>
+        /// Phase2 전환 연출 코루틴입니다.
+        ///
+        /// 순서
+        ///   1. 검은 화면 FadeIn
+        ///   2. _DiaText에 전환 문구 FadeIn 표시
+        ///   3. DialoguePlayer가 있으면 클릭 대기, 없으면 2초 자동 대기
+        ///   4. _DiaText FadeOut
+        ///   5. Phase2 상태 설정 + Zone 변경
+        ///   6. 검은 화면 FadeOut → 화면 밝아짐
+        ///   7. OnPhase2Entered 이벤트 발생
+        /// </summary>
+        private IEnumerator Phase2TransitionCoroutine(string phase2StageId)
+        {
+            // ── 1. 검은 화면 FadeIn ───────────────────────────────────────
+            CanvasGroup cg = null;
+            if (_transitionBlackPanel != null)
+            {
+                _transitionBlackPanel.SetActive(true);
+                cg = _transitionBlackPanel.GetComponent<CanvasGroup>();
+                if (cg == null) cg = _transitionBlackPanel.AddComponent<CanvasGroup>();
+                cg.alpha = 0f;
+                yield return cg.DOFade(1f, _transitionFadeDuration)
+                               .SetEase(Ease.OutQuad)
+                               .WaitForCompletion();
+            }
+
+            // ── 2. 전환 문구 FadeIn ───────────────────────────────────────
+            if (_DiaText != null)
+            {
+                _DiaText.text = _phase2TransitionLines;
+                _DiaText.alpha = 0f;
+                _DiaText.gameObject.SetActive(true);
+                yield return _DiaText.DOFade(1f, _transitionFadeDuration)
+                                     .SetEase(Ease.OutQuad)
+                                     .WaitForCompletion();
+            }
+
+            // ── 3. 클릭 대기 / 자동 대기 ─────────────────────────────────
+            if (_phase2TransitionPlayer != null
+                && !string.IsNullOrWhiteSpace(_phase2TransitionLines))
+            {
+                var lines = new System.Collections.Generic.List<DialogueLine>
+                {
+                    new DialogueLine
+                    {
+                        SpeakerId           = _transitionSpeakerId,
+                        Text                = _phase2TransitionLines.Trim(),
+                        RevealCharacterId   = -1,
+                        RevealCharacterName = string.Empty,
+                    }
+                };
+                bool done = false;
+                _phase2TransitionPlayer.Play(lines, onComplete: () => done = true);
+                yield return new WaitUntil(() => done);
+            }
+            else
+            {
+                yield return new WaitForSeconds(2f);
+            }
+
+            // ── 4. 전환 문구 FadeOut ──────────────────────────────────────
+            if (_DiaText != null)
+            {
+                yield return _DiaText.DOFade(0f, _transitionFadeDuration)
+                                     .SetEase(Ease.InQuad)
+                                     .WaitForCompletion();
+                _DiaText.gameObject.SetActive(false);
+            }
+
+            // ── 5. Phase2 상태 설정 ───────────────────────────────────────
             CurrentPhase = CampaignPhase.Phase2;
             CurrentPhase2StageId = phase2StageId;
 
             GameLogger.Instance?.StartStageLogging(phase2StageId);
 
-            _zone.color = Color.green;
-            _zoneText.color = Color.green;
-            _zoneText.text = "조사 지정 구역";
+            // Phase2 역할 재배정 (기본모드 역할 → 캠페인 모드 역할)
+            if (_phase2RoleConfig != null)
+                GameFlowController.Instance?.ReassignRolesForPhase2(_phase2RoleConfig);
+            else
+                Debug.LogWarning("[CampaignModeManager] Phase2 Role Config 미연결 — 역할 재배정 건너뜀");
 
-            // Phase2가 시작된 시점에 FragmentCollector의 엔딩 이벤트를 구독합니다.
-            // Start()에서 구독하면 Phase2가 아직 시작 안 됐을 때도 구독되므로 여기서 처리합니다.
+            if (_zone != null) _zone.color = Color.green;
+            if (_zoneText != null) { _zoneText.color = Color.green; _zoneText.text = "조사 지정 구역"; }
+
             SubscribeFragmentCollectorEvents();
 
             Debug.Log($"[CampaignModeManager] Phase2 진입 (같은 씬) — {phase2StageId}");
+
+            // ── 6. 검은 화면 FadeOut ──────────────────────────────────────
+            if (cg != null)
+            {
+                yield return cg.DOFade(0f, _transitionFadeDuration)
+                               .SetEase(Ease.InQuad)
+                               .WaitForCompletion();
+                _transitionBlackPanel.SetActive(false);
+            }
+
+            // ── 7. OnPhase2Entered 이벤트 발생 ────────────────────────────
             OnPhase2Entered?.Invoke(phase2StageId);
         }
 
-        /// <summary>
-        /// B방식: 로비 씬을 거쳐서 2회차로 전환합니다.
-        /// NewGameConfig에 Phase2 StageId를 저장하고 로비 씬으로 이동합니다.
-        /// 로비에서 PendingPhase2StageId를 읽어 Phase2 스테이지를 자동으로 시작합니다.
-        /// </summary>
         private void EnterPhase2ViaLobby(string phase2StageId)
         {
-            // 로비에서 이 값을 읽어 Phase2 스테이지로 자동 진입합니다.
             NewGameConfig.PendingPhase2StageId = phase2StageId;
-
             Debug.Log($"[CampaignModeManager] Phase2 진입 (로비 경유) — {phase2StageId}");
             SceneManager.LoadScene(_lobbySceneName);
         }
 
         // ── Private — 엔딩 처리 ───────────────────────────────────────────
 
-        /// <summary>
-        /// FragmentCollector의 OnAllCharactersCompleted 이벤트를 구독합니다.
-        /// Phase2 진입 시점에 호출됩니다.
-        /// FindObjectOfType을 사용해 씬에 배치된 FragmentCollector를 찾습니다.
-        /// </summary>
         private void SubscribeFragmentCollectorEvents()
         {
-            var collector = GameObject.FindObjectOfType<FragmentCollector>();
+            var collector = FindObjectOfType<FragmentCollector>();
             if (collector == null)
             {
-                Debug.LogWarning("[CampaignModeManager] FragmentCollector를 찾을 수 없습니다.\n" +
-                                 "씬에 FragmentCollector 컴포넌트가 있는지 확인해주세요.");
+                Debug.LogWarning("[CampaignModeManager] FragmentCollector를 찾을 수 없습니다.");
                 return;
             }
-
             collector.OnAllCharactersCompleted += OnAllCharactersCompleted;
             Debug.Log("[CampaignModeManager] FragmentCollector 엔딩 이벤트 구독 완료");
         }
 
-        /// <summary>
-        /// 모든 캐릭터의 시점 완결문이 해금됐을 때 호출됩니다.
-        /// OnCampaignEnding 이벤트를 발생시키고 목표 씬으로 전환합니다.
-        ///
-        /// _endingSceneName이 비어있으면 로비로, 설정되어 있으면 엔딩 씬으로 이동합니다.
-        /// 1초 딜레이는 결과 연출을 위한 것으로 추후 수정할 수 있습니다.
-        /// </summary>
         private void OnAllCharactersCompleted()
         {
             Debug.Log("[CampaignModeManager] 캠페인 엔딩 조건 달성 — 모든 캐릭터 기록 완수");
             OnCampaignEnding?.Invoke();
-
-            // Phase2 완료 로그
-            GameLogger.Instance?.LogEvent("game_end", new System.Collections.Generic.Dictionary<string, object>
-            {
-                { "result",  "win" },
-                { "mode",    "phase2_campaign" },
-            });
 
             string targetScene = string.IsNullOrEmpty(_endingSceneName)
                 ? _lobbySceneName
@@ -275,33 +266,9 @@ namespace HTH.Campaign
             StartCoroutine(EndingTransitionCoroutine(targetScene));
         }
 
-        /// <summary>
-        /// 1초 딜레이 후 목표 씬으로 전환합니다.
-        /// 추후 엔딩 연출(페이드 아웃 등)을 여기에 추가할 수 있습니다.
-        /// </summary>
         private IEnumerator EndingTransitionCoroutine(string sceneName)
         {
             yield return new WaitForSeconds(1f);
-
-            // Phase2 세션 로그 업로드
-            var logger = GameLogger.Instance;
-            if (logger != null)
-            {
-                string fileName = logger.BuildUploadFileName();
-                string stageId = logger.CurrentStageId;
-                logger.StopStageLogging();
-                byte[] bytes = logger.ExtractCurrentSessionBytes();
-
-                if (bytes != null && LogUploader.Instance != null)
-                {
-                    // Phase2 클리어는 항상 isWin = true
-                    LogUploader.Instance.UploadSessionBytes(
-                        bytes, fileName, isWin: true, stageId: stageId,
-                        onComplete: () => SceneManager.LoadScene(sceneName));
-                    yield break; // 업로드 완료 후 씬 전환
-                }
-            }
-
             SceneManager.LoadScene(sceneName);
         }
     }

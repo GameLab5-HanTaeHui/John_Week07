@@ -425,7 +425,7 @@ Material:
     m_Colors:
     - _AOColor: {r: 0, g: 0, b: 0, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Color: {r: 0.028835872, g: 0.036487788, b: 0.6792453, a: 1}
+    - _Color: {r: 0.84705883, g: 0.84705883, b: 0.9098039, a: 1}
     - _CustomAmbientColor: {r: 0.65, g: 0.65, b: 0.65, a: 1}
     - _DepthGlowColor: {r: 1, g: 0.9869999, b: 0.6, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
@@ -440,7 +440,7 @@ Material:
     - _HologramColor: {r: 1.25, g: 2.8, b: 6.8, a: 1}
     - _HologramLineDirection: {r: 0, g: 1, b: 0, a: 0}
     - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
-    - _RimColor: {r: 0.3066038, g: 0.36584237, b: 1, a: 1}
+    - _RimColor: {r: 0.84705883, g: 0.84705883, b: 0.9098039, a: 1}
     - _RimOffset: {r: 0, g: 0, b: 0, a: 0}
     - _SSSColor: {r: 1, g: 1, b: 1, a: 1}
     - _ShakeMaxDisplacement: {r: 0.1, g: 0.1, b: 0.1, a: 0}

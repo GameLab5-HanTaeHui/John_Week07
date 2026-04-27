@@ -126,8 +126,12 @@ namespace HTH.Campaign
 
         private void OnEnable()
         {
-            if (_buttons != null)
-                RefreshButtonStates();
+            if (_buttons == null) return;
+
+            RefreshButtonStates();
+
+            // 해금 상태가 바뀌었을 수 있으므로 카드 텍스트도 갱신
+            RefreshEpilogueCards();
         }
 
         // ── Private — 그리드 생성 ─────────────────────────────────────────
@@ -546,6 +550,35 @@ namespace HTH.Campaign
                 // 다른 카드 열릴 때 이 카드 닫기 (중복 등록 방지)
                 card.OnExpanded -= OnCardExpanded;
                 card.OnExpanded += OnCardExpanded;
+            }
+        }
+
+        /// <summary>
+        /// 이미 생성된 카드의 텍스트와 활성 상태를 갱신합니다.
+        /// OnEnable() 및 헬퍼 RefreshPage() 호출 시 사용합니다.
+        /// </summary>
+        private void RefreshEpilogueCards()
+        {
+            if (_epilogueCards == null) return;
+
+            for (int i = 0; i < _epilogueCards.Length; i++)
+            {
+                var card = _epilogueCards[i];
+                if (card == null) continue;
+
+                int capturedId = i + 1;
+                bool unlocked = _rewardSaveData != null &&
+                                  _rewardSaveData.IsEpilogueUnlocked(capturedId);
+
+                if (unlocked)
+                {
+                    var profile = _profileData?.FindProfile(capturedId);
+                    string text = profile?.EpilogueText ?? string.Empty;
+
+                    // 텍스트가 비어있지 않을 때만 갱신
+                    if (!string.IsNullOrEmpty(text))
+                        card.Setup(text);
+                }
             }
         }
 

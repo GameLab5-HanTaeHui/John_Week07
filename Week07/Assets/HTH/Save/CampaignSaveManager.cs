@@ -25,9 +25,9 @@ namespace HTH.Campaign
     ///   RewardSaveData.SaveEpilogueUnlock() 완료 시
     ///
     /// ─── 씬 배치 ─────────────────────────────────────────────────────────
-    ///   인게임: _CampaignSystem 하위 GameObject
-    ///   로비:   CampaignSystem (빈 GameObject)
-    ///   두 씬 모두 배치 필요 (DontDestroyOnLoad 사용 안 함)
+    ///   로비 씬의 Empty GameObject에 한 번만 배치합니다.
+    ///   DontDestroyOnLoad로 씬 전환 후에도 유지됩니다.
+    ///   인게임 씬에 별도 배치 불필요.
     ///
     /// ─── 외부 호출 ───────────────────────────────────────────────────────
     ///   CampaignSaveManager.Instance.Load(stageId)
@@ -53,6 +53,7 @@ namespace HTH.Campaign
         {
             if (Instance != null) { Destroy(gameObject); return; }
             Instance = this;
+            DontDestroyOnLoad(gameObject);
         }
 
         private void OnDestroy()
@@ -119,6 +120,10 @@ namespace HTH.Campaign
                 EnsureFolderExists();
 
                 data.savedAt = DateTime.Now.ToString("o");
+                // gameVersion은 SaveDataVersionManager가 설정한 값을 유지
+                // 비어있으면 현재 Application.version으로 채움
+                if (string.IsNullOrEmpty(data.gameVersion))
+                    data.gameVersion = Application.version;
                 string json = JsonUtility.ToJson(data, prettyPrint: true);
                 string path = GetFilePath(data.stageId);
 
@@ -149,6 +154,12 @@ namespace HTH.Campaign
             {
                 Debug.LogWarning($"[CampaignSaveManager] 삭제할 파일 없음 — {stageId}");
             }
+        }
+
+        /// <summary>인메모리 CurrentSave를 null로 초기화합니다.</summary>
+        public void ClearCurrentSave()
+        {
+            CurrentSave = null;
         }
 
         /// <summary>

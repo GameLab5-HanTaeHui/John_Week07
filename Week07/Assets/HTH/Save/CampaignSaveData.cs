@@ -25,6 +25,9 @@ namespace HTH.Campaign
         /// <summary>저장 시각입니다. (ISO 8601 형식)</summary>
         public string savedAt;
 
+        /// <summary>이 저장 파일을 생성한 게임 버전입니다.</summary>
+        public string gameVersion;
+
         // ── 대화 조각 ─────────────────────────────────────────────────────
 
         /// <summary>
