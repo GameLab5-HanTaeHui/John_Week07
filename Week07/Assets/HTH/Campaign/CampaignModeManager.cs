@@ -97,6 +97,22 @@ namespace HTH.Campaign
 
         // ── 외부 API ─────────────────────────────────────────────────────
 
+        private void Start()
+        {
+            if (NewGameConfig.ForceStartAsPhase2)
+            {
+                string phase2StageId = NewGameConfig.StageId + _phase2Suffix;
+                Debug.Log($"[CampaignModeManager] ForceStartAsPhase2 — {phase2StageId}");
+                NewGameConfig.ForceStartAsPhase2 = false;
+                // 전환 연출 없이 즉시 Phase2 상태 세팅
+                CurrentPhase = CampaignPhase.Phase2;
+                CurrentPhase2StageId = phase2StageId;
+                GameLogger.Instance?.StartStageLogging(phase2StageId);
+                SubscribeFragmentCollectorEvents();
+                OnPhase2Entered?.Invoke(phase2StageId);
+            }
+        }
+
         public void OnFirstRunCleared(string phase1StageId)
         {
             if (string.IsNullOrEmpty(phase1StageId))

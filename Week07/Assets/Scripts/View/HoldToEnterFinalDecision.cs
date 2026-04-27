@@ -69,6 +69,13 @@ public class HoldToEnterFinalDecision : MonoBehaviour
 
     public void BeginHold()
     {
+        var gfc = GameFlowController.Instance;
+        Debug.Log($"[HoldToEnterFinalDecision] BeginHold — " +
+                  $"LoopState={gfc?.CurrentLoopState} " +
+                  $"TurnState={gfc?.CurrentTurnState} " +
+                  $"CanEnter={gfc?.CanEnterFinalDecision} " +
+                  $"IsPhase2={HTH.Campaign.CampaignModeManager.IsPhase2Active}");
+
         if (_triggered) return;
         if (!CanActivate()) return;
 
@@ -163,6 +170,12 @@ public class HoldToEnterFinalDecision : MonoBehaviour
     private bool CanActivate()
     {
         var gfc = GameFlowController.Instance;
-        return gfc != null && gfc.CanEnterFinalDecision;
+        if (gfc == null) return false;
+
+        // Phase2에서는 LoopState가 WinState에 머물러 있으므로 별도 허용
+        if (HTH.Campaign.CampaignModeManager.IsPhase2Active)
+            return true;
+
+        return gfc.CanEnterFinalDecision;
     }
 }

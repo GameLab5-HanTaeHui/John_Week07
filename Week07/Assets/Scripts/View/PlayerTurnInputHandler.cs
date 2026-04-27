@@ -142,6 +142,12 @@ public class PlayerTurnInputHandler : MonoBehaviour
         _draggingId      = view.CharacterId;
         _draggingView    = view;
         _dragOriginalPos = view.transform.position;
+
+        // ★ PickupAnimator가 있으면 신뢰할 수 있는 groundY로 originalPos.y 교정
+        var anim = view.GetComponent<CharacterPickupAnimator>();
+        if (anim != null)
+            _dragOriginalPos.y = anim.GroundY;
+
         _dragOriginalRot = view.transform.rotation;
         _groundPlane     = new Plane(Vector3.up, view.transform.position);
 

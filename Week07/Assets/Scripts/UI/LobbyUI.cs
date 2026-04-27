@@ -45,6 +45,14 @@ public class LobbyUI : MonoBehaviour
     [SerializeField] private Button         _startRandomButton;
     [SerializeField] private Button         _backButton;
 
+    // ✅ 추가
+    [Header("스테이지 설정")]
+    [SerializeField] private string _stageId = "Stage_1";
+
+    [Header("캠페인 모드 설정")]
+    [Tooltip("true = 처음부터 기본 모드 없이 캠페인 모드만 실행")]
+    [SerializeField] private bool _alwaysStartAsPhase2 = false;
+
     // ── Unity ────────────────────────────────────────────────────────────────
 
     private void Start()
@@ -110,18 +118,25 @@ public class LobbyUI : MonoBehaviour
             return;
         }
         TurnHistoryRepository.Instance.ClearAll();
-        NewGameConfig.SetSeed(seed);
+        NewGameConfig.SetSeed(seed, _stageId);
+        NewGameConfig.ForceStartAsPhase2 = ShouldSkipToPhase2();
         SceneManager.LoadScene(_gameSceneName);
     }
 
     private void OnStartRandomClicked()
     {
         TurnHistoryRepository.Instance.ClearAll();
-        NewGameConfig.SetRandom();
+        NewGameConfig.SetRandom(_stageId);
+        NewGameConfig.ForceStartAsPhase2 = ShouldSkipToPhase2();
         SceneManager.LoadScene(_gameSceneName);
     }
 
     // ── Private ──────────────────────────────────────────────────────────────
+    private bool ShouldSkipToPhase2()
+    {
+        if (_alwaysStartAsPhase2) return true;
+        return StageClearRepository.Instance.HasCleared(_stageId);
+    }
 
     public void ShowMain()
     {

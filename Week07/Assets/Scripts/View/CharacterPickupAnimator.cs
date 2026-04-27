@@ -52,6 +52,10 @@ public class CharacterPickupAnimator : MonoBehaviour
     private Vector3    _tiltTarget;
     private Vector3    _tiltCurrent;
 
+    private float _groundY;
+    public void SetGroundY(float y) => _groundY = y;
+    public float GroundY => _groundY;
+
     private void Awake()
     {
         _baseScale = transform.localScale;
@@ -76,8 +80,12 @@ public class CharacterPickupAnimator : MonoBehaviour
         _tiltCurrent  = Vector3.zero;
         _tiltTarget   = Vector3.zero;
 
+
+        // ★ 수정: 현재 Y 대신 _groundY 기준으로 들어올림
+        float liftTargetY = _groundY + _liftHeight + _pickupOffset.y;
+
         DOTween.Sequence()
-            .Join(transform.DOMoveY(transform.position.y + _liftHeight + _pickupOffset.y, _liftDuration).SetEase(Ease.OutBack))
+            .Join(transform.DOMoveY(liftTargetY, _liftDuration).SetEase(Ease.OutBack))
             .Join(transform.DOScale(_baseScale * _liftScaleMulti, _liftDuration).SetEase(Ease.OutBack))
             .SetId(transform);
     }
@@ -103,6 +111,8 @@ public class CharacterPickupAnimator : MonoBehaviour
         _isHeld     = false;
         _tiltTarget = Vector3.zero;
         DOTween.Kill(transform);
+
+        _groundY = targetPos.y;
 
         var aboveTarget = new Vector3(targetPos.x, transform.position.y, targetPos.z);
         var impactRot   = targetRot * Quaternion.Euler(_impactTiltAngle, 0f, 0f);
@@ -145,6 +155,7 @@ public class CharacterPickupAnimator : MonoBehaviour
     /// </summary>
     public void ReplaceTo(Vector3 targetPos, Quaternion targetRot)
     {
+        _groundY = targetPos.y;
         DOTween.Kill(transform);
         DOTween.Sequence()
             .Append(transform.DOMove(targetPos, 0.25f).SetEase(Ease.OutQuad))

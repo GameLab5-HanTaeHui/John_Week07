@@ -134,10 +134,33 @@ public class LoopStateMachine : StateMachine
     /// <summary>FinalDecisionUI에서 제출 시 호출할 FinalDecisionState를 반환합니다.</summary>
     public FinalDecisionState GetFinalDecisionState() => _finalDecision;
 
-    public void NotifyCharacterClicked(int characterId) => _turnSM.NotifyCharacterClicked(characterId);
-    public void NotifyZoneClicked(int zoneId)           => _turnSM.NotifyZoneClicked(zoneId);
+    public void NotifyZoneClicked(int zoneId)
+    {
+        if (CurrentState == LoopStateType.WinState
+            && HTH.Campaign.CampaignModeManager.IsPhase2Active)
+        {
+            _turnSM.NotifyZoneClicked(zoneId);
+            return;
+        }
+        _turnSM.NotifyZoneClicked(zoneId);
+    }
+
+    public void NotifyCharacterClicked(int characterId)
+    {
+        if (CurrentState == LoopStateType.WinState
+            && HTH.Campaign.CampaignModeManager.IsPhase2Active)
+        {
+            _turnSM.NotifyCharacterClicked(characterId);
+            return;
+        }
+        _turnSM.NotifyCharacterClicked(characterId);
+    }
+
+    public void BeginDragSelect(int characterId)
+    {
+        _turnSM.BeginDragSelect(characterId);
+    }
     public void ForceEndPlayerAction()                  => _turnSM.ForceEndPlayerAction();
-    public void BeginDragSelect(int characterId)        => _turnSM.BeginDragSelect(characterId);
 
     // ── 외부 공개 API ────────────────────────────────────────────
 

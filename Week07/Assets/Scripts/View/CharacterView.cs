@@ -56,6 +56,9 @@ public class CharacterView : MonoBehaviour, IPointerClickHandler
     public void SnapToPosition(Vector3 worldPosition)
     {
         transform.position = worldPosition;
+        // ★ DOTween 도중 스냅 시에도 groundY 정확히 갱신
+        var anim = GetComponent<CharacterPickupAnimator>();
+        if (anim != null) anim.SetGroundY(worldPosition.y);
     }
 
     /// <summary>캐릭터를 목표 월드 회전으로 즉시 회전합니다.</summary>

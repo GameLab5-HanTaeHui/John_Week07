@@ -14,6 +14,9 @@ public static class NewGameConfig
     // [캠패인모드]
     public static string PendingPhase2StageId { get; set; }
 
+    // ★ 추가: 기본 모드를 스킵하고 처음부터 캠페인 모드로 시작
+    public static bool ForceStartAsPhase2 { get; set; }
+
     public static void SetRandom(string stageId = null) { IsSet = true; UseRandom = true; StageId = stageId; }
     public static void SetSeed(int seed, string stageId = null) { IsSet = true; UseRandom = false; Seed = seed; StageId = stageId; }
     public static void SetTutorial(int fixedSeed)
@@ -31,5 +34,7 @@ public static class NewGameConfig
         IsTutorial = false;
         StageId = null;
         PendingPhase2StageId = null;
+
+        ForceStartAsPhase2 = false; // ★ 추가
     }
 }

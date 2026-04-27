@@ -186,7 +186,10 @@ public class GameFlowController : SingletonMonobehaviour<GameFlowController>
     /// <summary>턴 종료 버튼에서 호출합니다. 미확정 캐릭터는 현 위치 유지, 특수능력 정상 발동.</summary>
     public void ForceEndTurn()
     {
-        if (CurrentLoopState != LoopStateType.RunningTurn) return;
+        bool isRunning = CurrentLoopState == LoopStateType.RunningTurn;
+        bool isPhase2Win = CurrentLoopState == LoopStateType.WinState
+                        && HTH.Campaign.CampaignModeManager.IsPhase2Active;
+        if (!isRunning && !isPhase2Win) return;
         _loopSM?.ForceEndPlayerAction();
     }
 
@@ -195,14 +198,20 @@ public class GameFlowController : SingletonMonobehaviour<GameFlowController>
     /// <summary>PlayerTurnInputHandler에서 캐릭터 클릭 시 호출합니다.</summary>
     public void NotifyCharacterClicked(int characterId)
     {
-        if (CurrentLoopState != LoopStateType.RunningTurn) return;
+        bool isRunning = CurrentLoopState == LoopStateType.RunningTurn;
+        bool isPhase2Win = CurrentLoopState == LoopStateType.WinState
+                        && HTH.Campaign.CampaignModeManager.IsPhase2Active;
+        if (!isRunning && !isPhase2Win) return;
         _loopSM?.NotifyCharacterClicked(characterId);
     }
 
     /// <summary>PlayerTurnInputHandler에서 구역 클릭 시 호출합니다.</summary>
     public void NotifyZoneClicked(int zoneId)
     {
-        if (CurrentLoopState != LoopStateType.RunningTurn) return;
+        bool isRunning = CurrentLoopState == LoopStateType.RunningTurn;
+        bool isPhase2Win = CurrentLoopState == LoopStateType.WinState
+                        && HTH.Campaign.CampaignModeManager.IsPhase2Active;
+        if (!isRunning && !isPhase2Win) return;
         _loopSM?.NotifyZoneClicked(zoneId);
     }
 
