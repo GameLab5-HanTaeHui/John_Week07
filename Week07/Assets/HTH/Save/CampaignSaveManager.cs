@@ -10,31 +10,38 @@ namespace HTH.Campaign
     /// ─── 저장 파일 경로 ──────────────────────────────────────────────────
     ///   {Application.persistentDataPath}/HTH/campaign_save_{stageId}.json
     ///
+    /// ─── 저장 데이터 ─────────────────────────────────────────────────────
+    ///   collectedFragmentIds  → 수집된 대화 조각 (P01_01 형식)
+    ///   playedComboIds        → 재생된 대사 ComboId
+    ///   collectedNames        → 수집된 캐릭터 이름
+    ///   unlockedConceptCards  → 해금된 컨셉 카드 캐릭터 ID
+    ///   unlockedEpilogues     → 해금된 시점 완결문 캐릭터 ID
+    ///
     /// ─── 저장 시점 ───────────────────────────────────────────────────────
     ///   FragmentCollector.TryCollectFragment() 완료 시
     ///   DialogueProgressTracker.MarkComboPlayed() 완료 시
     ///   CharacterRecordPanelManager.RegisterCharacterName() 완료 시
+    ///   RewardSaveData.SaveConceptCardUnlock() 완료 시
+    ///   RewardSaveData.SaveEpilogueUnlock() 완료 시
     ///
     /// ─── 씬 배치 ─────────────────────────────────────────────────────────
-    ///   _CampaignSystem 하위 GameObject에 컴포넌트로 추가합니다.
-    ///   DontDestroyOnLoad는 사용하지 않습니다.
-    ///   씬마다 존재하며 Initialize(stageId)로 초기화합니다.
+    ///   인게임: _CampaignSystem 하위 GameObject
+    ///   로비:   CampaignSystem (빈 GameObject)
+    ///   두 씬 모두 배치 필요 (DontDestroyOnLoad 사용 안 함)
     ///
     /// ─── 외부 호출 ───────────────────────────────────────────────────────
-    ///   CampaignSaveManager.Instance.Save(data)
     ///   CampaignSaveManager.Instance.Load(stageId)
+    ///   CampaignSaveManager.Instance.Save(data)
     ///   CampaignSaveManager.Instance.Delete(stageId)
     ///   CampaignSaveManager.Instance.HasSave(stageId)
+    ///   CampaignSaveManager.Instance.GetProgressSummary(stageId)
     /// </summary>
     [DisallowMultipleComponent]
     public class CampaignSaveManager : MonoBehaviour
     {
         public static CampaignSaveManager Instance { get; private set; }
 
-        /// <summary>저장 폴더명입니다.</summary>
         private const string FolderName = "HTH";
-
-        /// <summary>저장 파일명 접두사입니다.</summary>
         private const string FilePrefix = "campaign_save_";
 
         /// <summary>현재 로드된 저장 데이터입니다.</summary>
@@ -56,9 +63,9 @@ namespace HTH.Campaign
         // ── 공개 API ─────────────────────────────────────────────────────
 
         /// <summary>
-        /// 스테이지 ID로 저장 파일을 로드합니다.
+        /// 스테이지 ID로 JSON 저장 파일을 로드합니다.
         /// 파일이 없으면 새 데이터를 생성합니다.
-        /// Phase2 진입 시 호출합니다.
+        /// Phase2 진입 시 / 로비 진입 시 호출합니다.
         /// </summary>
         public CampaignSaveData Load(string stageId)
         {
@@ -70,19 +77,31 @@ namespace HTH.Campaign
                 {
                     string json = File.ReadAllText(path);
                     CurrentSave = JsonUtility.FromJson<CampaignSaveData>(json);
-                    Debug.Log($"[CampaignSaveManager] 저장 데이터 로드 완료 — {stageId}\n" +
-                              $"조각 {CurrentSave.collectedFragmentIds.Count}개 / " +
-                              $"ComboId {CurrentSave.playedComboIds.Count}개 / " +
-                              $"이름 {CurrentSave.collectedNames.Count}개");
+
+                    // null 방어 (JsonUtility가 빈 리스트를 null로 역직렬화하는 경우)
+                    CurrentSave.collectedFragmentIds ??= new();
+                    CurrentSave.playedComboIds ??= new();
+                    CurrentSave.collectedNames ??= new();
+                    CurrentSave.unlockedConceptCards ??= new();
+                    CurrentSave.unlockedEpilogues ??= new();
+
+                    Debug.Log($"[CampaignSaveManager] 로드 완료 — {stageId}\n" +
+                              $"  조각 {CurrentSave.collectedFragmentIds.Count}개\n" +
+                              $"  ComboId {CurrentSave.playedComboIds.Count}개\n" +
+                              $"  이름 {CurrentSave.collectedNames.Count}개\n" +
+                              $"  컨셉카드 {CurrentSave.unlockedConceptCards.Count}개\n" +
+                              $"  시점완결문 {CurrentSave.unlockedEpilogues.Count}개");
+
                     return CurrentSave;
                 }
                 catch (Exception e)
                 {
-                    Debug.LogError($"[CampaignSaveManager] 로드 실패 — {e.Message}");
+                    Debug.LogError($"[CampaignSaveManager] 로드 실패 — {e.Message}\n" +
+                                   "새 데이터로 대체합니다.");
                 }
             }
 
-            // 파일 없음 → 새 데이터 생성
+            // 파일 없음 또는 파싱 실패 → 새 데이터 생성
             CurrentSave = new CampaignSaveData { stageId = stageId };
             Debug.Log($"[CampaignSaveManager] 새 저장 데이터 생성 — {stageId}");
             return CurrentSave;
@@ -114,7 +133,7 @@ namespace HTH.Campaign
 
         /// <summary>
         /// 저장 파일을 삭제합니다.
-        /// 로비에서 진행 초기화 버튼 클릭 시 호출합니다.
+        /// 로비에서 이야기 초기화 버튼 클릭 → WarningDialog 확인 시 호출합니다.
         /// </summary>
         public void Delete(string stageId)
         {
@@ -133,7 +152,7 @@ namespace HTH.Campaign
         }
 
         /// <summary>
-        /// 저장 파일이 존재하는지 확인합니다.
+        /// 저장 파일이 존재하고 진행 데이터가 있는지 확인합니다.
         /// 로비에서 이어하기/새로하기 버튼 표시 여부 결정에 사용합니다.
         /// </summary>
         public bool HasSave(string stageId)
@@ -154,29 +173,37 @@ namespace HTH.Campaign
         }
 
         /// <summary>
-        /// 저장 데이터의 요약 정보를 반환합니다.
+        /// 저장 데이터 요약을 반환합니다.
         /// 로비에서 진행 상황 표시에 사용합니다.
+        /// 반환: (수집된 조각 수, 총 조각 수, 해금된 시점 완결문 수)
         /// </summary>
-        public (int fragmentCount, int totalFragments) GetProgressSummary(string stageId)
+        public (int fragmentCount, int totalFragments, int epilogueCount) GetProgressSummary(string stageId)
         {
-            if (!HasSave(stageId)) return (0, 35);
+            if (!HasSave(stageId)) return (0, 35, 0);
 
             try
             {
                 string json = File.ReadAllText(GetFilePath(stageId));
                 var data = JsonUtility.FromJson<CampaignSaveData>(json);
-                return (data.collectedFragmentIds.Count, 35); // 총 35개 ProfileClue
+                return (
+                    data.collectedFragmentIds?.Count ?? 0,
+                    35, // 총 35개 ProfileClue
+                    data.unlockedEpilogues?.Count ?? 0
+                );
             }
             catch
             {
-                return (0, 35);
+                return (0, 35, 0);
             }
         }
 
         // ── Private ──────────────────────────────────────────────────────
 
         private string GetFilePath(string stageId)
-            => Path.Combine(Application.persistentDataPath, FolderName, $"{FilePrefix}{stageId}.json");
+            => Path.Combine(
+                Application.persistentDataPath,
+                FolderName,
+                $"{FilePrefix}{stageId}.json");
 
         private void EnsureFolderExists()
         {

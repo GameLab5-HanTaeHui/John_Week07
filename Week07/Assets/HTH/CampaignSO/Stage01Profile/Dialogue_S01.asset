@@ -20,7 +20,7 @@ MonoBehaviour:
     ParticipantIds: 01000000
     SituationType: "\uAC1C\uC778 \uB3C5\uBC31"
     Trigger: "\uD734\uC2DD / \uBC24 / \uC870\uC0AC \uC911"
-    Visibility: "\uD63C\uC790 \uC788\uC744 \uB54C"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -61,7 +61,7 @@ MonoBehaviour:
     ParticipantIds: 02000000
     SituationType: "\uAC1C\uC778 \uB3C5\uBC31"
     Trigger: "\uD734\uC2DD / \uBC24 / \uC870\uC0AC \uC911"
-    Visibility: "\uD63C\uC790 \uC788\uC744 \uB54C"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -101,7 +101,7 @@ MonoBehaviour:
     ParticipantIds: 03000000
     SituationType: "\uAC1C\uC778 \uB3C5\uBC31"
     Trigger: "\uD734\uC2DD / \uBC24 / \uC870\uC0AC \uC911"
-    Visibility: "\uD63C\uC790 \uC788\uC744 \uB54C"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -141,7 +141,7 @@ MonoBehaviour:
     ParticipantIds: 04000000
     SituationType: "\uAC1C\uC778 \uB3C5\uBC31"
     Trigger: "\uD734\uC2DD / \uBC24 / \uC870\uC0AC \uC911"
-    Visibility: "\uD63C\uC790 \uC788\uC744 \uB54C"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -183,7 +183,7 @@ MonoBehaviour:
     ParticipantIds: 05000000
     SituationType: "\uAC1C\uC778 \uB3C5\uBC31"
     Trigger: "\uD734\uC2DD / \uBC24 / \uC870\uC0AC \uC911"
-    Visibility: "\uD63C\uC790 \uC788\uC744 \uB54C"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -223,7 +223,7 @@ MonoBehaviour:
     ParticipantIds: 06000000
     SituationType: "\uAC1C\uC778 \uB3C5\uBC31"
     Trigger: "\uD734\uC2DD / \uBC24 / \uC870\uC0AC \uC911"
-    Visibility: "\uD63C\uC790 \uC788\uC744 \uB54C"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -264,7 +264,7 @@ MonoBehaviour:
     ParticipantIds: 07000000
     SituationType: "\uAC1C\uC778 \uB3C5\uBC31"
     Trigger: "\uD734\uC2DD / \uBC24 / \uC870\uC0AC \uC911"
-    Visibility: "\uD63C\uC790 \uC788\uC744 \uB54C"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -305,7 +305,7 @@ MonoBehaviour:
     ParticipantIds: 0100000002000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #1|#2"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -392,7 +392,7 @@ MonoBehaviour:
     ParticipantIds: 0100000003000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #1|#3"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -474,7 +474,7 @@ MonoBehaviour:
     ParticipantIds: 0100000004000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #1|#4"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -536,7 +536,7 @@ MonoBehaviour:
     ParticipantIds: 0100000005000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #1|#5"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -597,7 +597,7 @@ MonoBehaviour:
     ParticipantIds: 0100000006000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #1|#6"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -658,7 +658,7 @@ MonoBehaviour:
     ParticipantIds: 0100000007000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #1|#7"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -719,7 +719,7 @@ MonoBehaviour:
     ParticipantIds: 0200000003000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #2|#3"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -782,7 +782,7 @@ MonoBehaviour:
     ParticipantIds: 0200000004000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #2|#4"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -844,7 +844,7 @@ MonoBehaviour:
     ParticipantIds: 0200000005000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #2|#5"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -903,7 +903,7 @@ MonoBehaviour:
     ParticipantIds: 0200000006000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #2|#6"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -966,7 +966,7 @@ MonoBehaviour:
     ParticipantIds: 0200000007000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #2|#7"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -1028,7 +1028,7 @@ MonoBehaviour:
     ParticipantIds: 0300000004000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #3|#4"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -1089,7 +1089,7 @@ MonoBehaviour:
     ParticipantIds: 0300000005000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #3|#5"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -1150,7 +1150,7 @@ MonoBehaviour:
     ParticipantIds: 0300000006000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #3|#6"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -1210,7 +1210,7 @@ MonoBehaviour:
     ParticipantIds: 0300000007000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #3|#7"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -1278,7 +1278,7 @@ MonoBehaviour:
     ParticipantIds: 0400000005000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #4|#5"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -1339,7 +1339,7 @@ MonoBehaviour:
     ParticipantIds: 0400000006000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #4|#6"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -1400,7 +1400,7 @@ MonoBehaviour:
     ParticipantIds: 0400000007000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #4|#7"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -1462,7 +1462,7 @@ MonoBehaviour:
     ParticipantIds: 0500000006000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #5|#6"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -1524,7 +1524,7 @@ MonoBehaviour:
     ParticipantIds: 0500000007000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #5|#7"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -1584,7 +1584,7 @@ MonoBehaviour:
     ParticipantIds: 0600000007000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #6|#7"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -1654,7 +1654,7 @@ MonoBehaviour:
     ParticipantIds: 010000000200000003000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #1|#2|#3"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -1726,7 +1726,7 @@ MonoBehaviour:
     ParticipantIds: 010000000200000004000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #1|#2|#4"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -1795,7 +1795,7 @@ MonoBehaviour:
     ParticipantIds: 010000000200000005000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #1|#2|#5"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -1869,7 +1869,7 @@ MonoBehaviour:
     ParticipantIds: 010000000200000006000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #1|#2|#6"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -1948,7 +1948,7 @@ MonoBehaviour:
     ParticipantIds: 010000000200000007000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #1|#2|#7"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -2026,7 +2026,7 @@ MonoBehaviour:
     ParticipantIds: 010000000300000004000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #1|#3|#4"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -2065,7 +2065,7 @@ MonoBehaviour:
     ParticipantIds: 010000000300000005000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #1|#3|#5"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -2103,7 +2103,7 @@ MonoBehaviour:
     ParticipantIds: 010000000300000006000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #1|#3|#6"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -2142,7 +2142,7 @@ MonoBehaviour:
     ParticipantIds: 010000000300000007000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #1|#3|#7"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -2182,7 +2182,7 @@ MonoBehaviour:
     ParticipantIds: 010000000400000005000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #1|#4|#5"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -2220,7 +2220,7 @@ MonoBehaviour:
     ParticipantIds: 010000000400000006000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #1|#4|#6"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -2260,7 +2260,7 @@ MonoBehaviour:
     ParticipantIds: 010000000400000007000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #1|#4|#7"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -2299,7 +2299,7 @@ MonoBehaviour:
     ParticipantIds: 010000000500000006000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #1|#5|#6"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -2339,7 +2339,7 @@ MonoBehaviour:
     ParticipantIds: 010000000500000007000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #1|#5|#7"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -2377,7 +2377,7 @@ MonoBehaviour:
     ParticipantIds: 010000000600000007000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #1|#6|#7"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -2417,7 +2417,7 @@ MonoBehaviour:
     ParticipantIds: 020000000300000004000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #2|#3|#4"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -2455,7 +2455,7 @@ MonoBehaviour:
     ParticipantIds: 020000000300000005000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #2|#3|#5"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -2494,7 +2494,7 @@ MonoBehaviour:
     ParticipantIds: 020000000300000006000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #2|#3|#6"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -2534,7 +2534,7 @@ MonoBehaviour:
     ParticipantIds: 020000000300000007000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #2|#3|#7"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -2573,7 +2573,7 @@ MonoBehaviour:
     ParticipantIds: 020000000400000005000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #2|#4|#5"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -2611,7 +2611,7 @@ MonoBehaviour:
     ParticipantIds: 020000000400000006000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #2|#4|#6"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -2650,7 +2650,7 @@ MonoBehaviour:
     ParticipantIds: 020000000400000007000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #2|#4|#7"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -2688,7 +2688,7 @@ MonoBehaviour:
     ParticipantIds: 020000000500000006000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #2|#5|#6"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -2727,7 +2727,7 @@ MonoBehaviour:
     ParticipantIds: 020000000500000007000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #2|#5|#7"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -2766,7 +2766,7 @@ MonoBehaviour:
     ParticipantIds: 020000000600000007000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #2|#6|#7"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -2805,7 +2805,7 @@ MonoBehaviour:
     ParticipantIds: 030000000400000005000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #3|#4|#5"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -2845,7 +2845,7 @@ MonoBehaviour:
     ParticipantIds: 030000000400000006000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #3|#4|#6"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -2883,7 +2883,7 @@ MonoBehaviour:
     ParticipantIds: 030000000400000007000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #3|#4|#7"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -2921,7 +2921,7 @@ MonoBehaviour:
     ParticipantIds: 030000000500000006000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #3|#5|#6"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -2959,7 +2959,7 @@ MonoBehaviour:
     ParticipantIds: 030000000500000007000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #3|#5|#7"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -2998,7 +2998,7 @@ MonoBehaviour:
     ParticipantIds: 030000000600000007000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #3|#6|#7"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -3038,7 +3038,7 @@ MonoBehaviour:
     ParticipantIds: 040000000500000006000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #4|#5|#6"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -3076,7 +3076,7 @@ MonoBehaviour:
     ParticipantIds: 040000000500000007000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #4|#5|#7"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -3115,7 +3115,7 @@ MonoBehaviour:
     ParticipantIds: 040000000600000007000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #4|#6|#7"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -3154,7 +3154,7 @@ MonoBehaviour:
     ParticipantIds: 050000000600000007000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #5|#6|#7"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -3194,7 +3194,7 @@ MonoBehaviour:
     ParticipantIds: 01000000020000000300000004000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #1|#2|#3|#4"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -3241,7 +3241,7 @@ MonoBehaviour:
     ParticipantIds: 01000000020000000300000005000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #1|#2|#3|#5"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -3289,7 +3289,7 @@ MonoBehaviour:
     ParticipantIds: 01000000020000000300000006000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #1|#2|#3|#6"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -3337,7 +3337,7 @@ MonoBehaviour:
     ParticipantIds: 01000000020000000300000007000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #1|#2|#3|#7"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -3386,7 +3386,7 @@ MonoBehaviour:
     ParticipantIds: 01000000020000000400000005000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #1|#2|#4|#5"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -3433,7 +3433,7 @@ MonoBehaviour:
     ParticipantIds: 01000000020000000400000006000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #1|#2|#4|#6"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -3480,7 +3480,7 @@ MonoBehaviour:
     ParticipantIds: 01000000020000000400000007000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #1|#2|#4|#7"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -3528,7 +3528,7 @@ MonoBehaviour:
     ParticipantIds: 01000000020000000500000006000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #1|#2|#5|#6"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -3576,7 +3576,7 @@ MonoBehaviour:
     ParticipantIds: 01000000020000000500000007000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #1|#2|#5|#7"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -3623,7 +3623,7 @@ MonoBehaviour:
     ParticipantIds: 01000000020000000600000007000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #1|#2|#6|#7"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -3672,7 +3672,7 @@ MonoBehaviour:
     ParticipantIds: 01000000030000000400000005000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #1|#3|#4|#5"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -3719,7 +3719,7 @@ MonoBehaviour:
     ParticipantIds: 01000000030000000400000006000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #1|#3|#4|#6"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -3768,7 +3768,7 @@ MonoBehaviour:
     ParticipantIds: 01000000030000000400000007000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #1|#3|#4|#7"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -3815,7 +3815,7 @@ MonoBehaviour:
     ParticipantIds: 01000000030000000500000006000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #1|#3|#5|#6"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -3864,7 +3864,7 @@ MonoBehaviour:
     ParticipantIds: 01000000030000000500000007000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #1|#3|#5|#7"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -3910,7 +3910,7 @@ MonoBehaviour:
     ParticipantIds: 01000000030000000600000007000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #1|#3|#6|#7"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -3958,7 +3958,7 @@ MonoBehaviour:
     ParticipantIds: 01000000040000000500000006000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #1|#4|#5|#6"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -4006,7 +4006,7 @@ MonoBehaviour:
     ParticipantIds: 01000000040000000500000007000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #1|#4|#5|#7"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -4052,7 +4052,7 @@ MonoBehaviour:
     ParticipantIds: 01000000040000000600000007000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #1|#4|#6|#7"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -4100,7 +4100,7 @@ MonoBehaviour:
     ParticipantIds: 01000000050000000600000007000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #1|#5|#6|#7"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -4148,7 +4148,7 @@ MonoBehaviour:
     ParticipantIds: 02000000030000000400000005000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #2|#3|#4|#5"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -4196,7 +4196,7 @@ MonoBehaviour:
     ParticipantIds: 02000000030000000400000006000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #2|#3|#4|#6"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -4243,7 +4243,7 @@ MonoBehaviour:
     ParticipantIds: 02000000030000000400000007000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #2|#3|#4|#7"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -4289,7 +4289,7 @@ MonoBehaviour:
     ParticipantIds: 02000000030000000500000006000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #2|#3|#5|#6"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -4337,7 +4337,7 @@ MonoBehaviour:
     ParticipantIds: 02000000030000000500000007000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #2|#3|#5|#7"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -4385,7 +4385,7 @@ MonoBehaviour:
     ParticipantIds: 02000000030000000600000007000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #2|#3|#6|#7"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -4433,7 +4433,7 @@ MonoBehaviour:
     ParticipantIds: 02000000040000000500000006000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #2|#4|#5|#6"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -4480,7 +4480,7 @@ MonoBehaviour:
     ParticipantIds: 02000000040000000500000007000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #2|#4|#5|#7"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -4527,7 +4527,7 @@ MonoBehaviour:
     ParticipantIds: 02000000040000000600000007000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #2|#4|#6|#7"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -4574,7 +4574,7 @@ MonoBehaviour:
     ParticipantIds: 02000000050000000600000007000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #2|#5|#6|#7"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -4621,7 +4621,7 @@ MonoBehaviour:
     ParticipantIds: 03000000040000000500000006000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #3|#4|#5|#6"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -4667,7 +4667,7 @@ MonoBehaviour:
     ParticipantIds: 03000000040000000500000007000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #3|#4|#5|#7"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -4714,7 +4714,7 @@ MonoBehaviour:
     ParticipantIds: 03000000040000000600000007000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #3|#4|#6|#7"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -4764,7 +4764,7 @@ MonoBehaviour:
     ParticipantIds: 03000000050000000600000007000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #3|#5|#6|#7"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -4813,7 +4813,7 @@ MonoBehaviour:
     ParticipantIds: 04000000050000000600000007000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #4|#5|#6|#7"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -4861,7 +4861,7 @@ MonoBehaviour:
     ParticipantIds: 0100000002000000030000000400000005000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #1|#2|#3|#4|#5"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -4918,7 +4918,7 @@ MonoBehaviour:
     ParticipantIds: 0100000002000000030000000400000006000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #1|#2|#3|#4|#6"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -4974,7 +4974,7 @@ MonoBehaviour:
     ParticipantIds: 0100000002000000030000000400000007000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #1|#2|#3|#4|#7"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -5030,7 +5030,7 @@ MonoBehaviour:
     ParticipantIds: 0100000002000000030000000500000006000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #1|#2|#3|#5|#6"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -5087,7 +5087,7 @@ MonoBehaviour:
     ParticipantIds: 0100000002000000030000000500000007000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #1|#2|#3|#5|#7"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -5143,7 +5143,7 @@ MonoBehaviour:
     ParticipantIds: 0100000002000000030000000600000007000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #1|#2|#3|#6|#7"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -5200,7 +5200,7 @@ MonoBehaviour:
     ParticipantIds: 0100000002000000040000000500000006000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #1|#2|#4|#5|#6"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -5254,7 +5254,7 @@ MonoBehaviour:
     ParticipantIds: 0100000002000000040000000500000007000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #1|#2|#4|#5|#7"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -5312,7 +5312,7 @@ MonoBehaviour:
     ParticipantIds: 0100000002000000040000000600000007000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #1|#2|#4|#6|#7"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -5367,7 +5367,7 @@ MonoBehaviour:
     ParticipantIds: 0100000002000000050000000600000007000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #1|#2|#5|#6|#7"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -5424,7 +5424,7 @@ MonoBehaviour:
     ParticipantIds: 0100000003000000040000000500000006000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #1|#3|#4|#5|#6"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -5480,7 +5480,7 @@ MonoBehaviour:
     ParticipantIds: 0100000003000000040000000500000007000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #1|#3|#4|#5|#7"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -5537,7 +5537,7 @@ MonoBehaviour:
     ParticipantIds: 0100000003000000040000000600000007000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #1|#3|#4|#6|#7"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -5593,7 +5593,7 @@ MonoBehaviour:
     ParticipantIds: 0100000003000000050000000600000007000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #1|#3|#5|#6|#7"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -5650,7 +5650,7 @@ MonoBehaviour:
     ParticipantIds: 0100000004000000050000000600000007000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #1|#4|#5|#6|#7"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -5705,7 +5705,7 @@ MonoBehaviour:
     ParticipantIds: 0200000003000000040000000500000006000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #2|#3|#4|#5|#6"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -5760,7 +5760,7 @@ MonoBehaviour:
     ParticipantIds: 0200000003000000040000000500000007000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #2|#3|#4|#5|#7"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -5816,7 +5816,7 @@ MonoBehaviour:
     ParticipantIds: 0200000003000000040000000600000007000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #2|#3|#4|#6|#7"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -5874,7 +5874,7 @@ MonoBehaviour:
     ParticipantIds: 0200000003000000050000000600000007000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #2|#3|#5|#6|#7"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -5932,7 +5932,7 @@ MonoBehaviour:
     ParticipantIds: 0200000004000000050000000600000007000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #2|#4|#5|#6|#7"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -5988,7 +5988,7 @@ MonoBehaviour:
     ParticipantIds: 0300000004000000050000000600000007000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #3|#4|#5|#6|#7"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -6045,7 +6045,7 @@ MonoBehaviour:
     ParticipantIds: 010000000200000003000000040000000500000006000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #1|#2|#3|#4|#5|#6"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -6108,7 +6108,7 @@ MonoBehaviour:
     ParticipantIds: 010000000200000003000000040000000500000007000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #1|#2|#3|#4|#5|#7"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -6175,7 +6175,7 @@ MonoBehaviour:
     ParticipantIds: 010000000200000003000000040000000600000007000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #1|#2|#3|#4|#6|#7"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -6240,7 +6240,7 @@ MonoBehaviour:
     ParticipantIds: 010000000200000003000000050000000600000007000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #1|#2|#3|#5|#6|#7"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -6305,7 +6305,7 @@ MonoBehaviour:
     ParticipantIds: 010000000200000004000000050000000600000007000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #1|#2|#4|#5|#6|#7"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -6368,7 +6368,7 @@ MonoBehaviour:
     ParticipantIds: 010000000300000004000000050000000600000007000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #1|#3|#4|#5|#6|#7"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -6434,7 +6434,7 @@ MonoBehaviour:
     ParticipantIds: 020000000300000004000000050000000600000007000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #2|#3|#4|#5|#6|#7"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -6499,7 +6499,7 @@ MonoBehaviour:
     ParticipantIds: 01000000020000000300000004000000050000000600000007000000
     SituationType: "\uC0DD\uC874 \uC870\uD569 \uB300\uC0AC"
     Trigger: "\uC0DD\uC874 \uC870\uD569: #1|#2|#3|#4|#5|#6|#7"
-    Visibility: "\uD574\uB2F9 \uC870\uD569 \uC0DD\uC874 \uC2DC"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 
     UnlockConditionId: 
@@ -6567,855 +6567,279 @@ MonoBehaviour:
     Condition:
       RequiredFragmentId: 
       MinLoopCount: 0
-  - ComboId: COND_P01_01
-    ComboKey: '#1|#2|#7'
-    ParticipantIds: 010000000200000007000000
-    SituationType: "\uD504\uB85C\uD30C\uC77C \uD575\uC2EC\uBB38\uC7A5"
-    Trigger: "\uC870\uC0AC \uBAA8\uB4DC / \uC120\uD0DD \uC870\uC0AC \uAD6C\uC5ED
-      / #1\uC774 #2,#7\uACFC \uAC19\uC740 \uCE78 / \uD574\uB2F9 \uD134 \uC0AC\uB9DD
-      \uC5C6\uC74C"
-    Visibility: "\uD2B9\uC815 \uC870\uAC74 \uB2EC\uC131 \uC2DC"
-    FragmentId: P01_01
-    TriggerDeadIds: 
-    UnlockConditionId: COND_P01_01
-    HintOfConditionId: 
-    Lines:
-    - SpeakerId: 1
-      Text: "\uB098\uB294 \uC0AC\uB78C\uBCF4\uB2E4, \uC0AC\uB78C\uACFC \uC0AC\uB78C
-        \uC0AC\uC774\uC5D0 \uC0DD\uAE30\uB294 \uAC04\uACA9\uC744 \uBA3C\uC800 \uBCF4\uAC8C
-        \uB3FC."
-      RevealCharacterId: -1
-      RevealCharacterName: 
-      IsProfileClue: 1
-      ProfileClueId: P01_01
-      ProfileCategory: "\uD589\uB3D9 \uC6D0\uB9AC"
-    Condition:
-      RequiredFragmentId: 
-      MinLoopCount: 0
-  - ComboId: COND_P01_02
-    ComboKey: '#1|#3|#4'
-    ParticipantIds: 010000000300000004000000
-    SituationType: "\uD504\uB85C\uD30C\uC77C \uD575\uC2EC\uBB38\uC7A5"
-    Trigger: "\uC870\uC0AC \uBAA8\uB4DC / \uC120\uD0DD \uC870\uC0AC \uAD6C\uC5ED
-      / #1\uC774 #3,#4\uC640 \uAC19\uC740 \uCE78 / #3,#4 \uBAA8\uB450 \uC0DD\uC874"
-    Visibility: "\uD2B9\uC815 \uC870\uAC74 \uB2EC\uC131 \uC2DC"
-    FragmentId: P01_02
-    TriggerDeadIds: 
-    UnlockConditionId: COND_P01_02
-    HintOfConditionId: 
-    Lines:
-    - SpeakerId: 1
-      Text: "\uB450 \uC0AC\uB78C\uC774 \uC11C\uB85C\uB97C \uB2F9\uC5F0\uD788 \uC120\uD0DD\uD558\uB294
-        \uC21C\uAC04, \uB0B4 \uC790\uB9AC\uB294 \uCC98\uC74C\uBD80\uD130 \uC5C6\uC5C8\uB358
-        \uAC83\uCC98\uB7FC \uB290\uAEF4\uC838."
-      RevealCharacterId: -1
-      RevealCharacterName: 
-      IsProfileClue: 1
-      ProfileClueId: P01_02
-      ProfileCategory: "\uAC10\uC815 \uD2B8\uB9AC\uAC70"
-    Condition:
-      RequiredFragmentId: 
-      MinLoopCount: 0
-  - ComboId: COND_P01_03
+  - ComboId: M1
     ComboKey: '#1'
     ParticipantIds: 01000000
-    SituationType: "\uD504\uB85C\uD30C\uC77C \uD575\uC2EC\uBB38\uC7A5"
-    Trigger: "\uC870\uC0AC \uBAA8\uB4DC / \uC120\uD0DD \uC870\uC0AC \uAD6C\uC5ED
-      / #1 \uB2E8\uB3C5 / \uC9C1\uC804 \uB8E8\uD504\uC5D0\uC11C #1\uC774 2\uC778
-      \uC774\uC0C1 \uC870\uD569 \uB300\uC0AC \uC218\uC9D1"
-    Visibility: "\uD2B9\uC815 \uC870\uAC74 \uB2EC\uC131 \uC2DC"
-    FragmentId: P01_03
+    SituationType: "\uAC1C\uC778 \uB3C5\uBC31"
+    Trigger: "\uD734\uC2DD / \uBC24 / \uC870\uC0AC \uC911"
+    Visibility: 
+    FragmentId: 
     TriggerDeadIds: 
-    UnlockConditionId: COND_P01_03
+    UnlockConditionId: 
     HintOfConditionId: 
     Lines:
     - SpeakerId: 1
-      Text: "\uB2E4\uC815\uD55C \uB9D0\uC740 \uBC30\uC6E0\uC9C0\uB9CC, \uB204\uAD70\uAC00\uC758
-        \uC548\uCABD\uC5D0 \uBA38\uBB34\uB294 \uBC95\uC740 \uC544\uC9C1\uB3C4 \uBAA8\uB974\uACA0\uC5B4."
+      Text: "\uB2E4\uB4E4 \uC11C\uB85C\uC758 \uC774\uB984\uC744 \uB108\uBB34 \uC27D\uAC8C
+        \uBD80\uB978\uB2E4. \uBD80\uB974\uBA74 \uB3CC\uC544\uC624\uB294 \uAC8C \uB2F9\uC5F0\uD55C
+        \uAC83\uCC98\uB7FC."
       RevealCharacterId: -1
       RevealCharacterName: 
-      IsProfileClue: 1
-      ProfileClueId: P01_03
-      ProfileCategory: "\uC228\uACA8\uC9C4 \uC57D\uC810"
-    Condition:
-      RequiredFragmentId: 
-      MinLoopCount: 0
-  - ComboId: COND_P01_04
-    ComboKey: '#1|#3|#4'
-    ParticipantIds: 010000000300000004000000
-    SituationType: "\uD504\uB85C\uD30C\uC77C \uD575\uC2EC\uBB38\uC7A5"
-    Trigger: "\uC870\uC0AC \uBAA8\uB4DC / \uC120\uD0DD \uC870\uC0AC \uAD6C\uC5ED
-      / #1,#3,#4 \uAC19\uC740 \uCE78 / \uAC19\uC740 \uC870\uD569\uC744 \uB450 \uBC88\uC9F8
-      \uC774\uC0C1 \uC870\uC0AC"
-    Visibility: "\uD2B9\uC815 \uC870\uAC74 \uB2EC\uC131 \uC2DC"
-    FragmentId: P01_04
-    TriggerDeadIds: 
-    UnlockConditionId: COND_P01_04
-    HintOfConditionId: 
-    Lines:
+      IsProfileClue: 0
+      ProfileClueId: 
+      ProfileCategory: 
     - SpeakerId: 1
-      Text: "\uBD80\uC218\uACE0 \uC2F6\uC5C8\uB358 \uAC8C \uC544\uB2C8\uB77C, \uB098\uB3C4
-        \uADF8 \uC548\uC5D0 \uC788\uC5C8\uB2E4\uACE0 \uBBFF\uACE0 \uC2F6\uC5C8\uB358
-        \uAC83\uBFD0\uC774\uC57C."
+      Text: "\uB098\uB294 \uC5B8\uC81C\uB098 \uADF8 \uBD04\uC758 \uBC14\uAE65\uC5D0
+        \uC788\uC5C8\uB2E4. \uADF8\uB7F0\uB370\uB3C4, \uC190\uC744 \uBED7\uACE0 \uC2F6\uC5C8\uB2E4."
       RevealCharacterId: -1
       RevealCharacterName: 
-      IsProfileClue: 1
-      ProfileClueId: P01_04
-      ProfileCategory: "\uC695\uB9DD"
-    Condition:
-      RequiredFragmentId: 
-      MinLoopCount: 0
-  - ComboId: COND_P01_05
-    ComboKey: '#1|ANY'
-    ParticipantIds: 01000000
-    SituationType: "\uD504\uB85C\uD30C\uC77C \uD575\uC2EC\uBB38\uC7A5"
-    Trigger: "\uC870\uC0AC \uBAA8\uB4DC / \uC120\uD0DD \uC870\uC0AC \uAD6C\uC5ED
-      / #1\uC774 \uD3EC\uD568\uB41C \uCE78\uC5D0\uC11C \uC0AC\uAC74 \uBC1C\uC0DD
-      \uD6C4 #1\uB9CC \uC0DD\uC874 \uB610\uB294 #1\uC774 \uC0DD\uC874\uC790 \uC911
-      \uD558\uB098"
-    Visibility: "\uD2B9\uC815 \uC870\uAC74 \uB2EC\uC131 \uC2DC"
-    FragmentId: P01_05
-    TriggerDeadIds: 
-    UnlockConditionId: COND_P01_05
-    HintOfConditionId: 
-    Lines:
+      IsProfileClue: 0
+      ProfileClueId: 
+      ProfileCategory: 
     - SpeakerId: 1
-      Text: "\uC0B4\uC544\uB0A8\uB294\uB2E4\uB294 \uAC74 \uAC00\uB054 \uC0C1\uC774
-        \uC544\uB2C8\uB77C, \uB05D\uAE4C\uC9C0 \uBCF4\uB77C\uB294 \uBC8C\uCC98\uB7FC
-        \uB290\uAEF4\uC838."
+      Text: "\uBD80\uC218\uACE0 \uC2F6\uC740 \uAC74 \uADF8\uB4E4\uC774 \uC544\uB2C8\uB77C\u2026
+        \uADF8 \uC548\uC5D0 \uB4E4\uC5B4\uAC08 \uC218 \uC5C6\uB294 \uB098 \uC790\uC2E0\uC77C\uC9C0\uB3C4
+        \uBAA8\uB978\uB2E4."
       RevealCharacterId: -1
       RevealCharacterName: 
-      IsProfileClue: 1
-      ProfileClueId: P01_05
-      ProfileCategory: "\uC5ED\uD560 \uC5F0\uACB0"
+      IsProfileClue: 0
+      ProfileClueId: 
+      ProfileCategory: 
     Condition:
       RequiredFragmentId: 
       MinLoopCount: 0
-  - ComboId: COND_P02_01
+  - ComboId: M2
     ComboKey: '#2'
     ParticipantIds: 02000000
-    SituationType: "\uD504\uB85C\uD30C\uC77C \uD575\uC2EC\uBB38\uC7A5"
-    Trigger: "\uC870\uC0AC \uBAA8\uB4DC / \uC120\uD0DD \uC870\uC0AC \uAD6C\uC5ED
-      / #2 \uB2E8\uB3C5 / \uB8E8\uD504 3\uC77C\uCC28 \uC774\uD6C4"
-    Visibility: "\uD2B9\uC815 \uC870\uAC74 \uB2EC\uC131 \uC2DC"
-    FragmentId: P02_01
+    SituationType: "\uAC1C\uC778 \uB3C5\uBC31"
+    Trigger: "\uD734\uC2DD / \uBC24 / \uC870\uC0AC \uC911"
+    Visibility: 
+    FragmentId: 
     TriggerDeadIds: 
-    UnlockConditionId: COND_P02_01
+    UnlockConditionId: 
     HintOfConditionId: 
     Lines:
     - SpeakerId: 2
-      Text: "\uC5EC\uAE30\uC11C \uBA48\uCD94\uBA74, \uC9C0\uAE08\uAE4C\uC9C0 \uAC78\uC5B4\uC628
-        \uAE38\uAE4C\uC9C0 \uC804\uBD80 \uD750\uB824\uC9C8 \uAC83 \uAC19\uC544."
+      Text: "\uC5EC\uAE30\uC11C \uBA48\uCD94\uBA74 \uC9C0\uAE08\uAE4C\uC9C0 \uC783\uC5B4\uC628
+        \uBAA8\uB4E0 \uAC83\uC774 \uC544\uBB34 \uC758\uBBF8 \uC5C6\uC5B4\uC9C4\uB2E4."
       RevealCharacterId: -1
       RevealCharacterName: 
-      IsProfileClue: 1
-      ProfileClueId: P02_01
-      ProfileCategory: "\uD589\uB3D9 \uC6D0\uB9AC"
-    Condition:
-      RequiredFragmentId: 
-      MinLoopCount: 0
-  - ComboId: COND_P02_02
-    ComboKey: '#1|#2'
-    ParticipantIds: 0100000002000000
-    SituationType: "\uD504\uB85C\uD30C\uC77C \uD575\uC2EC\uBB38\uC7A5"
-    Trigger: "\uC870\uC0AC \uBAA8\uB4DC / \uC120\uD0DD \uC870\uC0AC \uAD6C\uC5ED
-      / #2\uAC00 #1\uACFC \uAC19\uC740 \uCE78 / \uD574\uB2F9 \uD134 \uC0AC\uB9DD
-      \uC5C6\uC74C"
-    Visibility: "\uD2B9\uC815 \uC870\uAC74 \uB2EC\uC131 \uC2DC"
-    FragmentId: P02_02
-    TriggerDeadIds: 
-    UnlockConditionId: COND_P02_02
-    HintOfConditionId: 
-    Lines:
+      IsProfileClue: 0
+      ProfileClueId: 
+      ProfileCategory: 
     - SpeakerId: 2
-      Text: "\uB3D9\uB8CC\uB97C \uBD99\uC7A1\uB294 \uAC74, \uC5B4\uCA4C\uBA74 \uB0B4
-        \uB05D\uC744 \uB204\uAD70\uAC00 \uBD10\uC8FC\uAE38 \uBC14\uB77C\uB294 \uB9C8\uC74C\uC77C\uC9C0\uB3C4
-        \uBAB0\uB77C."
+      Text: "\uB098\uB294 \uB05D\uAE4C\uC9C0 \uAC00\uC57C \uD55C\uB2E4\uACE0 \uC0DD\uAC01\uD574.
+        \uADF8\uB798\uC57C \uC5EC\uAE30\uAE4C\uC9C0 \uC628 \uC2DC\uAC04\uC774 \uBB34\uB108\uC9C0\uC9C0
+        \uC54A\uC744 \uAC83 \uAC19\uC544\uC11C."
       RevealCharacterId: -1
       RevealCharacterName: 
-      IsProfileClue: 1
-      ProfileClueId: P02_02
-      ProfileCategory: "\uC228\uACA8\uC9C4 \uC57D\uC810"
-    Condition:
-      RequiredFragmentId: 
-      MinLoopCount: 0
-  - ComboId: COND_P02_03
-    ComboKey: '#2|#4'
-    ParticipantIds: 0200000004000000
-    SituationType: "\uD504\uB85C\uD30C\uC77C \uD575\uC2EC\uBB38\uC7A5"
-    Trigger: "\uC870\uC0AC \uBAA8\uB4DC / \uC120\uD0DD \uC870\uC0AC \uAD6C\uC5ED
-      / #2\uAC00 #4\uC640 \uAC19\uC740 \uCE78 / #3\uC774 \uAC19\uC740 \uCE78\uC5D0
-      \uC5C6\uC74C"
-    Visibility: "\uD2B9\uC815 \uC870\uAC74 \uB2EC\uC131 \uC2DC"
-    FragmentId: P02_03
-    TriggerDeadIds: 
-    UnlockConditionId: COND_P02_03
-    HintOfConditionId: 
-    Lines:
+      IsProfileClue: 0
+      ProfileClueId: 
+      ProfileCategory: 
     - SpeakerId: 2
-      Text: "\uBA48\uCD94\uC790\uB294 \uB9D0\uC740 \uC26C\uC790\uB294 \uB9D0\uC774
-        \uC544\uB2C8\uB77C, \uB0B4\uAC00 \uBD99\uC7A1\uACE0 \uC788\uB358 \uC774\uC720\uB97C
-        \uB193\uC73C\uB77C\uB294 \uB9D0\uCC98\uB7FC \uB4E4\uB824."
+      Text: "\uB3D9\uB8CC\uB4E4\uC744 \uC544\uB080\uB2E4. \uADF8\uB798\uC11C \uB354\uB354\uC6B1
+        \uD568\uAED8 \uAC00\uC57C \uD55C\uB2E4\uACE0 \uBBFF\uB294\uB2E4."
       RevealCharacterId: -1
       RevealCharacterName: 
-      IsProfileClue: 1
-      ProfileClueId: P02_03
-      ProfileCategory: "\uAC10\uC815 \uD2B8\uB9AC\uAC70"
+      IsProfileClue: 0
+      ProfileClueId: 
+      ProfileCategory: 
     Condition:
       RequiredFragmentId: 
       MinLoopCount: 0
-  - ComboId: COND_P02_04
-    ComboKey: '#2|#6'
-    ParticipantIds: 0200000006000000
-    SituationType: "\uD504\uB85C\uD30C\uC77C \uD575\uC2EC\uBB38\uC7A5"
-    Trigger: "\uC870\uC0AC \uBAA8\uB4DC / \uC120\uD0DD \uC870\uC0AC \uAD6C\uC5ED
-      / #2\uAC00 #6\uACFC \uAC19\uC740 \uCE78 / \uD504\uB9AC\uB4DC\uC758 \uD76C\uC0DD
-      \uAC00\uB2A5 \uC0C1\uD669\uC740 \uC544\uC9C1 \uBC1C\uC0DD\uD558\uC9C0 \uC54A\uC74C"
-    Visibility: "\uD2B9\uC815 \uC870\uAC74 \uB2EC\uC131 \uC2DC"
-    FragmentId: P02_04
-    TriggerDeadIds: 
-    UnlockConditionId: COND_P02_04
-    HintOfConditionId: 
-    Lines:
-    - SpeakerId: 2
-      Text: "\uB204\uAD70\uAC00 \uD55C \uC0AC\uB78C\uC5D0\uAC8C\uB9CC \uAC12\uC744
-        \uCE58\uB974\uAC8C \uD558\uB294 \uB05D\uC740, \uB354 \uC774\uC0C1 \uC2B9\uB9AC\uCC98\uB7FC
-        \uBCF4\uC774\uC9C0 \uC54A\uC544."
-      RevealCharacterId: -1
-      RevealCharacterName: 
-      IsProfileClue: 1
-      ProfileClueId: P02_04
-      ProfileCategory: "\uAD00\uACC4 \uC0C1\uCC98"
-    Condition:
-      RequiredFragmentId: 
-      MinLoopCount: 0
-  - ComboId: COND_P02_05
-    ComboKey: '#2|#5'
-    ParticipantIds: 0200000005000000
-    SituationType: "\uD504\uB85C\uD30C\uC77C \uD575\uC2EC\uBB38\uC7A5"
-    Trigger: "\uC870\uC0AC \uBAA8\uB4DC / \uC0AC\uAC74 \uACB0\uACFC / #2\uC640 #5\uAC00
-      \uAC19\uC740 \uCE78\uC774 \uB418\uC5B4 #5 \uC0AC\uB9DD / #2 \uC0DD\uC874"
-    Visibility: "\uD2B9\uC815 \uC870\uAC74 \uB2EC\uC131 \uC2DC"
-    FragmentId: P02_05
-    TriggerDeadIds: 
-    UnlockConditionId: COND_P02_05
-    HintOfConditionId: 
-    Lines:
-    - SpeakerId: 2
-      Text: "\uAC10\uC815\uC73C\uB85C \uD718\uB450\uB978 \uAC8C \uC544\uB2C8\uC57C.
-        \uB354 \uBC88\uC9C0\uAE30 \uC804\uC5D0 \uBA48\uCDB0 \uC138\uC6B4 \uAC83\uBFD0\uC774\uC57C."
-      RevealCharacterId: -1
-      RevealCharacterName: 
-      IsProfileClue: 1
-      ProfileClueId: P02_05
-      ProfileCategory: "\uC5ED\uD560 \uC5F0\uACB0"
-    Condition:
-      RequiredFragmentId: 
-      MinLoopCount: 0
-  - ComboId: COND_P03_01
-    ComboKey: '#3|#4'
-    ParticipantIds: 0300000004000000
-    SituationType: "\uD504\uB85C\uD30C\uC77C \uD575\uC2EC\uBB38\uC7A5"
-    Trigger: "\uC870\uC0AC \uBAA8\uB4DC / \uC120\uD0DD \uC870\uC0AC \uAD6C\uC5ED
-      / #3\uACFC #4\uAC00 \uAC19\uC740 \uCE78 / \uD574\uB2F9 \uD134 \uC0AC\uB9DD
-      \uC5C6\uC74C"
-    Visibility: "\uD2B9\uC815 \uC870\uAC74 \uB2EC\uC131 \uC2DC"
-    FragmentId: P03_01
-    TriggerDeadIds: 
-    UnlockConditionId: COND_P03_01
-    HintOfConditionId: 
-    Lines:
-    - SpeakerId: 3
-      Text: "\uC138\uC0C1\uC740 \uB113\uB2E4\uC9C0\uB9CC, \uB0B4 \uAE30\uC900\uC740
-        \uC5B8\uC81C\uB098 \uD55C \uC0AC\uB78C\uC5D0\uAC8C\uB85C \uB3CC\uC544\uC635\uB2C8\uB2E4."
-      RevealCharacterId: -1
-      RevealCharacterName: 
-      IsProfileClue: 1
-      ProfileClueId: P03_01
-      ProfileCategory: "\uD589\uB3D9 \uC6D0\uB9AC"
-    Condition:
-      RequiredFragmentId: 
-      MinLoopCount: 0
-  - ComboId: COND_P03_02
-    ComboKey: '#1|#3|#4'
-    ParticipantIds: 010000000300000004000000
-    SituationType: "\uD504\uB85C\uD30C\uC77C \uD575\uC2EC\uBB38\uC7A5"
-    Trigger: "\uC870\uC0AC \uBAA8\uB4DC / \uC120\uD0DD \uC870\uC0AC \uAD6C\uC5ED
-      / #3,#4,#1 \uAC19\uC740 \uCE78 / #1\uC758 \uB300\uD654 \uC870\uAC01 1\uAC1C
-      \uC774\uC0C1 \uBCF4\uC720"
-    Visibility: "\uD2B9\uC815 \uC870\uAC74 \uB2EC\uC131 \uC2DC"
-    FragmentId: P03_02
-    TriggerDeadIds: 
-    UnlockConditionId: COND_P03_02
-    HintOfConditionId: 
-    Lines:
-    - SpeakerId: 3
-      Text: "\uC9C0\uD0A8\uB2E4\uB294 \uB9D0\uC774 \uBB38\uC774 \uB420 \uC218\uB3C4
-        \uC788\uB2E4\uB294 \uAC78 \uC555\uB2C8\uB2E4. \uADF8\uB798\uB3C4 \uC190\uC7A1\uC774\uB97C
-        \uB193\uAE30\uAC00 \uC5B4\uB835\uC2B5\uB2C8\uB2E4."
-      RevealCharacterId: -1
-      RevealCharacterName: 
-      IsProfileClue: 1
-      ProfileClueId: P03_02
-      ProfileCategory: "\uC228\uACA8\uC9C4 \uC57D\uC810"
-    Condition:
-      RequiredFragmentId: 
-      MinLoopCount: 0
-  - ComboId: COND_P03_03
-    ComboKey: '#2|#3'
-    ParticipantIds: 0200000003000000
-    SituationType: "\uD504\uB85C\uD30C\uC77C \uD575\uC2EC\uBB38\uC7A5"
-    Trigger: "\uC870\uC0AC \uBAA8\uB4DC / \uC120\uD0DD \uC870\uC0AC \uAD6C\uC5ED
-      / #3\uC774 #2\uC640 \uAC19\uC740 \uCE78 / #4 \uC0DD\uC874"
-    Visibility: "\uD2B9\uC815 \uC870\uAC74 \uB2EC\uC131 \uC2DC"
-    FragmentId: P03_03
-    TriggerDeadIds: 
-    UnlockConditionId: COND_P03_03
-    HintOfConditionId: 
-    Lines:
-    - SpeakerId: 3
-      Text: "\uD070 \uB73B\uC774 \uAC00\uAE4C\uC6B4 \uC0AC\uB78C \uD558\uB098\uB97C
-        \uC704\uD5D8\uD558\uAC8C \uB9CC\uB4E0\uB2E4\uBA74, \uC800\uB294 \uADF8 \uB73B\uC744
-        \uB05D\uAE4C\uC9C0 \uBBFF\uC9C0 \uBABB\uD569\uB2C8\uB2E4."
-      RevealCharacterId: -1
-      RevealCharacterName: 
-      IsProfileClue: 1
-      ProfileClueId: P03_03
-      ProfileCategory: "\uAC10\uC815 \uD2B8\uB9AC\uAC70"
-    Condition:
-      RequiredFragmentId: 
-      MinLoopCount: 0
-  - ComboId: COND_P03_04
-    ComboKey: '#3|#7'
-    ParticipantIds: 0300000007000000
-    SituationType: "\uD504\uB85C\uD30C\uC77C \uD575\uC2EC\uBB38\uC7A5"
-    Trigger: "\uC870\uC0AC \uBAA8\uB4DC / \uC0AC\uAC74 \uACB0\uACFC / #7\uC774 \uC774\uB3D9\uD558\uBA70
-      \uC9C1\uC804 \uCE78\uC5D0\uC11C \uC0AC\uB9DD \uBC1C\uC0DD / \uC774\uB3D9 \uD6C4
-      #7\uC774 #3 \uD63C\uC790 \uC788\uB294 \uCE78\uC5D0 \uB3C4\uCC29"
-    Visibility: "\uD2B9\uC815 \uC870\uAC74 \uB2EC\uC131 \uC2DC"
-    FragmentId: P03_04
-    TriggerDeadIds: 
-    UnlockConditionId: COND_P03_04
-    HintOfConditionId: 
-    Lines:
-    - SpeakerId: 3
-      Text: "\uACE0\uD574\uB97C \uB4E3\uB294\uB2E4\uB294 \uAC74 \uC6A9\uC11C\uAC00
-        \uC544\uB2C8\uB77C, \uADF8 \uBB34\uAC8C\uB97C \uD568\uAED8 \uB4E4\uC5EC\uB2E4\uBCF4\uB294
-        \uC77C\uC785\uB2C8\uB2E4."
-      RevealCharacterId: -1
-      RevealCharacterName: 
-      IsProfileClue: 1
-      ProfileClueId: P03_04
-      ProfileCategory: "\uAD00\uACC4 \uC5ED\uD560"
-    Condition:
-      RequiredFragmentId: 
-      MinLoopCount: 0
-  - ComboId: COND_P03_05
+  - ComboId: M3
     ComboKey: '#3'
     ParticipantIds: 03000000
-    SituationType: "\uD504\uB85C\uD30C\uC77C \uD575\uC2EC\uBB38\uC7A5"
-    Trigger: "\uC870\uC0AC \uBAA8\uB4DC / \uC120\uD0DD \uC870\uC0AC \uAD6C\uC5ED
-      / #3 \uB2E8\uB3C5 / #4\uAC00 \uB2E4\uB978 \uCE78\uC5D0 \uC0DD\uC874 / \uC774\uC804
-      \uB8E8\uD504\uC5D0\uC11C #3,#4 \uC870\uD569 \uD655\uC778"
-    Visibility: "\uD2B9\uC815 \uC870\uAC74 \uB2EC\uC131 \uC2DC"
-    FragmentId: P03_05
+    SituationType: "\uAC1C\uC778 \uB3C5\uBC31"
+    Trigger: "\uD734\uC2DD / \uBC24 / \uC870\uC0AC \uC911"
+    Visibility: 
+    FragmentId: 
     TriggerDeadIds: 
-    UnlockConditionId: COND_P03_05
+    UnlockConditionId: 
     HintOfConditionId: 
     Lines:
     - SpeakerId: 3
-      Text: "\uB0B4\uAC00 \uC0AC\uB77C\uC9C0\uBA74, \uADF8 \uC0AC\uB78C\uC758 \uC138\uACC4\uB3C4
-        \uD568\uAED8 \uC228\uC744 \uC783\uC744\uAE4C \uBD10 \uB450\uB835\uC2B5\uB2C8\uB2E4."
+      Text: "\uB8E8\uC774\uC2A4\uAC00 \uC6C3\uC9C0 \uC54A\uB294 \uB0A0\uC740, \uC138\uC0C1\uC774
+        \uC870\uAE08\uC529 \uBB34\uB108\uC9C0\uB294 \uAC83\uCC98\uB7FC \uB290\uAEF4\uC9C4\uB2E4."
       RevealCharacterId: -1
       RevealCharacterName: 
-      IsProfileClue: 1
-      ProfileClueId: P03_05
-      ProfileCategory: "\uC5ED\uD560 \uC5F0\uACB0"
+      IsProfileClue: 0
+      ProfileClueId: 
+      ProfileCategory: 
+    - SpeakerId: 3
+      Text: "\uB0B4 \uAE30\uB3C4\uAC00 \uC2E0\uC5D0\uAC8C \uB2FF\uC9C0 \uC54A\uB294\uB2E4\uBA74,
+        \uB0B4\uAC00 \uC9C1\uC811 \uC9C0\uD0A4\uBA74 \uB41C\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+      IsProfileClue: 0
+      ProfileClueId: 
+      ProfileCategory: 
+    - SpeakerId: 3
+      Text: "\uADF8\uB97C \uC704\uD5D8\uD558\uAC8C \uB9CC\uB4DC\uB294 \uBAA8\uB4E0
+        \uAC83\uC5D0\uC11C \uBA40\uB9AC \uB5BC\uC5B4\uB193\uACE0 \uC2F6\uB2E4. \uC774\uAC83\uC774
+        \uC0AC\uB791\uC774 \uC544\uB2C8\uBA74 \uBB34\uC5C7\uC778\uAC00."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+      IsProfileClue: 0
+      ProfileClueId: 
+      ProfileCategory: 
     Condition:
       RequiredFragmentId: 
       MinLoopCount: 0
-  - ComboId: COND_P04_01
+  - ComboId: M4
     ComboKey: '#4'
     ParticipantIds: 04000000
-    SituationType: "\uD504\uB85C\uD30C\uC77C \uD575\uC2EC\uBB38\uC7A5"
-    Trigger: "\uC870\uC0AC \uBAA8\uB4DC / \uC120\uD0DD \uC870\uC0AC \uAD6C\uC5ED
-      / #4 \uB2E8\uB3C5 / \uD574\uB2F9 \uD134 \uC0AC\uB9DD \uC5C6\uC74C"
-    Visibility: "\uD2B9\uC815 \uC870\uAC74 \uB2EC\uC131 \uC2DC"
-    FragmentId: P04_01
+    SituationType: "\uAC1C\uC778 \uB3C5\uBC31"
+    Trigger: "\uD734\uC2DD / \uBC24 / \uC870\uC0AC \uC911"
+    Visibility: 
+    FragmentId: 
     TriggerDeadIds: 
-    UnlockConditionId: COND_P04_01
+    UnlockConditionId: 
     HintOfConditionId: 
     Lines:
     - SpeakerId: 4
-      Text: "\uC544\uBB34 \uC77C\uB3C4 \uD558\uC9C0 \uC54A\uB294 \uC2DC\uAC04\uC774,
-        \uB098\uB97C \uACA8\uC6B0 \uC228 \uC26C\uAC8C \uD574."
+      Text: "\uC544\uBB34 \uC77C\uB3C4 \uC548 \uC77C\uC5B4\uB0AC\uC73C\uBA74 \uC88B\uACA0\uB2E4.
+        \uC544\uBB34\uB3C4 \uBB3B\uC9C0 \uC54A\uACE0, \uC544\uBB34\uB3C4 \uC7AC\uCD09\uD558\uC9C0
+        \uC54A\uB294 \uACF3\uC5D0\uC11C."
       RevealCharacterId: -1
       RevealCharacterName: 
-      IsProfileClue: 1
-      ProfileClueId: P04_01
-      ProfileCategory: "\uD589\uB3D9 \uC6D0\uB9AC"
-    Condition:
-      RequiredFragmentId: 
-      MinLoopCount: 0
-  - ComboId: COND_P04_02
-    ComboKey: '#2|#4'
-    ParticipantIds: 0200000004000000
-    SituationType: "\uD504\uB85C\uD30C\uC77C \uD575\uC2EC\uBB38\uC7A5"
-    Trigger: "\uC870\uC0AC \uBAA8\uB4DC / \uC120\uD0DD \uC870\uC0AC \uAD6C\uC5ED
-      / #4\uAC00 #2\uC640 \uAC19\uC740 \uCE78 / #3\uC774 \uAC19\uC740 \uCE78\uC5D0
-      \uC5C6\uC74C"
-    Visibility: "\uD2B9\uC815 \uC870\uAC74 \uB2EC\uC131 \uC2DC"
-    FragmentId: P04_02
-    TriggerDeadIds: 
-    UnlockConditionId: COND_P04_02
-    HintOfConditionId: 
-    Lines:
+      IsProfileClue: 0
+      ProfileClueId: 
+      ProfileCategory: 
     - SpeakerId: 4
-      Text: "\uC120\uD0DD\uD558\uB77C\uB294 \uB9D0\uC740 \uAC00\uB054, \uB0B4 \uB4F1\uC744
-        \uB204\uAD70\uAC00\uC758 \uC190\uC73C\uB85C \uB5A0\uBBF8\uB294 \uB9D0\uCC98\uB7FC
-        \uB4E4\uB824."
+      Text: "\uB370\uC6B0\uC2A4\uAC00 \uB0B4 \uC606\uC5D0 \uC788\uC73C\uBA74 \uC228\uC740
+        \uC26C\uC5B4\uC9C4\uB2E4. \uADF8\uAC8C \uC633\uC740\uC9C0\uB294\u2026 \uBAA8\uB974\uACA0\uB2E4."
       RevealCharacterId: -1
       RevealCharacterName: 
-      IsProfileClue: 1
-      ProfileClueId: P04_02
-      ProfileCategory: "\uAC10\uC815 \uD2B8\uB9AC\uAC70"
-    Condition:
-      RequiredFragmentId: 
-      MinLoopCount: 0
-  - ComboId: COND_P04_03
-    ComboKey: '#3|#4'
-    ParticipantIds: 0300000004000000
-    SituationType: "\uD504\uB85C\uD30C\uC77C \uD575\uC2EC\uBB38\uC7A5"
-    Trigger: "\uC870\uC0AC \uBAA8\uB4DC / \uC120\uD0DD \uC870\uC0AC \uAD6C\uC5ED
-      / #3\uACFC #4\uAC00 \uAC19\uC740 \uCE78 / \uD574\uB2F9 \uD134 \uC0AC\uB9DD
-      \uC5C6\uC74C"
-    Visibility: "\uD2B9\uC815 \uC870\uAC74 \uB2EC\uC131 \uC2DC"
-    FragmentId: P04_03
-    TriggerDeadIds: 
-    UnlockConditionId: COND_P04_03
-    HintOfConditionId: 
-    Lines:
+      IsProfileClue: 0
+      ProfileClueId: 
+      ProfileCategory: 
     - SpeakerId: 4
-      Text: "\uB0B4\uAC00 \uC11C \uC788\uB294 \uAC8C \uC544\uB2C8\uB77C, \uB204\uAD70\uAC00\uC758
-        \uADF8\uB298\uC774 \uB098\uB97C \uC138\uC6CC \uC8FC\uB294 \uAC83 \uAC19\uC544."
+      Text: "\uB098\uB294 \uC774\uBBF8 \uB9CE\uC774 \uC9C0\uCCE4\uB2E4. \uB354 \uB098\uC544\uAC00\uC790\uB294
+        \uB9D0\uC774 \uAC00\uB054\uC740 \uB108\uBB34 \uBA40\uAC8C \uB4E4\uB824."
       RevealCharacterId: -1
       RevealCharacterName: 
-      IsProfileClue: 1
-      ProfileClueId: P04_03
-      ProfileCategory: "\uC228\uACA8\uC9C4 \uC57D\uC810"
+      IsProfileClue: 0
+      ProfileClueId: 
+      ProfileCategory: 
     Condition:
       RequiredFragmentId: 
       MinLoopCount: 0
-  - ComboId: COND_P04_04
-    ComboKey: '#4|#7'
-    ParticipantIds: 0400000007000000
-    SituationType: "\uD504\uB85C\uD30C\uC77C \uD575\uC2EC\uBB38\uC7A5"
-    Trigger: "\uC870\uC0AC \uBAA8\uB4DC / \uC120\uD0DD \uC870\uC0AC \uAD6C\uC5ED
-      / #4\uC640 #7\uC774 \uAC19\uC740 \uCE78 / \uD574\uB2F9 \uD134 \uC0AC\uB9DD
-      \uC5C6\uC74C"
-    Visibility: "\uD2B9\uC815 \uC870\uAC74 \uB2EC\uC131 \uC2DC"
-    FragmentId: P04_04
-    TriggerDeadIds: 
-    UnlockConditionId: COND_P04_04
-    HintOfConditionId: 
-    Lines:
-    - SpeakerId: 4
-      Text: "\uBB3B\uB294 \uC0AC\uB78C\uBCF4\uB2E4, \uBB3B\uC9C0 \uC54A\uC544\uB3C4
-        \uB418\uB294 \uCE68\uBB35\uC774 \uB354 \uD3B8\uD560 \uB54C\uAC00 \uC788\uC5B4."
-      RevealCharacterId: -1
-      RevealCharacterName: 
-      IsProfileClue: 1
-      ProfileClueId: P04_04
-      ProfileCategory: "\uAD00\uACC4 \uD0DC\uB3C4"
-    Condition:
-      RequiredFragmentId: 
-      MinLoopCount: 0
-  - ComboId: COND_P04_05
-    ComboKey: '#3|#4|#6'
-    ParticipantIds: 030000000400000006000000
-    SituationType: "\uD504\uB85C\uD30C\uC77C \uD575\uC2EC\uBB38\uC7A5"
-    Trigger: "\uC870\uC0AC \uBAA8\uB4DC / \uC120\uD0DD \uC870\uC0AC \uAD6C\uC5ED
-      / #3,#4,#6 \uAC19\uC740 \uCE78 / #6 \uC0DD\uC874 / \uD574\uB2F9 \uD134 \uC0AC\uB9DD
-      \uC5C6\uC74C"
-    Visibility: "\uD2B9\uC815 \uC870\uAC74 \uB2EC\uC131 \uC2DC"
-    FragmentId: P04_05
-    TriggerDeadIds: 
-    UnlockConditionId: COND_P04_05
-    HintOfConditionId: 
-    Lines:
-    - SpeakerId: 4
-      Text: "\uADF8 \uC0AC\uB78C\uC774 \uBA3C\uC800 \uC190\uC744 \uB193\uC73C\uBA74,
-        \uB098\uB294 \uB0B4\uAC00 \uC5B4\uB514\uC5D0 \uC11C\uC57C \uD558\uB294\uC9C0\uB3C4
-        \uC78A\uC744 \uAC83 \uAC19\uC544."
-      RevealCharacterId: -1
-      RevealCharacterName: 
-      IsProfileClue: 1
-      ProfileClueId: P04_05
-      ProfileCategory: "\uC5ED\uD560 \uC5F0\uACB0"
-    Condition:
-      RequiredFragmentId: 
-      MinLoopCount: 0
-  - ComboId: COND_P05_01
+  - ComboId: M5
     ComboKey: '#5'
     ParticipantIds: 05000000
-    SituationType: "\uD504\uB85C\uD30C\uC77C \uD575\uC2EC\uBB38\uC7A5"
-    Trigger: "\uC870\uC0AC \uBAA8\uB4DC / \uC120\uD0DD \uC870\uC0AC \uAD6C\uC5ED
-      / #5 \uB2E8\uB3C5 / \uC9C1\uC804 \uD134\uC5D0 \uAC19\uC740 \uAD6C\uC5ED\uC5D0\uC11C
-      \uAC08\uB4F1 \uB300\uC0AC \uBC1C\uC0DD"
-    Visibility: "\uD2B9\uC815 \uC870\uAC74 \uB2EC\uC131 \uC2DC"
-    FragmentId: P05_01
+    SituationType: "\uAC1C\uC778 \uB3C5\uBC31"
+    Trigger: "\uD734\uC2DD / \uBC24 / \uC870\uC0AC \uC911"
+    Visibility: 
+    FragmentId: 
     TriggerDeadIds: 
-    UnlockConditionId: COND_P05_01
+    UnlockConditionId: 
     HintOfConditionId: 
     Lines:
     - SpeakerId: 5
-      Text: "\uAC00\uC7A5 \uC120\uBA85\uD55C \uC21C\uAC04\uC740 \uBAA8\uB450\uAC00
-        \uB9D0\uC744 \uC0BC\uD0A4\uACE0, \uC544\uC9C1 \uC544\uBB34\uB3C4 \uC190\uB300\uC9C0
-        \uC54A\uC740 \uB54C\uC57C."
+      Text: "\uB2E4\uB4E4 \uC6C3\uC744 \uB54C\uB791 \uC870\uC6A9\uD560 \uB54C \uB0C4\uC0C8\uAC00
+        \uB2EC\uB77C. \uC774\uC0C1\uD558\uC9C0? \uD1A0\uB2C8\uB9CC \uADF8\uB807\uAC8C
+        \uB290\uB07C\uB098?"
       RevealCharacterId: -1
       RevealCharacterName: 
-      IsProfileClue: 1
-      ProfileClueId: P05_01
-      ProfileCategory: "\uD589\uB3D9 \uC6D0\uB9AC"
-    Condition:
-      RequiredFragmentId: 
-      MinLoopCount: 0
-  - ComboId: COND_P05_02
-    ComboKey: "#1|#5 \uB610\uB294 #2|#5"
-    ParticipantIds: 0100000005000000
-    SituationType: "\uD504\uB85C\uD30C\uC77C \uD575\uC2EC\uBB38\uC7A5"
-    Trigger: "\uC870\uC0AC \uBAA8\uB4DC / \uC120\uD0DD \uC870\uC0AC \uAD6C\uC5ED
-      / #5\uAC00 #1,#2 \uC911 \uD55C \uBA85\uACFC \uAC19\uC740 \uCE78 / \uD574\uB2F9
-      \uD134 \uC0AC\uB9DD \uC5C6\uC74C"
-    Visibility: "\uD2B9\uC815 \uC870\uAC74 \uB2EC\uC131 \uC2DC"
-    FragmentId: P05_02
-    TriggerDeadIds: 
-    UnlockConditionId: COND_P05_02
-    HintOfConditionId: 
-    Lines:
+      IsProfileClue: 0
+      ProfileClueId: 
+      ProfileCategory: 
     - SpeakerId: 5
-      Text: "\uC0AC\uB78C\uC740 \uB9D0\uBCF4\uB2E4 \uBB34\uB108\uC9C0\uB294 \uC21C\uC11C\uC5D0\uC11C
-        \uB354 \uC194\uC9C1\uD574\uC838."
+      Text: "\uC544\uC9C1\uC740 \uC544\uB2C8\uC57C. \uC870\uAE08 \uB354 \uAE30\uB2E4\uB9AC\uBA74,
+        \uD6E8\uC52C \uC9C4\uD574\uC9C8 \uAC83 \uAC19\uC544."
       RevealCharacterId: -1
       RevealCharacterName: 
-      IsProfileClue: 1
-      ProfileClueId: P05_02
-      ProfileCategory: "\uC695\uB9DD"
-    Condition:
-      RequiredFragmentId: 
-      MinLoopCount: 0
-  - ComboId: COND_P05_03
-    ComboKey: '#5|#7'
-    ParticipantIds: 0500000007000000
-    SituationType: "\uD504\uB85C\uD30C\uC77C \uD575\uC2EC\uBB38\uC7A5"
-    Trigger: "\uC870\uC0AC \uBAA8\uB4DC / \uC120\uD0DD \uC870\uC0AC \uAD6C\uC5ED
-      / #5\uAC00 #7\uACFC \uAC19\uC740 \uCE78 / \uC0C8\uD134 \uC9C8\uBB38 \uB300\uC0AC
-      1\uAC1C \uC774\uC0C1 \uC218\uC9D1"
-    Visibility: "\uD2B9\uC815 \uC870\uAC74 \uB2EC\uC131 \uC2DC"
-    FragmentId: P05_03
-    TriggerDeadIds: 
-    UnlockConditionId: COND_P05_03
-    HintOfConditionId: 
-    Lines:
+      IsProfileClue: 0
+      ProfileClueId: 
+      ProfileCategory: 
     - SpeakerId: 5
-      Text: "\uC131\uAE09\uD558\uAC8C \uB04A\uC73C\uBA74 \uD750\uB984\uC774 \uB9DD\uAC00\uC838.
-        \uC870\uAE08 \uB354 \uAE30\uB2E4\uB824\uC57C \uD574."
+      Text: "\uAC89\uC740 \uB2EC\uCF64\uD574\uC57C \uD574. \uADF8\uB798\uC57C \uC544\uBB34\uB3C4
+        \uC548 \uB180\uB77C\uB2C8\uAE4C."
       RevealCharacterId: -1
       RevealCharacterName: 
-      IsProfileClue: 1
-      ProfileClueId: P05_03
-      ProfileCategory: "\uC228\uACA8\uC9C4 \uC57D\uC810"
+      IsProfileClue: 0
+      ProfileClueId: 
+      ProfileCategory: 
     Condition:
       RequiredFragmentId: 
       MinLoopCount: 0
-  - ComboId: COND_P05_04
-    ComboKey: '#5|ANY'
-    ParticipantIds: 05000000
-    SituationType: "\uD504\uB85C\uD30C\uC77C \uD575\uC2EC\uBB38\uC7A5"
-    Trigger: "\uC870\uC0AC \uBAA8\uB4DC / \uC0AC\uAC74 \uACB0\uACFC / #5\uC758 \uC0B4\uC778\uC790
-      \uD6A8\uACFC\uB85C \uB204\uAD70\uAC00 \uC0AC\uB9DD / #5 \uC0DD\uC874"
-    Visibility: "\uD2B9\uC815 \uC870\uAC74 \uB2EC\uC131 \uC2DC"
-    FragmentId: P05_04
-    TriggerDeadIds: 
-    UnlockConditionId: COND_P05_04
-    HintOfConditionId: 
-    Lines:
-    - SpeakerId: 5
-      Text: "\uB05D\uB09C \uB4A4\uBCF4\uB2E4, \uB0A8\uC740 \uC0AC\uB78C\uB4E4\uC774
-        \uC11C\uB85C\uB97C \uBCF4\uB294 \uC5BC\uAD74\uC774 \uB354 \uC624\uB798 \uB0A8\uC544."
-      RevealCharacterId: -1
-      RevealCharacterName: 
-      IsProfileClue: 1
-      ProfileClueId: P05_04
-      ProfileCategory: "\uC5ED\uD560 \uC5F0\uACB0"
-    Condition:
-      RequiredFragmentId: 
-      MinLoopCount: 0
-  - ComboId: COND_P05_05
-    ComboKey: '#3|#4|#5'
-    ParticipantIds: 030000000400000005000000
-    SituationType: "\uD504\uB85C\uD30C\uC77C \uD575\uC2EC\uBB38\uC7A5"
-    Trigger: "\uC870\uC0AC \uBAA8\uB4DC / \uC120\uD0DD \uC870\uC0AC \uAD6C\uC5ED
-      / #5,#3,#4 \uAC19\uC740 \uCE78 / \uD574\uB2F9 \uD134 \uC0AC\uB9DD \uC5C6\uC74C"
-    Visibility: "\uD2B9\uC815 \uC870\uAC74 \uB2EC\uC131 \uC2DC"
-    FragmentId: P05_05
-    TriggerDeadIds: 
-    UnlockConditionId: COND_P05_05
-    HintOfConditionId: 
-    Lines:
-    - SpeakerId: 5
-      Text: "\uC11C\uB85C\uB9CC \uBCF4\uB294 \uB9C8\uC74C\uC740 \uD55C\uCABD\uC774
-        \uD754\uB4E4\uB9AC\uBA74, \uB2E4\uB978 \uCABD\uAE4C\uC9C0 \uAC19\uC774 \uB5A8\uB9AC\uB354\uB77C."
-      RevealCharacterId: -1
-      RevealCharacterName: 
-      IsProfileClue: 1
-      ProfileClueId: P05_05
-      ProfileCategory: "\uAD00\uACC4 \uAD00\uCC30"
-    Condition:
-      RequiredFragmentId: 
-      MinLoopCount: 0
-  - ComboId: COND_P06_01
-    ComboKey: '#6|ANY'
-    ParticipantIds: 06000000
-    SituationType: "\uD504\uB85C\uD30C\uC77C \uD575\uC2EC\uBB38\uC7A5"
-    Trigger: "\uC870\uC0AC \uBAA8\uB4DC / \uC120\uD0DD \uC870\uC0AC \uAD6C\uC5ED
-      / #6\uC774 \uB2E4\uB978 \uCE90\uB9AD\uD130 1\uBA85 \uC774\uC0C1\uACFC \uAC19\uC740
-      \uCE78 / \uC0AC\uAC74 \uC5C6\uC74C"
-    Visibility: "\uD2B9\uC815 \uC870\uAC74 \uB2EC\uC131 \uC2DC"
-    FragmentId: P06_01
-    TriggerDeadIds: 
-    UnlockConditionId: COND_P06_01
-    HintOfConditionId: 
-    Lines:
-    - SpeakerId: 6
-      Text: "\uC704\uD5D8\uC774 \uB208\uC55E\uC5D0 \uC788\uC73C\uBA74, \uB098\uB294
-        \uBA3C\uC800 \uD55C \uAC78\uC74C \uB098\uAC00\uB294 \uCABD\uC744 \uD0DD\uD558\uAC8C
-        \uB41C\uB2E4."
-      RevealCharacterId: -1
-      RevealCharacterName: 
-      IsProfileClue: 1
-      ProfileClueId: P06_01
-      ProfileCategory: "\uD589\uB3D9 \uC6D0\uB9AC"
-    Condition:
-      RequiredFragmentId: 
-      MinLoopCount: 0
-  - ComboId: COND_P06_02
-    ComboKey: '#6|#7'
-    ParticipantIds: 0600000007000000
-    SituationType: "\uD504\uB85C\uD30C\uC77C \uD575\uC2EC\uBB38\uC7A5"
-    Trigger: "\uC870\uC0AC \uBAA8\uB4DC / \uC120\uD0DD \uC870\uC0AC \uAD6C\uC5ED
-      / #6\uACFC #7\uC774 \uAC19\uC740 \uCE78 / \uD574\uB2F9 \uD134 \uC0AC\uB9DD
-      \uC5C6\uC74C"
-    Visibility: "\uD2B9\uC815 \uC870\uAC74 \uB2EC\uC131 \uC2DC"
-    FragmentId: P06_02
-    TriggerDeadIds: 
-    UnlockConditionId: COND_P06_02
-    HintOfConditionId: 
-    Lines:
-    - SpeakerId: 6
-      Text: "\uB300\uC2E0 \uC9CA\uC5B4\uC9C0\uB294 \uC77C\uC774, \uB204\uAD70\uAC00\uC758
-        \uBAAB\uC744 \uBE7C\uC557\uB294 \uC77C\uC77C \uC218\uB3C4 \uC788\uACA0\uC9C0."
-      RevealCharacterId: -1
-      RevealCharacterName: 
-      IsProfileClue: 1
-      ProfileClueId: P06_02
-      ProfileCategory: "\uC228\uACA8\uC9C4 \uC57D\uC810"
-    Condition:
-      RequiredFragmentId: 
-      MinLoopCount: 0
-  - ComboId: COND_P06_03
-    ComboKey: '#2|#6'
-    ParticipantIds: 0200000006000000
-    SituationType: "\uD504\uB85C\uD30C\uC77C \uD575\uC2EC\uBB38\uC7A5"
-    Trigger: "\uC870\uC0AC \uBAA8\uB4DC / \uC120\uD0DD \uC870\uC0AC \uAD6C\uC5ED
-      / #2\uC640 #6\uC774 \uAC19\uC740 \uCE78 / \uD574\uB2F9 \uD134 \uC0AC\uB9DD
-      \uC5C6\uC74C"
-    Visibility: "\uD2B9\uC815 \uC870\uAC74 \uB2EC\uC131 \uC2DC"
-    FragmentId: P06_03
-    TriggerDeadIds: 
-    UnlockConditionId: COND_P06_03
-    HintOfConditionId: 
-    Lines:
-    - SpeakerId: 6
-      Text: "\uBA54\uC774\uAC00 \uB05D\uC744 \uB9D0\uD560 \uB54C, \uB098\uB294 \uADF8
-        \uB05D\uAE4C\uC9C0 \uAC00\uB294 \uB3D9\uC548 \uCE58\uB7EC\uC9C8 \uAC12\uC744
-        \uBA3C\uC800 \uC0DD\uAC01\uD55C\uB2E4."
-      RevealCharacterId: -1
-      RevealCharacterName: 
-      IsProfileClue: 1
-      ProfileClueId: P06_03
-      ProfileCategory: "\uAD00\uACC4 \uD0DC\uB3C4"
-    Condition:
-      RequiredFragmentId: 
-      MinLoopCount: 0
-  - ComboId: COND_P06_04
+  - ComboId: M6
     ComboKey: '#6'
     ParticipantIds: 06000000
-    SituationType: "\uD504\uB85C\uD30C\uC77C \uD575\uC2EC\uBB38\uC7A5"
-    Trigger: "\uC870\uC0AC \uBAA8\uB4DC / \uC120\uD0DD \uC870\uC0AC \uAD6C\uC5ED
-      / #6 \uB2E8\uB3C5 / \uB8E8\uD504 2\uC77C\uCC28 \uC774\uD6C4"
-    Visibility: "\uD2B9\uC815 \uC870\uAC74 \uB2EC\uC131 \uC2DC"
-    FragmentId: P06_04
+    SituationType: "\uAC1C\uC778 \uB3C5\uBC31"
+    Trigger: "\uD734\uC2DD / \uBC24 / \uC870\uC0AC \uC911"
+    Visibility: 
+    FragmentId: 
     TriggerDeadIds: 
-    UnlockConditionId: COND_P06_04
+    UnlockConditionId: 
     HintOfConditionId: 
     Lines:
     - SpeakerId: 6
-      Text: "\uB2A6\uC740 \uD310\uB2E8\uC774 \uB204\uAD70\uAC00\uB97C \uB9DD\uCCE4\uB2E4\uB294
-        \uAE30\uC5B5\uC740, \uC0AC\uB78C\uC744 \uB108\uBB34 \uBE60\uB978 \uACB0\uB2E8\uC73C\uB85C
-        \uBC00\uC5B4 \uB123\uB294\uB2E4."
+      Text: "\uB204\uAD70\uAC00 \uC55E\uC5D0 \uC11C\uC57C \uD55C\uB2E4\uBA74, \uADF8\uAC74
+        \uB098\uC5EC\uC57C \uD55C\uB2E4."
       RevealCharacterId: -1
       RevealCharacterName: 
-      IsProfileClue: 1
-      ProfileClueId: P06_04
-      ProfileCategory: "\uC131\uC7A5 \uBC30\uACBD"
-    Condition:
-      RequiredFragmentId: 
-      MinLoopCount: 0
-  - ComboId: COND_P06_05
-    ComboKey: "#5|#6|ANY \uB610\uB294 #6|#7|ANY"
-    ParticipantIds: 050000000600000007000000
-    SituationType: "\uD504\uB85C\uD30C\uC77C \uD575\uC2EC\uBB38\uC7A5"
-    Trigger: "\uC870\uC0AC \uBAA8\uB4DC / \uC0AC\uAC74 \uC9C1\uC804 \uB300\uC0AC
-      / #6\uC774 #5 \uB610\uB294 #7\uACFC \uAC19\uC740 \uCE78, \uB3D9\uC2DC\uC5D0
-      \uB2E4\uB978 \uCE90\uB9AD\uD130\uB3C4 \uAC19\uC740 \uCE78 / \uC0AC\uB9DD \uB300\uCCB4
-      \uAC00\uB2A5"
-    Visibility: "\uD2B9\uC815 \uC870\uAC74 \uB2EC\uC131 \uC2DC"
-    FragmentId: P06_05
-    TriggerDeadIds: 
-    UnlockConditionId: COND_P06_05
-    HintOfConditionId: 
-    Lines:
+      IsProfileClue: 0
+      ProfileClueId: 
+      ProfileCategory: 
     - SpeakerId: 6
-      Text: "\uB204\uAD70\uAC00 \uC4F0\uB7EC\uC9C8 \uC790\uB9AC\uAC00 \uBCF4\uC774\uBA74,
-        \uB098\uB294 \uC790\uAFB8 \uADF8 \uC790\uB9AC\uB97C \uB0B4 \uC774\uB984\uC73C\uB85C
-        \uBC14\uAFD4 \uC77D\uB294\uB2E4."
+      Text: "\uB0B4\uAC00 \uB300\uC2E0\uD558\uBA74 \uB41C\uB2E4. \uADF8\uAC8C \uAC00\uC7A5
+        \uBE60\uB974\uACE0, \uAC00\uC7A5 \uB35C \uC544\uD508 \uAE38\uC774\uB2E4."
       RevealCharacterId: -1
       RevealCharacterName: 
-      IsProfileClue: 1
-      ProfileClueId: P06_05
-      ProfileCategory: "\uC5ED\uD560 \uC5F0\uACB0"
+      IsProfileClue: 0
+      ProfileClueId: 
+      ProfileCategory: 
+    - SpeakerId: 6
+      Text: "\uD558\uC9C0\uB9CC \uAC00\uB054 \uC0DD\uAC01\uD55C\uB2E4. \uB0B4\uAC00
+        \uB300\uC2E0\uD558\uB294 \uAC83\uC774 \uC815\uB9D0 \uADF8\uB4E4\uC744 \uC0B4\uB9AC\uB294
+        \uC77C\uC778\uC9C0."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+      IsProfileClue: 0
+      ProfileClueId: 
+      ProfileCategory: 
     Condition:
       RequiredFragmentId: 
       MinLoopCount: 0
-  - ComboId: COND_P07_01
-    ComboKey: '#3|#7'
-    ParticipantIds: 0300000007000000
-    SituationType: "\uD504\uB85C\uD30C\uC77C \uD575\uC2EC\uBB38\uC7A5"
-    Trigger: "\uC870\uC0AC \uBAA8\uB4DC / \uC0AC\uAC74 \uACB0\uACFC / #7\uC774 \uC774\uB3D9\uD558\uBA70
-      \uC9C1\uC804 \uCE78\uC5D0\uC11C \uC0AC\uB9DD \uBC1C\uC0DD / \uC774\uB3D9 \uD6C4
-      #7\uC774 #3 \uD63C\uC790 \uC788\uB294 \uCE78\uC5D0 \uB3C4\uCC29"
-    Visibility: "\uD2B9\uC815 \uC870\uAC74 \uB2EC\uC131 \uC2DC"
-    FragmentId: P07_01
-    TriggerDeadIds: 
-    UnlockConditionId: COND_P07_01
-    HintOfConditionId: 
-    Lines:
-    - SpeakerId: 7
-      Text: "\uB0B4\uAC00 \uC9C0\uB098\uC628 \uC790\uB9AC\uC5D0 \uB0A8\uACA8\uC9C4
-        \uC0AC\uB78C\uB4E4\uC740 \uB298 \uB2A6\uAC8C \uC18C\uB9AC\uB97C \uB0B8\uB2E4."
-      RevealCharacterId: -1
-      RevealCharacterName: 
-      IsProfileClue: 1
-      ProfileClueId: P07_01
-      ProfileCategory: "\uC5ED\uD560 \uC5F0\uACB0"
-    Condition:
-      RequiredFragmentId: 
-      MinLoopCount: 0
-  - ComboId: COND_P07_02
-    ComboKey: '#2|#7'
-    ParticipantIds: 0200000007000000
-    SituationType: "\uD504\uB85C\uD30C\uC77C \uD575\uC2EC\uBB38\uC7A5"
-    Trigger: "\uC870\uC0AC \uBAA8\uB4DC / \uC120\uD0DD \uC870\uC0AC \uAD6C\uC5ED
-      / #7\uACFC #2\uAC00 \uAC19\uC740 \uCE78 / \uD574\uB2F9 \uD134 \uC0AC\uB9DD
-      \uC5C6\uC74C"
-    Visibility: "\uD2B9\uC815 \uC870\uAC74 \uB2EC\uC131 \uC2DC"
-    FragmentId: P07_02
-    TriggerDeadIds: 
-    UnlockConditionId: COND_P07_02
-    HintOfConditionId: 
-    Lines:
-    - SpeakerId: 7
-      Text: "\uB05D\uC744 \uD5A5\uD574 \uB2EC\uB9AC\uB294 \uC0AC\uB78C\uB4E4\uC740
-        \uAE38\uAC00\uC5D0 \uB5A8\uC5B4\uC9C4 \uC774\uB984\uC744 \uC798 \uBCF4\uC9C0
-        \uBABB\uD574."
-      RevealCharacterId: -1
-      RevealCharacterName: 
-      IsProfileClue: 1
-      ProfileClueId: P07_02
-      ProfileCategory: "\uD589\uB3D9 \uC6D0\uB9AC"
-    Condition:
-      RequiredFragmentId: 
-      MinLoopCount: 0
-  - ComboId: COND_P07_03
-    ComboKey: '#6|#7'
-    ParticipantIds: 0600000007000000
-    SituationType: "\uD504\uB85C\uD30C\uC77C \uD575\uC2EC\uBB38\uC7A5"
-    Trigger: "\uC870\uC0AC \uBAA8\uB4DC / \uC120\uD0DD \uC870\uC0AC \uAD6C\uC5ED
-      / #7\uACFC #6\uC774 \uAC19\uC740 \uCE78 / \uD574\uB2F9 \uD134 \uC0AC\uB9DD
-      \uC5C6\uC74C"
-    Visibility: "\uD2B9\uC815 \uC870\uAC74 \uB2EC\uC131 \uC2DC"
-    FragmentId: P07_03
-    TriggerDeadIds: 
-    UnlockConditionId: COND_P07_03
-    HintOfConditionId: 
-    Lines:
-    - SpeakerId: 7
-      Text: "\uB300\uC2E0\uD558\uACA0\uB2E4\uB294 \uB9D0\uB3C4 \uACB0\uAD6D \uB204\uAD70\uAC00\uC758
-        \uBAAB\uC744 \uAC00\uC838\uAC00\uB294 \uB9D0\uC774\uC57C."
-      RevealCharacterId: -1
-      RevealCharacterName: 
-      IsProfileClue: 1
-      ProfileClueId: P07_03
-      ProfileCategory: "\uAC10\uC815 \uD2B8\uB9AC\uAC70"
-    Condition:
-      RequiredFragmentId: 
-      MinLoopCount: 0
-  - ComboId: COND_P07_04
+  - ComboId: M7
     ComboKey: '#7'
     ParticipantIds: 07000000
-    SituationType: "\uD504\uB85C\uD30C\uC77C \uD575\uC2EC\uBB38\uC7A5"
-    Trigger: "\uC870\uC0AC \uBAA8\uB4DC / \uC120\uD0DD \uC870\uC0AC \uAD6C\uC5ED
-      / #7 \uB2E8\uB3C5 / \uC774\uBC88 \uB8E8\uD504\uC5D0\uC11C #7\uC774 \uD55C \uBC88
-      \uC774\uC0C1 \uC774\uB3D9"
-    Visibility: "\uD2B9\uC815 \uC870\uAC74 \uB2EC\uC131 \uC2DC"
-    FragmentId: P07_04
+    SituationType: "\uAC1C\uC778 \uB3C5\uBC31"
+    Trigger: "\uD734\uC2DD / \uBC24 / \uC870\uC0AC \uC911"
+    Visibility: 
+    FragmentId: 
     TriggerDeadIds: 
-    UnlockConditionId: COND_P07_04
+    UnlockConditionId: 
     HintOfConditionId: 
     Lines:
     - SpeakerId: 7
-      Text: "\uBA48\uCDB0 \uC788\uC73C\uBA74, \uB4A4\uC5D0 \uB0A8\uC740 \uC5BC\uAD74\uB4E4\uC774
-        \uB354 \uB610\uB837\uD574\uC838."
+      Text: "\uC88B\uC740 \uC774\uB984\uC740 \uB298 \uC77C\uC774 \uB05D\uB09C \uB4A4\uC5D0
+        \uBD99\uB294\uB2E4. \uADF8 \uC804\uAE4C\uC9C0 \uC0AC\uB77C\uC9C0\uB294 \uAC74
+        \uC798 \uBCF4\uC774\uC9C0\uB3C4 \uC54A\uACE0."
       RevealCharacterId: -1
       RevealCharacterName: 
-      IsProfileClue: 1
-      ProfileClueId: P07_04
-      ProfileCategory: "\uC228\uACA8\uC9C4 \uC57D\uC810"
-    Condition:
-      RequiredFragmentId: 
-      MinLoopCount: 0
-  - ComboId: COND_P07_05
-    ComboKey: "#1|#7 \uB610\uB294 #5|#7"
-    ParticipantIds: 0100000007000000
-    SituationType: "\uD504\uB85C\uD30C\uC77C \uD575\uC2EC\uBB38\uC7A5"
-    Trigger: "\uC870\uC0AC \uBAA8\uB4DC / \uC120\uD0DD \uC870\uC0AC \uAD6C\uC5ED
-      / #7\uC774 #1 \uB610\uB294 #5\uC640 \uAC19\uC740 \uCE78 / \uD574\uB2F9 \uD134
-      \uC0AC\uB9DD \uC5C6\uC74C"
-    Visibility: "\uD2B9\uC815 \uC870\uAC74 \uB2EC\uC131 \uC2DC"
-    FragmentId: P07_05
-    TriggerDeadIds: 
-    UnlockConditionId: COND_P07_05
-    HintOfConditionId: 
-    Lines:
+      IsProfileClue: 0
+      ProfileClueId: 
+      ProfileCategory: 
     - SpeakerId: 7
-      Text: "\uB09C \uD654\uB09C \uAC8C \uC544\uB2C8\uC57C. \uB2E4\uB9CC \uC78A\uD78C
-        \uCABD\uC758 \uC5BC\uAD74\uC744 \uB108\uBB34 \uB9CE\uC774 \uBD24\uC744 \uBFD0\uC774\uC57C."
+      Text: "\uBA3C\uC800 \uC6C0\uC9C1\uC5EC\uC57C \uC0B0\uB2E4. \uD558\uC9C0\uB9CC
+        \uBA3C\uC800 \uC6C0\uC9C1\uC774\uBA74, \uB204\uAD70\uAC00\uB294 \uB4A4\uC5D0
+        \uB0A8\uB294\uB2E4."
       RevealCharacterId: -1
       RevealCharacterName: 
-      IsProfileClue: 1
-      ProfileClueId: P07_05
-      ProfileCategory: "\uC695\uB9DD/\uBD84\uB178"
+      IsProfileClue: 0
+      ProfileClueId: 
+      ProfileCategory: 
+    - SpeakerId: 7
+      Text: "\uBA54\uC774\uB294 \uB05D\uC744 \uBCF8\uB2E4. \uB098\uB294 \uADF8 \uB05D\uAE4C\uC9C0
+        \uAC00\uB294 \uAE38\uC5D0 \uB5A8\uC5B4\uC9C0\uB294 \uC0AC\uB78C\uB4E4\uC744
+        \uBCF8\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+      IsProfileClue: 0
+      ProfileClueId: 
+      ProfileCategory: 
     Condition:
       RequiredFragmentId: 
       MinLoopCount: 0
@@ -7424,7 +6848,7 @@ MonoBehaviour:
     ParticipantIds: 020000000300000004000000050000000600000007000000
     SituationType: "\uC0AC\uB9DD \uBC18\uC751"
     Trigger: "\uC5D4\uBE44 \uC0AC\uB9DD"
-    Visibility: "\uC0AC\uB9DD \uD6C4 \uD30C\uD2F0 \uB300\uD654"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 01000000
     UnlockConditionId: 
@@ -7490,7 +6914,7 @@ MonoBehaviour:
     ParticipantIds: 010000000300000004000000050000000600000007000000
     SituationType: "\uC0AC\uB9DD \uBC18\uC751"
     Trigger: "\uBA54\uC774 \uC0AC\uB9DD"
-    Visibility: "\uC0AC\uB9DD \uD6C4 \uD30C\uD2F0 \uB300\uD654"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 02000000
     UnlockConditionId: 
@@ -7554,7 +6978,7 @@ MonoBehaviour:
     ParticipantIds: 010000000200000004000000050000000600000007000000
     SituationType: "\uC0AC\uB9DD \uBC18\uC751"
     Trigger: "\uB370\uC6B0\uC2A4 \uC0AC\uB9DD"
-    Visibility: "\uC0AC\uB9DD \uD6C4 \uD30C\uD2F0 \uB300\uD654"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 03000000
     UnlockConditionId: 
@@ -7619,7 +7043,7 @@ MonoBehaviour:
     ParticipantIds: 010000000200000003000000050000000600000007000000
     SituationType: "\uC0AC\uB9DD \uBC18\uC751"
     Trigger: "\uB8E8\uC774\uC2A4 \uC0AC\uB9DD"
-    Visibility: "\uC0AC\uB9DD \uD6C4 \uD30C\uD2F0 \uB300\uD654"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 04000000
     UnlockConditionId: 
@@ -7683,7 +7107,7 @@ MonoBehaviour:
     ParticipantIds: 010000000200000003000000040000000600000007000000
     SituationType: "\uC0AC\uB9DD \uBC18\uC751"
     Trigger: "\uD1A0\uB2C8 \uC0AC\uB9DD"
-    Visibility: "\uC0AC\uB9DD \uD6C4 \uD30C\uD2F0 \uB300\uD654"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 05000000
     UnlockConditionId: 
@@ -7750,7 +7174,7 @@ MonoBehaviour:
     ParticipantIds: 010000000200000003000000040000000500000007000000
     SituationType: "\uC0AC\uB9DD \uBC18\uC751"
     Trigger: "\uD504\uB9AC\uB4DC \uC0AC\uB9DD"
-    Visibility: "\uC0AC\uB9DD \uD6C4 \uD30C\uD2F0 \uB300\uD654"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 06000000
     UnlockConditionId: 
@@ -7816,7 +7240,7 @@ MonoBehaviour:
     ParticipantIds: 010000000200000003000000040000000500000006000000
     SituationType: "\uC0AC\uB9DD \uBC18\uC751"
     Trigger: "\uC0C8\uD134 \uC0AC\uB9DD"
-    Visibility: "\uC0AC\uB9DD \uD6C4 \uD30C\uD2F0 \uB300\uD654"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 07000000
     UnlockConditionId: 
@@ -7876,1092 +7300,13 @@ MonoBehaviour:
     Condition:
       RequiredFragmentId: 
       MinLoopCount: 0
-  - ComboId: HINT_P01_01
-    ComboKey: '#1|#2|#7'
-    ParticipantIds: 010000000200000007000000
-    SituationType: "\uD504\uB85C\uD30C\uC77C \uC720\uB3C4\uB300\uC0AC"
-    Trigger: "#1\uC774 #7\uACFC \uAC19\uC740 \uCE78, #2 \uC0DD\uC874"
-    Visibility: "\uBD80\uBD84 \uC870\uAC74 \uB2EC\uC131 \uC2DC"
-    FragmentId: 
-    TriggerDeadIds: 
-    UnlockConditionId: 
-    HintOfConditionId: COND_P01_01
-    Lines:
-    - SpeakerId: 1
-      Text: "\uBA54\uC774\uC640 \uC0C8\uD134\uC774 \uAC19\uC740 \uC790\uB9AC\uC5D0
-        \uC788\uC73C\uBA74, \uB9D0\uBCF4\uB2E4 \uBA3C\uC800 \uBC8C\uC5B4\uC9C0\uB294
-        \uD2C8\uC774 \uBCF4\uC77C \uAC83 \uAC19\uC544."
-      RevealCharacterId: -1
-      RevealCharacterName: 
-      IsProfileClue: 0
-      ProfileClueId: 
-      ProfileCategory: 
-    Condition:
-      RequiredFragmentId: 
-      MinLoopCount: 0
-  - ComboId: HINT_P01_02
-    ComboKey: '#1|#3|#4'
-    ParticipantIds: 010000000300000004000000
-    SituationType: "\uD504\uB85C\uD30C\uC77C \uC720\uB3C4\uB300\uC0AC"
-    Trigger: "#1\uC774 #3 \uB610\uB294 #4\uC640 \uAC19\uC740 \uCE78, \uB2E4\uB978
-      \uC5F0\uC778 \uC0DD\uC874"
-    Visibility: "\uBD80\uBD84 \uC870\uAC74 \uB2EC\uC131 \uC2DC"
-    FragmentId: 
-    TriggerDeadIds: 
-    UnlockConditionId: 
-    HintOfConditionId: COND_P01_02
-    Lines:
-    - SpeakerId: 1
-      Text: "\uB458\uC774 \uD568\uAED8 \uC788\uB294 \uACF3\uC5D0\uB294 \uC774\uC0C1\uD558\uAC8C
-        \uBB38\uD131\uC774 \uC0DD\uACA8. \uB4E4\uC5B4\uAC00\uB3C4 \uC548\uCABD\uC740
-        \uC544\uB2CC \uB290\uB08C\uC774\uC57C."
-      RevealCharacterId: -1
-      RevealCharacterName: 
-      IsProfileClue: 0
-      ProfileClueId: 
-      ProfileCategory: 
-    Condition:
-      RequiredFragmentId: 
-      MinLoopCount: 0
-  - ComboId: HINT_P01_03
-    ComboKey: '#1'
-    ParticipantIds: 01000000
-    SituationType: "\uD504\uB85C\uD30C\uC77C \uC720\uB3C4\uB300\uC0AC"
-    Trigger: "#1\uC774 \uD63C\uC790 \uC788\uACE0 \uC9C1\uC804 \uC870\uD569 \uB300\uC0AC
-      \uC218\uC9D1 \uC774\uB825 \uC874\uC7AC"
-    Visibility: "\uBD80\uBD84 \uC870\uAC74 \uB2EC\uC131 \uC2DC"
-    FragmentId: 
-    TriggerDeadIds: 
-    UnlockConditionId: 
-    HintOfConditionId: COND_P01_03
-    Lines:
-    - SpeakerId: 1
-      Text: "\uAC00\uB054\uC740 \uD63C\uC790 \uC788\uC744 \uB54C\uBCF4\uB2E4, \uB204\uAD70\uAC00\uC640
-        \uD5E4\uC5B4\uC9C4 \uB4A4\uAC00 \uB354 \uC870\uC6A9\uD558\uAC8C \uB4E4\uB824."
-      RevealCharacterId: -1
-      RevealCharacterName: 
-      IsProfileClue: 0
-      ProfileClueId: 
-      ProfileCategory: 
-    Condition:
-      RequiredFragmentId: 
-      MinLoopCount: 0
-  - ComboId: HINT_P01_04
-    ComboKey: '#1|#3|#4'
-    ParticipantIds: 010000000300000004000000
-    SituationType: "\uD504\uB85C\uD30C\uC77C \uC720\uB3C4\uB300\uC0AC"
-    Trigger: "#1\uC774 #3,#4 \uC870\uD569\uC744 \uC774\uBBF8 1\uD68C \uBAA9\uACA9"
-    Visibility: "\uBD80\uBD84 \uC870\uAC74 \uB2EC\uC131 \uC2DC"
-    FragmentId: 
-    TriggerDeadIds: 
-    UnlockConditionId: 
-    HintOfConditionId: COND_P01_04
-    Lines:
-    - SpeakerId: 1
-      Text: "\uAC19\uC740 \uC7A5\uBA74\uC744 \uB2E4\uC2DC \uBCF4\uBA74, \uCC98\uC74C\uC5D4
-        \uC548 \uBCF4\uC774\uB358 \uBE48\uC790\uB9AC\uAC00 \uBCF4\uC5EC."
-      RevealCharacterId: -1
-      RevealCharacterName: 
-      IsProfileClue: 0
-      ProfileClueId: 
-      ProfileCategory: 
-    Condition:
-      RequiredFragmentId: 
-      MinLoopCount: 0
-  - ComboId: HINT_P01_05
-    ComboKey: '#1|ANY'
-    ParticipantIds: 01000000
-    SituationType: "\uD504\uB85C\uD30C\uC77C \uC720\uB3C4\uB300\uC0AC"
-    Trigger: "#1\uACFC \uB2E4\uB978 \uCE90\uB9AD\uD130\uAC00 \uAC19\uC740 \uCE78,
-      \uC0AC\uAC74 \uC704\uD5D8 \uC874\uC7AC"
-    Visibility: "\uBD80\uBD84 \uC870\uAC74 \uB2EC\uC131 \uC2DC"
-    FragmentId: 
-    TriggerDeadIds: 
-    UnlockConditionId: 
-    HintOfConditionId: COND_P01_05
-    Lines:
-    - SpeakerId: 1
-      Text: "\uC5B4\uB5A4 \uC0AC\uB78C\uC740 \uC0AC\uB77C\uC9C0\uACE0, \uC5B4\uB5A4
-        \uC0AC\uB78C\uC740 \uB0A8\uC544. \uB0A8\uC740 \uCABD\uC774 \uB354 \uAC00\uBCBC\uC6B4
-        \uAC74 \uC544\uB2C8\uC57C."
-      RevealCharacterId: -1
-      RevealCharacterName: 
-      IsProfileClue: 0
-      ProfileClueId: 
-      ProfileCategory: 
-    Condition:
-      RequiredFragmentId: 
-      MinLoopCount: 0
-  - ComboId: HINT_P02_01
-    ComboKey: '#2'
-    ParticipantIds: 02000000
-    SituationType: "\uD504\uB85C\uD30C\uC77C \uC720\uB3C4\uB300\uC0AC"
-    Trigger: "#2\uAC00 \uD63C\uC790 \uC788\uACE0 \uB8E8\uD504\uAC00 2\uC77C \uC774\uC0C1
-      \uC9C4\uD589"
-    Visibility: "\uBD80\uBD84 \uC870\uAC74 \uB2EC\uC131 \uC2DC"
-    FragmentId: 
-    TriggerDeadIds: 
-    UnlockConditionId: 
-    HintOfConditionId: COND_P02_01
-    Lines:
-    - SpeakerId: 2
-      Text: "\uBA54\uC774\uB294 \uD63C\uC790 \uC788\uC744\uC218\uB85D \uB354 \uBA40\uB9AC
-        \uC788\uB294 \uB05D\uC744 \uBCF4\uB294 \uC0AC\uB78C \uAC19\uC544."
-      RevealCharacterId: -1
-      RevealCharacterName: 
-      IsProfileClue: 0
-      ProfileClueId: 
-      ProfileCategory: 
-    Condition:
-      RequiredFragmentId: 
-      MinLoopCount: 0
-  - ComboId: HINT_P02_02
-    ComboKey: '#1|#2'
-    ParticipantIds: 0100000002000000
-    SituationType: "\uD504\uB85C\uD30C\uC77C \uC720\uB3C4\uB300\uC0AC"
-    Trigger: "#2\uC640 #1\uC774 \uAC19\uC740 \uCE78"
-    Visibility: "\uBD80\uBD84 \uC870\uAC74 \uB2EC\uC131 \uC2DC"
-    FragmentId: 
-    TriggerDeadIds: 
-    UnlockConditionId: 
-    HintOfConditionId: COND_P02_02
-    Lines:
-    - SpeakerId: 2
-      Text: "\uC5D4\uBE44 \uC55E\uC5D0\uC11C\uB77C\uBA74 \uBA54\uC774\uB3C4 \uAC00\uB054
-        \uCE7C\uC744 \uB0B4\uB824\uB193\uB294 \uAC83 \uAC19\uC544."
-      RevealCharacterId: -1
-      RevealCharacterName: 
-      IsProfileClue: 0
-      ProfileClueId: 
-      ProfileCategory: 
-    Condition:
-      RequiredFragmentId: 
-      MinLoopCount: 0
-  - ComboId: HINT_P02_03
-    ComboKey: '#2|#4'
-    ParticipantIds: 0200000004000000
-    SituationType: "\uD504\uB85C\uD30C\uC77C \uC720\uB3C4\uB300\uC0AC"
-    Trigger: "#2\uC640 #4\uAC00 \uAC19\uC740 \uCE78, #3\uC740 \uB2E4\uB978 \uCE78"
-    Visibility: "\uBD80\uBD84 \uC870\uAC74 \uB2EC\uC131 \uC2DC"
-    FragmentId: 
-    TriggerDeadIds: 
-    UnlockConditionId: 
-    HintOfConditionId: COND_P02_03
-    Lines:
-    - SpeakerId: 2
-      Text: "\uB8E8\uC774\uC2A4\uAC00 \uBA48\uCD94\uACE0 \uC2F6\uC5B4 \uD560\uC218\uB85D
-        \uBA54\uC774\uB294 \uB354 \uC55E\uC73C\uB85C \uBC00\uC5B4\uBD99\uC77C \uAC70\uC57C."
-      RevealCharacterId: -1
-      RevealCharacterName: 
-      IsProfileClue: 0
-      ProfileClueId: 
-      ProfileCategory: 
-    Condition:
-      RequiredFragmentId: 
-      MinLoopCount: 0
-  - ComboId: HINT_P02_04
-    ComboKey: '#2|#6'
-    ParticipantIds: 0200000006000000
-    SituationType: "\uD504\uB85C\uD30C\uC77C \uC720\uB3C4\uB300\uC0AC"
-    Trigger: "#2\uC640 #6\uC774 \uAC19\uC740 \uCE78"
-    Visibility: "\uBD80\uBD84 \uC870\uAC74 \uB2EC\uC131 \uC2DC"
-    FragmentId: 
-    TriggerDeadIds: 
-    UnlockConditionId: 
-    HintOfConditionId: COND_P02_04
-    Lines:
-    - SpeakerId: 2
-      Text: "\uD504\uB9AC\uB4DC\uB294 \uB298 \uBA3C\uC800 \uC11C\uB824 \uD558\uACE0,
-        \uBA54\uC774\uB294 \uADF8\uB7F0 \uB4B7\uBAA8\uC2B5\uC744 \uC624\uB798 \uBCF4\uC9C0
-        \uBABB\uD574."
-      RevealCharacterId: -1
-      RevealCharacterName: 
-      IsProfileClue: 0
-      ProfileClueId: 
-      ProfileCategory: 
-    Condition:
-      RequiredFragmentId: 
-      MinLoopCount: 0
-  - ComboId: HINT_P02_05
-    ComboKey: '#2|#5'
-    ParticipantIds: 0200000005000000
-    SituationType: "\uD504\uB85C\uD30C\uC77C \uC720\uB3C4\uB300\uC0AC"
-    Trigger: "#2\uC640 #5\uAC00 \uAC19\uC740 \uCE78\uC774 \uB420 \uAC00\uB2A5\uC131
-      \uC874\uC7AC"
-    Visibility: "\uBD80\uBD84 \uC870\uAC74 \uB2EC\uC131 \uC2DC"
-    FragmentId: 
-    TriggerDeadIds: 
-    UnlockConditionId: 
-    HintOfConditionId: COND_P02_05
-    Lines:
-    - SpeakerId: 2
-      Text: "\uD1A0\uB2C8\uC640 \uBA54\uC774\uAC00 \uAC00\uAE4C\uC6CC\uC9C0\uBA74,
-        \uB18D\uB2F4\uC73C\uB85C \uB118\uAE38 \uC218 \uC5C6\uB294 \uC120\uC774 \uC0DD\uAE38\uC9C0\uB3C4
-        \uBAB0\uB77C."
-      RevealCharacterId: -1
-      RevealCharacterName: 
-      IsProfileClue: 0
-      ProfileClueId: 
-      ProfileCategory: 
-    Condition:
-      RequiredFragmentId: 
-      MinLoopCount: 0
-  - ComboId: HINT_P03_01
-    ComboKey: '#3|#4'
-    ParticipantIds: 0300000004000000
-    SituationType: "\uD504\uB85C\uD30C\uC77C \uC720\uB3C4\uB300\uC0AC"
-    Trigger: "#3\uACFC #4\uAC00 \uAC19\uC740 \uCE78"
-    Visibility: "\uBD80\uBD84 \uC870\uAC74 \uB2EC\uC131 \uC2DC"
-    FragmentId: 
-    TriggerDeadIds: 
-    UnlockConditionId: 
-    HintOfConditionId: COND_P03_01
-    Lines:
-    - SpeakerId: 3
-      Text: "\uB370\uC6B0\uC2A4\uAC00 \uB9D0\uD558\uB294 \uC548\uC804\uC740 \uB298
-        \uAC19\uC740 \uBC29\uD5A5\uC744 \uD5A5\uD558\uB294 \uAC83 \uAC19\uC544."
-      RevealCharacterId: -1
-      RevealCharacterName: 
-      IsProfileClue: 0
-      ProfileClueId: 
-      ProfileCategory: 
-    Condition:
-      RequiredFragmentId: 
-      MinLoopCount: 0
-  - ComboId: HINT_P03_02
-    ComboKey: '#1|#3|#4'
-    ParticipantIds: 010000000300000004000000
-    SituationType: "\uD504\uB85C\uD30C\uC77C \uC720\uB3C4\uB300\uC0AC"
-    Trigger: "#1\uC774 #3,#4 \uC911 \uD55C \uBA85\uACFC \uAC19\uC740 \uCE78"
-    Visibility: "\uBD80\uBD84 \uC870\uAC74 \uB2EC\uC131 \uC2DC"
-    FragmentId: 
-    TriggerDeadIds: 
-    UnlockConditionId: 
-    HintOfConditionId: COND_P03_02
-    Lines:
-    - SpeakerId: 3
-      Text: "\uC5D4\uBE44\uB294 \uB458 \uC0AC\uC774\uC758 \uC870\uC6A9\uD55C \uBB38\uD2C8\uC744
-        \uB108\uBB34 \uC798 \uBCF4\uB294 \uAC83 \uAC19\uC544."
-      RevealCharacterId: -1
-      RevealCharacterName: 
-      IsProfileClue: 0
-      ProfileClueId: 
-      ProfileCategory: 
-    Condition:
-      RequiredFragmentId: 
-      MinLoopCount: 0
-  - ComboId: HINT_P03_03
-    ComboKey: '#2|#3'
-    ParticipantIds: 0200000003000000
-    SituationType: "\uD504\uB85C\uD30C\uC77C \uC720\uB3C4\uB300\uC0AC"
-    Trigger: "#3\uACFC #2\uAC00 \uAC19\uC740 \uCE78, #4 \uC0DD\uC874"
-    Visibility: "\uBD80\uBD84 \uC870\uAC74 \uB2EC\uC131 \uC2DC"
-    FragmentId: 
-    TriggerDeadIds: 
-    UnlockConditionId: 
-    HintOfConditionId: COND_P03_03
-    Lines:
-    - SpeakerId: 3
-      Text: "\uBA54\uC774\uC758 \uC804\uC9C4\uC740 \uB370\uC6B0\uC2A4\uC5D0\uAC8C
-        \uC790\uC8FC \uC704\uD5D8 \uC2E0\uD638\uCC98\uB7FC \uB4E4\uB9B4 \uAC70\uC57C."
-      RevealCharacterId: -1
-      RevealCharacterName: 
-      IsProfileClue: 0
-      ProfileClueId: 
-      ProfileCategory: 
-    Condition:
-      RequiredFragmentId: 
-      MinLoopCount: 0
-  - ComboId: HINT_P03_04
-    ComboKey: '#3|#7'
-    ParticipantIds: 0300000007000000
-    SituationType: "\uD504\uB85C\uD30C\uC77C \uC720\uB3C4\uB300\uC0AC"
-    Trigger: "#7\uACFC #3\uC774 \uAC19\uC740 \uCE78, \uC9C1\uC804 \uC774\uB3D9\uC5D0\uC11C
-      \uC0AC\uB9DD \uC5C6\uC74C"
-    Visibility: "\uBD80\uBD84 \uC870\uAC74 \uB2EC\uC131 \uC2DC"
-    FragmentId: 
-    TriggerDeadIds: 
-    UnlockConditionId: 
-    HintOfConditionId: COND_P03_04
-    Lines:
-    - SpeakerId: 3
-      Text: "\uC0C8\uD134\uC740 \uBB34\uAC70\uC6B4 \uB9D0\uC744 \uC544\uBB34\uC5D0\uAC8C\uB098
-        \uB9E1\uAE30\uC9C0 \uC54A\uC544. \uB370\uC6B0\uC2A4\uB77C\uBA74 \uC870\uC6A9\uD788
-        \uB4E4\uC5B4\uC904\uC9C0\uB3C4 \uBAB0\uB77C."
-      RevealCharacterId: -1
-      RevealCharacterName: 
-      IsProfileClue: 0
-      ProfileClueId: 
-      ProfileCategory: 
-    Condition:
-      RequiredFragmentId: 
-      MinLoopCount: 0
-  - ComboId: HINT_P03_05
-    ComboKey: '#3'
-    ParticipantIds: 03000000
-    SituationType: "\uD504\uB85C\uD30C\uC77C \uC720\uB3C4\uB300\uC0AC"
-    Trigger: "#3\uC774 \uD63C\uC790 \uC788\uACE0 #4 \uC0DD\uC874"
-    Visibility: "\uBD80\uBD84 \uC870\uAC74 \uB2EC\uC131 \uC2DC"
-    FragmentId: 
-    TriggerDeadIds: 
-    UnlockConditionId: 
-    HintOfConditionId: COND_P03_05
-    Lines:
-    - SpeakerId: 3
-      Text: "\uB370\uC6B0\uC2A4\uAC00 \uD63C\uC790 \uC788\uC744 \uB54C\uB294, \uC5C6\uB294
-        \uC0AC\uB78C\uC758 \uC228\uC18C\uB9AC\uAE4C\uC9C0 \uC138\uB294 \uAC83 \uAC19\uC544."
-      RevealCharacterId: -1
-      RevealCharacterName: 
-      IsProfileClue: 0
-      ProfileClueId: 
-      ProfileCategory: 
-    Condition:
-      RequiredFragmentId: 
-      MinLoopCount: 0
-  - ComboId: HINT_P04_01
-    ComboKey: '#4'
-    ParticipantIds: 04000000
-    SituationType: "\uD504\uB85C\uD30C\uC77C \uC720\uB3C4\uB300\uC0AC"
-    Trigger: "#4\uAC00 \uD63C\uC790 \uC788\uACE0 \uC0AC\uAC74 \uC5C6\uC74C"
-    Visibility: "\uBD80\uBD84 \uC870\uAC74 \uB2EC\uC131 \uC2DC"
-    FragmentId: 
-    TriggerDeadIds: 
-    UnlockConditionId: 
-    HintOfConditionId: COND_P04_01
-    Lines:
-    - SpeakerId: 4
-      Text: "\uB8E8\uC774\uC2A4\uC5D0\uAC8C\uB294 \uC870\uC6A9\uD55C \uCE78 \uD558\uB098\uAC00
-        \uB2E4\uB978 \uC0AC\uB78C\uC758 \uC2B9\uB9AC\uBCF4\uB2E4 \uC911\uC694\uD560
-        \uB54C\uAC00 \uC788\uC5B4."
-      RevealCharacterId: -1
-      RevealCharacterName: 
-      IsProfileClue: 0
-      ProfileClueId: 
-      ProfileCategory: 
-    Condition:
-      RequiredFragmentId: 
-      MinLoopCount: 0
-  - ComboId: HINT_P04_02
-    ComboKey: '#2|#4'
-    ParticipantIds: 0200000004000000
-    SituationType: "\uD504\uB85C\uD30C\uC77C \uC720\uB3C4\uB300\uC0AC"
-    Trigger: "#4\uC640 #2\uAC00 \uAC19\uC740 \uCE78, #3 \uBD80\uC7AC"
-    Visibility: "\uBD80\uBD84 \uC870\uAC74 \uB2EC\uC131 \uC2DC"
-    FragmentId: 
-    TriggerDeadIds: 
-    UnlockConditionId: 
-    HintOfConditionId: COND_P04_02
-    Lines:
-    - SpeakerId: 4
-      Text: "\uBA54\uC774\uC640 \uB8E8\uC774\uC2A4\uB97C \uAC19\uC774 \uB450\uBA74
-        \uD55C\uCABD\uC740 \uB354 \uBE68\uB77C\uC9C0\uACE0, \uD55C\uCABD\uC740 \uB354
-        \uBA40\uC5B4\uC9C8 \uAC70\uC57C."
-      RevealCharacterId: -1
-      RevealCharacterName: 
-      IsProfileClue: 0
-      ProfileClueId: 
-      ProfileCategory: 
-    Condition:
-      RequiredFragmentId: 
-      MinLoopCount: 0
-  - ComboId: HINT_P04_03
-    ComboKey: '#3|#4'
-    ParticipantIds: 0300000004000000
-    SituationType: "\uD504\uB85C\uD30C\uC77C \uC720\uB3C4\uB300\uC0AC"
-    Trigger: "#3\uACFC #4\uAC00 \uAC19\uC740 \uCE78"
-    Visibility: "\uBD80\uBD84 \uC870\uAC74 \uB2EC\uC131 \uC2DC"
-    FragmentId: 
-    TriggerDeadIds: 
-    UnlockConditionId: 
-    HintOfConditionId: COND_P04_03
-    Lines:
-    - SpeakerId: 4
-      Text: "\uB8E8\uC774\uC2A4\uB294 \uB370\uC6B0\uC2A4 \uACC1\uC5D0 \uC788\uC744
-        \uB54C \uAC00\uC7A5 \uD3B8\uD574 \uBCF4\uC774\uC9C0\uB9CC, \uAF2D \uAC00\uC7A5
-        \uC790\uC720\uB85C\uC6CC \uBCF4\uC774\uC9C4 \uC54A\uC544."
-      RevealCharacterId: -1
-      RevealCharacterName: 
-      IsProfileClue: 0
-      ProfileClueId: 
-      ProfileCategory: 
-    Condition:
-      RequiredFragmentId: 
-      MinLoopCount: 0
-  - ComboId: HINT_P04_04
-    ComboKey: '#4|#7'
-    ParticipantIds: 0400000007000000
-    SituationType: "\uD504\uB85C\uD30C\uC77C \uC720\uB3C4\uB300\uC0AC"
-    Trigger: "#4\uC640 #7\uC774 \uAC19\uC740 \uCE78"
-    Visibility: "\uBD80\uBD84 \uC870\uAC74 \uB2EC\uC131 \uC2DC"
-    FragmentId: 
-    TriggerDeadIds: 
-    UnlockConditionId: 
-    HintOfConditionId: COND_P04_04
-    Lines:
-    - SpeakerId: 4
-      Text: "\uC0C8\uD134\uC774 \uBB3B\uAE30 \uC2DC\uC791\uD558\uBA74, \uB8E8\uC774\uC2A4\uB294
-        \uB300\uB2F5\uBCF4\uB2E4 \uC870\uC6A9\uD55C \uACF3\uC744 \uBA3C\uC800 \uCC3E\uC744
-        \uAC70\uC57C."
-      RevealCharacterId: -1
-      RevealCharacterName: 
-      IsProfileClue: 0
-      ProfileClueId: 
-      ProfileCategory: 
-    Condition:
-      RequiredFragmentId: 
-      MinLoopCount: 0
-  - ComboId: HINT_P04_05
-    ComboKey: '#3|#4|#6'
-    ParticipantIds: 030000000400000006000000
-    SituationType: "\uD504\uB85C\uD30C\uC77C \uC720\uB3C4\uB300\uC0AC"
-    Trigger: "#4\uAC00 #3\uACFC \uAC19\uC740 \uCE78, #6\uB3C4 \uC0DD\uC874"
-    Visibility: "\uBD80\uBD84 \uC870\uAC74 \uB2EC\uC131 \uC2DC"
-    FragmentId: 
-    TriggerDeadIds: 
-    UnlockConditionId: 
-    HintOfConditionId: COND_P04_05
-    Lines:
-    - SpeakerId: 4
-      Text: "\uD504\uB9AC\uB4DC\uAC00 \uACC1\uC5D0 \uC788\uC73C\uBA74, \uB8E8\uC774\uC2A4\uB294
-        \uB204\uAC00 \uB204\uAD6C\uB97C \uBD99\uB4E4\uACE0 \uC788\uB294\uC9C0 \uB354
-        \uB610\uB837\uD558\uAC8C \uB290\uB084\uC9C0\uB3C4 \uBAB0\uB77C."
-      RevealCharacterId: -1
-      RevealCharacterName: 
-      IsProfileClue: 0
-      ProfileClueId: 
-      ProfileCategory: 
-    Condition:
-      RequiredFragmentId: 
-      MinLoopCount: 0
-  - ComboId: HINT_P05_01
-    ComboKey: '#5'
-    ParticipantIds: 05000000
-    SituationType: "\uD504\uB85C\uD30C\uC77C \uC720\uB3C4\uB300\uC0AC"
-    Trigger: "#5\uAC00 \uD63C\uC790 \uC788\uACE0 \uC9C1\uC804 \uD134 2\uC778 \uC774\uC0C1
-      \uAC08\uB4F1 \uC870\uD569"
-    Visibility: "\uBD80\uBD84 \uC870\uAC74 \uB2EC\uC131 \uC2DC"
-    FragmentId: 
-    TriggerDeadIds: 
-    UnlockConditionId: 
-    HintOfConditionId: COND_P05_01
-    Lines:
-    - SpeakerId: 5
-      Text: "\uD1A0\uB2C8\uB294 \uC18C\uB780\uC758 \uD55C\uAC00\uC6B4\uB370\uBCF4\uB2E4,
-        \uC18C\uB780\uC774 \uB05D\uB09C \uB4A4\uB97C \uB354 \uC624\uB798 \uBCF4\uB294
-        \uAC83 \uAC19\uC544."
-      RevealCharacterId: -1
-      RevealCharacterName: 
-      IsProfileClue: 0
-      ProfileClueId: 
-      ProfileCategory: 
-    Condition:
-      RequiredFragmentId: 
-      MinLoopCount: 0
-  - ComboId: HINT_P05_02
-    ComboKey: "#1|#5 \uB610\uB294 #2|#5"
-    ParticipantIds: 0100000005000000
-    SituationType: "\uD504\uB85C\uD30C\uC77C \uC720\uB3C4\uB300\uC0AC"
-    Trigger: "#5\uAC00 #1 \uB610\uB294 #2\uC640 \uAC19\uC740 \uCE78"
-    Visibility: "\uBD80\uBD84 \uC870\uAC74 \uB2EC\uC131 \uC2DC"
-    FragmentId: 
-    TriggerDeadIds: 
-    UnlockConditionId: 
-    HintOfConditionId: COND_P05_02
-    Lines:
-    - SpeakerId: 5
-      Text: "\uD1A0\uB2C8\uB294 \uB204\uAC00 \uBB34\uC2A8 \uB9D0\uC744 \uD558\uB294\uC9C0\uBCF4\uB2E4,
-        \uB204\uAC00 \uBA3C\uC800 \uD45C\uC815\uC744 \uBC14\uAFB8\uB294\uC9C0\uB97C
-        \uBCF4\uB294 \uAC83 \uAC19\uC544."
-      RevealCharacterId: -1
-      RevealCharacterName: 
-      IsProfileClue: 0
-      ProfileClueId: 
-      ProfileCategory: 
-    Condition:
-      RequiredFragmentId: 
-      MinLoopCount: 0
-  - ComboId: HINT_P05_03
-    ComboKey: '#5|#7'
-    ParticipantIds: 0500000007000000
-    SituationType: "\uD504\uB85C\uD30C\uC77C \uC720\uB3C4\uB300\uC0AC"
-    Trigger: "#5\uC640 #7\uC774 \uAC19\uC740 \uCE78"
-    Visibility: "\uBD80\uBD84 \uC870\uAC74 \uB2EC\uC131 \uC2DC"
-    FragmentId: 
-    TriggerDeadIds: 
-    UnlockConditionId: 
-    HintOfConditionId: COND_P05_03
-    Lines:
-    - SpeakerId: 5
-      Text: "\uC0C8\uD134\uC758 \uC9C8\uBB38\uC740 \uD1A0\uB2C8\uAC00 \uAE30\uB2E4\uB9AC\uB358
-        \uD750\uB984\uC744 \uC790\uAFB8 \uB04A\uC5B4 \uBC84\uB9B4\uC9C0\uB3C4 \uBAB0\uB77C."
-      RevealCharacterId: -1
-      RevealCharacterName: 
-      IsProfileClue: 0
-      ProfileClueId: 
-      ProfileCategory: 
-    Condition:
-      RequiredFragmentId: 
-      MinLoopCount: 0
-  - ComboId: HINT_P05_04
-    ComboKey: '#5|ANY'
-    ParticipantIds: 05000000
-    SituationType: "\uD504\uB85C\uD30C\uC77C \uC720\uB3C4\uB300\uC0AC"
-    Trigger: "#5\uAC00 \uB2E4\uB978 \uCE90\uB9AD\uD130\uC640 \uAC19\uC740 \uCE78,
-      \uC0B4\uC778\uC790 \uD6A8\uACFC \uAC00\uB2A5"
-    Visibility: "\uBD80\uBD84 \uC870\uAC74 \uB2EC\uC131 \uC2DC"
-    FragmentId: 
-    TriggerDeadIds: 
-    UnlockConditionId: 
-    HintOfConditionId: COND_P05_04
-    Lines:
-    - SpeakerId: 5
-      Text: "\uD1A0\uB2C8\uAC00 \uC788\uB294 \uCE78\uC5D0\uC11C\uB294 \uC0AC\uAC74
-        \uADF8 \uC790\uCCB4\uBCF4\uB2E4, \uC0AC\uAC74 \uB4A4\uC758 \uD45C\uC815\uC774
-        \uB354 \uC911\uC694\uD574\uC9C8 \uAC70\uC57C."
-      RevealCharacterId: -1
-      RevealCharacterName: 
-      IsProfileClue: 0
-      ProfileClueId: 
-      ProfileCategory: 
-    Condition:
-      RequiredFragmentId: 
-      MinLoopCount: 0
-  - ComboId: HINT_P05_05
-    ComboKey: '#3|#4|#5'
-    ParticipantIds: 030000000400000005000000
-    SituationType: "\uD504\uB85C\uD30C\uC77C \uC720\uB3C4\uB300\uC0AC"
-    Trigger: "#5\uAC00 #3 \uB610\uB294 #4\uC640 \uAC19\uC740 \uCE78"
-    Visibility: "\uBD80\uBD84 \uC870\uAC74 \uB2EC\uC131 \uC2DC"
-    FragmentId: 
-    TriggerDeadIds: 
-    UnlockConditionId: 
-    HintOfConditionId: COND_P05_05
-    Lines:
-    - SpeakerId: 5
-      Text: "\uD1A0\uB2C8\uC5D0\uAC8C \uB370\uC6B0\uC2A4\uC640 \uB8E8\uC774\uC2A4\uB294
-        \uB530\uB85C \uC788\uC744 \uB54C\uBCF4\uB2E4 \uAC19\uC774 \uC788\uC744 \uB54C
-        \uB354 \uD765\uBBF8\uB85C\uC6B4 \uC7A5\uBA74\uC77C \uAC70\uC57C."
-      RevealCharacterId: -1
-      RevealCharacterName: 
-      IsProfileClue: 0
-      ProfileClueId: 
-      ProfileCategory: 
-    Condition:
-      RequiredFragmentId: 
-      MinLoopCount: 0
-  - ComboId: HINT_P06_01
-    ComboKey: '#6|ANY'
-    ParticipantIds: 06000000
-    SituationType: "\uD504\uB85C\uD30C\uC77C \uC720\uB3C4\uB300\uC0AC"
-    Trigger: "#6\uC774 \uB2E4\uB978 \uCE90\uB9AD\uD130\uC640 \uAC19\uC740 \uCE78"
-    Visibility: "\uBD80\uBD84 \uC870\uAC74 \uB2EC\uC131 \uC2DC"
-    FragmentId: 
-    TriggerDeadIds: 
-    UnlockConditionId: 
-    HintOfConditionId: COND_P06_01
-    Lines:
-    - SpeakerId: 6
-      Text: "\uD504\uB9AC\uB4DC\uB294 \uC0AC\uB78C\uC774 \uB9CE\uC744\uC218\uB85D
-        \uB4A4\uAC00 \uC544\uB2C8\uB77C \uC55E\uC744 \uBCF4\uAC8C \uB418\uB294 \uC0AC\uB78C
-        \uAC19\uC544."
-      RevealCharacterId: -1
-      RevealCharacterName: 
-      IsProfileClue: 0
-      ProfileClueId: 
-      ProfileCategory: 
-    Condition:
-      RequiredFragmentId: 
-      MinLoopCount: 0
-  - ComboId: HINT_P06_02
-    ComboKey: '#6|#7'
-    ParticipantIds: 0600000007000000
-    SituationType: "\uD504\uB85C\uD30C\uC77C \uC720\uB3C4\uB300\uC0AC"
-    Trigger: "#6\uACFC #7\uC774 \uAC19\uC740 \uCE78"
-    Visibility: "\uBD80\uBD84 \uC870\uAC74 \uB2EC\uC131 \uC2DC"
-    FragmentId: 
-    TriggerDeadIds: 
-    UnlockConditionId: 
-    HintOfConditionId: COND_P06_02
-    Lines:
-    - SpeakerId: 6
-      Text: "\uC0C8\uD134\uC740 \uD504\uB9AC\uB4DC\uAC00 \uBA3C\uC800 \uB098\uC124
-        \uB54C\uB9C8\uB2E4, \uADF8\uAC8C \uC815\uB9D0 \uBAA8\uB450\uC758 \uC120\uD0DD\uC778\uC9C0
-        \uBB3C\uC744 \uAC70\uC57C."
-      RevealCharacterId: -1
-      RevealCharacterName: 
-      IsProfileClue: 0
-      ProfileClueId: 
-      ProfileCategory: 
-    Condition:
-      RequiredFragmentId: 
-      MinLoopCount: 0
-  - ComboId: HINT_P06_03
-    ComboKey: '#2|#6'
-    ParticipantIds: 0200000006000000
-    SituationType: "\uD504\uB85C\uD30C\uC77C \uC720\uB3C4\uB300\uC0AC"
-    Trigger: "#2\uC640 #6\uC774 \uAC19\uC740 \uCE78"
-    Visibility: "\uBD80\uBD84 \uC870\uAC74 \uB2EC\uC131 \uC2DC"
-    FragmentId: 
-    TriggerDeadIds: 
-    UnlockConditionId: 
-    HintOfConditionId: COND_P06_03
-    Lines:
-    - SpeakerId: 6
-      Text: "\uBA54\uC774\uAC00 \uACB0\uB9D0\uC744 \uBCF4\uBA74, \uD504\uB9AC\uB4DC\uB294
-        \uADF8 \uACB0\uB9D0 \uC55E\uC5D0 \uB193\uC77C \uC0AC\uB78C\uB4E4\uC744 \uBCFC
-        \uAC70\uC57C."
-      RevealCharacterId: -1
-      RevealCharacterName: 
-      IsProfileClue: 0
-      ProfileClueId: 
-      ProfileCategory: 
-    Condition:
-      RequiredFragmentId: 
-      MinLoopCount: 0
-  - ComboId: HINT_P06_04
-    ComboKey: '#6'
-    ParticipantIds: 06000000
-    SituationType: "\uD504\uB85C\uD30C\uC77C \uC720\uB3C4\uB300\uC0AC"
-    Trigger: "#6\uC774 \uD63C\uC790 \uC788\uACE0 \uB8E8\uD504 2\uC77C\uCC28 \uC774\uD6C4"
-    Visibility: "\uBD80\uBD84 \uC870\uAC74 \uB2EC\uC131 \uC2DC"
-    FragmentId: 
-    TriggerDeadIds: 
-    UnlockConditionId: 
-    HintOfConditionId: COND_P06_04
-    Lines:
-    - SpeakerId: 6
-      Text: "\uD504\uB9AC\uB4DC\uB294 \uD63C\uC790 \uC788\uC744 \uB54C\uC870\uCC28
-        \uB204\uAD70\uAC00 \uB300\uC2E0 \uACB0\uC815\uC744 \uB0B4\uB9AC\uACE0 \uC788\uB294
-        \uAC83 \uAC19\uC544."
-      RevealCharacterId: -1
-      RevealCharacterName: 
-      IsProfileClue: 0
-      ProfileClueId: 
-      ProfileCategory: 
-    Condition:
-      RequiredFragmentId: 
-      MinLoopCount: 0
-  - ComboId: HINT_P06_05
-    ComboKey: "#5|#6|ANY \uB610\uB294 #6|#7|ANY"
-    ParticipantIds: 050000000600000007000000
-    SituationType: "\uD504\uB85C\uD30C\uC77C \uC720\uB3C4\uB300\uC0AC"
-    Trigger: "#6\uC774 #5 \uB610\uB294 #7\uACFC \uAC19\uC740 \uCE78, \uB2E4\uB978
-      \uCE90\uB9AD\uD130\uB3C4 \uC874\uC7AC"
-    Visibility: "\uBD80\uBD84 \uC870\uAC74 \uB2EC\uC131 \uC2DC"
-    FragmentId: 
-    TriggerDeadIds: 
-    UnlockConditionId: 
-    HintOfConditionId: COND_P06_05
-    Lines:
-    - SpeakerId: 6
-      Text: "\uD504\uB9AC\uB4DC\uAC00 \uC704\uD5D8\uD55C \uC0AC\uB78C\uACFC \uAC19\uC740
-        \uCE78\uC5D0 \uC788\uC73C\uBA74, \uB204\uAC00 \uC704\uD5D8\uD55C\uC9C0\uBCF4\uB2E4
-        \uB204\uAC00 \uB300\uC2E0 \uC124\uC9C0\uAC00 \uC911\uC694\uD574\uC838."
-      RevealCharacterId: -1
-      RevealCharacterName: 
-      IsProfileClue: 0
-      ProfileClueId: 
-      ProfileCategory: 
-    Condition:
-      RequiredFragmentId: 
-      MinLoopCount: 0
-  - ComboId: HINT_P07_01
-    ComboKey: '#3|#7'
-    ParticipantIds: 0300000007000000
-    SituationType: "\uD504\uB85C\uD30C\uC77C \uC720\uB3C4\uB300\uC0AC"
-    Trigger: "#7\uACFC #3\uC774 \uAC19\uC740 \uCE78, \uC9C1\uC804 \uC774\uB3D9\uC5D0\uC11C
-      \uC0AC\uB9DD \uC5C6\uC74C"
-    Visibility: "\uBD80\uBD84 \uC870\uAC74 \uB2EC\uC131 \uC2DC"
-    FragmentId: 
-    TriggerDeadIds: 
-    UnlockConditionId: 
-    HintOfConditionId: COND_P07_01
-    Lines:
-    - SpeakerId: 7
-      Text: "\uC0C8\uD134\uC740 \uBB34\uAC70\uC6B4 \uC77C\uC744 \uB370\uC6B0\uC2A4\uC5D0\uAC8C\uB77C\uBA74
-        \uACE0\uD574\uCC98\uB7FC \uD138\uC5B4\uB193\uC744 \uC218 \uC788\uC744\uC9C0\uB3C4
-        \uBAB0\uB77C."
-      RevealCharacterId: -1
-      RevealCharacterName: 
-      IsProfileClue: 0
-      ProfileClueId: 
-      ProfileCategory: 
-    Condition:
-      RequiredFragmentId: 
-      MinLoopCount: 0
-  - ComboId: HINT_P07_02
-    ComboKey: '#2|#7'
-    ParticipantIds: 0200000007000000
-    SituationType: "\uD504\uB85C\uD30C\uC77C \uC720\uB3C4\uB300\uC0AC"
-    Trigger: "#2\uC640 #7\uC774 \uAC19\uC740 \uCE78"
-    Visibility: "\uBD80\uBD84 \uC870\uAC74 \uB2EC\uC131 \uC2DC"
-    FragmentId: 
-    TriggerDeadIds: 
-    UnlockConditionId: 
-    HintOfConditionId: COND_P07_02
-    Lines:
-    - SpeakerId: 7
-      Text: "\uBA54\uC774\uC640 \uC0C8\uD134\uC744 \uAC19\uC740 \uC790\uB9AC\uC5D0
-        \uB450\uBA74, \uAC19\uC740 \uBAA9\uC801\uC9C0\uBCF4\uB2E4 \uB2E4\uB978 \uAE38\uC774
-        \uBA3C\uC800 \uBCF4\uC77C \uAC70\uC57C."
-      RevealCharacterId: -1
-      RevealCharacterName: 
-      IsProfileClue: 0
-      ProfileClueId: 
-      ProfileCategory: 
-    Condition:
-      RequiredFragmentId: 
-      MinLoopCount: 0
-  - ComboId: HINT_P07_03
-    ComboKey: '#6|#7'
-    ParticipantIds: 0600000007000000
-    SituationType: "\uD504\uB85C\uD30C\uC77C \uC720\uB3C4\uB300\uC0AC"
-    Trigger: "#6\uACFC #7\uC774 \uAC19\uC740 \uCE78"
-    Visibility: "\uBD80\uBD84 \uC870\uAC74 \uB2EC\uC131 \uC2DC"
-    FragmentId: 
-    TriggerDeadIds: 
-    UnlockConditionId: 
-    HintOfConditionId: COND_P07_03
-    Lines:
-    - SpeakerId: 7
-      Text: "\uD504\uB9AC\uB4DC\uC758 \uC88B\uC740 \uC758\uB3C4\uB294 \uC0C8\uD134\uC5D0\uAC8C
-        \uAC00\uC7A5 \uC704\uD5D8\uD55C \uC9C8\uBB38\uC744 \uB9CC\uB4E4 \uAC70\uC57C."
-      RevealCharacterId: -1
-      RevealCharacterName: 
-      IsProfileClue: 0
-      ProfileClueId: 
-      ProfileCategory: 
-    Condition:
-      RequiredFragmentId: 
-      MinLoopCount: 0
-  - ComboId: HINT_P07_04
-    ComboKey: '#7'
-    ParticipantIds: 07000000
-    SituationType: "\uD504\uB85C\uD30C\uC77C \uC720\uB3C4\uB300\uC0AC"
-    Trigger: "#7\uC774 \uC774\uB3D9\uD55C \uB4A4 \uD63C\uC790 \uC788\uC74C"
-    Visibility: "\uBD80\uBD84 \uC870\uAC74 \uB2EC\uC131 \uC2DC"
-    FragmentId: 
-    TriggerDeadIds: 
-    UnlockConditionId: 
-    HintOfConditionId: COND_P07_04
-    Lines:
-    - SpeakerId: 7
-      Text: "\uC0C8\uD134\uC740 \uD63C\uC790 \uC788\uC744 \uB54C\uB3C4 \uC5B4\uB518\uAC00\uB97C
-        \uB5A0\uB098\uC628 \uC0AC\uB78C\uCC98\uB7FC \uBCF4\uC5EC."
-      RevealCharacterId: -1
-      RevealCharacterName: 
-      IsProfileClue: 0
-      ProfileClueId: 
-      ProfileCategory: 
-    Condition:
-      RequiredFragmentId: 
-      MinLoopCount: 0
-  - ComboId: HINT_P07_05
-    ComboKey: "#1|#7 \uB610\uB294 #5|#7"
-    ParticipantIds: 0100000007000000
-    SituationType: "\uD504\uB85C\uD30C\uC77C \uC720\uB3C4\uB300\uC0AC"
-    Trigger: "#7\uC774 #1 \uB610\uB294 #5\uC640 \uAC19\uC740 \uCE78"
-    Visibility: "\uBD80\uBD84 \uC870\uAC74 \uB2EC\uC131 \uC2DC"
-    FragmentId: 
-    TriggerDeadIds: 
-    UnlockConditionId: 
-    HintOfConditionId: COND_P07_05
-    Lines:
-    - SpeakerId: 7
-      Text: "\uC0C8\uD134\uC740 \uBD80\uB4DC\uB7EC\uC6B4 \uB9D0\uC774\uB098 \uAC00\uBCBC\uC6B4
-        \uB18D\uB2F4 \uB4A4\uC5D0 \uC228\uC740 \uC2DC\uC120\uC744 \uD2B9\uD788 \uC624\uB798
-        \uBCF8\uB2E4."
-      RevealCharacterId: -1
-      RevealCharacterName: 
-      IsProfileClue: 0
-      ProfileClueId: 
-      ProfileCategory: 
-    Condition:
-      RequiredFragmentId: 
-      MinLoopCount: 0
-  - ComboId: M1
-    ComboKey: '#1'
-    ParticipantIds: 01000000
-    SituationType: "\uAC1C\uC778 \uB3C5\uBC31"
-    Trigger: "\uD734\uC2DD / \uBC24 / \uC870\uC0AC \uC911"
-    Visibility: "\uD63C\uC790 \uC788\uC744 \uB54C"
-    FragmentId: 
-    TriggerDeadIds: 
-    UnlockConditionId: 
-    HintOfConditionId: 
-    Lines:
-    - SpeakerId: 1
-      Text: "\uB2E4\uB4E4 \uC11C\uB85C\uC758 \uC774\uB984\uC744 \uB108\uBB34 \uC27D\uAC8C
-        \uBD80\uB978\uB2E4. \uBD80\uB974\uBA74 \uB3CC\uC544\uC624\uB294 \uAC8C \uB2F9\uC5F0\uD55C
-        \uAC83\uCC98\uB7FC."
-      RevealCharacterId: -1
-      RevealCharacterName: 
-      IsProfileClue: 0
-      ProfileClueId: 
-      ProfileCategory: 
-    - SpeakerId: 1
-      Text: "\uB098\uB294 \uC5B8\uC81C\uB098 \uADF8 \uBD04\uC758 \uBC14\uAE65\uC5D0
-        \uC788\uC5C8\uB2E4. \uADF8\uB7F0\uB370\uB3C4, \uC190\uC744 \uBED7\uACE0 \uC2F6\uC5C8\uB2E4."
-      RevealCharacterId: -1
-      RevealCharacterName: 
-      IsProfileClue: 0
-      ProfileClueId: 
-      ProfileCategory: 
-    - SpeakerId: 1
-      Text: "\uBD80\uC218\uACE0 \uC2F6\uC740 \uAC74 \uADF8\uB4E4\uC774 \uC544\uB2C8\uB77C\u2026
-        \uADF8 \uC548\uC5D0 \uB4E4\uC5B4\uAC08 \uC218 \uC5C6\uB294 \uB098 \uC790\uC2E0\uC77C\uC9C0\uB3C4
-        \uBAA8\uB978\uB2E4."
-      RevealCharacterId: -1
-      RevealCharacterName: 
-      IsProfileClue: 0
-      ProfileClueId: 
-      ProfileCategory: 
-    Condition:
-      RequiredFragmentId: 
-      MinLoopCount: 0
-  - ComboId: M2
-    ComboKey: '#2'
-    ParticipantIds: 02000000
-    SituationType: "\uAC1C\uC778 \uB3C5\uBC31"
-    Trigger: "\uD734\uC2DD / \uBC24 / \uC870\uC0AC \uC911"
-    Visibility: "\uD63C\uC790 \uC788\uC744 \uB54C"
-    FragmentId: 
-    TriggerDeadIds: 
-    UnlockConditionId: 
-    HintOfConditionId: 
-    Lines:
-    - SpeakerId: 2
-      Text: "\uC5EC\uAE30\uC11C \uBA48\uCD94\uBA74 \uC9C0\uAE08\uAE4C\uC9C0 \uC783\uC5B4\uC628
-        \uBAA8\uB4E0 \uAC83\uC774 \uC544\uBB34 \uC758\uBBF8 \uC5C6\uC5B4\uC9C4\uB2E4."
-      RevealCharacterId: -1
-      RevealCharacterName: 
-      IsProfileClue: 0
-      ProfileClueId: 
-      ProfileCategory: 
-    - SpeakerId: 2
-      Text: "\uB098\uB294 \uB05D\uAE4C\uC9C0 \uAC00\uC57C \uD55C\uB2E4\uACE0 \uC0DD\uAC01\uD574.
-        \uADF8\uB798\uC57C \uC5EC\uAE30\uAE4C\uC9C0 \uC628 \uC2DC\uAC04\uC774 \uBB34\uB108\uC9C0\uC9C0
-        \uC54A\uC744 \uAC83 \uAC19\uC544\uC11C."
-      RevealCharacterId: -1
-      RevealCharacterName: 
-      IsProfileClue: 0
-      ProfileClueId: 
-      ProfileCategory: 
-    - SpeakerId: 2
-      Text: "\uB3D9\uB8CC\uB4E4\uC744 \uC544\uB080\uB2E4. \uADF8\uB798\uC11C \uB354\uB354\uC6B1
-        \uD568\uAED8 \uAC00\uC57C \uD55C\uB2E4\uACE0 \uBBFF\uB294\uB2E4."
-      RevealCharacterId: -1
-      RevealCharacterName: 
-      IsProfileClue: 0
-      ProfileClueId: 
-      ProfileCategory: 
-    Condition:
-      RequiredFragmentId: 
-      MinLoopCount: 0
-  - ComboId: M3
-    ComboKey: '#3'
-    ParticipantIds: 03000000
-    SituationType: "\uAC1C\uC778 \uB3C5\uBC31"
-    Trigger: "\uD734\uC2DD / \uBC24 / \uC870\uC0AC \uC911"
-    Visibility: "\uD63C\uC790 \uC788\uC744 \uB54C"
-    FragmentId: 
-    TriggerDeadIds: 
-    UnlockConditionId: 
-    HintOfConditionId: 
-    Lines:
-    - SpeakerId: 3
-      Text: "\uB8E8\uC774\uC2A4\uAC00 \uC6C3\uC9C0 \uC54A\uB294 \uB0A0\uC740, \uC138\uC0C1\uC774
-        \uC870\uAE08\uC529 \uBB34\uB108\uC9C0\uB294 \uAC83\uCC98\uB7FC \uB290\uAEF4\uC9C4\uB2E4."
-      RevealCharacterId: -1
-      RevealCharacterName: 
-      IsProfileClue: 0
-      ProfileClueId: 
-      ProfileCategory: 
-    - SpeakerId: 3
-      Text: "\uB0B4 \uAE30\uB3C4\uAC00 \uC2E0\uC5D0\uAC8C \uB2FF\uC9C0 \uC54A\uB294\uB2E4\uBA74,
-        \uB0B4\uAC00 \uC9C1\uC811 \uC9C0\uD0A4\uBA74 \uB41C\uB2E4."
-      RevealCharacterId: -1
-      RevealCharacterName: 
-      IsProfileClue: 0
-      ProfileClueId: 
-      ProfileCategory: 
-    - SpeakerId: 3
-      Text: "\uADF8\uB97C \uC704\uD5D8\uD558\uAC8C \uB9CC\uB4DC\uB294 \uBAA8\uB4E0
-        \uAC83\uC5D0\uC11C \uBA40\uB9AC \uB5BC\uC5B4\uB193\uACE0 \uC2F6\uB2E4. \uC774\uAC83\uC774
-        \uC0AC\uB791\uC774 \uC544\uB2C8\uBA74 \uBB34\uC5C7\uC778\uAC00."
-      RevealCharacterId: -1
-      RevealCharacterName: 
-      IsProfileClue: 0
-      ProfileClueId: 
-      ProfileCategory: 
-    Condition:
-      RequiredFragmentId: 
-      MinLoopCount: 0
-  - ComboId: M4
-    ComboKey: '#4'
-    ParticipantIds: 04000000
-    SituationType: "\uAC1C\uC778 \uB3C5\uBC31"
-    Trigger: "\uD734\uC2DD / \uBC24 / \uC870\uC0AC \uC911"
-    Visibility: "\uD63C\uC790 \uC788\uC744 \uB54C"
-    FragmentId: 
-    TriggerDeadIds: 
-    UnlockConditionId: 
-    HintOfConditionId: 
-    Lines:
-    - SpeakerId: 4
-      Text: "\uC544\uBB34 \uC77C\uB3C4 \uC548 \uC77C\uC5B4\uB0AC\uC73C\uBA74 \uC88B\uACA0\uB2E4.
-        \uC544\uBB34\uB3C4 \uBB3B\uC9C0 \uC54A\uACE0, \uC544\uBB34\uB3C4 \uC7AC\uCD09\uD558\uC9C0
-        \uC54A\uB294 \uACF3\uC5D0\uC11C."
-      RevealCharacterId: -1
-      RevealCharacterName: 
-      IsProfileClue: 0
-      ProfileClueId: 
-      ProfileCategory: 
-    - SpeakerId: 4
-      Text: "\uB370\uC6B0\uC2A4\uAC00 \uB0B4 \uC606\uC5D0 \uC788\uC73C\uBA74 \uC228\uC740
-        \uC26C\uC5B4\uC9C4\uB2E4. \uADF8\uAC8C \uC633\uC740\uC9C0\uB294\u2026 \uBAA8\uB974\uACA0\uB2E4."
-      RevealCharacterId: -1
-      RevealCharacterName: 
-      IsProfileClue: 0
-      ProfileClueId: 
-      ProfileCategory: 
-    - SpeakerId: 4
-      Text: "\uB098\uB294 \uC774\uBBF8 \uB9CE\uC774 \uC9C0\uCCE4\uB2E4. \uB354 \uB098\uC544\uAC00\uC790\uB294
-        \uB9D0\uC774 \uAC00\uB054\uC740 \uB108\uBB34 \uBA40\uAC8C \uB4E4\uB824."
-      RevealCharacterId: -1
-      RevealCharacterName: 
-      IsProfileClue: 0
-      ProfileClueId: 
-      ProfileCategory: 
-    Condition:
-      RequiredFragmentId: 
-      MinLoopCount: 0
-  - ComboId: M5
-    ComboKey: '#5'
-    ParticipantIds: 05000000
-    SituationType: "\uAC1C\uC778 \uB3C5\uBC31"
-    Trigger: "\uD734\uC2DD / \uBC24 / \uC870\uC0AC \uC911"
-    Visibility: "\uD63C\uC790 \uC788\uC744 \uB54C"
-    FragmentId: 
-    TriggerDeadIds: 
-    UnlockConditionId: 
-    HintOfConditionId: 
-    Lines:
-    - SpeakerId: 5
-      Text: "\uB2E4\uB4E4 \uC6C3\uC744 \uB54C\uB791 \uC870\uC6A9\uD560 \uB54C \uB0C4\uC0C8\uAC00
-        \uB2EC\uB77C. \uC774\uC0C1\uD558\uC9C0? \uD1A0\uB2C8\uB9CC \uADF8\uB807\uAC8C
-        \uB290\uB07C\uB098?"
-      RevealCharacterId: -1
-      RevealCharacterName: 
-      IsProfileClue: 0
-      ProfileClueId: 
-      ProfileCategory: 
-    - SpeakerId: 5
-      Text: "\uC544\uC9C1\uC740 \uC544\uB2C8\uC57C. \uC870\uAE08 \uB354 \uAE30\uB2E4\uB9AC\uBA74,
-        \uD6E8\uC52C \uC9C4\uD574\uC9C8 \uAC83 \uAC19\uC544."
-      RevealCharacterId: -1
-      RevealCharacterName: 
-      IsProfileClue: 0
-      ProfileClueId: 
-      ProfileCategory: 
-    - SpeakerId: 5
-      Text: "\uAC89\uC740 \uB2EC\uCF64\uD574\uC57C \uD574. \uADF8\uB798\uC57C \uC544\uBB34\uB3C4
-        \uC548 \uB180\uB77C\uB2C8\uAE4C."
-      RevealCharacterId: -1
-      RevealCharacterName: 
-      IsProfileClue: 0
-      ProfileClueId: 
-      ProfileCategory: 
-    Condition:
-      RequiredFragmentId: 
-      MinLoopCount: 0
-  - ComboId: M6
-    ComboKey: '#6'
-    ParticipantIds: 06000000
-    SituationType: "\uAC1C\uC778 \uB3C5\uBC31"
-    Trigger: "\uD734\uC2DD / \uBC24 / \uC870\uC0AC \uC911"
-    Visibility: "\uD63C\uC790 \uC788\uC744 \uB54C"
-    FragmentId: 
-    TriggerDeadIds: 
-    UnlockConditionId: 
-    HintOfConditionId: 
-    Lines:
-    - SpeakerId: 6
-      Text: "\uB204\uAD70\uAC00 \uC55E\uC5D0 \uC11C\uC57C \uD55C\uB2E4\uBA74, \uADF8\uAC74
-        \uB098\uC5EC\uC57C \uD55C\uB2E4."
-      RevealCharacterId: -1
-      RevealCharacterName: 
-      IsProfileClue: 0
-      ProfileClueId: 
-      ProfileCategory: 
-    - SpeakerId: 6
-      Text: "\uB0B4\uAC00 \uB300\uC2E0\uD558\uBA74 \uB41C\uB2E4. \uADF8\uAC8C \uAC00\uC7A5
-        \uBE60\uB974\uACE0, \uAC00\uC7A5 \uB35C \uC544\uD508 \uAE38\uC774\uB2E4."
-      RevealCharacterId: -1
-      RevealCharacterName: 
-      IsProfileClue: 0
-      ProfileClueId: 
-      ProfileCategory: 
-    - SpeakerId: 6
-      Text: "\uD558\uC9C0\uB9CC \uAC00\uB054 \uC0DD\uAC01\uD55C\uB2E4. \uB0B4\uAC00
-        \uB300\uC2E0\uD558\uB294 \uAC83\uC774 \uC815\uB9D0 \uADF8\uB4E4\uC744 \uC0B4\uB9AC\uB294
-        \uC77C\uC778\uC9C0."
-      RevealCharacterId: -1
-      RevealCharacterName: 
-      IsProfileClue: 0
-      ProfileClueId: 
-      ProfileCategory: 
-    Condition:
-      RequiredFragmentId: 
-      MinLoopCount: 0
-  - ComboId: M7
-    ComboKey: '#7'
-    ParticipantIds: 07000000
-    SituationType: "\uAC1C\uC778 \uB3C5\uBC31"
-    Trigger: "\uD734\uC2DD / \uBC24 / \uC870\uC0AC \uC911"
-    Visibility: "\uD63C\uC790 \uC788\uC744 \uB54C"
-    FragmentId: 
-    TriggerDeadIds: 
-    UnlockConditionId: 
-    HintOfConditionId: 
-    Lines:
-    - SpeakerId: 7
-      Text: "\uC88B\uC740 \uC774\uB984\uC740 \uB298 \uC77C\uC774 \uB05D\uB09C \uB4A4\uC5D0
-        \uBD99\uB294\uB2E4. \uADF8 \uC804\uAE4C\uC9C0 \uC0AC\uB77C\uC9C0\uB294 \uAC74
-        \uC798 \uBCF4\uC774\uC9C0\uB3C4 \uC54A\uACE0."
-      RevealCharacterId: -1
-      RevealCharacterName: 
-      IsProfileClue: 0
-      ProfileClueId: 
-      ProfileCategory: 
-    - SpeakerId: 7
-      Text: "\uBA3C\uC800 \uC6C0\uC9C1\uC5EC\uC57C \uC0B0\uB2E4. \uD558\uC9C0\uB9CC
-        \uBA3C\uC800 \uC6C0\uC9C1\uC774\uBA74, \uB204\uAD70\uAC00\uB294 \uB4A4\uC5D0
-        \uB0A8\uB294\uB2E4."
-      RevealCharacterId: -1
-      RevealCharacterName: 
-      IsProfileClue: 0
-      ProfileClueId: 
-      ProfileCategory: 
-    - SpeakerId: 7
-      Text: "\uBA54\uC774\uB294 \uB05D\uC744 \uBCF8\uB2E4. \uB098\uB294 \uADF8 \uB05D\uAE4C\uC9C0
-        \uAC00\uB294 \uAE38\uC5D0 \uB5A8\uC5B4\uC9C0\uB294 \uC0AC\uB78C\uB4E4\uC744
-        \uBCF8\uB2E4."
-      RevealCharacterId: -1
-      RevealCharacterName: 
-      IsProfileClue: 0
-      ProfileClueId: 
-      ProfileCategory: 
-    Condition:
-      RequiredFragmentId: 
-      MinLoopCount: 0
   - ComboId: SPEC_LOVER_CHAIN
     ComboKey: '#4|#1|#2|#6|#7|#5'
-    ParticipantIds: 010000000200000004000000050000000600000007000000
+    ParticipantIds: 040000000100000002000000060000000700000005000000
     SituationType: "\uC0AC\uB9DD \uBC18\uC751 / \uC5F0\uC778 \uC5F0\uC1C4"
     Trigger: "\uB370\uC6B0\uC2A4 \uC0AC\uB9DD \uD6C4 \uB8E8\uC774\uC2A4 \uC5F0\uC1C4
       \uBD95\uAD34"
-    Visibility: "\uD2B9\uC218 \uC0AC\uB9DD \uD6C4"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 03000000
     UnlockConditionId: 
@@ -9019,13 +7364,101 @@ MonoBehaviour:
     Condition:
       RequiredFragmentId: 
       MinLoopCount: 0
+  - ComboId: SPEC_SCAPEGOAT
+    ComboKey: '#2|#7|#1|#3'
+    ParticipantIds: 02000000070000000100000003000000
+    SituationType: "\uC0AC\uB9DD \uBC18\uC751 / \uD76C\uC0DD\uC591"
+    Trigger: "\uD504\uB9AC\uB4DC\uAC00 \uB300\uC2E0 \uC0AC\uB9DD"
+    Visibility: 
+    FragmentId: 
+    TriggerDeadIds: 06000000
+    UnlockConditionId: 
+    HintOfConditionId: 
+    Lines:
+    - SpeakerId: 2
+      Text: "\uC65C \uB610 \uB124\uAC00 \uBA3C\uC800 \uB098\uC11C. \uC774\uB7F0 \uC2DD\uC73C\uB85C
+        \uAC00\uACE0 \uC2F6\uC9C4 \uC54A\uC558\uB294\uB370."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+      IsProfileClue: 0
+      ProfileClueId: 
+      ProfileCategory: 
+    - SpeakerId: 7
+      Text: "\uBD10. \uACB0\uAD6D \uC120\uD0DD\uC744 \uBE7C\uC557\uACE0 \uB5A0\uB0AC\uC796\uC544.
+        \uC0B4\uC544\uB0A8\uC740 \uC0AC\uB78C\uD55C\uD14C\uB294 \uBB3B\uC9C0\uB3C4
+        \uC54A\uACE0."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+      IsProfileClue: 0
+      ProfileClueId: 
+      ProfileCategory: 
+    - SpeakerId: 3
+      Text: "\uBA3C\uC800 \uB0B4\uBBF8\uB294 \uC190\uC774 \uC544\uB984\uB2E4\uC6CC
+        \uBCF4\uC77C \uC218\uB294 \uC788\uC2B5\uB2C8\uB2E4. \uD558\uC9C0\uB9CC \uB0A8\uC740
+        \uCABD\uC5D0\uAC90 \uC624\uB798 \uB0A8\uB294 \uC77C\uC774\uAE30\uB3C4 \uD569\uB2C8\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+      IsProfileClue: 0
+      ProfileClueId: 
+      ProfileCategory: 
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ComboId: SPEC_WANDERER
+    ComboKey: '#7|#1|#2|#5'
+    ParticipantIds: 07000000010000000200000005000000
+    SituationType: "\uC0AC\uB9DD \uBC18\uC751 / \uBC30\uD68C\uC790"
+    Trigger: "\uC0C8\uD134 \uC774\uB3D9 \uB4A4 \uC774\uC804 \uAD6C\uC5ED \uC0AC\uB9DD"
+    Visibility: 
+    FragmentId: 
+    TriggerDeadIds: 07000000
+    UnlockConditionId: 
+    HintOfConditionId: 
+    Lines:
+    - SpeakerId: 7
+      Text: "\u2026\uB610 \uB0A8\uACBC\uC5B4. \uC774\uBC88\uC5D0\uB3C4 \uB0B4\uAC00
+        \uBA3C\uC800 \uC6C0\uC9C1\uC600\uAE30 \uB54C\uBB38\uC5D0."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+      IsProfileClue: 0
+      ProfileClueId: 
+      ProfileCategory: 
+    - SpeakerId: 1
+      Text: "\uC0C8\uD134 \uD0D3\uB9CC\uC740 \uC544\uB2C8\uC5D0\uC694. \uD558\uC9C0\uB9CC
+        \uC0C8\uD134\uC774 \uADF8 \uB9D0\uC744 \uBBFF\uC9C0 \uC54A\uC744 \uAC83\uB3C4
+        \uC54C\uC544\uC694."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+      IsProfileClue: 0
+      ProfileClueId: 
+      ProfileCategory: 
+    - SpeakerId: 2
+      Text: "\uC9C0\uAE08 \uD544\uC694\uD55C \uAC74 \uC774\uC720\uB97C \uCC3E\uB294
+        \uAC70\uC57C. \uC5EC\uAE30\uC11C \uBA48\uCD94\uBA74 \uC0C1\uD669\uC774 \uB354
+        \uB098\uBE60\uC9C8 \uC218 \uC788\uC5B4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+      IsProfileClue: 0
+      ProfileClueId: 
+      ProfileCategory: 
+    - SpeakerId: 5
+      Text: "\uC774\uC804 \uC790\uB9AC\uC5D0\uB3C4 \uB204\uAC00 \uC788\uC5C8\uAD6C\uB098\u2026
+        \uC6C0\uC9C1\uC778 \uB4A4\uC758 \uB9DB\uC740 \uB298 \uB2A6\uAC8C \uC62C\uB77C\uC640."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+      IsProfileClue: 0
+      ProfileClueId: 
+      ProfileCategory: 
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
   - ComboId: SPEC_MURDERER
     ComboKey: '#5|#1|#2|#7'
-    ParticipantIds: 01000000020000000500000007000000
+    ParticipantIds: 05000000010000000200000007000000
     SituationType: "\uC0AC\uB9DD \uBC18\uC751 / \uC0B4\uC778\uC790"
     Trigger: "\uD1A0\uB2C8\uC640 \uAC19\uC740 \uAD6C\uC5ED\uC5D0\uC11C \uC0AC\uB9DD
       \uBC1C\uC0DD"
-    Visibility: "\uD2B9\uC218 \uC0AC\uB9DD \uD6C4"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 05000000
     UnlockConditionId: 
@@ -9068,10 +7501,10 @@ MonoBehaviour:
       MinLoopCount: 0
   - ComboId: SPEC_REVENGER
     ComboKey: '#2|#1|#6|#7'
-    ParticipantIds: 01000000020000000600000007000000
+    ParticipantIds: 02000000010000000600000007000000
     SituationType: "\uC0AC\uB9DD \uBC18\uC751 / \uBCF5\uC218\uC790"
     Trigger: "\uBA54\uC774\uAC00 \uC0B4\uC778\uC790\uB97C \uC751\uC9D5"
-    Visibility: "\uD2B9\uC218 \uC0AC\uB9DD \uD6C4"
+    Visibility: 
     FragmentId: 
     TriggerDeadIds: 05000000
     UnlockConditionId: 
@@ -9114,38 +7547,23 @@ MonoBehaviour:
     Condition:
       RequiredFragmentId: 
       MinLoopCount: 0
-  - ComboId: SPEC_SCAPEGOAT
-    ComboKey: '#2|#7|#1|#3'
-    ParticipantIds: 01000000020000000300000007000000
-    SituationType: "\uC0AC\uB9DD \uBC18\uC751 / \uD76C\uC0DD\uC591"
-    Trigger: "\uD504\uB9AC\uB4DC\uAC00 \uB300\uC2E0 \uC0AC\uB9DD"
-    Visibility: "\uD2B9\uC218 \uC0AC\uB9DD \uD6C4"
-    FragmentId: 
-    TriggerDeadIds: 06000000
-    UnlockConditionId: 
+  - ComboId: COND_P01_01
+    ComboKey: '#1|#2|#7'
+    ParticipantIds: 010000000200000007000000
+    SituationType: "\uD504\uB85C\uD30C\uC77C \uD575\uC2EC\uBB38\uC7A5"
+    Trigger: "\uC870\uC0AC \uBAA8\uB4DC / \uC120\uD0DD \uC870\uC0AC \uAD6C\uC5ED
+      / #1\uC774 #2,#7\uACFC \uAC19\uC740 \uCE78 / \uD574\uB2F9 \uD134 \uC0AC\uB9DD
+      \uC5C6\uC74C"
+    Visibility: 
+    FragmentId: P01_01
+    TriggerDeadIds: 
+    UnlockConditionId: COND_P01_01
     HintOfConditionId: 
     Lines:
-    - SpeakerId: 2
-      Text: "\uC65C \uB610 \uB124\uAC00 \uBA3C\uC800 \uB098\uC11C. \uC774\uB7F0 \uC2DD\uC73C\uB85C
-        \uAC00\uACE0 \uC2F6\uC9C4 \uC54A\uC558\uB294\uB370."
-      RevealCharacterId: -1
-      RevealCharacterName: 
-      IsProfileClue: 0
-      ProfileClueId: 
-      ProfileCategory: 
-    - SpeakerId: 7
-      Text: "\uBD10. \uACB0\uAD6D \uC120\uD0DD\uC744 \uBE7C\uC557\uACE0 \uB5A0\uB0AC\uC796\uC544.
-        \uC0B4\uC544\uB0A8\uC740 \uC0AC\uB78C\uD55C\uD14C\uB294 \uBB3B\uC9C0\uB3C4
-        \uC54A\uACE0."
-      RevealCharacterId: -1
-      RevealCharacterName: 
-      IsProfileClue: 0
-      ProfileClueId: 
-      ProfileCategory: 
-    - SpeakerId: 3
-      Text: "\uBA3C\uC800 \uB0B4\uBBF8\uB294 \uC190\uC774 \uC544\uB984\uB2E4\uC6CC
-        \uBCF4\uC77C \uC218\uB294 \uC788\uC2B5\uB2C8\uB2E4. \uD558\uC9C0\uB9CC \uB0A8\uC740
-        \uCABD\uC5D0\uAC90 \uC624\uB798 \uB0A8\uB294 \uC77C\uC774\uAE30\uB3C4 \uD569\uB2C8\uB2E4."
+    - SpeakerId: 1
+      Text: "\uB098\uB294 \uC0AC\uB78C\uBCF4\uB2E4, \uC0AC\uB78C\uACFC \uC0AC\uB78C
+        \uC0AC\uC774\uC5D0 \uC0DD\uAE30\uB294 \uAC04\uACA9\uC744 \uBA3C\uC800 \uBCF4\uAC8C
+        \uB3FC."
       RevealCharacterId: -1
       RevealCharacterName: 
       IsProfileClue: 0
@@ -9154,46 +7572,1628 @@ MonoBehaviour:
     Condition:
       RequiredFragmentId: 
       MinLoopCount: 0
-  - ComboId: SPEC_WANDERER
-    ComboKey: '#7|#1|#2|#5'
-    ParticipantIds: 01000000020000000500000007000000
-    SituationType: "\uC0AC\uB9DD \uBC18\uC751 / \uBC30\uD68C\uC790"
-    Trigger: "\uC0C8\uD134 \uC774\uB3D9 \uB4A4 \uC774\uC804 \uAD6C\uC5ED \uC0AC\uB9DD"
-    Visibility: "\uD2B9\uC218 \uC0AC\uB9DD \uD6C4"
+  - ComboId: HINT_P01_01
+    ComboKey: '#1|#2|#7'
+    ParticipantIds: 010000000200000007000000
+    SituationType: "\uD504\uB85C\uD30C\uC77C \uC720\uB3C4\uB300\uC0AC"
+    Trigger: "#1\uC774 #7\uACFC \uAC19\uC740 \uCE78, #2 \uC0DD\uC874"
+    Visibility: 
     FragmentId: 
-    TriggerDeadIds: 07000000
+    TriggerDeadIds: 
     UnlockConditionId: 
+    HintOfConditionId: COND_P01_01
+    Lines:
+    - SpeakerId: 1
+      Text: "\uBA54\uC774\uC640 \uC0C8\uD134\uC774 \uAC19\uC740 \uC790\uB9AC\uC5D0
+        \uC788\uC73C\uBA74, \uB9D0\uBCF4\uB2E4 \uBA3C\uC800 \uBC8C\uC5B4\uC9C0\uB294
+        \uD2C8\uC774 \uBCF4\uC77C \uAC83 \uAC19\uC544."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+      IsProfileClue: 0
+      ProfileClueId: 
+      ProfileCategory: 
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ComboId: COND_P01_02
+    ComboKey: '#1|#3|#4'
+    ParticipantIds: 010000000300000004000000
+    SituationType: "\uD504\uB85C\uD30C\uC77C \uD575\uC2EC\uBB38\uC7A5"
+    Trigger: "\uC870\uC0AC \uBAA8\uB4DC / \uC120\uD0DD \uC870\uC0AC \uAD6C\uC5ED
+      / #1\uC774 #3,#4\uC640 \uAC19\uC740 \uCE78 / #3,#4 \uBAA8\uB450 \uC0DD\uC874"
+    Visibility: 
+    FragmentId: P01_02
+    TriggerDeadIds: 
+    UnlockConditionId: COND_P01_02
+    HintOfConditionId: 
+    Lines:
+    - SpeakerId: 1
+      Text: "\uB450 \uC0AC\uB78C\uC774 \uC11C\uB85C\uB97C \uB2F9\uC5F0\uD788 \uC120\uD0DD\uD558\uB294
+        \uC21C\uAC04, \uB0B4 \uC790\uB9AC\uB294 \uCC98\uC74C\uBD80\uD130 \uC5C6\uC5C8\uB358
+        \uAC83\uCC98\uB7FC \uB290\uAEF4\uC838."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+      IsProfileClue: 0
+      ProfileClueId: 
+      ProfileCategory: 
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ComboId: HINT_P01_02
+    ComboKey: '#1|#3|#4'
+    ParticipantIds: 010000000300000004000000
+    SituationType: "\uD504\uB85C\uD30C\uC77C \uC720\uB3C4\uB300\uC0AC"
+    Trigger: "#1\uC774 #3 \uB610\uB294 #4\uC640 \uAC19\uC740 \uCE78, \uB2E4\uB978
+      \uC5F0\uC778 \uC0DD\uC874"
+    Visibility: 
+    FragmentId: 
+    TriggerDeadIds: 
+    UnlockConditionId: 
+    HintOfConditionId: COND_P01_02
+    Lines:
+    - SpeakerId: 1
+      Text: "\uB458\uC774 \uD568\uAED8 \uC788\uB294 \uACF3\uC5D0\uB294 \uC774\uC0C1\uD558\uAC8C
+        \uBB38\uD131\uC774 \uC0DD\uACA8. \uB4E4\uC5B4\uAC00\uB3C4 \uC548\uCABD\uC740
+        \uC544\uB2CC \uB290\uB08C\uC774\uC57C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+      IsProfileClue: 0
+      ProfileClueId: 
+      ProfileCategory: 
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ComboId: COND_P01_03
+    ComboKey: '#1'
+    ParticipantIds: 01000000
+    SituationType: "\uD504\uB85C\uD30C\uC77C \uD575\uC2EC\uBB38\uC7A5"
+    Trigger: "\uC870\uC0AC \uBAA8\uB4DC / \uC120\uD0DD \uC870\uC0AC \uAD6C\uC5ED
+      / #1 \uB2E8\uB3C5 / \uC9C1\uC804 \uB8E8\uD504\uC5D0\uC11C #1\uC774 2\uC778
+      \uC774\uC0C1 \uC870\uD569 \uB300\uC0AC \uC218\uC9D1"
+    Visibility: 
+    FragmentId: P01_03
+    TriggerDeadIds: 
+    UnlockConditionId: COND_P01_03
+    HintOfConditionId: 
+    Lines:
+    - SpeakerId: 1
+      Text: "\uB2E4\uC815\uD55C \uB9D0\uC740 \uBC30\uC6E0\uC9C0\uB9CC, \uB204\uAD70\uAC00\uC758
+        \uC548\uCABD\uC5D0 \uBA38\uBB34\uB294 \uBC95\uC740 \uC544\uC9C1\uB3C4 \uBAA8\uB974\uACA0\uC5B4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+      IsProfileClue: 0
+      ProfileClueId: 
+      ProfileCategory: 
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ComboId: HINT_P01_03
+    ComboKey: '#1'
+    ParticipantIds: 01000000
+    SituationType: "\uD504\uB85C\uD30C\uC77C \uC720\uB3C4\uB300\uC0AC"
+    Trigger: "#1\uC774 \uD63C\uC790 \uC788\uACE0 \uC9C1\uC804 \uC870\uD569 \uB300\uC0AC
+      \uC218\uC9D1 \uC774\uB825 \uC874\uC7AC"
+    Visibility: 
+    FragmentId: 
+    TriggerDeadIds: 
+    UnlockConditionId: 
+    HintOfConditionId: COND_P01_03
+    Lines:
+    - SpeakerId: 1
+      Text: "\uAC00\uB054\uC740 \uD63C\uC790 \uC788\uC744 \uB54C\uBCF4\uB2E4, \uB204\uAD70\uAC00\uC640
+        \uD5E4\uC5B4\uC9C4 \uB4A4\uAC00 \uB354 \uC870\uC6A9\uD558\uAC8C \uB4E4\uB824."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+      IsProfileClue: 0
+      ProfileClueId: 
+      ProfileCategory: 
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ComboId: COND_P01_04
+    ComboKey: '#1|#3|#4'
+    ParticipantIds: 010000000300000004000000
+    SituationType: "\uD504\uB85C\uD30C\uC77C \uD575\uC2EC\uBB38\uC7A5"
+    Trigger: "\uC870\uC0AC \uBAA8\uB4DC / \uC120\uD0DD \uC870\uC0AC \uAD6C\uC5ED
+      / #1,#3,#4 \uAC19\uC740 \uCE78 / \uAC19\uC740 \uC870\uD569\uC744 \uB450 \uBC88\uC9F8
+      \uC774\uC0C1 \uC870\uC0AC"
+    Visibility: 
+    FragmentId: P01_04
+    TriggerDeadIds: 
+    UnlockConditionId: COND_P01_04
+    HintOfConditionId: 
+    Lines:
+    - SpeakerId: 1
+      Text: "\uBD80\uC218\uACE0 \uC2F6\uC5C8\uB358 \uAC8C \uC544\uB2C8\uB77C, \uB098\uB3C4
+        \uADF8 \uC548\uC5D0 \uC788\uC5C8\uB2E4\uACE0 \uBBFF\uACE0 \uC2F6\uC5C8\uB358
+        \uAC83\uBFD0\uC774\uC57C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+      IsProfileClue: 0
+      ProfileClueId: 
+      ProfileCategory: 
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ComboId: HINT_P01_04
+    ComboKey: '#1|#3|#4'
+    ParticipantIds: 010000000300000004000000
+    SituationType: "\uD504\uB85C\uD30C\uC77C \uC720\uB3C4\uB300\uC0AC"
+    Trigger: "#1\uC774 #3,#4 \uC870\uD569\uC744 \uC774\uBBF8 1\uD68C \uBAA9\uACA9"
+    Visibility: 
+    FragmentId: 
+    TriggerDeadIds: 
+    UnlockConditionId: 
+    HintOfConditionId: COND_P01_04
+    Lines:
+    - SpeakerId: 1
+      Text: "\uAC19\uC740 \uC7A5\uBA74\uC744 \uB2E4\uC2DC \uBCF4\uBA74, \uCC98\uC74C\uC5D4
+        \uC548 \uBCF4\uC774\uB358 \uBE48\uC790\uB9AC\uAC00 \uBCF4\uC5EC."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+      IsProfileClue: 0
+      ProfileClueId: 
+      ProfileCategory: 
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ComboId: COND_P01_05
+    ComboKey: '#1|ANY'
+    ParticipantIds: 01000000
+    SituationType: "\uD504\uB85C\uD30C\uC77C \uD575\uC2EC\uBB38\uC7A5"
+    Trigger: "\uC870\uC0AC \uBAA8\uB4DC / \uC120\uD0DD \uC870\uC0AC \uAD6C\uC5ED
+      / #1\uC774 \uD3EC\uD568\uB41C \uCE78\uC5D0\uC11C \uC0AC\uAC74 \uBC1C\uC0DD
+      \uD6C4 #1\uB9CC \uC0DD\uC874 \uB610\uB294 #1\uC774 \uC0DD\uC874\uC790 \uC911
+      \uD558\uB098"
+    Visibility: 
+    FragmentId: P01_05
+    TriggerDeadIds: 
+    UnlockConditionId: COND_P01_05
+    HintOfConditionId: 
+    Lines:
+    - SpeakerId: 1
+      Text: "\uC0B4\uC544\uB0A8\uB294\uB2E4\uB294 \uAC74 \uAC00\uB054 \uC0C1\uC774
+        \uC544\uB2C8\uB77C, \uB05D\uAE4C\uC9C0 \uBCF4\uB77C\uB294 \uBC8C\uCC98\uB7FC
+        \uB290\uAEF4\uC838."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+      IsProfileClue: 0
+      ProfileClueId: 
+      ProfileCategory: 
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ComboId: HINT_P01_05
+    ComboKey: '#1|ANY'
+    ParticipantIds: 01000000
+    SituationType: "\uD504\uB85C\uD30C\uC77C \uC720\uB3C4\uB300\uC0AC"
+    Trigger: "#1\uACFC \uB2E4\uB978 \uCE90\uB9AD\uD130\uAC00 \uAC19\uC740 \uCE78,
+      \uC0AC\uAC74 \uC704\uD5D8 \uC874\uC7AC"
+    Visibility: 
+    FragmentId: 
+    TriggerDeadIds: 
+    UnlockConditionId: 
+    HintOfConditionId: COND_P01_05
+    Lines:
+    - SpeakerId: 1
+      Text: "\uC5B4\uB5A4 \uC0AC\uB78C\uC740 \uC0AC\uB77C\uC9C0\uACE0, \uC5B4\uB5A4
+        \uC0AC\uB78C\uC740 \uB0A8\uC544. \uB0A8\uC740 \uCABD\uC774 \uB354 \uAC00\uBCBC\uC6B4
+        \uAC74 \uC544\uB2C8\uC57C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+      IsProfileClue: 0
+      ProfileClueId: 
+      ProfileCategory: 
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ComboId: COND_P02_01
+    ComboKey: '#2'
+    ParticipantIds: 02000000
+    SituationType: "\uD504\uB85C\uD30C\uC77C \uD575\uC2EC\uBB38\uC7A5"
+    Trigger: "\uC870\uC0AC \uBAA8\uB4DC / \uC120\uD0DD \uC870\uC0AC \uAD6C\uC5ED
+      / #2 \uB2E8\uB3C5 / \uB8E8\uD504 3\uC77C\uCC28 \uC774\uD6C4"
+    Visibility: 
+    FragmentId: P02_01
+    TriggerDeadIds: 
+    UnlockConditionId: COND_P02_01
+    HintOfConditionId: 
+    Lines:
+    - SpeakerId: 2
+      Text: "\uC5EC\uAE30\uC11C \uBA48\uCD94\uBA74, \uC9C0\uAE08\uAE4C\uC9C0 \uAC78\uC5B4\uC628
+        \uAE38\uAE4C\uC9C0 \uC804\uBD80 \uD750\uB824\uC9C8 \uAC83 \uAC19\uC544."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+      IsProfileClue: 0
+      ProfileClueId: 
+      ProfileCategory: 
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ComboId: HINT_P02_01
+    ComboKey: '#2'
+    ParticipantIds: 02000000
+    SituationType: "\uD504\uB85C\uD30C\uC77C \uC720\uB3C4\uB300\uC0AC"
+    Trigger: "#2\uAC00 \uD63C\uC790 \uC788\uACE0 \uB8E8\uD504\uAC00 2\uC77C \uC774\uC0C1
+      \uC9C4\uD589"
+    Visibility: 
+    FragmentId: 
+    TriggerDeadIds: 
+    UnlockConditionId: 
+    HintOfConditionId: COND_P02_01
+    Lines:
+    - SpeakerId: 2
+      Text: "\uBA54\uC774\uB294 \uD63C\uC790 \uC788\uC744\uC218\uB85D \uB354 \uBA40\uB9AC
+        \uC788\uB294 \uB05D\uC744 \uBCF4\uB294 \uC0AC\uB78C \uAC19\uC544."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+      IsProfileClue: 0
+      ProfileClueId: 
+      ProfileCategory: 
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ComboId: COND_P02_02
+    ComboKey: '#1|#2'
+    ParticipantIds: 0100000002000000
+    SituationType: "\uD504\uB85C\uD30C\uC77C \uD575\uC2EC\uBB38\uC7A5"
+    Trigger: "\uC870\uC0AC \uBAA8\uB4DC / \uC120\uD0DD \uC870\uC0AC \uAD6C\uC5ED
+      / #2\uAC00 #1\uACFC \uAC19\uC740 \uCE78 / \uD574\uB2F9 \uD134 \uC0AC\uB9DD
+      \uC5C6\uC74C"
+    Visibility: 
+    FragmentId: P02_02
+    TriggerDeadIds: 
+    UnlockConditionId: COND_P02_02
+    HintOfConditionId: 
+    Lines:
+    - SpeakerId: 2
+      Text: "\uB3D9\uB8CC\uB97C \uBD99\uC7A1\uB294 \uAC74, \uC5B4\uCA4C\uBA74 \uB0B4
+        \uB05D\uC744 \uB204\uAD70\uAC00 \uBD10\uC8FC\uAE38 \uBC14\uB77C\uB294 \uB9C8\uC74C\uC77C\uC9C0\uB3C4
+        \uBAB0\uB77C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+      IsProfileClue: 0
+      ProfileClueId: 
+      ProfileCategory: 
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ComboId: HINT_P02_02
+    ComboKey: '#1|#2'
+    ParticipantIds: 0100000002000000
+    SituationType: "\uD504\uB85C\uD30C\uC77C \uC720\uB3C4\uB300\uC0AC"
+    Trigger: "#2\uC640 #1\uC774 \uAC19\uC740 \uCE78"
+    Visibility: 
+    FragmentId: 
+    TriggerDeadIds: 
+    UnlockConditionId: 
+    HintOfConditionId: COND_P02_02
+    Lines:
+    - SpeakerId: 2
+      Text: "\uC5D4\uBE44 \uC55E\uC5D0\uC11C\uB77C\uBA74 \uBA54\uC774\uB3C4 \uAC00\uB054
+        \uCE7C\uC744 \uB0B4\uB824\uB193\uB294 \uAC83 \uAC19\uC544."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+      IsProfileClue: 0
+      ProfileClueId: 
+      ProfileCategory: 
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ComboId: COND_P02_03
+    ComboKey: '#2|#4'
+    ParticipantIds: 0200000004000000
+    SituationType: "\uD504\uB85C\uD30C\uC77C \uD575\uC2EC\uBB38\uC7A5"
+    Trigger: "\uC870\uC0AC \uBAA8\uB4DC / \uC120\uD0DD \uC870\uC0AC \uAD6C\uC5ED
+      / #2\uAC00 #4\uC640 \uAC19\uC740 \uCE78 / #3\uC774 \uAC19\uC740 \uCE78\uC5D0
+      \uC5C6\uC74C"
+    Visibility: 
+    FragmentId: P02_03
+    TriggerDeadIds: 
+    UnlockConditionId: COND_P02_03
+    HintOfConditionId: 
+    Lines:
+    - SpeakerId: 2
+      Text: "\uBA48\uCD94\uC790\uB294 \uB9D0\uC740 \uC26C\uC790\uB294 \uB9D0\uC774
+        \uC544\uB2C8\uB77C, \uB0B4\uAC00 \uBD99\uC7A1\uACE0 \uC788\uB358 \uC774\uC720\uB97C
+        \uB193\uC73C\uB77C\uB294 \uB9D0\uCC98\uB7FC \uB4E4\uB824."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+      IsProfileClue: 0
+      ProfileClueId: 
+      ProfileCategory: 
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ComboId: HINT_P02_03
+    ComboKey: '#2|#4'
+    ParticipantIds: 0200000004000000
+    SituationType: "\uD504\uB85C\uD30C\uC77C \uC720\uB3C4\uB300\uC0AC"
+    Trigger: "#2\uC640 #4\uAC00 \uAC19\uC740 \uCE78, #3\uC740 \uB2E4\uB978 \uCE78"
+    Visibility: 
+    FragmentId: 
+    TriggerDeadIds: 
+    UnlockConditionId: 
+    HintOfConditionId: COND_P02_03
+    Lines:
+    - SpeakerId: 2
+      Text: "\uB8E8\uC774\uC2A4\uAC00 \uBA48\uCD94\uACE0 \uC2F6\uC5B4 \uD560\uC218\uB85D
+        \uBA54\uC774\uB294 \uB354 \uC55E\uC73C\uB85C \uBC00\uC5B4\uBD99\uC77C \uAC70\uC57C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+      IsProfileClue: 0
+      ProfileClueId: 
+      ProfileCategory: 
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ComboId: COND_P02_04
+    ComboKey: '#2|#6'
+    ParticipantIds: 0200000006000000
+    SituationType: "\uD504\uB85C\uD30C\uC77C \uD575\uC2EC\uBB38\uC7A5"
+    Trigger: "\uC870\uC0AC \uBAA8\uB4DC / \uC120\uD0DD \uC870\uC0AC \uAD6C\uC5ED
+      / #2\uAC00 #6\uACFC \uAC19\uC740 \uCE78 / \uD504\uB9AC\uB4DC\uC758 \uD76C\uC0DD
+      \uAC00\uB2A5 \uC0C1\uD669\uC740 \uC544\uC9C1 \uBC1C\uC0DD\uD558\uC9C0 \uC54A\uC74C"
+    Visibility: 
+    FragmentId: P02_04
+    TriggerDeadIds: 
+    UnlockConditionId: COND_P02_04
+    HintOfConditionId: 
+    Lines:
+    - SpeakerId: 2
+      Text: "\uB204\uAD70\uAC00 \uD55C \uC0AC\uB78C\uC5D0\uAC8C\uB9CC \uAC12\uC744
+        \uCE58\uB974\uAC8C \uD558\uB294 \uB05D\uC740, \uB354 \uC774\uC0C1 \uC2B9\uB9AC\uCC98\uB7FC
+        \uBCF4\uC774\uC9C0 \uC54A\uC544."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+      IsProfileClue: 0
+      ProfileClueId: 
+      ProfileCategory: 
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ComboId: HINT_P02_04
+    ComboKey: '#2|#6'
+    ParticipantIds: 0200000006000000
+    SituationType: "\uD504\uB85C\uD30C\uC77C \uC720\uB3C4\uB300\uC0AC"
+    Trigger: "#2\uC640 #6\uC774 \uAC19\uC740 \uCE78"
+    Visibility: 
+    FragmentId: 
+    TriggerDeadIds: 
+    UnlockConditionId: 
+    HintOfConditionId: COND_P02_04
+    Lines:
+    - SpeakerId: 2
+      Text: "\uD504\uB9AC\uB4DC\uB294 \uB298 \uBA3C\uC800 \uC11C\uB824 \uD558\uACE0,
+        \uBA54\uC774\uB294 \uADF8\uB7F0 \uB4B7\uBAA8\uC2B5\uC744 \uC624\uB798 \uBCF4\uC9C0
+        \uBABB\uD574."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+      IsProfileClue: 0
+      ProfileClueId: 
+      ProfileCategory: 
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ComboId: COND_P02_05
+    ComboKey: '#2|#5'
+    ParticipantIds: 0200000005000000
+    SituationType: "\uD504\uB85C\uD30C\uC77C \uD575\uC2EC\uBB38\uC7A5"
+    Trigger: "\uC870\uC0AC \uBAA8\uB4DC / \uC0AC\uAC74 \uACB0\uACFC / #2\uC640 #5\uAC00
+      \uAC19\uC740 \uCE78\uC774 \uB418\uC5B4 #5 \uC0AC\uB9DD / #2 \uC0DD\uC874"
+    Visibility: 
+    FragmentId: P02_05
+    TriggerDeadIds: 
+    UnlockConditionId: COND_P02_05
+    HintOfConditionId: 
+    Lines:
+    - SpeakerId: 2
+      Text: "\uAC10\uC815\uC73C\uB85C \uD718\uB450\uB978 \uAC8C \uC544\uB2C8\uC57C.
+        \uB354 \uBC88\uC9C0\uAE30 \uC804\uC5D0 \uBA48\uCDB0 \uC138\uC6B4 \uAC83\uBFD0\uC774\uC57C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+      IsProfileClue: 0
+      ProfileClueId: 
+      ProfileCategory: 
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ComboId: HINT_P02_05
+    ComboKey: '#2|#5'
+    ParticipantIds: 0200000005000000
+    SituationType: "\uD504\uB85C\uD30C\uC77C \uC720\uB3C4\uB300\uC0AC"
+    Trigger: "#2\uC640 #5\uAC00 \uAC19\uC740 \uCE78\uC774 \uB420 \uAC00\uB2A5\uC131
+      \uC874\uC7AC"
+    Visibility: 
+    FragmentId: 
+    TriggerDeadIds: 
+    UnlockConditionId: 
+    HintOfConditionId: COND_P02_05
+    Lines:
+    - SpeakerId: 2
+      Text: "\uD1A0\uB2C8\uC640 \uBA54\uC774\uAC00 \uAC00\uAE4C\uC6CC\uC9C0\uBA74,
+        \uB18D\uB2F4\uC73C\uB85C \uB118\uAE38 \uC218 \uC5C6\uB294 \uC120\uC774 \uC0DD\uAE38\uC9C0\uB3C4
+        \uBAB0\uB77C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+      IsProfileClue: 0
+      ProfileClueId: 
+      ProfileCategory: 
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ComboId: COND_P03_01
+    ComboKey: '#3|#4'
+    ParticipantIds: 0300000004000000
+    SituationType: "\uD504\uB85C\uD30C\uC77C \uD575\uC2EC\uBB38\uC7A5"
+    Trigger: "\uC870\uC0AC \uBAA8\uB4DC / \uC120\uD0DD \uC870\uC0AC \uAD6C\uC5ED
+      / #3\uACFC #4\uAC00 \uAC19\uC740 \uCE78 / \uD574\uB2F9 \uD134 \uC0AC\uB9DD
+      \uC5C6\uC74C"
+    Visibility: 
+    FragmentId: P03_01
+    TriggerDeadIds: 
+    UnlockConditionId: COND_P03_01
+    HintOfConditionId: 
+    Lines:
+    - SpeakerId: 3
+      Text: "\uC138\uC0C1\uC740 \uB113\uB2E4\uC9C0\uB9CC, \uB0B4 \uAE30\uC900\uC740
+        \uC5B8\uC81C\uB098 \uD55C \uC0AC\uB78C\uC5D0\uAC8C\uB85C \uB3CC\uC544\uC635\uB2C8\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+      IsProfileClue: 0
+      ProfileClueId: 
+      ProfileCategory: 
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ComboId: HINT_P03_01
+    ComboKey: '#3|#4'
+    ParticipantIds: 0300000004000000
+    SituationType: "\uD504\uB85C\uD30C\uC77C \uC720\uB3C4\uB300\uC0AC"
+    Trigger: "#3\uACFC #4\uAC00 \uAC19\uC740 \uCE78"
+    Visibility: 
+    FragmentId: 
+    TriggerDeadIds: 
+    UnlockConditionId: 
+    HintOfConditionId: COND_P03_01
+    Lines:
+    - SpeakerId: 3
+      Text: "\uB370\uC6B0\uC2A4\uAC00 \uB9D0\uD558\uB294 \uC548\uC804\uC740 \uB298
+        \uAC19\uC740 \uBC29\uD5A5\uC744 \uD5A5\uD558\uB294 \uAC83 \uAC19\uC544."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+      IsProfileClue: 0
+      ProfileClueId: 
+      ProfileCategory: 
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ComboId: COND_P03_02
+    ComboKey: '#1|#3|#4'
+    ParticipantIds: 010000000300000004000000
+    SituationType: "\uD504\uB85C\uD30C\uC77C \uD575\uC2EC\uBB38\uC7A5"
+    Trigger: "\uC870\uC0AC \uBAA8\uB4DC / \uC120\uD0DD \uC870\uC0AC \uAD6C\uC5ED
+      / #3,#4,#1 \uAC19\uC740 \uCE78 / #1\uC758 \uB300\uD654 \uC870\uAC01 1\uAC1C
+      \uC774\uC0C1 \uBCF4\uC720"
+    Visibility: 
+    FragmentId: P03_02
+    TriggerDeadIds: 
+    UnlockConditionId: COND_P03_02
+    HintOfConditionId: 
+    Lines:
+    - SpeakerId: 3
+      Text: "\uC9C0\uD0A8\uB2E4\uB294 \uB9D0\uC774 \uBB38\uC774 \uB420 \uC218\uB3C4
+        \uC788\uB2E4\uB294 \uAC78 \uC555\uB2C8\uB2E4. \uADF8\uB798\uB3C4 \uC190\uC7A1\uC774\uB97C
+        \uB193\uAE30\uAC00 \uC5B4\uB835\uC2B5\uB2C8\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+      IsProfileClue: 0
+      ProfileClueId: 
+      ProfileCategory: 
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ComboId: HINT_P03_02
+    ComboKey: '#1|#3|#4'
+    ParticipantIds: 010000000300000004000000
+    SituationType: "\uD504\uB85C\uD30C\uC77C \uC720\uB3C4\uB300\uC0AC"
+    Trigger: "#1\uC774 #3,#4 \uC911 \uD55C \uBA85\uACFC \uAC19\uC740 \uCE78"
+    Visibility: 
+    FragmentId: 
+    TriggerDeadIds: 
+    UnlockConditionId: 
+    HintOfConditionId: COND_P03_02
+    Lines:
+    - SpeakerId: 3
+      Text: "\uC5D4\uBE44\uB294 \uB458 \uC0AC\uC774\uC758 \uC870\uC6A9\uD55C \uBB38\uD2C8\uC744
+        \uB108\uBB34 \uC798 \uBCF4\uB294 \uAC83 \uAC19\uC544."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+      IsProfileClue: 0
+      ProfileClueId: 
+      ProfileCategory: 
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ComboId: COND_P03_03
+    ComboKey: '#2|#3'
+    ParticipantIds: 0200000003000000
+    SituationType: "\uD504\uB85C\uD30C\uC77C \uD575\uC2EC\uBB38\uC7A5"
+    Trigger: "\uC870\uC0AC \uBAA8\uB4DC / \uC120\uD0DD \uC870\uC0AC \uAD6C\uC5ED
+      / #3\uC774 #2\uC640 \uAC19\uC740 \uCE78 / #4 \uC0DD\uC874"
+    Visibility: 
+    FragmentId: P03_03
+    TriggerDeadIds: 
+    UnlockConditionId: COND_P03_03
+    HintOfConditionId: 
+    Lines:
+    - SpeakerId: 3
+      Text: "\uD070 \uB73B\uC774 \uAC00\uAE4C\uC6B4 \uC0AC\uB78C \uD558\uB098\uB97C
+        \uC704\uD5D8\uD558\uAC8C \uB9CC\uB4E0\uB2E4\uBA74, \uC800\uB294 \uADF8 \uB73B\uC744
+        \uB05D\uAE4C\uC9C0 \uBBFF\uC9C0 \uBABB\uD569\uB2C8\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+      IsProfileClue: 0
+      ProfileClueId: 
+      ProfileCategory: 
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ComboId: HINT_P03_03
+    ComboKey: '#2|#3'
+    ParticipantIds: 0200000003000000
+    SituationType: "\uD504\uB85C\uD30C\uC77C \uC720\uB3C4\uB300\uC0AC"
+    Trigger: "#3\uACFC #2\uAC00 \uAC19\uC740 \uCE78, #4 \uC0DD\uC874"
+    Visibility: 
+    FragmentId: 
+    TriggerDeadIds: 
+    UnlockConditionId: 
+    HintOfConditionId: COND_P03_03
+    Lines:
+    - SpeakerId: 3
+      Text: "\uBA54\uC774\uC758 \uC804\uC9C4\uC740 \uB370\uC6B0\uC2A4\uC5D0\uAC8C
+        \uC790\uC8FC \uC704\uD5D8 \uC2E0\uD638\uCC98\uB7FC \uB4E4\uB9B4 \uAC70\uC57C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+      IsProfileClue: 0
+      ProfileClueId: 
+      ProfileCategory: 
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ComboId: COND_P03_04
+    ComboKey: '#3|#7'
+    ParticipantIds: 0300000007000000
+    SituationType: "\uD504\uB85C\uD30C\uC77C \uD575\uC2EC\uBB38\uC7A5"
+    Trigger: "\uC870\uC0AC \uBAA8\uB4DC / \uC0AC\uAC74 \uACB0\uACFC / #7\uC774 \uC774\uB3D9\uD558\uBA70
+      \uC9C1\uC804 \uCE78\uC5D0\uC11C \uC0AC\uB9DD \uBC1C\uC0DD / \uC774\uB3D9 \uD6C4
+      #7\uC774 #3 \uD63C\uC790 \uC788\uB294 \uCE78\uC5D0 \uB3C4\uCC29"
+    Visibility: 
+    FragmentId: P03_04
+    TriggerDeadIds: 
+    UnlockConditionId: COND_P03_04
+    HintOfConditionId: 
+    Lines:
+    - SpeakerId: 3
+      Text: "\uACE0\uD574\uB97C \uB4E3\uB294\uB2E4\uB294 \uAC74 \uC6A9\uC11C\uAC00
+        \uC544\uB2C8\uB77C, \uADF8 \uBB34\uAC8C\uB97C \uD568\uAED8 \uB4E4\uC5EC\uB2E4\uBCF4\uB294
+        \uC77C\uC785\uB2C8\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+      IsProfileClue: 0
+      ProfileClueId: 
+      ProfileCategory: 
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ComboId: HINT_P03_04
+    ComboKey: '#3|#7'
+    ParticipantIds: 0300000007000000
+    SituationType: "\uD504\uB85C\uD30C\uC77C \uC720\uB3C4\uB300\uC0AC"
+    Trigger: "#7\uACFC #3\uC774 \uAC19\uC740 \uCE78, \uC9C1\uC804 \uC774\uB3D9\uC5D0\uC11C
+      \uC0AC\uB9DD \uC5C6\uC74C"
+    Visibility: 
+    FragmentId: 
+    TriggerDeadIds: 
+    UnlockConditionId: 
+    HintOfConditionId: COND_P03_04
+    Lines:
+    - SpeakerId: 3
+      Text: "\uC0C8\uD134\uC740 \uBB34\uAC70\uC6B4 \uB9D0\uC744 \uC544\uBB34\uC5D0\uAC8C\uB098
+        \uB9E1\uAE30\uC9C0 \uC54A\uC544. \uB370\uC6B0\uC2A4\uB77C\uBA74 \uC870\uC6A9\uD788
+        \uB4E4\uC5B4\uC904\uC9C0\uB3C4 \uBAB0\uB77C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+      IsProfileClue: 0
+      ProfileClueId: 
+      ProfileCategory: 
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ComboId: COND_P03_05
+    ComboKey: '#3'
+    ParticipantIds: 03000000
+    SituationType: "\uD504\uB85C\uD30C\uC77C \uD575\uC2EC\uBB38\uC7A5"
+    Trigger: "\uC870\uC0AC \uBAA8\uB4DC / \uC120\uD0DD \uC870\uC0AC \uAD6C\uC5ED
+      / #3 \uB2E8\uB3C5 / #4\uAC00 \uB2E4\uB978 \uCE78\uC5D0 \uC0DD\uC874 / \uC774\uC804
+      \uB8E8\uD504\uC5D0\uC11C #3,#4 \uC870\uD569 \uD655\uC778"
+    Visibility: 
+    FragmentId: P03_05
+    TriggerDeadIds: 
+    UnlockConditionId: COND_P03_05
+    HintOfConditionId: 
+    Lines:
+    - SpeakerId: 3
+      Text: "\uB0B4\uAC00 \uC0AC\uB77C\uC9C0\uBA74, \uADF8 \uC0AC\uB78C\uC758 \uC138\uACC4\uB3C4
+        \uD568\uAED8 \uC228\uC744 \uC783\uC744\uAE4C \uBD10 \uB450\uB835\uC2B5\uB2C8\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+      IsProfileClue: 0
+      ProfileClueId: 
+      ProfileCategory: 
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ComboId: HINT_P03_05
+    ComboKey: '#3'
+    ParticipantIds: 03000000
+    SituationType: "\uD504\uB85C\uD30C\uC77C \uC720\uB3C4\uB300\uC0AC"
+    Trigger: "#3\uC774 \uD63C\uC790 \uC788\uACE0 #4 \uC0DD\uC874"
+    Visibility: 
+    FragmentId: 
+    TriggerDeadIds: 
+    UnlockConditionId: 
+    HintOfConditionId: COND_P03_05
+    Lines:
+    - SpeakerId: 3
+      Text: "\uB370\uC6B0\uC2A4\uAC00 \uD63C\uC790 \uC788\uC744 \uB54C\uB294, \uC5C6\uB294
+        \uC0AC\uB78C\uC758 \uC228\uC18C\uB9AC\uAE4C\uC9C0 \uC138\uB294 \uAC83 \uAC19\uC544."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+      IsProfileClue: 0
+      ProfileClueId: 
+      ProfileCategory: 
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ComboId: COND_P04_01
+    ComboKey: '#4'
+    ParticipantIds: 04000000
+    SituationType: "\uD504\uB85C\uD30C\uC77C \uD575\uC2EC\uBB38\uC7A5"
+    Trigger: "\uC870\uC0AC \uBAA8\uB4DC / \uC120\uD0DD \uC870\uC0AC \uAD6C\uC5ED
+      / #4 \uB2E8\uB3C5 / \uD574\uB2F9 \uD134 \uC0AC\uB9DD \uC5C6\uC74C"
+    Visibility: 
+    FragmentId: P04_01
+    TriggerDeadIds: 
+    UnlockConditionId: COND_P04_01
+    HintOfConditionId: 
+    Lines:
+    - SpeakerId: 4
+      Text: "\uC544\uBB34 \uC77C\uB3C4 \uD558\uC9C0 \uC54A\uB294 \uC2DC\uAC04\uC774,
+        \uB098\uB97C \uACA8\uC6B0 \uC228 \uC26C\uAC8C \uD574."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+      IsProfileClue: 0
+      ProfileClueId: 
+      ProfileCategory: 
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ComboId: HINT_P04_01
+    ComboKey: '#4'
+    ParticipantIds: 04000000
+    SituationType: "\uD504\uB85C\uD30C\uC77C \uC720\uB3C4\uB300\uC0AC"
+    Trigger: "#4\uAC00 \uD63C\uC790 \uC788\uACE0 \uC0AC\uAC74 \uC5C6\uC74C"
+    Visibility: 
+    FragmentId: 
+    TriggerDeadIds: 
+    UnlockConditionId: 
+    HintOfConditionId: COND_P04_01
+    Lines:
+    - SpeakerId: 4
+      Text: "\uB8E8\uC774\uC2A4\uC5D0\uAC8C\uB294 \uC870\uC6A9\uD55C \uCE78 \uD558\uB098\uAC00
+        \uB2E4\uB978 \uC0AC\uB78C\uC758 \uC2B9\uB9AC\uBCF4\uB2E4 \uC911\uC694\uD560
+        \uB54C\uAC00 \uC788\uC5B4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+      IsProfileClue: 0
+      ProfileClueId: 
+      ProfileCategory: 
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ComboId: COND_P04_02
+    ComboKey: '#2|#4'
+    ParticipantIds: 0200000004000000
+    SituationType: "\uD504\uB85C\uD30C\uC77C \uD575\uC2EC\uBB38\uC7A5"
+    Trigger: "\uC870\uC0AC \uBAA8\uB4DC / \uC120\uD0DD \uC870\uC0AC \uAD6C\uC5ED
+      / #4\uAC00 #2\uC640 \uAC19\uC740 \uCE78 / #3\uC774 \uAC19\uC740 \uCE78\uC5D0
+      \uC5C6\uC74C"
+    Visibility: 
+    FragmentId: P04_02
+    TriggerDeadIds: 
+    UnlockConditionId: COND_P04_02
+    HintOfConditionId: 
+    Lines:
+    - SpeakerId: 4
+      Text: "\uC120\uD0DD\uD558\uB77C\uB294 \uB9D0\uC740 \uAC00\uB054, \uB0B4 \uB4F1\uC744
+        \uB204\uAD70\uAC00\uC758 \uC190\uC73C\uB85C \uB5A0\uBBF8\uB294 \uB9D0\uCC98\uB7FC
+        \uB4E4\uB824."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+      IsProfileClue: 0
+      ProfileClueId: 
+      ProfileCategory: 
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ComboId: HINT_P04_02
+    ComboKey: '#2|#4'
+    ParticipantIds: 0200000004000000
+    SituationType: "\uD504\uB85C\uD30C\uC77C \uC720\uB3C4\uB300\uC0AC"
+    Trigger: "#4\uC640 #2\uAC00 \uAC19\uC740 \uCE78, #3 \uBD80\uC7AC"
+    Visibility: 
+    FragmentId: 
+    TriggerDeadIds: 
+    UnlockConditionId: 
+    HintOfConditionId: COND_P04_02
+    Lines:
+    - SpeakerId: 4
+      Text: "\uBA54\uC774\uC640 \uB8E8\uC774\uC2A4\uB97C \uAC19\uC774 \uB450\uBA74
+        \uD55C\uCABD\uC740 \uB354 \uBE68\uB77C\uC9C0\uACE0, \uD55C\uCABD\uC740 \uB354
+        \uBA40\uC5B4\uC9C8 \uAC70\uC57C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+      IsProfileClue: 0
+      ProfileClueId: 
+      ProfileCategory: 
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ComboId: COND_P04_03
+    ComboKey: '#3|#4'
+    ParticipantIds: 0300000004000000
+    SituationType: "\uD504\uB85C\uD30C\uC77C \uD575\uC2EC\uBB38\uC7A5"
+    Trigger: "\uC870\uC0AC \uBAA8\uB4DC / \uC120\uD0DD \uC870\uC0AC \uAD6C\uC5ED
+      / #3\uACFC #4\uAC00 \uAC19\uC740 \uCE78 / \uD574\uB2F9 \uD134 \uC0AC\uB9DD
+      \uC5C6\uC74C"
+    Visibility: 
+    FragmentId: P04_03
+    TriggerDeadIds: 
+    UnlockConditionId: COND_P04_03
+    HintOfConditionId: 
+    Lines:
+    - SpeakerId: 4
+      Text: "\uB0B4\uAC00 \uC11C \uC788\uB294 \uAC8C \uC544\uB2C8\uB77C, \uB204\uAD70\uAC00\uC758
+        \uADF8\uB298\uC774 \uB098\uB97C \uC138\uC6CC \uC8FC\uB294 \uAC83 \uAC19\uC544."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+      IsProfileClue: 0
+      ProfileClueId: 
+      ProfileCategory: 
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ComboId: HINT_P04_03
+    ComboKey: '#3|#4'
+    ParticipantIds: 0300000004000000
+    SituationType: "\uD504\uB85C\uD30C\uC77C \uC720\uB3C4\uB300\uC0AC"
+    Trigger: "#3\uACFC #4\uAC00 \uAC19\uC740 \uCE78"
+    Visibility: 
+    FragmentId: 
+    TriggerDeadIds: 
+    UnlockConditionId: 
+    HintOfConditionId: COND_P04_03
+    Lines:
+    - SpeakerId: 4
+      Text: "\uB8E8\uC774\uC2A4\uB294 \uB370\uC6B0\uC2A4 \uACC1\uC5D0 \uC788\uC744
+        \uB54C \uAC00\uC7A5 \uD3B8\uD574 \uBCF4\uC774\uC9C0\uB9CC, \uAF2D \uAC00\uC7A5
+        \uC790\uC720\uB85C\uC6CC \uBCF4\uC774\uC9C4 \uC54A\uC544."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+      IsProfileClue: 0
+      ProfileClueId: 
+      ProfileCategory: 
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ComboId: COND_P04_04
+    ComboKey: '#4|#7'
+    ParticipantIds: 0400000007000000
+    SituationType: "\uD504\uB85C\uD30C\uC77C \uD575\uC2EC\uBB38\uC7A5"
+    Trigger: "\uC870\uC0AC \uBAA8\uB4DC / \uC120\uD0DD \uC870\uC0AC \uAD6C\uC5ED
+      / #4\uC640 #7\uC774 \uAC19\uC740 \uCE78 / \uD574\uB2F9 \uD134 \uC0AC\uB9DD
+      \uC5C6\uC74C"
+    Visibility: 
+    FragmentId: P04_04
+    TriggerDeadIds: 
+    UnlockConditionId: COND_P04_04
+    HintOfConditionId: 
+    Lines:
+    - SpeakerId: 4
+      Text: "\uBB3B\uB294 \uC0AC\uB78C\uBCF4\uB2E4, \uBB3B\uC9C0 \uC54A\uC544\uB3C4
+        \uB418\uB294 \uCE68\uBB35\uC774 \uB354 \uD3B8\uD560 \uB54C\uAC00 \uC788\uC5B4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+      IsProfileClue: 0
+      ProfileClueId: 
+      ProfileCategory: 
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ComboId: HINT_P04_04
+    ComboKey: '#4|#7'
+    ParticipantIds: 0400000007000000
+    SituationType: "\uD504\uB85C\uD30C\uC77C \uC720\uB3C4\uB300\uC0AC"
+    Trigger: "#4\uC640 #7\uC774 \uAC19\uC740 \uCE78"
+    Visibility: 
+    FragmentId: 
+    TriggerDeadIds: 
+    UnlockConditionId: 
+    HintOfConditionId: COND_P04_04
+    Lines:
+    - SpeakerId: 4
+      Text: "\uC0C8\uD134\uC774 \uBB3B\uAE30 \uC2DC\uC791\uD558\uBA74, \uB8E8\uC774\uC2A4\uB294
+        \uB300\uB2F5\uBCF4\uB2E4 \uC870\uC6A9\uD55C \uACF3\uC744 \uBA3C\uC800 \uCC3E\uC744
+        \uAC70\uC57C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+      IsProfileClue: 0
+      ProfileClueId: 
+      ProfileCategory: 
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ComboId: COND_P04_05
+    ComboKey: '#3|#4|#6'
+    ParticipantIds: 030000000400000006000000
+    SituationType: "\uD504\uB85C\uD30C\uC77C \uD575\uC2EC\uBB38\uC7A5"
+    Trigger: "\uC870\uC0AC \uBAA8\uB4DC / \uC120\uD0DD \uC870\uC0AC \uAD6C\uC5ED
+      / #3,#4,#6 \uAC19\uC740 \uCE78 / #6 \uC0DD\uC874 / \uD574\uB2F9 \uD134 \uC0AC\uB9DD
+      \uC5C6\uC74C"
+    Visibility: 
+    FragmentId: P04_05
+    TriggerDeadIds: 
+    UnlockConditionId: COND_P04_05
+    HintOfConditionId: 
+    Lines:
+    - SpeakerId: 4
+      Text: "\uADF8 \uC0AC\uB78C\uC774 \uBA3C\uC800 \uC190\uC744 \uB193\uC73C\uBA74,
+        \uB098\uB294 \uB0B4\uAC00 \uC5B4\uB514\uC5D0 \uC11C\uC57C \uD558\uB294\uC9C0\uB3C4
+        \uC78A\uC744 \uAC83 \uAC19\uC544."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+      IsProfileClue: 0
+      ProfileClueId: 
+      ProfileCategory: 
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ComboId: HINT_P04_05
+    ComboKey: '#3|#4|#6'
+    ParticipantIds: 030000000400000006000000
+    SituationType: "\uD504\uB85C\uD30C\uC77C \uC720\uB3C4\uB300\uC0AC"
+    Trigger: "#4\uAC00 #3\uACFC \uAC19\uC740 \uCE78, #6\uB3C4 \uC0DD\uC874"
+    Visibility: 
+    FragmentId: 
+    TriggerDeadIds: 
+    UnlockConditionId: 
+    HintOfConditionId: COND_P04_05
+    Lines:
+    - SpeakerId: 4
+      Text: "\uD504\uB9AC\uB4DC\uAC00 \uACC1\uC5D0 \uC788\uC73C\uBA74, \uB8E8\uC774\uC2A4\uB294
+        \uB204\uAC00 \uB204\uAD6C\uB97C \uBD99\uB4E4\uACE0 \uC788\uB294\uC9C0 \uB354
+        \uB610\uB837\uD558\uAC8C \uB290\uB084\uC9C0\uB3C4 \uBAB0\uB77C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+      IsProfileClue: 0
+      ProfileClueId: 
+      ProfileCategory: 
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ComboId: COND_P05_01
+    ComboKey: '#5'
+    ParticipantIds: 05000000
+    SituationType: "\uD504\uB85C\uD30C\uC77C \uD575\uC2EC\uBB38\uC7A5"
+    Trigger: "\uC870\uC0AC \uBAA8\uB4DC / \uC120\uD0DD \uC870\uC0AC \uAD6C\uC5ED
+      / #5 \uB2E8\uB3C5 / \uC9C1\uC804 \uD134\uC5D0 \uAC19\uC740 \uAD6C\uC5ED\uC5D0\uC11C
+      \uAC08\uB4F1 \uB300\uC0AC \uBC1C\uC0DD"
+    Visibility: 
+    FragmentId: P05_01
+    TriggerDeadIds: 
+    UnlockConditionId: COND_P05_01
+    HintOfConditionId: 
+    Lines:
+    - SpeakerId: 5
+      Text: "\uAC00\uC7A5 \uC120\uBA85\uD55C \uC21C\uAC04\uC740 \uBAA8\uB450\uAC00
+        \uB9D0\uC744 \uC0BC\uD0A4\uACE0, \uC544\uC9C1 \uC544\uBB34\uB3C4 \uC190\uB300\uC9C0
+        \uC54A\uC740 \uB54C\uC57C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+      IsProfileClue: 0
+      ProfileClueId: 
+      ProfileCategory: 
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ComboId: HINT_P05_01
+    ComboKey: '#5'
+    ParticipantIds: 05000000
+    SituationType: "\uD504\uB85C\uD30C\uC77C \uC720\uB3C4\uB300\uC0AC"
+    Trigger: "#5\uAC00 \uD63C\uC790 \uC788\uACE0 \uC9C1\uC804 \uD134 2\uC778 \uC774\uC0C1
+      \uAC08\uB4F1 \uC870\uD569"
+    Visibility: 
+    FragmentId: 
+    TriggerDeadIds: 
+    UnlockConditionId: 
+    HintOfConditionId: COND_P05_01
+    Lines:
+    - SpeakerId: 5
+      Text: "\uD1A0\uB2C8\uB294 \uC18C\uB780\uC758 \uD55C\uAC00\uC6B4\uB370\uBCF4\uB2E4,
+        \uC18C\uB780\uC774 \uB05D\uB09C \uB4A4\uB97C \uB354 \uC624\uB798 \uBCF4\uB294
+        \uAC83 \uAC19\uC544."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+      IsProfileClue: 0
+      ProfileClueId: 
+      ProfileCategory: 
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ComboId: COND_P05_02
+    ComboKey: "#1|#5 \uB610\uB294 #2|#5"
+    ParticipantIds: 0100000005000000
+    SituationType: "\uD504\uB85C\uD30C\uC77C \uD575\uC2EC\uBB38\uC7A5"
+    Trigger: "\uC870\uC0AC \uBAA8\uB4DC / \uC120\uD0DD \uC870\uC0AC \uAD6C\uC5ED
+      / #5\uAC00 #1,#2 \uC911 \uD55C \uBA85\uACFC \uAC19\uC740 \uCE78 / \uD574\uB2F9
+      \uD134 \uC0AC\uB9DD \uC5C6\uC74C"
+    Visibility: 
+    FragmentId: P05_02
+    TriggerDeadIds: 
+    UnlockConditionId: COND_P05_02
+    HintOfConditionId: 
+    Lines:
+    - SpeakerId: 5
+      Text: "\uC0AC\uB78C\uC740 \uB9D0\uBCF4\uB2E4 \uBB34\uB108\uC9C0\uB294 \uC21C\uC11C\uC5D0\uC11C
+        \uB354 \uC194\uC9C1\uD574\uC838."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+      IsProfileClue: 0
+      ProfileClueId: 
+      ProfileCategory: 
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ComboId: HINT_P05_02
+    ComboKey: "#1|#5 \uB610\uB294 #2|#5"
+    ParticipantIds: 0100000005000000
+    SituationType: "\uD504\uB85C\uD30C\uC77C \uC720\uB3C4\uB300\uC0AC"
+    Trigger: "#5\uAC00 #1 \uB610\uB294 #2\uC640 \uAC19\uC740 \uCE78"
+    Visibility: 
+    FragmentId: 
+    TriggerDeadIds: 
+    UnlockConditionId: 
+    HintOfConditionId: COND_P05_02
+    Lines:
+    - SpeakerId: 5
+      Text: "\uD1A0\uB2C8\uB294 \uB204\uAC00 \uBB34\uC2A8 \uB9D0\uC744 \uD558\uB294\uC9C0\uBCF4\uB2E4,
+        \uB204\uAC00 \uBA3C\uC800 \uD45C\uC815\uC744 \uBC14\uAFB8\uB294\uC9C0\uB97C
+        \uBCF4\uB294 \uAC83 \uAC19\uC544."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+      IsProfileClue: 0
+      ProfileClueId: 
+      ProfileCategory: 
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ComboId: COND_P05_03
+    ComboKey: '#5|#7'
+    ParticipantIds: 0500000007000000
+    SituationType: "\uD504\uB85C\uD30C\uC77C \uD575\uC2EC\uBB38\uC7A5"
+    Trigger: "\uC870\uC0AC \uBAA8\uB4DC / \uC120\uD0DD \uC870\uC0AC \uAD6C\uC5ED
+      / #5\uAC00 #7\uACFC \uAC19\uC740 \uCE78 / \uC0C8\uD134 \uC9C8\uBB38 \uB300\uC0AC
+      1\uAC1C \uC774\uC0C1 \uC218\uC9D1"
+    Visibility: 
+    FragmentId: P05_03
+    TriggerDeadIds: 
+    UnlockConditionId: COND_P05_03
+    HintOfConditionId: 
+    Lines:
+    - SpeakerId: 5
+      Text: "\uC131\uAE09\uD558\uAC8C \uB04A\uC73C\uBA74 \uD750\uB984\uC774 \uB9DD\uAC00\uC838.
+        \uC870\uAE08 \uB354 \uAE30\uB2E4\uB824\uC57C \uD574."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+      IsProfileClue: 0
+      ProfileClueId: 
+      ProfileCategory: 
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ComboId: HINT_P05_03
+    ComboKey: '#5|#7'
+    ParticipantIds: 0500000007000000
+    SituationType: "\uD504\uB85C\uD30C\uC77C \uC720\uB3C4\uB300\uC0AC"
+    Trigger: "#5\uC640 #7\uC774 \uAC19\uC740 \uCE78"
+    Visibility: 
+    FragmentId: 
+    TriggerDeadIds: 
+    UnlockConditionId: 
+    HintOfConditionId: COND_P05_03
+    Lines:
+    - SpeakerId: 5
+      Text: "\uC0C8\uD134\uC758 \uC9C8\uBB38\uC740 \uD1A0\uB2C8\uAC00 \uAE30\uB2E4\uB9AC\uB358
+        \uD750\uB984\uC744 \uC790\uAFB8 \uB04A\uC5B4 \uBC84\uB9B4\uC9C0\uB3C4 \uBAB0\uB77C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+      IsProfileClue: 0
+      ProfileClueId: 
+      ProfileCategory: 
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ComboId: COND_P05_04
+    ComboKey: '#5|ANY'
+    ParticipantIds: 05000000
+    SituationType: "\uD504\uB85C\uD30C\uC77C \uD575\uC2EC\uBB38\uC7A5"
+    Trigger: "\uC870\uC0AC \uBAA8\uB4DC / \uC0AC\uAC74 \uACB0\uACFC / #5\uC758 \uC0B4\uC778\uC790
+      \uD6A8\uACFC\uB85C \uB204\uAD70\uAC00 \uC0AC\uB9DD / #5 \uC0DD\uC874"
+    Visibility: 
+    FragmentId: P05_04
+    TriggerDeadIds: 
+    UnlockConditionId: COND_P05_04
+    HintOfConditionId: 
+    Lines:
+    - SpeakerId: 5
+      Text: "\uB05D\uB09C \uB4A4\uBCF4\uB2E4, \uB0A8\uC740 \uC0AC\uB78C\uB4E4\uC774
+        \uC11C\uB85C\uB97C \uBCF4\uB294 \uC5BC\uAD74\uC774 \uB354 \uC624\uB798 \uB0A8\uC544."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+      IsProfileClue: 0
+      ProfileClueId: 
+      ProfileCategory: 
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ComboId: HINT_P05_04
+    ComboKey: '#5|ANY'
+    ParticipantIds: 05000000
+    SituationType: "\uD504\uB85C\uD30C\uC77C \uC720\uB3C4\uB300\uC0AC"
+    Trigger: "#5\uAC00 \uB2E4\uB978 \uCE90\uB9AD\uD130\uC640 \uAC19\uC740 \uCE78,
+      \uC0B4\uC778\uC790 \uD6A8\uACFC \uAC00\uB2A5"
+    Visibility: 
+    FragmentId: 
+    TriggerDeadIds: 
+    UnlockConditionId: 
+    HintOfConditionId: COND_P05_04
+    Lines:
+    - SpeakerId: 5
+      Text: "\uD1A0\uB2C8\uAC00 \uC788\uB294 \uCE78\uC5D0\uC11C\uB294 \uC0AC\uAC74
+        \uADF8 \uC790\uCCB4\uBCF4\uB2E4, \uC0AC\uAC74 \uB4A4\uC758 \uD45C\uC815\uC774
+        \uB354 \uC911\uC694\uD574\uC9C8 \uAC70\uC57C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+      IsProfileClue: 0
+      ProfileClueId: 
+      ProfileCategory: 
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ComboId: COND_P05_05
+    ComboKey: '#3|#4|#5'
+    ParticipantIds: 030000000400000005000000
+    SituationType: "\uD504\uB85C\uD30C\uC77C \uD575\uC2EC\uBB38\uC7A5"
+    Trigger: "\uC870\uC0AC \uBAA8\uB4DC / \uC120\uD0DD \uC870\uC0AC \uAD6C\uC5ED
+      / #5,#3,#4 \uAC19\uC740 \uCE78 / \uD574\uB2F9 \uD134 \uC0AC\uB9DD \uC5C6\uC74C"
+    Visibility: 
+    FragmentId: P05_05
+    TriggerDeadIds: 
+    UnlockConditionId: COND_P05_05
+    HintOfConditionId: 
+    Lines:
+    - SpeakerId: 5
+      Text: "\uC11C\uB85C\uB9CC \uBCF4\uB294 \uB9C8\uC74C\uC740 \uD55C\uCABD\uC774
+        \uD754\uB4E4\uB9AC\uBA74, \uB2E4\uB978 \uCABD\uAE4C\uC9C0 \uAC19\uC774 \uB5A8\uB9AC\uB354\uB77C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+      IsProfileClue: 0
+      ProfileClueId: 
+      ProfileCategory: 
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ComboId: HINT_P05_05
+    ComboKey: '#3|#4|#5'
+    ParticipantIds: 030000000400000005000000
+    SituationType: "\uD504\uB85C\uD30C\uC77C \uC720\uB3C4\uB300\uC0AC"
+    Trigger: "#5\uAC00 #3 \uB610\uB294 #4\uC640 \uAC19\uC740 \uCE78"
+    Visibility: 
+    FragmentId: 
+    TriggerDeadIds: 
+    UnlockConditionId: 
+    HintOfConditionId: COND_P05_05
+    Lines:
+    - SpeakerId: 5
+      Text: "\uD1A0\uB2C8\uC5D0\uAC8C \uB370\uC6B0\uC2A4\uC640 \uB8E8\uC774\uC2A4\uB294
+        \uB530\uB85C \uC788\uC744 \uB54C\uBCF4\uB2E4 \uAC19\uC774 \uC788\uC744 \uB54C
+        \uB354 \uD765\uBBF8\uB85C\uC6B4 \uC7A5\uBA74\uC77C \uAC70\uC57C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+      IsProfileClue: 0
+      ProfileClueId: 
+      ProfileCategory: 
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ComboId: COND_P06_01
+    ComboKey: '#6|ANY'
+    ParticipantIds: 06000000
+    SituationType: "\uD504\uB85C\uD30C\uC77C \uD575\uC2EC\uBB38\uC7A5"
+    Trigger: "\uC870\uC0AC \uBAA8\uB4DC / \uC120\uD0DD \uC870\uC0AC \uAD6C\uC5ED
+      / #6\uC774 \uB2E4\uB978 \uCE90\uB9AD\uD130 1\uBA85 \uC774\uC0C1\uACFC \uAC19\uC740
+      \uCE78 / \uC0AC\uAC74 \uC5C6\uC74C"
+    Visibility: 
+    FragmentId: P06_01
+    TriggerDeadIds: 
+    UnlockConditionId: COND_P06_01
+    HintOfConditionId: 
+    Lines:
+    - SpeakerId: 6
+      Text: "\uC704\uD5D8\uC774 \uB208\uC55E\uC5D0 \uC788\uC73C\uBA74, \uB098\uB294
+        \uBA3C\uC800 \uD55C \uAC78\uC74C \uB098\uAC00\uB294 \uCABD\uC744 \uD0DD\uD558\uAC8C
+        \uB41C\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+      IsProfileClue: 0
+      ProfileClueId: 
+      ProfileCategory: 
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ComboId: HINT_P06_01
+    ComboKey: '#6|ANY'
+    ParticipantIds: 06000000
+    SituationType: "\uD504\uB85C\uD30C\uC77C \uC720\uB3C4\uB300\uC0AC"
+    Trigger: "#6\uC774 \uB2E4\uB978 \uCE90\uB9AD\uD130\uC640 \uAC19\uC740 \uCE78"
+    Visibility: 
+    FragmentId: 
+    TriggerDeadIds: 
+    UnlockConditionId: 
+    HintOfConditionId: COND_P06_01
+    Lines:
+    - SpeakerId: 6
+      Text: "\uD504\uB9AC\uB4DC\uB294 \uC0AC\uB78C\uC774 \uB9CE\uC744\uC218\uB85D
+        \uB4A4\uAC00 \uC544\uB2C8\uB77C \uC55E\uC744 \uBCF4\uAC8C \uB418\uB294 \uC0AC\uB78C
+        \uAC19\uC544."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+      IsProfileClue: 0
+      ProfileClueId: 
+      ProfileCategory: 
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ComboId: COND_P06_02
+    ComboKey: '#6|#7'
+    ParticipantIds: 0600000007000000
+    SituationType: "\uD504\uB85C\uD30C\uC77C \uD575\uC2EC\uBB38\uC7A5"
+    Trigger: "\uC870\uC0AC \uBAA8\uB4DC / \uC120\uD0DD \uC870\uC0AC \uAD6C\uC5ED
+      / #6\uACFC #7\uC774 \uAC19\uC740 \uCE78 / \uD574\uB2F9 \uD134 \uC0AC\uB9DD
+      \uC5C6\uC74C"
+    Visibility: 
+    FragmentId: P06_02
+    TriggerDeadIds: 
+    UnlockConditionId: COND_P06_02
+    HintOfConditionId: 
+    Lines:
+    - SpeakerId: 6
+      Text: "\uB300\uC2E0 \uC9CA\uC5B4\uC9C0\uB294 \uC77C\uC774, \uB204\uAD70\uAC00\uC758
+        \uBAAB\uC744 \uBE7C\uC557\uB294 \uC77C\uC77C \uC218\uB3C4 \uC788\uACA0\uC9C0."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+      IsProfileClue: 0
+      ProfileClueId: 
+      ProfileCategory: 
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ComboId: HINT_P06_02
+    ComboKey: '#6|#7'
+    ParticipantIds: 0600000007000000
+    SituationType: "\uD504\uB85C\uD30C\uC77C \uC720\uB3C4\uB300\uC0AC"
+    Trigger: "#6\uACFC #7\uC774 \uAC19\uC740 \uCE78"
+    Visibility: 
+    FragmentId: 
+    TriggerDeadIds: 
+    UnlockConditionId: 
+    HintOfConditionId: COND_P06_02
+    Lines:
+    - SpeakerId: 6
+      Text: "\uC0C8\uD134\uC740 \uD504\uB9AC\uB4DC\uAC00 \uBA3C\uC800 \uB098\uC124
+        \uB54C\uB9C8\uB2E4, \uADF8\uAC8C \uC815\uB9D0 \uBAA8\uB450\uC758 \uC120\uD0DD\uC778\uC9C0
+        \uBB3C\uC744 \uAC70\uC57C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+      IsProfileClue: 0
+      ProfileClueId: 
+      ProfileCategory: 
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ComboId: COND_P06_03
+    ComboKey: '#2|#6'
+    ParticipantIds: 0200000006000000
+    SituationType: "\uD504\uB85C\uD30C\uC77C \uD575\uC2EC\uBB38\uC7A5"
+    Trigger: "\uC870\uC0AC \uBAA8\uB4DC / \uC120\uD0DD \uC870\uC0AC \uAD6C\uC5ED
+      / #2\uC640 #6\uC774 \uAC19\uC740 \uCE78 / \uD574\uB2F9 \uD134 \uC0AC\uB9DD
+      \uC5C6\uC74C"
+    Visibility: 
+    FragmentId: P06_03
+    TriggerDeadIds: 
+    UnlockConditionId: COND_P06_03
+    HintOfConditionId: 
+    Lines:
+    - SpeakerId: 6
+      Text: "\uBA54\uC774\uAC00 \uB05D\uC744 \uB9D0\uD560 \uB54C, \uB098\uB294 \uADF8
+        \uB05D\uAE4C\uC9C0 \uAC00\uB294 \uB3D9\uC548 \uCE58\uB7EC\uC9C8 \uAC12\uC744
+        \uBA3C\uC800 \uC0DD\uAC01\uD55C\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+      IsProfileClue: 0
+      ProfileClueId: 
+      ProfileCategory: 
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ComboId: HINT_P06_03
+    ComboKey: '#2|#6'
+    ParticipantIds: 0200000006000000
+    SituationType: "\uD504\uB85C\uD30C\uC77C \uC720\uB3C4\uB300\uC0AC"
+    Trigger: "#2\uC640 #6\uC774 \uAC19\uC740 \uCE78"
+    Visibility: 
+    FragmentId: 
+    TriggerDeadIds: 
+    UnlockConditionId: 
+    HintOfConditionId: COND_P06_03
+    Lines:
+    - SpeakerId: 6
+      Text: "\uBA54\uC774\uAC00 \uACB0\uB9D0\uC744 \uBCF4\uBA74, \uD504\uB9AC\uB4DC\uB294
+        \uADF8 \uACB0\uB9D0 \uC55E\uC5D0 \uB193\uC77C \uC0AC\uB78C\uB4E4\uC744 \uBCFC
+        \uAC70\uC57C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+      IsProfileClue: 0
+      ProfileClueId: 
+      ProfileCategory: 
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ComboId: COND_P06_04
+    ComboKey: '#6'
+    ParticipantIds: 06000000
+    SituationType: "\uD504\uB85C\uD30C\uC77C \uD575\uC2EC\uBB38\uC7A5"
+    Trigger: "\uC870\uC0AC \uBAA8\uB4DC / \uC120\uD0DD \uC870\uC0AC \uAD6C\uC5ED
+      / #6 \uB2E8\uB3C5 / \uB8E8\uD504 2\uC77C\uCC28 \uC774\uD6C4"
+    Visibility: 
+    FragmentId: P06_04
+    TriggerDeadIds: 
+    UnlockConditionId: COND_P06_04
+    HintOfConditionId: 
+    Lines:
+    - SpeakerId: 6
+      Text: "\uB2A6\uC740 \uD310\uB2E8\uC774 \uB204\uAD70\uAC00\uB97C \uB9DD\uCCE4\uB2E4\uB294
+        \uAE30\uC5B5\uC740, \uC0AC\uB78C\uC744 \uB108\uBB34 \uBE60\uB978 \uACB0\uB2E8\uC73C\uB85C
+        \uBC00\uC5B4 \uB123\uB294\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+      IsProfileClue: 0
+      ProfileClueId: 
+      ProfileCategory: 
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ComboId: HINT_P06_04
+    ComboKey: '#6'
+    ParticipantIds: 06000000
+    SituationType: "\uD504\uB85C\uD30C\uC77C \uC720\uB3C4\uB300\uC0AC"
+    Trigger: "#6\uC774 \uD63C\uC790 \uC788\uACE0 \uB8E8\uD504 2\uC77C\uCC28 \uC774\uD6C4"
+    Visibility: 
+    FragmentId: 
+    TriggerDeadIds: 
+    UnlockConditionId: 
+    HintOfConditionId: COND_P06_04
+    Lines:
+    - SpeakerId: 6
+      Text: "\uD504\uB9AC\uB4DC\uB294 \uD63C\uC790 \uC788\uC744 \uB54C\uC870\uCC28
+        \uB204\uAD70\uAC00 \uB300\uC2E0 \uACB0\uC815\uC744 \uB0B4\uB9AC\uACE0 \uC788\uB294
+        \uAC83 \uAC19\uC544."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+      IsProfileClue: 0
+      ProfileClueId: 
+      ProfileCategory: 
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ComboId: COND_P06_05
+    ComboKey: "#5|#6|ANY \uB610\uB294 #6|#7|ANY"
+    ParticipantIds: 050000000600000007000000
+    SituationType: "\uD504\uB85C\uD30C\uC77C \uD575\uC2EC\uBB38\uC7A5"
+    Trigger: "\uC870\uC0AC \uBAA8\uB4DC / \uC0AC\uAC74 \uC9C1\uC804 \uB300\uC0AC
+      / #6\uC774 #5 \uB610\uB294 #7\uACFC \uAC19\uC740 \uCE78, \uB3D9\uC2DC\uC5D0
+      \uB2E4\uB978 \uCE90\uB9AD\uD130\uB3C4 \uAC19\uC740 \uCE78 / \uC0AC\uB9DD \uB300\uCCB4
+      \uAC00\uB2A5"
+    Visibility: 
+    FragmentId: P06_05
+    TriggerDeadIds: 
+    UnlockConditionId: COND_P06_05
+    HintOfConditionId: 
+    Lines:
+    - SpeakerId: 6
+      Text: "\uB204\uAD70\uAC00 \uC4F0\uB7EC\uC9C8 \uC790\uB9AC\uAC00 \uBCF4\uC774\uBA74,
+        \uB098\uB294 \uC790\uAFB8 \uADF8 \uC790\uB9AC\uB97C \uB0B4 \uC774\uB984\uC73C\uB85C
+        \uBC14\uAFD4 \uC77D\uB294\uB2E4."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+      IsProfileClue: 0
+      ProfileClueId: 
+      ProfileCategory: 
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ComboId: HINT_P06_05
+    ComboKey: "#5|#6|ANY \uB610\uB294 #6|#7|ANY"
+    ParticipantIds: 050000000600000007000000
+    SituationType: "\uD504\uB85C\uD30C\uC77C \uC720\uB3C4\uB300\uC0AC"
+    Trigger: "#6\uC774 #5 \uB610\uB294 #7\uACFC \uAC19\uC740 \uCE78, \uB2E4\uB978
+      \uCE90\uB9AD\uD130\uB3C4 \uC874\uC7AC"
+    Visibility: 
+    FragmentId: 
+    TriggerDeadIds: 
+    UnlockConditionId: 
+    HintOfConditionId: COND_P06_05
+    Lines:
+    - SpeakerId: 6
+      Text: "\uD504\uB9AC\uB4DC\uAC00 \uC704\uD5D8\uD55C \uC0AC\uB78C\uACFC \uAC19\uC740
+        \uCE78\uC5D0 \uC788\uC73C\uBA74, \uB204\uAC00 \uC704\uD5D8\uD55C\uC9C0\uBCF4\uB2E4
+        \uB204\uAC00 \uB300\uC2E0 \uC124\uC9C0\uAC00 \uC911\uC694\uD574\uC838."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+      IsProfileClue: 0
+      ProfileClueId: 
+      ProfileCategory: 
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ComboId: COND_P07_01
+    ComboKey: '#3|#7'
+    ParticipantIds: 0300000007000000
+    SituationType: "\uD504\uB85C\uD30C\uC77C \uD575\uC2EC\uBB38\uC7A5"
+    Trigger: "\uC870\uC0AC \uBAA8\uB4DC / \uC0AC\uAC74 \uACB0\uACFC / #7\uC774 \uC774\uB3D9\uD558\uBA70
+      \uC9C1\uC804 \uCE78\uC5D0\uC11C \uC0AC\uB9DD \uBC1C\uC0DD / \uC774\uB3D9 \uD6C4
+      #7\uC774 #3 \uD63C\uC790 \uC788\uB294 \uCE78\uC5D0 \uB3C4\uCC29"
+    Visibility: 
+    FragmentId: P07_01
+    TriggerDeadIds: 
+    UnlockConditionId: COND_P07_01
     HintOfConditionId: 
     Lines:
     - SpeakerId: 7
-      Text: "\u2026\uB610 \uB0A8\uACBC\uC5B4. \uC774\uBC88\uC5D0\uB3C4 \uB0B4\uAC00
-        \uBA3C\uC800 \uC6C0\uC9C1\uC600\uAE30 \uB54C\uBB38\uC5D0."
+      Text: "\uB0B4\uAC00 \uC9C0\uB098\uC628 \uC790\uB9AC\uC5D0 \uB0A8\uACA8\uC9C4
+        \uC0AC\uB78C\uB4E4\uC740 \uB298 \uB2A6\uAC8C \uC18C\uB9AC\uB97C \uB0B8\uB2E4."
       RevealCharacterId: -1
       RevealCharacterName: 
       IsProfileClue: 0
       ProfileClueId: 
       ProfileCategory: 
-    - SpeakerId: 1
-      Text: "\uC0C8\uD134 \uD0D3\uB9CC\uC740 \uC544\uB2C8\uC5D0\uC694. \uD558\uC9C0\uB9CC
-        \uC0C8\uD134\uC774 \uADF8 \uB9D0\uC744 \uBBFF\uC9C0 \uC54A\uC744 \uAC83\uB3C4
-        \uC54C\uC544\uC694."
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ComboId: HINT_P07_01
+    ComboKey: '#3|#7'
+    ParticipantIds: 0300000007000000
+    SituationType: "\uD504\uB85C\uD30C\uC77C \uC720\uB3C4\uB300\uC0AC"
+    Trigger: "#7\uACFC #3\uC774 \uAC19\uC740 \uCE78, \uC9C1\uC804 \uC774\uB3D9\uC5D0\uC11C
+      \uC0AC\uB9DD \uC5C6\uC74C"
+    Visibility: 
+    FragmentId: 
+    TriggerDeadIds: 
+    UnlockConditionId: 
+    HintOfConditionId: COND_P07_01
+    Lines:
+    - SpeakerId: 7
+      Text: "\uC0C8\uD134\uC740 \uBB34\uAC70\uC6B4 \uC77C\uC744 \uB370\uC6B0\uC2A4\uC5D0\uAC8C\uB77C\uBA74
+        \uACE0\uD574\uCC98\uB7FC \uD138\uC5B4\uB193\uC744 \uC218 \uC788\uC744\uC9C0\uB3C4
+        \uBAB0\uB77C."
       RevealCharacterId: -1
       RevealCharacterName: 
       IsProfileClue: 0
       ProfileClueId: 
       ProfileCategory: 
-    - SpeakerId: 2
-      Text: "\uC9C0\uAE08 \uD544\uC694\uD55C \uAC74 \uC774\uC720\uB97C \uCC3E\uB294
-        \uAC70\uC57C. \uC5EC\uAE30\uC11C \uBA48\uCD94\uBA74 \uC0C1\uD669\uC774 \uB354
-        \uB098\uBE60\uC9C8 \uC218 \uC788\uC5B4."
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ComboId: COND_P07_02
+    ComboKey: '#2|#7'
+    ParticipantIds: 0200000007000000
+    SituationType: "\uD504\uB85C\uD30C\uC77C \uD575\uC2EC\uBB38\uC7A5"
+    Trigger: "\uC870\uC0AC \uBAA8\uB4DC / \uC120\uD0DD \uC870\uC0AC \uAD6C\uC5ED
+      / #7\uACFC #2\uAC00 \uAC19\uC740 \uCE78 / \uD574\uB2F9 \uD134 \uC0AC\uB9DD
+      \uC5C6\uC74C"
+    Visibility: 
+    FragmentId: P07_02
+    TriggerDeadIds: 
+    UnlockConditionId: COND_P07_02
+    HintOfConditionId: 
+    Lines:
+    - SpeakerId: 7
+      Text: "\uB05D\uC744 \uD5A5\uD574 \uB2EC\uB9AC\uB294 \uC0AC\uB78C\uB4E4\uC740
+        \uAE38\uAC00\uC5D0 \uB5A8\uC5B4\uC9C4 \uC774\uB984\uC744 \uC798 \uBCF4\uC9C0
+        \uBABB\uD574."
       RevealCharacterId: -1
       RevealCharacterName: 
       IsProfileClue: 0
       ProfileClueId: 
       ProfileCategory: 
-    - SpeakerId: 5
-      Text: "\uC774\uC804 \uC790\uB9AC\uC5D0\uB3C4 \uB204\uAC00 \uC788\uC5C8\uAD6C\uB098\u2026
-        \uC6C0\uC9C1\uC778 \uB4A4\uC758 \uB9DB\uC740 \uB298 \uB2A6\uAC8C \uC62C\uB77C\uC640."
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ComboId: HINT_P07_02
+    ComboKey: '#2|#7'
+    ParticipantIds: 0200000007000000
+    SituationType: "\uD504\uB85C\uD30C\uC77C \uC720\uB3C4\uB300\uC0AC"
+    Trigger: "#2\uC640 #7\uC774 \uAC19\uC740 \uCE78"
+    Visibility: 
+    FragmentId: 
+    TriggerDeadIds: 
+    UnlockConditionId: 
+    HintOfConditionId: COND_P07_02
+    Lines:
+    - SpeakerId: 7
+      Text: "\uBA54\uC774\uC640 \uC0C8\uD134\uC744 \uAC19\uC740 \uC790\uB9AC\uC5D0
+        \uB450\uBA74, \uAC19\uC740 \uBAA9\uC801\uC9C0\uBCF4\uB2E4 \uB2E4\uB978 \uAE38\uC774
+        \uBA3C\uC800 \uBCF4\uC77C \uAC70\uC57C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+      IsProfileClue: 0
+      ProfileClueId: 
+      ProfileCategory: 
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ComboId: COND_P07_03
+    ComboKey: '#6|#7'
+    ParticipantIds: 0600000007000000
+    SituationType: "\uD504\uB85C\uD30C\uC77C \uD575\uC2EC\uBB38\uC7A5"
+    Trigger: "\uC870\uC0AC \uBAA8\uB4DC / \uC120\uD0DD \uC870\uC0AC \uAD6C\uC5ED
+      / #7\uACFC #6\uC774 \uAC19\uC740 \uCE78 / \uD574\uB2F9 \uD134 \uC0AC\uB9DD
+      \uC5C6\uC74C"
+    Visibility: 
+    FragmentId: P07_03
+    TriggerDeadIds: 
+    UnlockConditionId: COND_P07_03
+    HintOfConditionId: 
+    Lines:
+    - SpeakerId: 7
+      Text: "\uB300\uC2E0\uD558\uACA0\uB2E4\uB294 \uB9D0\uB3C4 \uACB0\uAD6D \uB204\uAD70\uAC00\uC758
+        \uBAAB\uC744 \uAC00\uC838\uAC00\uB294 \uB9D0\uC774\uC57C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+      IsProfileClue: 0
+      ProfileClueId: 
+      ProfileCategory: 
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ComboId: HINT_P07_03
+    ComboKey: '#6|#7'
+    ParticipantIds: 0600000007000000
+    SituationType: "\uD504\uB85C\uD30C\uC77C \uC720\uB3C4\uB300\uC0AC"
+    Trigger: "#6\uACFC #7\uC774 \uAC19\uC740 \uCE78"
+    Visibility: 
+    FragmentId: 
+    TriggerDeadIds: 
+    UnlockConditionId: 
+    HintOfConditionId: COND_P07_03
+    Lines:
+    - SpeakerId: 7
+      Text: "\uD504\uB9AC\uB4DC\uC758 \uC88B\uC740 \uC758\uB3C4\uB294 \uC0C8\uD134\uC5D0\uAC8C
+        \uAC00\uC7A5 \uC704\uD5D8\uD55C \uC9C8\uBB38\uC744 \uB9CC\uB4E4 \uAC70\uC57C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+      IsProfileClue: 0
+      ProfileClueId: 
+      ProfileCategory: 
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ComboId: COND_P07_04
+    ComboKey: '#7'
+    ParticipantIds: 07000000
+    SituationType: "\uD504\uB85C\uD30C\uC77C \uD575\uC2EC\uBB38\uC7A5"
+    Trigger: "\uC870\uC0AC \uBAA8\uB4DC / \uC120\uD0DD \uC870\uC0AC \uAD6C\uC5ED
+      / #7 \uB2E8\uB3C5 / \uC774\uBC88 \uB8E8\uD504\uC5D0\uC11C #7\uC774 \uD55C \uBC88
+      \uC774\uC0C1 \uC774\uB3D9"
+    Visibility: 
+    FragmentId: P07_04
+    TriggerDeadIds: 
+    UnlockConditionId: COND_P07_04
+    HintOfConditionId: 
+    Lines:
+    - SpeakerId: 7
+      Text: "\uBA48\uCDB0 \uC788\uC73C\uBA74, \uB4A4\uC5D0 \uB0A8\uC740 \uC5BC\uAD74\uB4E4\uC774
+        \uB354 \uB610\uB837\uD574\uC838."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+      IsProfileClue: 0
+      ProfileClueId: 
+      ProfileCategory: 
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ComboId: HINT_P07_04
+    ComboKey: '#7'
+    ParticipantIds: 07000000
+    SituationType: "\uD504\uB85C\uD30C\uC77C \uC720\uB3C4\uB300\uC0AC"
+    Trigger: "#7\uC774 \uC774\uB3D9\uD55C \uB4A4 \uD63C\uC790 \uC788\uC74C"
+    Visibility: 
+    FragmentId: 
+    TriggerDeadIds: 
+    UnlockConditionId: 
+    HintOfConditionId: COND_P07_04
+    Lines:
+    - SpeakerId: 7
+      Text: "\uC0C8\uD134\uC740 \uD63C\uC790 \uC788\uC744 \uB54C\uB3C4 \uC5B4\uB518\uAC00\uB97C
+        \uB5A0\uB098\uC628 \uC0AC\uB78C\uCC98\uB7FC \uBCF4\uC5EC."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+      IsProfileClue: 0
+      ProfileClueId: 
+      ProfileCategory: 
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ComboId: COND_P07_05
+    ComboKey: "#1|#7 \uB610\uB294 #5|#7"
+    ParticipantIds: 0100000007000000
+    SituationType: "\uD504\uB85C\uD30C\uC77C \uD575\uC2EC\uBB38\uC7A5"
+    Trigger: "\uC870\uC0AC \uBAA8\uB4DC / \uC120\uD0DD \uC870\uC0AC \uAD6C\uC5ED
+      / #7\uC774 #1 \uB610\uB294 #5\uC640 \uAC19\uC740 \uCE78 / \uD574\uB2F9 \uD134
+      \uC0AC\uB9DD \uC5C6\uC74C"
+    Visibility: 
+    FragmentId: P07_05
+    TriggerDeadIds: 
+    UnlockConditionId: COND_P07_05
+    HintOfConditionId: 
+    Lines:
+    - SpeakerId: 7
+      Text: "\uB09C \uD654\uB09C \uAC8C \uC544\uB2C8\uC57C. \uB2E4\uB9CC \uC78A\uD78C
+        \uCABD\uC758 \uC5BC\uAD74\uC744 \uB108\uBB34 \uB9CE\uC774 \uBD24\uC744 \uBFD0\uC774\uC57C."
+      RevealCharacterId: -1
+      RevealCharacterName: 
+      IsProfileClue: 0
+      ProfileClueId: 
+      ProfileCategory: 
+    Condition:
+      RequiredFragmentId: 
+      MinLoopCount: 0
+  - ComboId: HINT_P07_05
+    ComboKey: "#1|#7 \uB610\uB294 #5|#7"
+    ParticipantIds: 0100000007000000
+    SituationType: "\uD504\uB85C\uD30C\uC77C \uC720\uB3C4\uB300\uC0AC"
+    Trigger: "#7\uC774 #1 \uB610\uB294 #5\uC640 \uAC19\uC740 \uCE78"
+    Visibility: 
+    FragmentId: 
+    TriggerDeadIds: 
+    UnlockConditionId: 
+    HintOfConditionId: COND_P07_05
+    Lines:
+    - SpeakerId: 7
+      Text: "\uC0C8\uD134\uC740 \uBD80\uB4DC\uB7EC\uC6B4 \uB9D0\uC774\uB098 \uAC00\uBCBC\uC6B4
+        \uB18D\uB2F4 \uB4A4\uC5D0 \uC228\uC740 \uC2DC\uC120\uC744 \uD2B9\uD788 \uC624\uB798
+        \uBCF8\uB2E4."
       RevealCharacterId: -1
       RevealCharacterName: 
       IsProfileClue: 0

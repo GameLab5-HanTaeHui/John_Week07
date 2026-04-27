@@ -154,24 +154,29 @@ public class TitleBookAnimator : MonoBehaviour
             return;
         }
 
+        // 전체 소요 시간 = 각 엔트리의 delay + duration 중 최대값
+        float maxEndTime = 0f;
         for (int i = 0; i < entries.Length; i++)
         {
             var entry = entries[i];
             if (entry.target == null) continue;
+
+            float endTime = entry.delay + entry.duration;
+            if (endTime > maxEndTime) maxEndTime = endTime;
 
             Vector3 targetRot = new Vector3(
                 entry.target.localEulerAngles.x,
                 entry.target.localEulerAngles.y,
                 entry.rotationZ);
 
-            var tween = entry.target
-                             .DOLocalRotate(targetRot, entry.duration, entry.rotateMode)
-                             .SetDelay(entry.delay)
-                             .SetEase(entry.ease);
-
-            if (i == entries.Length - 1)
-                tween.OnComplete(() => onComplete?.Invoke());
+            entry.target
+                 .DOLocalRotate(targetRot, entry.duration, entry.rotateMode)
+                 .SetDelay(entry.delay)
+                 .SetEase(entry.ease);
         }
+
+        // 모든 트윈이 끝나는 시점에 콜백 호출
+        DOVirtual.DelayedCall(maxEndTime, () => onComplete?.Invoke());
     }
 
     private void PlayEntriesReverse(RotationEntry[] entries, Action onComplete)
@@ -182,30 +187,34 @@ public class TitleBookAnimator : MonoBehaviour
             return;
         }
 
-        int   count     = entries.Length;
+        int count = entries.Length;
         float baseDelay = 0f;
+        float maxEndTime = 0f;
 
         for (int i = count - 1; i >= 0; i--)
         {
             var entry = entries[i];
             if (entry.target == null) continue;
 
-            float delay  = baseDelay;
-            baseDelay   += entry.delay > 0 ? entry.delay : 0.05f;
+            float delay = baseDelay;
+            baseDelay += entry.delay > 0 ? entry.delay : 0.05f;
+
+            float endTime = delay + entry.duration;
+            if (endTime > maxEndTime) maxEndTime = endTime;
 
             Vector3 originRot = new Vector3(
                 entry.target.localEulerAngles.x,
                 entry.target.localEulerAngles.y,
                 entry.rotationBackZ);
 
-            var tween = entry.target
-                             .DOLocalRotate(originRot, entry.duration, entry.rotateMode)
-                             .SetDelay(delay)
-                             .SetEase(entry.ease);
-
-            if (i == 0)
-                tween.OnComplete(() => onComplete?.Invoke());
+            entry.target
+                 .DOLocalRotate(originRot, entry.duration, entry.rotateMode)
+                 .SetDelay(delay)
+                 .SetEase(entry.ease);
         }
+
+        // 모든 트윈이 끝나는 시점에 콜백 호출
+        DOVirtual.DelayedCall(maxEndTime, () => onComplete?.Invoke());
     }
 
 #if UNITY_EDITOR

@@ -1,58 +1,53 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+using DG.Tweening;
 using TMPro;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 namespace HTH.Campaign
 {
     /// <summary>
     /// 개별 캐릭터의 프로파일 추리 UI입니다.
     ///
-    /// ─── 이 스크립트의 역할 ──────────────────────────────────────────────
-    ///   특정 캐릭터의 4개 프로파일 항목을 표시하고,
-    ///   플레이어가 각 항목의 선택지를 골라 제출하면 정답을 판정합니다.
-    ///   결과에 따라 컨셉 카드와 시점 완결문을 표시하고 해금 처리합니다.
+    /// ─── 핵심 구조 ───────────────────────────────────────────────────────
+    ///   카드 10개 + 슬롯 5개를 씬에 미리 배치합니다.
+    ///   Show() 시 수집된 조각 데이터만 주입합니다.
     ///
-    /// ─── 열리는 조건 ─────────────────────────────────────────────────────
-    ///   CharacterRecordBook의 "추리하기" 버튼 클릭 (기록장에서 직접)
-    ///   또는 ProfileInquiryAllUI에서 캐릭터 선택 시
-    ///   → Show(characterId) 호출
-    ///   → FragmentCollector.GetFragmentCount(characterId) >= RequiredFragmentCount 확인
-    ///   → 조건 충족 시 패널 활성화
-    ///   → 조건 미충족 시 _insufficientFragmentText로 피드백 표시
+    /// ─── 카드 데이터 출처 ────────────────────────────────────────────────
+    ///   FragmentCollector.HasFragment("P01_01") 로 수집 여부 확인
+    ///   → ProfileClueDataSO.GetCluesByCharacter(id) 로 진실/거짓 텍스트 조회
+    ///   → 수집된 것만 카드에 주입 (미수집 카드는 비활성화)
     ///
-    /// ─── 동작 흐름 ───────────────────────────────────────────────────────
-    ///   Show(characterId) 호출
-    ///   → 대화 조각 수 체크
-    ///       부족 → "대화 조각이 부족합니다. (1/3)" 텍스트 2초 표시 후 자동 숨김
-    ///       충족 → 패널 활성화
-    ///   → 캐릭터 정보 표시 (#번호, 이름, 조각 수)
-    ///   → ProfileItemView 프리팹을 동적 생성 (각 프로파일 항목)
-    ///   → 각 ProfileItemView에 질문과 선택지 버튼 설정
-    ///   → 모든 항목이 선택되면 제출 버튼 활성화
-    ///   → 제출 버튼 클릭 → 정답 판정
-    ///   → 결과 패널 표시 (컨셉 카드, 시점 완결문)
-    ///   → FragmentCollector에 해금 기록 요청
-    ///   → 결과 닫기 버튼 클릭 → 패널 닫힘
+    ///   진실(CLUE) 카드 5개: clue.ClueText  → IsClue = true
+    ///   거짓(HINT) 카드 5개: clue.HintText  → IsClue = false
+    ///   10개 카드 랜덤 섞어서 배치
     ///
-    /// ─── 씬 배치 ─────────────────────────────────────────────────────────
-    ///   _CampaignSystem 하위 GameObject에 컴포넌트로 추가합니다.
-    ///   Canvas/ProfileInquiryPanel을 Inspector에서 Panel 필드에 연결합니다.
+    /// ─── 정답 판정 ───────────────────────────────────────────────────────
+    ///   슬롯 5개 모두 채워지면 제출 버튼 활성화
+    ///   각 슬롯의 IsCorrect (CurrentCard.IsClue == true) 가 전부 true 면 정답
+    ///   오답 → 검은 화면 + 소설체 문구 → 패널 닫고 인게임 복귀
+    ///   정답 → 패널 닫고 에필로그 다이얼로그 재생
     ///
     /// ─── Inspector 연결 ──────────────────────────────────────────────────
-    ///   Profile Data               → ProfileDataSO 에셋
-    ///   Fragment Collector         → _CampaignSystem/FragmentCollector
-    ///   Character Record Book      → _CampaignSystem/CharacterRecordBook
-    ///   Panel                      → Canvas/ProfileInquiryPanel
-    ///   Profile Item Container     → ProfileInquiryPanel 하위 빈 GameObject
-    ///   Profile Item View Prefab   → ProfileItemView.prefab
-    ///   Submit Button              → 제출 Button
-    ///   Close Button               → 닫기 Button
-    ///   Result Panel               → 결과 패널 (기본 비활성)
-    ///   Result Close Button        → 결과 패널 닫기 Button
-    ///   Insufficient Fragment Text → 조각 부족 피드백 TMP_Text (기본 비활성)
-    ///   Feedback Duration          → 피드백 표시 시간(초, 기본값 2)
+    ///   Profile Data           → ProfileDataSO 에셋
+    ///   Profile Clue Data      → ProfileClueDataSO 에셋
+    ///   Fragment Collector     → FragmentCollector
+    ///   Reward Save Data       → RewardSaveData 에셋
+    ///   Panel                  → 전체 패널 GameObject
+    ///   Character Name Text    → 캐릭터 이름 TMP
+    ///   Cards[10]              → 씬에 배치된 카드 10개
+    ///   Slots[5]               → 씬에 배치된 슬롯 5개 (Step 0~4)
+    ///   Submit Button          → 제출 버튼
+    ///   Close Button           → 닫기 버튼
+    ///   Wrong Answer Panel     → 오답 검은 화면 패널 (CanvasGroup 필요)
+    ///   Wrong Answer Text      → 소설체 문구 TMP
+    ///   Wrong Answer Lines     → 문구 목록
+    ///   Fade Duration          → 페이드 시간 (초)
+    ///   Display Time           → 문구 표시 시간 (초)
+    ///   Epilogue Player        → 에필로그 DialoguePlayer
+    ///   Select Panel           → ProfileInquirySelectPanel (닫기용)
     /// </summary>
     [DisallowMultipleComponent]
     public class ProfileInquiryUI : MonoBehaviour
@@ -60,88 +55,97 @@ namespace HTH.Campaign
         // ── Inspector ────────────────────────────────────────────────────
 
         [Header("데이터")]
-        [Tooltip("캐릭터별 프로파일 항목, 선택지, 정답 데이터입니다.\n" +
-                 "Project → Create → HTH → Campaign → ProfileData로 생성합니다.")]
+        [Tooltip("캐릭터 프로파일 데이터입니다.")]
         [SerializeField] private ProfileDataSO _profileData;
 
-        [Tooltip("대화 조각 수집 관리 컴포넌트입니다.\n" +
-                 "조각 수 체크와 보상 해금에 사용됩니다.")]
+        [Tooltip("진실(CLUE)/거짓(HINT) 조각 텍스트 데이터입니다.")]
+        [SerializeField] private ProfileClueDataSO _profileClueData;
+
+        [Tooltip("대화 조각 수집 관리 컴포넌트입니다.")]
         [SerializeField] private FragmentCollector _fragmentCollector;
 
-        [Tooltip("인물 기록장 컴포넌트입니다.\n" +
-                 "수집된 캐릭터 이름을 가져와 표시할 때 사용됩니다.")]
-        [SerializeField] private CharacterRecordBook _characterRecordBook;
+        [Tooltip("보상 해금 기록 에셋입니다.")]
+        [SerializeField] private RewardSaveData _rewardSaveData;
 
         [Header("UI 루트")]
-        [Tooltip("프로파일 추리 전체 패널입니다.\nCanvas/ProfileInquiryPanel을 연결합니다.")]
+        [Tooltip("전체 패널 GameObject입니다. (기본 비활성)")]
         [SerializeField] private GameObject _panel;
 
         [Header("캐릭터 정보")]
-        [Tooltip("'#1', '#2' 등 캐릭터 번호를 표시합니다.")]
-        [SerializeField] private TMP_Text _characterIdText;
-
-        [Tooltip("캐릭터 이름을 표시합니다. 미수집 시 '???'로 표시됩니다.")]
+        [Tooltip("캐릭터 이름을 표시하는 TMP입니다.")]
         [SerializeField] private TMP_Text _characterNameText;
 
-        [Tooltip("'대화 조각 3/3' 형식으로 수집 현황을 표시합니다.")]
-        [SerializeField] private TMP_Text _fragmentCountText;
+        [Header("카드 (씬에 미리 배치, 총 10개)")]
+        [Tooltip("진실 5개 + 거짓 5개 = 총 10개 카드를 연결합니다.\n" +
+                 "Show() 시 수집된 조각 텍스트가 주입되고 랜덤 배치됩니다.")]
+        [SerializeField] private ProfileAnswerCard[] _cards = new ProfileAnswerCard[10];
 
-        [Header("프로파일 항목")]
-        [Tooltip("ProfileItemView 프리팹이 생성될 부모 Transform입니다.\n" +
-                 "Vertical Layout Group 컴포넌트를 추가하면 자동으로 정렬됩니다.")]
-        [SerializeField] private Transform _profileItemContainer;
-
-        [Tooltip("프로파일 항목 1개의 UI 프리팹입니다.\n" +
-                 "ProfileItemView.prefab을 연결합니다.")]
-        [SerializeField] private ProfileItemView _profileItemViewPrefab;
+        [Header("슬롯 (씬에 미리 배치, 총 5개)")]
+        [Tooltip("Slot_0~Slot_4 순서로 5개 연결합니다.\n" +
+                 "각 슬롯의 Inspector에서 Step Index를 0~4로 설정하세요.")]
+        [SerializeField] private ProfileAnswerSlot[] _slots = new ProfileAnswerSlot[5];
 
         [Header("버튼")]
-        [Tooltip("모든 항목 선택 완료 시 활성화됩니다. 클릭 시 정답 판정이 시작됩니다.")]
+        [Tooltip("모든 슬롯이 채워지면 활성화됩니다.")]
         [SerializeField] private Button _submitButton;
 
-        [Tooltip("패널을 닫습니다. 선택을 저장하지 않고 닫힙니다.")]
+        [Tooltip("추리를 포기하고 패널을 닫습니다.")]
         [SerializeField] private Button _closeButton;
 
-        [Header("결과 패널")]
-        [Tooltip("제출 후 결과를 표시하는 패널입니다. 기본적으로 비활성화되어 있습니다.")]
-        [SerializeField] private GameObject _resultPanel;
+        [Header("오답 처리")]
+        [Tooltip("오답 시 표시할 검은 화면 패널입니다. CanvasGroup 컴포넌트 필요.")]
+        [SerializeField] private GameObject _wrongAnswerPanel;
 
-        [Tooltip("'3/4 정답' 또는 '전부 정답!' 형식으로 결과를 표시합니다.")]
-        [SerializeField] private TMP_Text _resultText;
+        [Tooltip("소설체 오답 문구 TMP입니다.")]
+        [SerializeField] private TMP_Text _wrongAnswerText;
 
-        [Tooltip("컨셉 카드 내용을 표시하는 패널입니다. 일부 정답 이상 시 활성화됩니다.")]
-        [SerializeField] private GameObject _conceptCardPanel;
+        [Tooltip("오답 시 랜덤으로 표시될 소설체 문구 목록입니다.")]
+        [SerializeField]
+        private List<string> _wrongAnswerLines = new()
+        {
+            "이건… 내가 원하던 모습이 아니야.",
+            "아직 보이지 않는 것들이 있어. 더 들어야 해.",
+            "틀렸어. 이 사람을 나는 아직 모르는 거야.",
+            "뭔가 어긋나 있어. 다시 처음부터 생각해야 해.",
+            "나는 그들의 말을 듣고 있었지만, 진심은 다른 곳에 있었어."
+        };
 
-        [Tooltip("컨셉 카드 내용(캐치프레이즈, 배경, 성격)을 표시합니다.")]
-        [SerializeField] private TMP_Text _conceptCardText;
+        [Tooltip("정답 시 표시될 소설체 문구입니다.")]
+        [SerializeField]
+        [TextArea(2, 4)]
+        private string _correctAnswerLine =
+            "이제야 보인다.\n이것이 그 사람의 진짜 모습이었다.";
 
-        [Tooltip("시점 완결문을 표시하는 패널입니다. 전부 정답 시에만 활성화됩니다.")]
-        [SerializeField] private GameObject _epiloguePanel;
+        [Tooltip("검은 화면 페이드 인/아웃 시간 (초)")]
+        [SerializeField] private float _wrongAnswerFadeDuration = 0.5f;
 
-        [Tooltip("캐릭터의 시점 독백 텍스트를 표시합니다.")]
-        [SerializeField] private TMP_Text _epilogueText;
+        [Tooltip("오답 문구 표시 시간 (초)")]
+        [SerializeField] private float _wrongAnswerDisplayTime = 3f;
 
-        [Tooltip("결과 패널을 닫고 프로파일 추리 패널 전체를 닫습니다.")]
-        [SerializeField] private Button _resultCloseButton;
+        [Tooltip("정답 문구 표시 후 에필로그 시작까지 대기 시간 (초)")]
+        [SerializeField] private float _correctAnswerDisplayTime = 2.5f;
 
-        [Header("조각 부족 피드백")]
-        [Tooltip("대화 조각이 부족할 때 표시할 TMP_Text입니다.\n" +
-                 "ProfileInquiryPanel 하위에 배치하고 기본 비활성화 상태로 둡니다.\n" +
-                 "예: '대화 조각이 부족합니다. (1/3)'\n" +
-                 "패널이 닫힌 상태에서도 표시되므로 Canvas 직속에 배치해도 됩니다.")]
-        [SerializeField] private TMP_Text _insufficientFragmentText;
+        [Header("에필로그")]
+        [Tooltip("정답 시 에필로그를 재생할 DialoguePlayer입니다.")]
+        [SerializeField] private DialoguePlayer _epilogueDialoguePlayer;
 
-        [Tooltip("조각 부족 피드백 텍스트가 표시되는 시간(초)입니다.")]
-        [SerializeField] private float _feedbackDuration = 2f;
+        [Header("연결")]
+        [Tooltip("오답/닫기 시 함께 닫을 ProfileInquirySelectPanel입니다.")]
+        [SerializeField] private ProfileInquirySelectPanel _selectPanel;
+
+        [Header("씬 전환")]
+        [Tooltip("에필로그 완료 후 이동할 씬 이름입니다.")]
+        [SerializeField] private string _lobbySceneName = "LobbyScene";
+
+        [Tooltip("알림 표시 후 클릭 차단 시간 (초)")]
+        [SerializeField] private float _noticeLockDuration = 2f;
 
         // ── 내부 상태 ─────────────────────────────────────────────────────
 
         private CharacterProfileData _currentProfile;
         private int _currentCharacterId;
-        private List<ProfileItemView> _itemViews = new();
-        private Coroutine _feedbackCoroutine;
+        private float _currentDisplayTime;
 
-        /// <summary>현재 패널이 열려있는지 여부입니다.</summary>
         public bool IsOpen { get; private set; }
 
         // ── Unity ────────────────────────────────────────────────────────
@@ -149,143 +153,237 @@ namespace HTH.Campaign
         private void Awake()
         {
             if (_panel != null) _panel.SetActive(false);
-            if (_resultPanel != null) _resultPanel.SetActive(false);
-            if (_insufficientFragmentText != null) _insufficientFragmentText.gameObject.SetActive(false);
+            if (_wrongAnswerPanel != null) _wrongAnswerPanel.SetActive(false);
+
+            // Submit 버튼 초기 비활성 + 숨김
+            // 슬롯 5개가 전부 채워지기 전까지 표시하지 않습니다.
+            if (_submitButton != null)
+            {
+                _submitButton.interactable = false;
+                _submitButton.gameObject.SetActive(false);
+            }
+
+            // 슬롯은 씬에 직접 배치되어 있으므로
+            // _panel 비활성 여부와 무관하게 이벤트 등록이 가능합니다.
+            foreach (var slot in _slots)
+                if (slot != null)
+                    slot.OnSlotChanged += _ => RefreshSubmitButton();
 
             _submitButton?.onClick.AddListener(OnSubmitClicked);
-            _closeButton?.onClick.AddListener(Hide);
-            _resultCloseButton?.onClick.AddListener(HideResult);
+            _closeButton?.onClick.AddListener(OnCloseClicked);
         }
 
         private void OnDestroy()
         {
             _submitButton?.onClick.RemoveListener(OnSubmitClicked);
-            _closeButton?.onClick.RemoveListener(Hide);
-            _resultCloseButton?.onClick.RemoveListener(HideResult);
+            _closeButton?.onClick.RemoveListener(OnCloseClicked);
         }
 
         // ── 공개 API ─────────────────────────────────────────────────────
 
-        /// <summary>
-        /// 특정 캐릭터의 프로파일 추리 패널을 엽니다.
-        /// 대화 조각이 RequiredFragmentCount 미만이면 피드백 텍스트를 표시하고 열리지 않습니다.
-        /// </summary>
+        /// <summary>특정 캐릭터의 프로파일 추리 패널을 엽니다.</summary>
         public void Show(int characterId)
         {
-            if (_profileData == null)
+            if (_profileData == null || _profileClueData == null)
             {
-                Debug.LogError("[ProfileInquiryUI] ProfileDataSO가 연결되지 않았습니다.");
+                Debug.LogError("[ProfileInquiryUI] ProfileDataSO 또는 ProfileClueDataSO 미연결");
                 return;
             }
 
             var profile = _profileData.FindProfile(characterId);
             if (profile == null)
             {
-                Debug.LogWarning($"[ProfileInquiryUI] CharacterId={characterId}의 프로파일 데이터가 없습니다.");
-                return;
-            }
-
-            int fragmentCount = _fragmentCollector != null
-                ? _fragmentCollector.GetFragmentCount(characterId)
-                : 0;
-
-            // 조각이 부족하면 피드백을 표시하고 패널을 열지 않습니다.
-            if (fragmentCount < profile.RequiredFragmentCount)
-            {
-                Debug.Log($"[ProfileInquiryUI] 조각 부족 — {fragmentCount}/{profile.RequiredFragmentCount}");
-                ShowInsufficientFeedback(fragmentCount, profile.RequiredFragmentCount);
+                Debug.LogWarning($"[ProfileInquiryUI] #{characterId} 프로파일 없음");
                 return;
             }
 
             _currentCharacterId = characterId;
             _currentProfile = profile;
 
-            RefreshCharacterInfo(characterId, fragmentCount, profile.RequiredFragmentCount);
-            BuildProfileItems(profile);
-
-            if (_resultPanel != null) _resultPanel.SetActive(false);
             if (_panel != null) _panel.SetActive(true);
             IsOpen = true;
 
-            Debug.Log($"[ProfileInquiryUI] 프로파일 추리 열림 — CharacterId={characterId}");
+            if (_submitButton != null)
+            {
+                _submitButton.interactable = false;
+                _submitButton.gameObject.SetActive(false);
+            }
+
+            SetupCharacterInfo(characterId);
+            ResetAll();
+            SetupSlotsAndCards(characterId, profile);
+
+            // Layout 완료 후 홈 위치 재기록
+            StartCoroutine(RecordHomesNextFrame());
+
+            Debug.Log($"[ProfileInquiryUI] 열림 — #{characterId}");
         }
 
-        /// <summary>프로파일 추리 패널을 닫습니다.</summary>
+        /// <summary>
+        /// Close 버튼 클릭 시 호출됩니다.
+        /// 슬롯에 꽂힌 카드를 제자리로 돌려보내고 Submit을 비활성화합니다.
+        /// 패널은 닫지 않습니다.
+        /// </summary>
+        private void OnCloseClicked()
+        {
+            ResetCards();
+        }
+
+        /// <summary>
+        /// 슬롯에 꽂힌 카드를 모두 제자리로 돌려보내고
+        /// Submit 버튼을 비활성화합니다.
+        /// </summary>
+        public void ResetCards()
+        {
+            foreach (var slot in _slots)
+                slot?.ResetSlot();
+
+            if (_submitButton != null)
+            {
+                _submitButton.interactable = false;
+                _submitButton.gameObject.SetActive(false);
+            }
+        }
+
+        /// <summary>패널을 닫고 모든 카드를 홈으로 즉시 복귀시킵니다.</summary>
         public void Hide()
         {
+            foreach (var card in _cards)
+                card?.ReturnHomeInstant();
+
+            foreach (var slot in _slots)
+                slot?.ResetSlot();
+
+            if (_submitButton != null)
+            {
+                _submitButton.interactable = false;
+                _submitButton.gameObject.SetActive(false);
+            }
+
             if (_panel != null) _panel.SetActive(false);
             IsOpen = false;
-            ClearProfileItems();
         }
 
-        /// <summary>ProfileItemView에서 선택지가 변경됐을 때 호출됩니다.</summary>
-        public void OnItemSelectionChanged()
+        // ── Private — 데이터 주입 ─────────────────────────────────────────
+
+        private void SetupCharacterInfo(int characterId)
         {
-            RefreshSubmitButton();
+            if (_characterNameText == null) return;
+            string name = CharacterRecordPanelManager.Instance?
+                .GetCollectedName(characterId);
+            _characterNameText.text = string.IsNullOrEmpty(name)
+                ? $"#{characterId}" : name;
         }
 
-        // ── Private — UI 구성 ─────────────────────────────────────────────
-
-        private void RefreshCharacterInfo(int characterId, int fragmentCount, int requiredCount)
+        /// <summary>
+        /// 수집된 조각을 기반으로 슬롯 질문과 카드 텍스트를 주입합니다.
+        ///
+        /// 과정:
+        ///   1. ProfileClueDataSO에서 캐릭터의 조각 5개 조회
+        ///   2. 각 조각 수집 여부를 FragmentCollector.HasFragment()로 확인
+        ///   3. 수집된 조각의 ClueText(진실)/HintText(거짓)를 카드에 주입
+        ///   4. 카드 10개를 랜덤 섞어서 배치
+        ///   5. 슬롯에 Step 질문 주입
+        /// </summary>
+        private void SetupSlotsAndCards(int characterId, CharacterProfileData profile)
         {
-            if (_characterIdText != null)
-                _characterIdText.text = $"#{characterId}";
-
-            if (_characterNameText != null)
+            var clues = _profileClueData.GetCluesByCharacter(characterId);
+            if (clues == null || clues.Count == 0)
             {
-                string name = _characterRecordBook?.GetCollectedName(characterId);
-                _characterNameText.text = string.IsNullOrEmpty(name) ? "???" : name;
+                Debug.LogWarning($"[ProfileInquiryUI] #{characterId} ProfileClue 없음");
+                return;
             }
 
-            if (_fragmentCountText != null)
-                _fragmentCountText.text = $"대화 조각 {fragmentCount}/{requiredCount}";
-        }
+            // 카드 데이터 구성: (stepIndex, isClue, text)
+            var cardDatas = new List<(int step, bool isClue, string text)>();
 
-        private void BuildProfileItems(CharacterProfileData profile)
-        {
-            ClearProfileItems();
+            int stepCount = Mathf.Min(
+                Mathf.Min(clues.Count, profile.ProfileItems.Count),
+                _slots.Length);
 
-            if (_profileItemViewPrefab == null || _profileItemContainer == null) return;
-
-            for (int i = 0; i < profile.ProfileItems.Count; i++)
+            for (int i = 0; i < stepCount; i++)
             {
-                var item = profile.ProfileItems[i];
-                if (item == null) continue;
+                var clue = clues[i];
+                bool collected = _fragmentCollector?.HasFragment(clue.ProfileClueId) ?? false;
 
-                bool isLocked = !string.IsNullOrEmpty(item.RequiredFragmentId)
-                    && (_fragmentCollector == null
-                        || !_fragmentCollector.HasFragment(item.RequiredFragmentId));
+                // 수집된 조각만 카드에 추가
+                if (collected)
+                {
+                    cardDatas.Add((i, true, clue.ClueText));   // 진실
+                    cardDatas.Add((i, false, clue.HintText));   // 거짓
+                }
 
-                var view = Instantiate(_profileItemViewPrefab, _profileItemContainer);
-                view.Setup(i, item, isLocked);
-                _itemViews.Add(view);
+                // 슬롯 질문 주입
+                if (i < _slots.Length && _slots[i] != null)
+                    _slots[i].SetupQuestion(profile.ProfileItems[i].Question);
             }
 
-            RefreshSubmitButton();
+            // 카드 데이터 랜덤 섞기
+            for (int i = cardDatas.Count - 1; i > 0; i--)
+            {
+                int j = Random.Range(0, i + 1);
+                (cardDatas[i], cardDatas[j]) = (cardDatas[j], cardDatas[i]);
+            }
+
+            // 카드에 데이터 주입 (카드 수보다 데이터가 적으면 나머지 비활성화)
+            for (int i = 0; i < _cards.Length; i++)
+            {
+                if (_cards[i] == null) continue;
+
+                if (i < cardDatas.Count)
+                {
+                    var (step, isClue, text) = cardDatas[i];
+                    _cards[i].SetupData(step, isClue, text, _slots);
+                    _cards[i].gameObject.SetActive(true);
+                }
+                else
+                {
+                    // 미수집으로 채울 카드 없으면 비활성화
+                    _cards[i].gameObject.SetActive(false);
+                }
+            }
         }
 
-        private void ClearProfileItems()
+        private void ResetAll()
         {
-            foreach (var view in _itemViews)
-                if (view != null) Destroy(view.gameObject);
-            _itemViews.Clear();
+            // 카드 위치는 변경하지 않습니다.
+            // 씬에 배치된 위치가 홈 위치입니다.
+            // RecordHomesNextFrame()에서 홈 위치를 새로 기록합니다.
+            foreach (var card in _cards)
+                card?.gameObject.SetActive(true);
+
+            foreach (var slot in _slots)
+                slot?.ResetSlot();
+        }
+
+        private IEnumerator RecordHomesNextFrame()
+        {
+            yield return null;
+            yield return null;
+
+            foreach (var card in _cards)
+                if (card != null && card.gameObject.activeSelf)
+                    card.RecordHome();
         }
 
         private void RefreshSubmitButton()
         {
             if (_submitButton == null) return;
 
-            bool allSelected = true;
-            foreach (var view in _itemViews)
+            bool allFilled = true;
+            foreach (var slot in _slots)
             {
-                if (view == null || view.IsLocked) continue;
-                if (!view.HasSelection)
+                if (slot == null || !slot.HasCard)
                 {
-                    allSelected = false;
+                    allFilled = false;
                     break;
                 }
             }
-            _submitButton.interactable = allSelected;
+
+            // 5개 전부 채워지면 버튼 표시 + 활성화
+            // 하나라도 비어있으면 버튼 숨김
+            _submitButton.gameObject.SetActive(allFilled);
+            _submitButton.interactable = allFilled;
         }
 
         // ── Private — 제출 및 판정 ────────────────────────────────────────
@@ -294,114 +392,219 @@ namespace HTH.Campaign
         {
             if (_currentProfile == null) return;
 
-            var answers = new int[_currentProfile.ProfileItems.Count];
-            for (int i = 0; i < _itemViews.Count; i++)
+            // 모든 슬롯에 진실 조각이 드롭됐는지 확인
+            bool allCorrect = true;
+            foreach (var slot in _slots)
             {
-                answers[i] = (_itemViews[i] == null || _itemViews[i].IsLocked)
-                    ? -1
-                    : _itemViews[i].SelectedIndex;
-            }
-
-            int correctCount = _currentProfile.CountCorrect(answers);
-            bool allCorrect = _currentProfile.IsAllCorrect(answers);
-            int total = _currentProfile.ProfileItems.Count;
-
-            Debug.Log($"[ProfileInquiryUI] 제출 — {correctCount}/{_currentProfile.ProfileItems.Count} 정답");
-
-            // 프로파일 추리 제출 로그
-            GameLogger.Instance?.LogEvent("profile_submitted",
-                new System.Collections.Generic.Dictionary<string, object>
+                if (slot == null || !slot.IsCorrect)
                 {
-                    { "character_id",   _currentCharacterId },
-                    { "correct_count",  correctCount },
-                    { "total_count",    total },
-                    { "all_correct",    allCorrect },
-                    { "concept_card",   correctCount > 0 },
-                    { "epilogue",       allCorrect },
-                });
-
-            ShowResult(correctCount, allCorrect);
-        }
-
-        private void ShowResult(int correctCount, bool allCorrect)
-        {
-            if (_resultPanel == null) return;
-
-            int total = _currentProfile?.ProfileItems.Count ?? 4;
-
-            if (_resultText != null)
-                _resultText.text = allCorrect
-                    ? $"전부 정답! ({correctCount}/{total})\n모든 보상이 해금됩니다."
-                    : $"{correctCount}/{total} 정답\n일부 보상이 해금됩니다.";
-
-            bool conceptCardUnlocked = correctCount > 0;
-            if (_conceptCardPanel != null)
-            {
-                _conceptCardPanel.SetActive(conceptCardUnlocked);
-                if (conceptCardUnlocked && _conceptCardText != null
-                    && _currentProfile?.ConceptCard != null)
-                {
-                    var card = _currentProfile.ConceptCard;
-                    _conceptCardText.text =
-                        $"[{card.Catchphrase}]\n\n" +
-                        $"{card.NarrativeBackground}\n\n" +
-                        $"{card.Personality}";
+                    allCorrect = false;
+                    break;
                 }
             }
 
-            if (_epiloguePanel != null)
-            {
-                _epiloguePanel.SetActive(allCorrect);
-                if (allCorrect && _epilogueText != null)
-                    _epilogueText.text = _currentProfile?.EpilogueText ?? string.Empty;
-            }
+            Debug.Log($"[ProfileInquiryUI] 제출 — #{_currentCharacterId} 전부정답={allCorrect}");
 
-            _resultPanel.SetActive(true);
-
-            if (_fragmentCollector != null)
-            {
-                if (conceptCardUnlocked)
-                    _fragmentCollector.UnlockConceptCard(_currentCharacterId);
-                if (allCorrect)
-                    _fragmentCollector.UnlockEpilogue(_currentCharacterId);
-            }
+            if (allCorrect)
+                StartCoroutine(HandleCorrectAnswer());
+            else
+                StartCoroutine(HandleWrongAnswer());
         }
 
-        private void HideResult()
+        // ── Private — 정답 처리 ───────────────────────────────────────────
+
+        private IEnumerator HandleCorrectAnswer()
         {
-            if (_resultPanel != null) _resultPanel.SetActive(false);
+            // 보상 해금
+            string charName = CharacterRecordPanelManager.Instance?
+                .GetCollectedName(_currentCharacterId);
+
+            _fragmentCollector?.UnlockConceptCard(_currentCharacterId);
+            _fragmentCollector?.UnlockEpilogue(_currentCharacterId);
+            _rewardSaveData?.SaveConceptCardUnlock(_currentCharacterId, charName);
+            _rewardSaveData?.SaveEpilogueUnlock(_currentCharacterId, charName);
+
+            // Submit 버튼 비활성화 (중복 클릭 방지)
+            if (_submitButton != null)
+            {
+                _submitButton.interactable = false;
+                _submitButton.gameObject.SetActive(false);
+            }
+
+            // 검은 화면 FadeIn + 정답 문구 표시
+            // FadeOut은 하지 않음 — 에필로그 후 알림까지 검은 화면 유지
+            yield return StartCoroutine(FadeInResultPanel(_correctAnswerLine,
+                                                          _correctAnswerDisplayTime));
+
+            // 패널 닫기
             Hide();
+            _selectPanel?.Hide();
+
+            // 첫 해금 여부 확인 (에필로그 수 = 1이면 첫 번째)
+            bool isFirstUnlock = _rewardSaveData != null
+                && _rewardSaveData.GetUnlockedEpilogueCount() == 1;
+
+            // 에필로그 다이얼로그 재생 → 완료 후 알림/로비 이동
+            StartCoroutine(PlayEpilogueAndNotify(isFirstUnlock));
         }
 
-        // ── Private — 조각 부족 피드백 ───────────────────────────────────
+        private IEnumerator PlayEpilogueAndNotify(bool isFirstUnlock)
+        {
+            if (_epilogueDialoguePlayer == null) yield break;
+            if (_currentProfile?.EpilogueLines == null
+                || _currentProfile.EpilogueLines.Count == 0) yield break;
+
+            var lines = new List<DialogueLine>();
+            foreach (var text in _currentProfile.EpilogueLines)
+            {
+                if (string.IsNullOrWhiteSpace(text)) continue;
+                lines.Add(new DialogueLine
+                {
+                    SpeakerId = _currentCharacterId,
+                    Text = text.Trim(),
+                    RevealCharacterId = -1,
+                    RevealCharacterName = string.Empty
+                });
+            }
+
+            if (lines.Count == 0) yield break;
+
+            // 에필로그 완료까지 대기
+            bool done = false;
+            _epilogueDialoguePlayer.Play(lines, onComplete: () => done = true);
+            yield return new WaitUntil(() => done);
+
+            // 첫 해금 시 알림 표시 후 로비 이동
+            // 이후 해금 시 바로 로비 이동
+            if (isFirstUnlock)
+                yield return StartCoroutine(ShowUnlockNoticeAndGoLobby());
+            else
+                LoadLobbyScene();
+        }
 
         /// <summary>
-        /// 조각 부족 피드백 텍스트를 일정 시간 표시 후 숨깁니다.
-        /// Show()에서 조각 수가 RequiredFragmentCount 미만일 때 호출됩니다.
-        /// 패널이 열리지 않은 상태에서도 텍스트만 표시됩니다.
+        /// <summary>
+        /// "도감이 열렸습니다" 알림을 표시하고 2초간 클릭을 차단합니다.
+        /// 기존 _wrongAnswerPanel / _wrongAnswerText를 재활용합니다.
+        /// 검은 화면은 FadeInResultPanel()으로 이미 켜진 상태입니다.
+        /// 2초 후 클릭하면 로비 씬으로 이동합니다.
         /// </summary>
-        private void ShowInsufficientFeedback(int current, int required)
+        private IEnumerator ShowUnlockNoticeAndGoLobby()
         {
-            if (_insufficientFragmentText == null) return;
+            // 검은 화면은 이미 떠 있음 — 텍스트만 교체
+            if (_wrongAnswerText != null)
+                _wrongAnswerText.text =
+                    "도감이 열렸습니다.\n" +
+                    "로비에서 해금된 캐릭터의 기록을 확인할 수 있습니다.";
 
-            if (_feedbackCoroutine != null)
+            // CanvasGroup blocksRaycasts 보장
+            if (_wrongAnswerPanel != null)
             {
-                StopCoroutine(_feedbackCoroutine);
-                _feedbackCoroutine = null;
+                var cg = _wrongAnswerPanel.GetComponent<CanvasGroup>();
+                if (cg != null) cg.blocksRaycasts = true;
             }
 
-            _feedbackCoroutine = StartCoroutine(FeedbackCoroutine(current, required));
+            // 2초 클릭 차단
+            yield return new WaitForSeconds(_noticeLockDuration);
+
+            // 클릭 유도 문구 추가
+            if (_wrongAnswerText != null)
+                _wrongAnswerText.text += "\n\n[ 클릭하여 계속 ]";
+
+            // 클릭 대기
+            yield return new WaitUntil(() => Input.GetMouseButtonDown(0));
+
+            // 씬 전환 (검은 화면은 씬 전환으로 자동 정리됨)
+            LoadLobbyScene();
         }
 
-        private IEnumerator FeedbackCoroutine(int current, int required)
+        private void LoadLobbyScene()
         {
-            _insufficientFragmentText.text = $"대화 조각이 부족합니다. ({current}/{required})";
-            _insufficientFragmentText.gameObject.SetActive(true);
+            SceneManager.LoadScene(_lobbySceneName);
+        }
 
-            yield return new WaitForSeconds(_feedbackDuration);
+        // ── Private — 오답 처리 ───────────────────────────────────────────
 
-            _insufficientFragmentText.gameObject.SetActive(false);
-            _feedbackCoroutine = null;
+        private IEnumerator HandleWrongAnswer()
+        {
+            // Submit 버튼 비활성화 (중복 클릭 방지)
+            if (_submitButton != null)
+            {
+                _submitButton.interactable = false;
+                _submitButton.gameObject.SetActive(false);
+            }
+
+            // 오답 문구 랜덤 선택
+            string wrongLine = _wrongAnswerLines.Count > 0
+                ? _wrongAnswerLines[Random.Range(0, _wrongAnswerLines.Count)]
+                : string.Empty;
+
+            // 검은 화면 FadeIn + 문구 표시 + FadeOut (오답 표시 시간 사용)
+            _currentDisplayTime = _wrongAnswerDisplayTime;
+            yield return StartCoroutine(ShowResultPanel(wrongLine));
+
+            // 패널 닫기 → 인게임 복귀
+            Hide();
+            _selectPanel?.Hide();
+        }
+
+        // ── Private — 공통 결과 패널 ─────────────────────────────────────
+
+        /// <summary>
+        /// 검은 화면 FadeIn + 문구 표시 + FadeOut을 모두 처리합니다.
+        /// 오답 처리에 사용합니다.
+        /// </summary>
+        private IEnumerator ShowResultPanel(string message)
+        {
+            yield return StartCoroutine(FadeInResultPanel(message, _currentDisplayTime));
+            yield return StartCoroutine(FadeOutResultPanel());
+        }
+
+        /// <summary>
+        /// 검은 화면 FadeIn + 문구 표시 + 대기만 처리합니다.
+        /// 정답 처리에 사용합니다. (FadeOut은 하지 않아 검은 화면 유지)
+        /// </summary>
+        private IEnumerator FadeInResultPanel(string message, float displayTime)
+        {
+            if (_wrongAnswerPanel == null) yield break;
+
+            _wrongAnswerPanel.SetActive(true);
+            var cg = _wrongAnswerPanel.GetComponent<CanvasGroup>();
+            if (cg == null) cg = _wrongAnswerPanel.AddComponent<CanvasGroup>();
+
+            if (_wrongAnswerText != null)
+                _wrongAnswerText.text = string.Empty;
+
+            // 페이드 인
+            cg.alpha = 0f;
+            cg.blocksRaycasts = true;
+            yield return cg.DOFade(1f, _wrongAnswerFadeDuration)
+                           .SetEase(Ease.OutQuad)
+                           .WaitForCompletion();
+
+            // 문구 표시
+            if (_wrongAnswerText != null)
+                _wrongAnswerText.text = message;
+
+            // 대기
+            yield return new WaitForSeconds(displayTime);
+        }
+
+        /// <summary>
+        /// 검은 화면 FadeOut + 패널 비활성화를 처리합니다.
+        /// </summary>
+        private IEnumerator FadeOutResultPanel()
+        {
+            if (_wrongAnswerPanel == null) yield break;
+
+            var cg = _wrongAnswerPanel.GetComponent<CanvasGroup>();
+            if (cg == null) yield break;
+
+            yield return cg.DOFade(0f, _wrongAnswerFadeDuration)
+                           .SetEase(Ease.InQuad)
+                           .WaitForCompletion();
+
+            _wrongAnswerPanel.SetActive(false);
         }
     }
 }

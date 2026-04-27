@@ -51,11 +51,6 @@ namespace HTH.Campaign
 
         [Tooltip("선택된 상태의 배경색")]
         [SerializeField] private Color _selectedColor = new Color(0.8f, 0.6f, 0.2f, 0.8f);
-
-        [Header("이름 미수집 표시")]
-        [Tooltip("이름이 수집되기 전 표시할 대체 텍스트입니다.\n예: '$%&' 또는 '???'")]
-        [SerializeField] private string _unknownNameText = "$%&";
-
         // ── 내부 상태 ─────────────────────────────────────────────────────
 
         private Button _button;
@@ -96,7 +91,11 @@ namespace HTH.Campaign
                 _iconImage.enabled = icon != null;
             }
 
-            RefreshNameText();
+            // 이름 텍스트 기입
+            if (_nameText != null)
+                _nameText.text = string.IsNullOrEmpty(collectedName) ? "" : collectedName;
+
+
             SetSelected(false);
 
             // _button이 null이면 Awake가 실행 안 된 것
@@ -139,18 +138,12 @@ namespace HTH.Campaign
         public void UpdateName(string name)
         {
             _collectedName = name;
-            RefreshNameText();
+            if (_nameText != null)
+                _nameText.text = string.IsNullOrEmpty(name) ? "" : name;
         }
 
         // ── Private ──────────────────────────────────────────────────────
 
-        private void RefreshNameText()
-        {
-            if (_nameText == null) return;
-            _nameText.text = string.IsNullOrEmpty(_collectedName)
-                ? _unknownNameText
-                : _collectedName;
-        }
 
         private void OnDestroy()
         {

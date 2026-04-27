@@ -26,10 +26,11 @@ using HTH;
 ///   ConfirmMessage  → 확인 패널에 표시할 메시지 텍스트
 ///
 /// ─── 외부 연결 ────────────────────────────────────────────────────────────
-///   MapObjectInputHandler → 클릭 시 BeginHold() 호출
-///   ConfirmPanel          → 공유 확인 패널 (싱글톤)
-///   GameFlowController    → EnterFinalDecision() / CanEnterFinalDecision 체크
-///   TutorialManager       → 입력 권한 체크
+///   MapObjectInputHandler          → 클릭 시 BeginHold() 호출
+///   ConfirmPanel                   → 공유 확인 패널 (싱글톤)
+///   GameFlowController             → EnterFinalDecision() / CanEnterFinalDecision 체크
+///   TutorialManager                → 입력 권한 체크
+///   ProfileInquirySelectPanel      → Phase2 캐릭터 선택 패널
 /// </summary>
 [DisallowMultipleComponent]
 [RequireComponent(typeof(Collider))]
@@ -43,8 +44,8 @@ public class HoldToEnterFinalDecision : MonoBehaviour
     [SerializeField] private string _confirmMessagePhase2 = "인물 추리를 시작하시겠습니까?";
 
     [Header("Phase2 연결")]
-    [Tooltip("Phase2에서 최종 추리 대신 표시할 프로파일 추리 UI")]
-    [SerializeField] private HTH.Campaign.ProfileInquiryAllUI _profileInquiryAllUI;
+    [Tooltip("Phase2에서 캐릭터를 선택하는 패널입니다.")]
+    [SerializeField] private HTH.Campaign.ProfileInquirySelectPanel _profileInquirySelectPanel;
 
     private Vector3 _fullScale;
     private bool _triggered;
@@ -121,13 +122,13 @@ public class HoldToEnterFinalDecision : MonoBehaviour
                     return;
                 }
 
-                // Phase2: 프로파일 추리 UI 표시
+                // Phase2: 캐릭터 선택 패널 표시
                 if (HTH.Campaign.CampaignModeManager.IsPhase2Active)
                 {
-                    if (_profileInquiryAllUI != null)
-                        _profileInquiryAllUI.Show();
+                    if (_profileInquirySelectPanel != null)
+                        _profileInquirySelectPanel.Show();
                     else
-                        Debug.LogWarning("[HoldToEnterFinalDecision] ProfileInquiryAllUI가 연결되지 않았습니다.");
+                        Debug.LogWarning("[HoldToEnterFinalDecision] ProfileInquirySelectPanel이 연결되지 않았습니다.");
                     return;
                 }
 

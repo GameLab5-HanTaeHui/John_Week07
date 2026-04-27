@@ -10,9 +10,11 @@ namespace HTH.Campaign
     ///   Application.persistentDataPath/HTH/campaign_save_{stageId}.json
     ///
     /// ─── 저장 내용 ───────────────────────────────────────────────────────
-    ///   수집된 대화 조각 ID 목록    (FragmentCollector)
-    ///   재생된 ComboId 목록         (DialogueProgressTracker)
-    ///   수집된 캐릭터 이름 목록     (CharacterRecordPanelManager)
+    ///   대화 조각 수집 목록      (FragmentCollector)
+    ///   재생된 ComboId 목록      (DialogueProgressTracker)
+    ///   수집된 캐릭터 이름 목록  (CharacterRecordPanelManager)
+    ///   해금된 컨셉 카드 목록    (RewardSaveData)
+    ///   해금된 시점 완결문 목록  (RewardSaveData)
     /// </summary>
     [Serializable]
     public class CampaignSaveData
@@ -23,11 +25,15 @@ namespace HTH.Campaign
         /// <summary>저장 시각입니다. (ISO 8601 형식)</summary>
         public string savedAt;
 
+        // ── 대화 조각 ─────────────────────────────────────────────────────
+
         /// <summary>
         /// 수집된 FragmentId 목록입니다.
         /// 예: ["P01_01", "P01_02", "P03_05"]
         /// </summary>
         public List<string> collectedFragmentIds = new();
+
+        // ── 대사 기록 ─────────────────────────────────────────────────────
 
         /// <summary>
         /// 이번 씬에서 재생된 ComboId 목록입니다.
@@ -36,16 +42,34 @@ namespace HTH.Campaign
         /// </summary>
         public List<string> playedComboIds = new();
 
-        /// <summary>
-        /// 수집된 캐릭터 이름 목록입니다.
-        /// </summary>
+        // ── 캐릭터 이름 ───────────────────────────────────────────────────
+
+        /// <summary>수집된 캐릭터 이름 목록입니다.</summary>
         public List<CollectedNameEntry> collectedNames = new();
+
+        // ── 보상 해금 ─────────────────────────────────────────────────────
+
+        /// <summary>
+        /// 해금된 컨셉 카드 캐릭터 ID 목록입니다.
+        /// 예: [1, 3, 5]
+        /// </summary>
+        public List<int> unlockedConceptCards = new();
+
+        /// <summary>
+        /// 해금된 시점 완결문 캐릭터 ID 목록입니다.
+        /// 예: [1, 2, 7]
+        /// </summary>
+        public List<int> unlockedEpilogues = new();
+
+        // ── 유틸 ──────────────────────────────────────────────────────────
 
         /// <summary>진행 데이터가 존재하는지 여부입니다.</summary>
         public bool HasProgress =>
             collectedFragmentIds.Count > 0 ||
             playedComboIds.Count > 0 ||
-            collectedNames.Count > 0;
+            collectedNames.Count > 0 ||
+            unlockedConceptCards.Count > 0 ||
+            unlockedEpilogues.Count > 0;
     }
 
     /// <summary>수집된 캐릭터 이름 1개 항목입니다.</summary>

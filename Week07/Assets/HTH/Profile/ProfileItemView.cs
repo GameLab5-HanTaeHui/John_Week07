@@ -34,7 +34,7 @@ namespace HTH.Campaign
 
         private readonly List<Button> _choiceButtons = new();
         private int _itemIndex;
-        private ProfileInquiryUI _parentUI;
+        private System.Action _onSelectionChanged;
 
         /// <summary>현재 선택된 선택지 인덱스입니다. 미선택 시 -1.</summary>
         public int SelectedIndex { get; private set; } = -1;
@@ -54,14 +54,15 @@ namespace HTH.Campaign
         /// <param name="itemIndex">이 항목의 인덱스 (0~3)</param>
         /// <param name="item">프로파일 항목 데이터</param>
         /// <param name="isLocked">필요 조각 미수집 시 잠금</param>
-        public void Setup(int itemIndex, ProfileItem item, bool isLocked)
+        public void Setup(int itemIndex, ProfileItem item, bool isLocked,
+                          System.Action onSelectionChanged = null)
         {
+            _onSelectionChanged = onSelectionChanged;
+
+
             _itemIndex = itemIndex;
             IsLocked = isLocked;
             SelectedIndex = -1;
-
-            // 부모 ProfileInquiryUI 참조
-            _parentUI = GetComponentInParent<ProfileInquiryUI>();
 
             // 질문 텍스트
             if (_questionText != null)
@@ -113,8 +114,8 @@ namespace HTH.Campaign
                 _choiceButtons[i].colors = colors;
             }
 
-            // 부모 UI에 선택 변경 알림
-            _parentUI?.OnItemSelectionChanged();
+            // 선택 변경 콜백 호출
+            _onSelectionChanged?.Invoke();
         }
 
         private void OnDestroy()

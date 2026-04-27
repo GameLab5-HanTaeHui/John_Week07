@@ -30,7 +30,7 @@ namespace HTH.Campaign
     ///     "characters": [
     ///       {
     ///         "characterId": 1,
-    ///         "requiredFragmentCount": 3,
+    ///         "requiredFragmentCount": 5,
     ///         "characterFullName": "엔비",
     ///         "characterRole": "(주인공)",
     ///         "profileItems": [
@@ -48,7 +48,7 @@ namespace HTH.Campaign
     ///           "personality": "성격",
     ///           "gimmickRelevance": "기믹 연관성"
     ///         },
-    ///         "epilogueText": "시점 완결문"
+    ///         "epilogueLines": ["문단1", "문단2", "..."]
     ///       }
     ///     ]
     ///   }
@@ -65,32 +65,27 @@ namespace HTH.Campaign
 
         public override void OnInspectorGUI()
         {
-            // 기본 Inspector 표시
             DrawDefaultInspector();
 
             EditorGUILayout.Space(10);
             EditorGUILayout.LabelField("── StreamingAssets 임포트 ──", EditorStyles.boldLabel);
 
-            // 파일명 입력 필드
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.LabelField("파일명", GUILayout.Width(50));
             _fileNameInput = EditorGUILayout.TextField(_fileNameInput);
             EditorGUILayout.LabelField(".json", GUILayout.Width(40));
             EditorGUILayout.EndHorizontal();
 
-            // 경로 미리보기
             string previewPath = Path.Combine(CampaignFolderPath, $"{_fileNameInput}.json");
             EditorGUILayout.HelpBox($"경로: {previewPath}", MessageType.None);
 
             EditorGUILayout.Space(4);
 
-            // 임포트 버튼
             GUI.enabled = !string.IsNullOrEmpty(_fileNameInput);
             if (GUILayout.Button("Import From StreamingAssets", GUILayout.Height(30)))
                 ImportFromStreamingAssets(_fileNameInput);
             GUI.enabled = true;
 
-            // 폴더 열기 버튼
             if (GUILayout.Button("StreamingAssets/Campaign 폴더 열기", GUILayout.Height(24)))
                 OpenCampaignFolder();
 
@@ -102,31 +97,14 @@ namespace HTH.Campaign
                 MessageType.Warning);
 
             EditorGUILayout.HelpBox(
-                "JSON 형식:\n" +
-                "{\n" +
-                "  \"stageId\": \"Stage_1_Phase2\",\n" +
-                "  \"characters\": [\n" +
-                "    {\n" +
-                "      \"characterId\": 1,\n" +
-                "      \"requiredFragmentCount\": 3,\n" +
-                "      \"characterFullName\": \"엔비\",\n" +
-                "      \"characterRole\": \"(주인공)\",\n" +
-                "      \"profileItems\": [...],\n" +
-                "      \"conceptCard\": {...},\n" +
-                "      \"epilogueText\": \"...\"\n" +
-                "    }\n" +
-                "  ]\n" +
-                "}",
+                "epilogueLines: 문단 단위 배열\n" +
+                "예: [\"나는 늘...\", \"그래서...\"]\n\n" +
+                "epilogueText: 단일 문자열 (하위 호환, 자동 분리)",
                 MessageType.Info);
         }
 
-        /// <summary>
-        /// StreamingAssets/Campaign/{fileName}.json을 읽어
-        /// ProfileDataSO에 데이터를 입력합니다.
-        /// </summary>
         private void ImportFromStreamingAssets(string fileName)
         {
-            // 폴더 없으면 생성
             EnsureCampaignFolderExists();
 
             string path = Path.Combine(CampaignFolderPath, $"{fileName}.json");
@@ -134,10 +112,7 @@ namespace HTH.Campaign
             if (!File.Exists(path))
             {
                 Debug.LogError($"[ProfileDataImporter] 파일 없음 — {path}");
-                EditorUtility.DisplayDialog(
-                    "파일 없음",
-                    $"파일을 찾을 수 없습니다.\n{path}",
-                    "확인");
+                EditorUtility.DisplayDialog("파일 없음", $"파일을 찾을 수 없습니다.\n{path}", "확인");
                 return;
             }
 
@@ -155,10 +130,10 @@ namespace HTH.Campaign
                 var so = (ProfileDataSO)target;
                 var serialized = new SerializedObject(so);
 
-                // stageId 설정
+                // stageId
                 serialized.FindProperty("_stageId").stringValue = data.stageId ?? "";
 
-                // characterProfiles 리스트 초기화
+                // characterProfiles 초기화
                 var profilesProp = serialized.FindProperty("_characterProfiles");
                 profilesProp.ClearArray();
 
@@ -170,7 +145,7 @@ namespace HTH.Campaign
                         profilesProp.InsertArrayElementAtIndex(i);
                         var charProp = profilesProp.GetArrayElementAtIndex(i);
 
-                        // 기본 필드 설정
+                        // ── 기본 필드 ─────────────────────────────────────
                         charProp.FindPropertyRelative("CharacterId").intValue
                             = charData.characterId;
                         charProp.FindPropertyRelative("RequiredFragmentCount").intValue
@@ -179,10 +154,37 @@ namespace HTH.Campaign
                             = charData.characterFullName ?? "";
                         charProp.FindPropertyRelative("CharacterRole").stringValue
                             = charData.characterRole ?? "";
-                        charProp.FindPropertyRelative("EpilogueText").stringValue
-                            = charData.epilogueText ?? "";
 
-                        // ProfileItems 설정
+                        // ── EpilogueLines ─────────────────────────────────
+                        var epilogueProp = charProp.FindPropertyRelative("EpilogueLines");
+                        epilogueProp.ClearArray();
+
+                        if (charData.epilogueLines != null && charData.epilogueLines.Length > 0)
+                        {
+                            // 신규: epilogueLines 배열 사용
+                            for (int j = 0; j < charData.epilogueLines.Length; j++)
+                            {
+                                epilogueProp.InsertArrayElementAtIndex(j);
+                                epilogueProp.GetArrayElementAtIndex(j).stringValue
+                                    = charData.epilogueLines[j] ?? "";
+                            }
+                        }
+                        else if (!string.IsNullOrEmpty(charData.epilogueText))
+                        {
+                            // 하위 호환: epilogueText를 줄바꿈 기준으로 분리
+                            var lines = charData.epilogueText.Split(
+                                new[] { "\n\n", "\r\n\r\n" },
+                                StringSplitOptions.RemoveEmptyEntries);
+
+                            for (int j = 0; j < lines.Length; j++)
+                            {
+                                epilogueProp.InsertArrayElementAtIndex(j);
+                                epilogueProp.GetArrayElementAtIndex(j).stringValue
+                                    = lines[j].Trim();
+                            }
+                        }
+
+                        // ── ProfileItems ──────────────────────────────────
                         var itemsProp = charProp.FindPropertyRelative("ProfileItems");
                         itemsProp.ClearArray();
 
@@ -201,7 +203,7 @@ namespace HTH.Campaign
                                 itemProp.FindPropertyRelative("RequiredFragmentId").stringValue
                                     = itemData.requiredFragmentId ?? "";
 
-                                // Choices 설정
+                                // Choices
                                 var choicesProp = itemProp.FindPropertyRelative("Choices");
                                 choicesProp.ClearArray();
 
@@ -217,7 +219,7 @@ namespace HTH.Campaign
                             }
                         }
 
-                        // ConceptCard 설정
+                        // ── ConceptCard ───────────────────────────────────
                         if (charData.conceptCard != null)
                         {
                             var cardProp = charProp.FindPropertyRelative("ConceptCard");
@@ -239,14 +241,13 @@ namespace HTH.Campaign
                 EditorUtility.SetDirty(so);
                 AssetDatabase.SaveAssets();
 
+                int charCount = data.characters?.Length ?? 0;
                 Debug.Log($"[ProfileDataImporter] 임포트 완료 — " +
-                          $"StageId: {data.stageId}, " +
-                          $"캐릭터 수: {data.characters?.Length ?? 0}, " +
-                          $"파일: {path}");
+                          $"StageId: {data.stageId}, 캐릭터 수: {charCount}");
 
                 EditorUtility.DisplayDialog(
                     "임포트 완료",
-                    $"StageId: {data.stageId}\n캐릭터 수: {data.characters?.Length ?? 0}\n\n" +
+                    $"StageId: {data.stageId}\n캐릭터 수: {charCount}\n\n" +
                     "⚠ CharacterIcon, CardIllustration은\nInspector에서 직접 연결하세요.",
                     "확인");
             }
@@ -257,14 +258,12 @@ namespace HTH.Campaign
             }
         }
 
-        /// <summary>StreamingAssets/Campaign 폴더를 OS 탐색기에서 엽니다.</summary>
         private void OpenCampaignFolder()
         {
             EnsureCampaignFolderExists();
             EditorUtility.RevealInFinder(CampaignFolderPath);
         }
 
-        /// <summary>StreamingAssets/Campaign 폴더가 없으면 생성합니다.</summary>
         private static void EnsureCampaignFolderExists()
         {
             if (!Directory.Exists(CampaignFolderPath))
@@ -281,70 +280,43 @@ namespace HTH.Campaign
     [Serializable]
     internal class ProfileJsonRoot
     {
-        /// <summary>스테이지 ID입니다.</summary>
         public string stageId;
-
-        /// <summary>캐릭터별 프로파일 데이터 배열입니다.</summary>
         public ProfileJsonCharacter[] characters;
     }
 
     [Serializable]
     internal class ProfileJsonCharacter
     {
-        /// <summary>캐릭터 ID입니다. (1~7)</summary>
         public int characterId;
-
-        /// <summary>프로파일 추리 가능 최소 대화 조각 수입니다.</summary>
         public int requiredFragmentCount;
-
-        /// <summary>캐릭터 이름입니다.</summary>
         public string characterFullName;
-
-        /// <summary>캐릭터 역할입니다.</summary>
         public string characterRole;
-
-        /// <summary>프로파일 항목 배열입니다.</summary>
         public ProfileJsonItem[] profileItems;
-
-        /// <summary>컨셉 카드 데이터입니다.</summary>
         public ProfileJsonConceptCard conceptCard;
 
-        /// <summary>시점 완결문입니다.</summary>
+        /// <summary>시점 완결문 문단 배열입니다. (신규)</summary>
+        public string[] epilogueLines;
+
+        /// <summary>시점 완결문 단일 문자열입니다. (하위 호환)</summary>
         public string epilogueText;
     }
 
     [Serializable]
     internal class ProfileJsonItem
     {
-        /// <summary>프로파일 질문입니다.</summary>
         public string question;
-
-        /// <summary>선택지 배열입니다.</summary>
         public string[] choices;
-
-        /// <summary>정답 선택지 인덱스입니다. (0-based)</summary>
         public int correctChoiceIndex;
-
-        /// <summary>추리 가능 조건 FragmentId입니다.</summary>
         public string requiredFragmentId;
     }
 
     [Serializable]
     internal class ProfileJsonConceptCard
     {
-        /// <summary>캐치프레이즈입니다.</summary>
         public string catchphrase;
-
-        /// <summary>외형적 특징입니다.</summary>
         public string appearance;
-
-        /// <summary>서사적 배경입니다.</summary>
         public string narrativeBackground;
-
-        /// <summary>성격 및 행동 원리입니다.</summary>
         public string personality;
-
-        /// <summary>기믹 연관성입니다.</summary>
         public string gimmickRelevance;
     }
 }

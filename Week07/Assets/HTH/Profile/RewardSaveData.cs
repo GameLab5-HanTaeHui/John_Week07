@@ -4,22 +4,20 @@ using UnityEngine;
 namespace HTH.Campaign
 {
     /// <summary>
-    /// 캠페인 보상 해금 기록을 저장/로드하는 클래스입니다.
+    /// 캠페인 보상 해금 기록을 관리하는 ScriptableObject입니다.
+    ///
+    /// ─── 저장 방식 변경 ──────────────────────────────────────────────────
+    ///   PlayerPrefs → CampaignSaveManager JSON 파일로 통합
+    ///   CampaignSaveData.unlockedConceptCards / unlockedEpilogues 사용
     ///
     /// ─── 역할 ────────────────────────────────────────────────────────────
-    ///   컨셉 카드 해금 여부 저장
-    ///   시점 완결문 해금 여부 저장
-    ///   수집된 캐릭터 이름 저장
-    ///   씬 간 데이터 유지 (PlayerPrefs 기반)
+    ///   컨셉 카드 해금 여부 저장/조회
+    ///   시점 완결문 해금 여부 저장/조회
+    ///   수집된 캐릭터 이름 저장/조회
     ///
     /// ─── 사용처 ──────────────────────────────────────────────────────────
-    ///   인게임: FragmentCollector에서 해금 시 Save() 호출
-    ///   로비:   RewardGalleryUI에서 Load() 후 열람
-    ///
-    /// ─── PlayerPrefs 키 규칙 ─────────────────────────────────────────────
-    ///   컨셉 카드: "hth_reward_{stageId}_conceptcard_{characterId}"
-    ///   시점 완결문: "hth_reward_{stageId}_epilogue_{characterId}"
-    ///   캐릭터 이름: "hth_reward_{stageId}_name_{characterId}"
+    ///   인게임: FragmentCollector에서 해금 시 Save 호출
+    ///   로비:   LobbyPage2Controller, LobbyPage1Controller에서 조회
     /// </summary>
     [CreateAssetMenu(fileName = "RewardSaveData",
                      menuName = "HTH/Campaign/RewardSaveData")]
@@ -41,30 +39,26 @@ namespace HTH.Campaign
         /// <summary>컨셉 카드 해금을 저장합니다.</summary>
         public void SaveConceptCardUnlock(int characterId, string characterName = null)
         {
+            EnsureLoaded();
             _unlockedConceptCards.Add(characterId);
 
-            string key = $"hth_reward_{_stageId}_conceptcard_{characterId}";
-            PlayerPrefs.SetInt(key, 1);
-
             if (!string.IsNullOrEmpty(characterName))
-                SaveCharacterName(characterId, characterName);
+                _characterNames[characterId] = characterName;
 
-            PlayerPrefs.Save();
+            Flush();
             Debug.Log($"[RewardSaveData] 컨셉 카드 저장 — #{characterId}");
         }
 
         /// <summary>시점 완결문 해금을 저장합니다.</summary>
         public void SaveEpilogueUnlock(int characterId, string characterName = null)
         {
+            EnsureLoaded();
             _unlockedEpilogues.Add(characterId);
 
-            string key = $"hth_reward_{_stageId}_epilogue_{characterId}";
-            PlayerPrefs.SetInt(key, 1);
-
             if (!string.IsNullOrEmpty(characterName))
-                SaveCharacterName(characterId, characterName);
+                _characterNames[characterId] = characterName;
 
-            PlayerPrefs.Save();
+            Flush();
             Debug.Log($"[RewardSaveData] 시점 완결문 저장 — #{characterId}");
         }
 
@@ -72,12 +66,13 @@ namespace HTH.Campaign
         public void SaveCharacterName(int characterId, string name)
         {
             if (string.IsNullOrEmpty(name)) return;
+            EnsureLoaded();
 
             _characterNames[characterId] = name;
 
-            string key = $"hth_reward_{_stageId}_name_{characterId}";
-            PlayerPrefs.SetString(key, name);
-            PlayerPrefs.Save();
+            // 이름은 CampaignSaveData.collectedNames에 이미 저장됨
+            // 여기서는 캐시만 갱신
+            Flush();
         }
 
         // ── 공개 API — 조회 ──────────────────────────────────────────────
@@ -85,49 +80,62 @@ namespace HTH.Campaign
         /// <summary>컨셉 카드 해금 여부를 반환합니다.</summary>
         public bool IsConceptCardUnlocked(int characterId)
         {
-            if (!_isLoaded) Load();
+            EnsureLoaded();
             return _unlockedConceptCards.Contains(characterId);
         }
 
         /// <summary>시점 완결문 해금 여부를 반환합니다.</summary>
         public bool IsEpilogueUnlocked(int characterId)
         {
-            if (!_isLoaded) Load();
+            EnsureLoaded();
             return _unlockedEpilogues.Contains(characterId);
+        }
+
+        /// <summary>해금된 시점 완결문 수를 반환합니다.</summary>
+        public int GetUnlockedEpilogueCount()
+        {
+            EnsureLoaded();
+            return _unlockedEpilogues.Count;
         }
 
         /// <summary>수집된 캐릭터 이름을 반환합니다. 미수집 시 null.</summary>
         public string GetCharacterName(int characterId)
         {
-            if (!_isLoaded) Load();
+            EnsureLoaded();
             _characterNames.TryGetValue(characterId, out string name);
             return name;
         }
 
         // ── 저장/로드 ─────────────────────────────────────────────────────
 
-        /// <summary>PlayerPrefs에서 해금 기록을 로드합니다.</summary>
+        /// <summary>
+        /// CampaignSaveData에서 보상 기록을 로드합니다.
+        /// CampaignSaveManager.Load() 이후 호출합니다.
+        /// </summary>
         public void Load()
         {
             _unlockedConceptCards.Clear();
             _unlockedEpilogues.Clear();
             _characterNames.Clear();
 
-            // 캐릭터 1~7 기준으로 로드
-            for (int i = 1; i <= 7; i++)
+            var saveData = CampaignSaveManager.Instance?.CurrentSave;
+            if (saveData == null)
             {
-                string conceptKey = $"hth_reward_{_stageId}_conceptcard_{i}";
-                if (PlayerPrefs.GetInt(conceptKey, 0) == 1)
-                    _unlockedConceptCards.Add(i);
+                // CampaignSaveManager가 없으면 직접 로드
+                saveData = CampaignSaveManager.Instance?.Load(_stageId);
+            }
 
-                string epilogueKey = $"hth_reward_{_stageId}_epilogue_{i}";
-                if (PlayerPrefs.GetInt(epilogueKey, 0) == 1)
-                    _unlockedEpilogues.Add(i);
+            if (saveData != null)
+            {
+                foreach (int id in saveData.unlockedConceptCards)
+                    _unlockedConceptCards.Add(id);
 
-                string nameKey = $"hth_reward_{_stageId}_name_{i}";
-                string name = PlayerPrefs.GetString(nameKey, string.Empty);
-                if (!string.IsNullOrEmpty(name))
-                    _characterNames[i] = name;
+                foreach (int id in saveData.unlockedEpilogues)
+                    _unlockedEpilogues.Add(id);
+
+                foreach (var entry in saveData.collectedNames)
+                    if (!string.IsNullOrEmpty(entry.name))
+                        _characterNames[entry.characterId] = entry.name;
             }
 
             _isLoaded = true;
@@ -136,23 +144,19 @@ namespace HTH.Campaign
                       $"시점 완결문 {_unlockedEpilogues.Count}개)");
         }
 
-        /// <summary>특정 스테이지의 모든 보상 기록을 초기화합니다.</summary>
+        /// <summary>
+        /// 보상 기록 초기화 시 호출합니다.
+        /// CampaignSaveManager.Delete()와 함께 사용합니다.
+        /// </summary>
         public void Clear()
         {
-            for (int i = 1; i <= 7; i++)
-            {
-                PlayerPrefs.DeleteKey($"hth_reward_{_stageId}_conceptcard_{i}");
-                PlayerPrefs.DeleteKey($"hth_reward_{_stageId}_epilogue_{i}");
-                PlayerPrefs.DeleteKey($"hth_reward_{_stageId}_name_{i}");
-            }
-
-            PlayerPrefs.Save();
-
             _unlockedConceptCards.Clear();
             _unlockedEpilogues.Clear();
             _characterNames.Clear();
             _isLoaded = false;
 
+            // JSON 파일 삭제는 CampaignSaveManager에서 처리
+            CampaignSaveManager.Instance?.Delete(_stageId);
             Debug.Log($"[RewardSaveData] 보상 기록 초기화 — {_stageId}");
         }
 
@@ -161,6 +165,31 @@ namespace HTH.Campaign
         private void OnEnable()
         {
             _isLoaded = false;
+        }
+
+        // ── Private ──────────────────────────────────────────────────────
+
+        /// <summary>로드되지 않은 경우 자동으로 로드합니다.</summary>
+        private void EnsureLoaded()
+        {
+            if (!_isLoaded) Load();
+        }
+
+        /// <summary>현재 캐시를 CampaignSaveData에 반영하고 저장합니다.</summary>
+        private void Flush()
+        {
+            var saveData = CampaignSaveManager.Instance?.CurrentSave;
+            if (saveData == null) return;
+
+            // 컨셉 카드 동기화
+            saveData.unlockedConceptCards.Clear();
+            saveData.unlockedConceptCards.AddRange(_unlockedConceptCards);
+
+            // 시점 완결문 동기화
+            saveData.unlockedEpilogues.Clear();
+            saveData.unlockedEpilogues.AddRange(_unlockedEpilogues);
+
+            CampaignSaveManager.Instance.Save(saveData);
         }
     }
 }

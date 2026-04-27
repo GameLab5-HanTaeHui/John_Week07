@@ -145,8 +145,8 @@ namespace HTH.Campaign
         private void OnNextPageClicked()
         {
             // LobbyUIManager의 챕터 시스템으로 2페이지로 전환
-            var uiManager = FindObjectOfType<LobbyUIManager>();
-            uiManager?.ShowNextChapter();
+            var bookAnimator = FindObjectOfType<TitleBookAnimator>();
+            bookAnimator?.TurnPage();
         }
 
         /// <summary>

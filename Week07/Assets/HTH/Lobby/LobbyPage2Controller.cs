@@ -1,4 +1,7 @@
-﻿using TMPro;
+﻿using System.Collections;
+using System.Collections.Generic;
+using DG.Tweening;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,136 +10,409 @@ namespace HTH.Campaign
     /// <summary>
     /// 로비 2페이지 (도감)를 관리합니다.
     ///
-    /// ─── 구조 ────────────────────────────────────────────────────────────
-    ///   왼쪽 페이지
-    ///     캐릭터 초상화 버튼 7개 (2열 배치)
-    ///     해금된 캐릭터만 활성화, 미해금은 잠금 표시
+    /// ─── 기본 동작 ───────────────────────────────────────────────────────
+    ///   왼쪽: CharacterIconButton 7개
+    ///   오른쪽: 선택된 캐릭터의 시점 완결문 + 이미지 조각 표시
     ///
-    ///   오른쪽 페이지
-    ///     캐릭터 이름 TMP
-    ///     시점 완결문 TMP (스크롤 가능)
-    ///     기본 상태: 안내 문구 표시
+    /// ─── 히든 엔딩 조건 ──────────────────────────────────────────────────
+    ///   7개 에필로그 전부 해금된 상태에서
+    ///   버튼을 _secretOrder 순서대로 클릭하면
+    ///   → 이미지 조각들이 합쳐지는 연출
+    ///   → 완성된 사진 클릭 → 히든 엔딩 다이얼로그
     ///
-    ///   하단
-    ///     ← 버튼 (1페이지로 돌아가기)
+    ///   실패 조건 (둘 중 하나)
+    ///   A. 틀린 버튼 클릭 시 즉시 초기화
+    ///   B. _secretTimeLimit 초 내에 완성 못 하면 초기화
     ///
     /// ─── Inspector 연결 ──────────────────────────────────────────────────
-    ///   Portrait Buttons[7]   → 캐릭터 초상화 버튼 7개 (CharacterId 1~7 순서)
-    ///   Lock Overlays[7]      → 미해금 잠금 오버레이 7개
-    ///   Character Name Text   → 오른쪽 페이지 캐릭터 이름 TMP
-    ///   Epilogue Text         → 오른쪽 페이지 시점 완결문 TMP
-    ///   Default Message       → 캐릭터 미선택 시 안내 문구 GameObject
-    ///   Prev Page Button      → 1페이지로 돌아가는 버튼
-    ///   Epilogue Data SO      → EpilogueDataSO 에셋 (시점 완결문 데이터)
+    ///   Icon Button Prefab    → CharacterIconButton 프리팹
+    ///   Icon Grid             → GridLayoutGroup 부모
+    ///   Profile Data          → ProfileDataSO 에셋
+    ///   Reward Save Data      → RewardSaveData 에셋
+    ///   Character Name Text   → 오른쪽 캐릭터 이름 TMP
+    ///   Epilogue Text         → 오른쪽 시점 완결문 TMP
+    ///   Default Message       → 미선택 안내 GameObject
+    ///   Prev Page Button      → 1페이지 이동 버튼
+    ///   Fragment Images[7]    → 캐릭터별 이미지 조각 Image (CharacterId 1~7 순서)
+    ///   Complete Image        → 완성된 사진 Image (기본 비활성)
+    ///   Complete Image Button → 완성 사진 클릭 버튼
+    ///   Hidden Ending Panel   → 검은 화면 패널
+    ///   Hidden Ending Player  → 히든 엔딩 대사 재생 DialoguePlayer
+    ///   Hidden Ending Lines   → 히든 엔딩 대사 목록
+    ///   Secret Order[7]       → 올바른 클릭 순서 (기본: 1,2,3,4,5,6,7)
+    ///   Secret Time Limit     → 순서 입력 제한 시간 (초, 0이면 무제한)
     /// </summary>
     [DisallowMultipleComponent]
     public class LobbyPage2Controller : MonoBehaviour
     {
         // ── Inspector ────────────────────────────────────────────────────
 
-        [Header("왼쪽 페이지 — 캐릭터 초상화")]
-        [Tooltip("캐릭터 초상화 버튼 7개입니다.\n" +
-                 "Element 0 = CharacterId 1 (엔비), Element 6 = CharacterId 7 (새턴)")]
-        [SerializeField] private Button[] _portraitButtons = new Button[7];
-
-        [Tooltip("미해금 캐릭터에 표시할 잠금 오버레이 7개입니다.")]
-        [SerializeField] private GameObject[] _lockOverlays = new GameObject[7];
-
-        [Header("오른쪽 페이지 — 시점 완결문")]
-        [Tooltip("선택된 캐릭터 이름을 표시하는 TMP_Text입니다.")]
-        [SerializeField] private TMP_Text _characterNameText;
-
-        [Tooltip("시점 완결문 내용을 표시하는 TMP_Text입니다.")]
-        [SerializeField] private TMP_Text _epilogueText;
-
-        [Tooltip("캐릭터 미선택 시 표시할 안내 문구 GameObject입니다.")]
-        [SerializeField] private GameObject _defaultMessage;
-
-        [Header("페이지 이동")]
-        [Tooltip("1페이지로 돌아가는 버튼입니다.")]
-        [SerializeField] private Button _prevPageButton;
+        [Header("캐릭터 버튼 생성")]
+        [SerializeField] private CharacterIconButton _iconButtonPrefab;
+        [SerializeField] private Transform _iconGrid;
 
         [Header("데이터")]
-        [Tooltip("시점 완결문 데이터 에셋입니다.")]
-        [SerializeField] private EpilogueDataSO _epilogueData;
-
-        [Tooltip("캠페인 보상 해금 기록 에셋입니다.")]
+        [SerializeField] private ProfileDataSO _profileData;
         [SerializeField] private RewardSaveData _rewardSaveData;
+
+        [Header("오른쪽 페이지")]
+        [SerializeField] private TMP_Text _characterNameText;
+        [SerializeField] private TMP_Text _epilogueText;
+        [SerializeField] private GameObject _defaultMessage;
+
+        [Tooltip("캐릭터 선택 시 표시할 포트레이트 Image입니다.")]
+        [SerializeField] private Image _characterPortraitImage;
+
+        [Tooltip("캐릭터별 포트레이트 스프라이트 (CharacterId 1~7 순서)")]
+        [SerializeField] private Sprite[] _portraitSprites = new Sprite[7];
+
+        [Header("페이지 이동")]
+        [SerializeField] private Button _prevPageButton;
+
+        [Header("이미지 조각 (CharacterId 1~7 순서)")]
+        [Tooltip("캐릭터별 이미지 조각 Image 7개입니다.\n" +
+                 "Element 0 = CharacterId 1 순서로 연결합니다.")]
+        [SerializeField] private Image[] _fragmentImages = new Image[7];
+
+        [Header("완성 사진")]
+        [Tooltip("7조각 완성 시 표시할 전체 이미지입니다. (기본 비활성)")]
+        [SerializeField] private GameObject _completeImageRoot;
+
+        [Tooltip("완성 사진 클릭 버튼입니다.")]
+        [SerializeField] private Button _completeImageButton;
+
+        [Header("히든 엔딩")]
+        [Tooltip("히든 엔딩 검은 화면 패널입니다.")]
+        [SerializeField] private GameObject _hiddenEndingPanel;
+
+        [Tooltip("히든 엔딩 대사를 재생할 DialoguePlayer입니다.")]
+        [SerializeField] private DialoguePlayer _hiddenEndingPlayer;
+
+        [Tooltip("히든 엔딩 대사 목록입니다.")]
+        [SerializeField] private List<string> _hiddenEndingLines = new();
+
+        [Header("히든 엔딩 퍼즐 설정")]
+        [Tooltip("올바른 클릭 순서입니다.\n기본: 1,2,3,4,5,6,7\nInspector에서 자유롭게 변경 가능합니다.")]
+        [SerializeField] private int[] _secretOrder = { 1, 2, 3, 4, 5, 6, 7 };
+
+        [Tooltip("순서 입력 제한 시간(초)입니다.\n0이면 시간 제한 없음.")]
+        [SerializeField] private float _secretTimeLimit = 30f;
+
+        [Tooltip("조각 합쳐지는 연출 시간(초)입니다.")]
+        [SerializeField] private float _assembleDuration = 1.5f;
 
         // ── 내부 상태 ─────────────────────────────────────────────────────
 
+        private CharacterIconButton[] _buttons;
         private int _selectedCharacterId = -1;
+
+        // 히든 엔딩 퍼즐
+        private int _secretProgress;    // 현재 몇 번째 순서까지 맞췄는지
+        private bool _puzzleActive;      // 퍼즐 진행 중 여부
+        private bool _puzzleComplete;    // 완성 여부
+        private Coroutine _timeoutCoroutine;
 
         // ── Unity ────────────────────────────────────────────────────────
 
         private void Start()
         {
-            // 초상화 버튼 리스너 등록
-            for (int i = 0; i < _portraitButtons.Length; i++)
-            {
-                int characterId = i + 1; // CharacterId 1~7
-                _portraitButtons[i]?.onClick.AddListener(() => OnPortraitClicked(characterId));
-            }
-
+            BuildGrid();
             _prevPageButton?.onClick.AddListener(OnPrevPageClicked);
+            _completeImageButton?.onClick.AddListener(OnCompleteImageClicked);
 
-            Refresh();
+            if (_completeImageRoot != null) _completeImageRoot.SetActive(false);
+            if (_hiddenEndingPanel != null) _hiddenEndingPanel.SetActive(false);
+
+            ShowEpilogue(-1);
         }
 
         private void OnEnable()
         {
-            // 페이지 진입 시마다 해금 상태 갱신
-            Refresh();
+            if (_buttons != null)
+                RefreshButtonStates();
         }
 
-        // ── 공개 API ─────────────────────────────────────────────────────
+        // ── Private — 그리드 생성 ─────────────────────────────────────────
 
-        /// <summary>해금 상태에 따라 UI를 갱신합니다.</summary>
-        public void Refresh()
+        private void BuildGrid()
         {
-            for (int i = 0; i < _portraitButtons.Length; i++)
+            if (_iconButtonPrefab == null || _iconGrid == null) return;
+
+            _buttons = new CharacterIconButton[7];
+
+            for (int i = 0; i < 7; i++)
             {
-                int characterId = i + 1;
+                int capturedId = i + 1;
+
+                var profile = _profileData?.FindProfile(capturedId);
+                Sprite icon = profile?.CharacterIcon;
+                string name = profile?.CharacterFullName ?? $"#{capturedId}";
                 bool unlocked = _rewardSaveData != null &&
-                              _rewardSaveData.IsEpilogueUnlocked(characterId);
+                                  _rewardSaveData.IsEpilogueUnlocked(capturedId);
 
-                if (_portraitButtons[i] != null)
-                    _portraitButtons[i].interactable = unlocked;
+                var btn = Instantiate(_iconButtonPrefab, _iconGrid);
+                btn.Setup(
+                    characterId: capturedId,
+                    icon: icon,
+                    collectedName: name,
+                    onClicked: () => OnPortraitClicked(capturedId)
+                );
 
-                if (_lockOverlays.Length > i && _lockOverlays[i] != null)
-                    _lockOverlays[i].SetActive(!unlocked);
+                var button = btn.GetComponent<Button>();
+                if (button != null)
+                    button.interactable = unlocked;
+
+                _buttons[i] = btn;
+            }
+        }
+
+        private void RefreshButtonStates()
+        {
+            if (_buttons == null) return;
+
+            bool allUnlocked = true;
+            for (int i = 0; i < _buttons.Length; i++)
+            {
+                if (_buttons[i] == null) continue;
+
+                int capturedId = i + 1;
+                bool unlocked = _rewardSaveData != null &&
+                                  _rewardSaveData.IsEpilogueUnlocked(capturedId);
+
+                var button = _buttons[i].GetComponent<Button>();
+                if (button != null)
+                    button.interactable = unlocked;
+
+                if (!unlocked) allUnlocked = false;
             }
 
-            // 선택된 캐릭터가 있으면 유지, 없으면 기본 메시지
-            ShowEpilogue(_selectedCharacterId);
+            // 7개 전부 해금 시 퍼즐 모드 활성화
+            _puzzleActive = allUnlocked && !_puzzleComplete;
         }
 
-        // ── Private ──────────────────────────────────────────────────────
+        // ── Private — 버튼 클릭 처리 ─────────────────────────────────────
 
         private void OnPortraitClicked(int characterId)
         {
+            // 퍼즐 완성 상태면 일반 동작 차단
+            if (_puzzleComplete) return;
+
+            // 퍼즐 모드 처리
+            if (_puzzleActive)
+            {
+                HandlePuzzleInput(characterId);
+                return;
+            }
+
+            // 일반 동작: 시점 완결문 표시
+            SelectCharacter(characterId);
+        }
+
+        private void SelectCharacter(int characterId)
+        {
             _selectedCharacterId = characterId;
+
+            if (_buttons != null)
+                for (int i = 0; i < _buttons.Length; i++)
+                    _buttons[i]?.SetSelected(i + 1 == characterId);
+
             ShowEpilogue(characterId);
         }
 
-        private void OnPrevPageClicked()
+        // ── Private — 히든 엔딩 퍼즐 ─────────────────────────────────────
+
+        /// <summary>
+        /// 퍼즐 입력을 처리합니다.
+        /// 올바른 순서면 진행, 틀리면 즉시 초기화합니다.
+        /// </summary>
+        private void HandlePuzzleInput(int characterId)
         {
-            _selectedCharacterId = -1;
-            var uiManager = FindObjectOfType<LobbyUIManager>();
-            uiManager?.ShowPreviousChapter();
+            if (_secretOrder == null || _secretOrder.Length == 0) return;
+
+            int expected = _secretOrder[_secretProgress];
+
+            if (characterId == expected)
+            {
+                // 정답 — 이미지 조각 표시
+                ShowFragmentImage(characterId);
+                _secretProgress++;
+
+                // 타임아웃 코루틴 재시작
+                if (_secretTimeLimit > 0f)
+                {
+                    if (_timeoutCoroutine != null)
+                        StopCoroutine(_timeoutCoroutine);
+                    _timeoutCoroutine = StartCoroutine(TimeoutCoroutine());
+                }
+
+                if (_secretProgress >= _secretOrder.Length)
+                {
+                    // 완성!
+                    if (_timeoutCoroutine != null)
+                    {
+                        StopCoroutine(_timeoutCoroutine);
+                        _timeoutCoroutine = null;
+                    }
+                    StartCoroutine(AssembleCompleteImage());
+                }
+                else
+                {
+                    // 선택 상태 표시
+                    if (_buttons != null)
+                        for (int i = 0; i < _buttons.Length; i++)
+                            _buttons[i]?.SetSelected(i + 1 == characterId);
+                }
+            }
+            else
+            {
+                // 오답 → 즉시 초기화
+                ResetPuzzle();
+                // 일반 동작으로 시점 완결문 표시
+                SelectCharacter(characterId);
+            }
+        }
+
+        /// <summary>캐릭터 이미지 조각을 표시합니다.</summary>
+        private void ShowFragmentImage(int characterId)
+        {
+            int index = characterId - 1;
+            if (_fragmentImages == null || index >= _fragmentImages.Length) return;
+            if (_fragmentImages[index] == null) return;
+
+            _fragmentImages[index].gameObject.SetActive(true);
+            _fragmentImages[index].transform
+                .DOPunchScale(Vector3.one * 0.1f, 0.3f, 5, 0.5f);
+        }
+
+        /// <summary>퍼즐을 초기화합니다.</summary>
+        private void ResetPuzzle()
+        {
+            _secretProgress = 0;
+
+            if (_timeoutCoroutine != null)
+            {
+                StopCoroutine(_timeoutCoroutine);
+                _timeoutCoroutine = null;
+            }
+
+            // 이미지 조각 전부 숨김
+            if (_fragmentImages != null)
+                foreach (var img in _fragmentImages)
+                    if (img != null) img.gameObject.SetActive(false);
+
+            // 버튼 선택 해제
+            if (_buttons != null)
+                foreach (var btn in _buttons)
+                    btn?.SetSelected(false);
+        }
+
+        /// <summary>제한 시간 초과 시 퍼즐을 초기화합니다.</summary>
+        private IEnumerator TimeoutCoroutine()
+        {
+            yield return new WaitForSeconds(_secretTimeLimit);
+            ResetPuzzle();
+            ShowEpilogue(_selectedCharacterId);
+            _timeoutCoroutine = null;
         }
 
         /// <summary>
-        /// 선택된 캐릭터의 시점 완결문을 표시합니다.
-        /// characterId가 -1이면 기본 안내 메시지를 표시합니다.
+        /// 7조각이 완성됐을 때 합쳐지는 연출 후 완성 사진을 표시합니다.
         /// </summary>
+        private IEnumerator AssembleCompleteImage()
+        {
+            _puzzleComplete = true;
+            _puzzleActive = false;
+
+            // 조각들이 중앙으로 모이는 연출
+            if (_fragmentImages != null)
+            {
+                foreach (var img in _fragmentImages)
+                {
+                    if (img == null) continue;
+                    img.transform
+                       .DOScale(Vector3.zero, _assembleDuration * 0.8f)
+                       .SetEase(Ease.InBack);
+                }
+            }
+
+            yield return new WaitForSeconds(_assembleDuration);
+
+            // 조각 전부 숨기고 완성 사진 표시
+            if (_fragmentImages != null)
+                foreach (var img in _fragmentImages)
+                    if (img != null) img.gameObject.SetActive(false);
+
+            if (_completeImageRoot != null)
+            {
+                _completeImageRoot.SetActive(true);
+                _completeImageRoot.transform.localScale = Vector3.zero;
+                _completeImageRoot.transform
+                    .DOScale(Vector3.one, _assembleDuration * 0.5f)
+                    .SetEase(Ease.OutBack);
+            }
+
+            // 버튼 선택 해제
+            if (_buttons != null)
+                foreach (var btn in _buttons)
+                    btn?.SetSelected(false);
+        }
+
+        /// <summary>완성 사진 클릭 시 히든 엔딩을 재생합니다.</summary>
+        private void OnCompleteImageClicked()
+        {
+            if (!_puzzleComplete) return;
+            StartCoroutine(PlayHiddenEnding());
+        }
+
+        /// <summary>히든 엔딩 다이얼로그를 재생합니다.</summary>
+        private IEnumerator PlayHiddenEnding()
+        {
+            // 검은 화면 페이드 인
+            if (_hiddenEndingPanel != null)
+            {
+                _hiddenEndingPanel.SetActive(true);
+                var cg = _hiddenEndingPanel.GetComponent<CanvasGroup>();
+                if (cg == null) cg = _hiddenEndingPanel.AddComponent<CanvasGroup>();
+                cg.alpha = 0f;
+                yield return cg.DOFade(1f, 0.5f).WaitForCompletion();
+            }
+
+            // DialoguePlayer로 대사 재생
+            if (_hiddenEndingPlayer != null && _hiddenEndingLines.Count > 0)
+            {
+                var lines = new List<DialogueLine>();
+                foreach (var text in _hiddenEndingLines)
+                    lines.Add(new DialogueLine
+                    {
+                        SpeakerId = 0,
+                        Text = text,
+                        RevealCharacterId = -1,
+                        RevealCharacterName = string.Empty
+                    });
+
+                bool done = false;
+                _hiddenEndingPlayer.Play(lines, onComplete: () => done = true);
+                yield return new WaitUntil(() => done);
+            }
+
+            // 검은 화면 페이드 아웃
+            if (_hiddenEndingPanel != null)
+            {
+                var cg = _hiddenEndingPanel.GetComponent<CanvasGroup>();
+                if (cg != null)
+                    yield return cg.DOFade(0f, 0.5f).WaitForCompletion();
+                _hiddenEndingPanel.SetActive(false);
+            }
+        }
+
+        // ── Private — 시점 완결문 표시 ────────────────────────────────────
+
         private void ShowEpilogue(int characterId)
         {
             bool hasSelection = characterId > 0 &&
-                              _rewardSaveData != null &&
-                              _rewardSaveData.IsEpilogueUnlocked(characterId);
+                                _rewardSaveData != null &&
+                                _rewardSaveData.IsEpilogueUnlocked(characterId);
 
-            // 기본 메시지 토글
             if (_defaultMessage != null)
                 _defaultMessage.SetActive(!hasSelection);
 
@@ -146,33 +422,58 @@ namespace HTH.Campaign
             if (_epilogueText != null)
                 _epilogueText.gameObject.SetActive(hasSelection);
 
+            if (_characterPortraitImage != null)
+                _characterPortraitImage.gameObject.SetActive(hasSelection);
+
             if (!hasSelection) return;
 
-            // 캐릭터 이름 표시
-            if (_characterNameText != null)
-                _characterNameText.text = GetCharacterName(characterId);
+            var profile = _profileData?.FindProfile(characterId);
 
-            // 시점 완결문 내용 표시
+            // 이름 표시
+            if (_characterNameText != null)
+                _characterNameText.text = profile?.CharacterFullName ?? $"#{characterId}";
+
+            // 시점 완결문 표시
             if (_epilogueText != null)
+                _epilogueText.text = !string.IsNullOrEmpty(profile?.EpilogueText)
+                    ? profile.EpilogueText
+                    : $"[에필로그 없음 — #{characterId}]";
+
+            // 포트레이트 이미지 표시
+            if (_characterPortraitImage != null)
             {
-                string content = _epilogueData != null
-                    ? _epilogueData.GetEpilogue(characterId)
-                    : $"[에필로그 데이터 없음 — CharacterId={characterId}]";
-                _epilogueText.text = content;
+                int spriteIdx = characterId - 1;
+                bool hasSprite = _portraitSprites != null
+                    && spriteIdx >= 0
+                    && spriteIdx < _portraitSprites.Length
+                    && _portraitSprites[spriteIdx] != null;
+
+                if (hasSprite)
+                {
+                    _characterPortraitImage.sprite = _portraitSprites[spriteIdx];
+                    _characterPortraitImage.enabled = true;
+                }
+                else
+                {
+                    // 스프라이트 미연결 시 이미지 숨김
+                    _characterPortraitImage.enabled = false;
+                }
             }
         }
 
-        /// <summary>캐릭터 ID로 이름을 반환합니다.</summary>
-        private string GetCharacterName(int characterId) => characterId switch
+        // ── Private — 페이지 이동 ─────────────────────────────────────────
+
+        private void OnPrevPageClicked()
         {
-            1 => "엔비",
-            2 => "메이",
-            3 => "데우스",
-            4 => "루이스",
-            5 => "토니",
-            6 => "프리드",
-            7 => "새턴",
-            _ => $"#{characterId}"
-        };
+            _selectedCharacterId = -1;
+            ResetPuzzle();
+
+            if (_buttons != null)
+                foreach (var btn in _buttons)
+                    btn?.SetSelected(false);
+
+            var bookAnimator = FindObjectOfType<TitleBookAnimator>();
+            bookAnimator?.TurnPageBack();
+        }
     }
 }
