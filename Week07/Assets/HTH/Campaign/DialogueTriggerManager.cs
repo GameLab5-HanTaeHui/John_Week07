@@ -6,40 +6,60 @@ using UnityEngine;
 namespace HTH.Campaign
 {
     /// <summary>
-    /// 캐릭터 조우를 감지하고 다이얼로그를 선택해 DialoguePlayer에 전달합니다.
+    /// 캠페인 씬의 다이얼로그 트리거 및 출력을 관리하는 매니저입니다.
     ///
-    /// ─── 이 스크립트의 역할 ──────────────────────────────────────────────
-    ///   캠페인 2회차(Phase2)에서 "누가 누구와 같은 구역에 있는가"를 판단해
-    ///   해당 조합의 대사를 찾아 DialoguePlayer에게 재생을 요청합니다.
-    ///   대사 재생이 완료되면 대화 조각 수집과 이름 공개도 처리합니다.
+    /// ─── 책임 ────────────────────────────────────────────────────────────
+    ///   1. 캠페인 씬 진입 시 SO 데이터 로드 및 초기화
+    ///   2. 턴 종료 시점의 사망/기믹 컨텍스트 캐싱
+    ///   3. 활성 구역 순회 → 후보 선별 → 우선순위 정렬 → 출력
+    ///   4. 시간대별 대사 트리거 (Morning/Lunch/Evening)
+    ///   5. 이미 본 조합 → AlreadySeenLines 대체 출력
+    ///   6. 보상 조각 수집 처리
     ///
-    /// ─── 트리거 시점 ─────────────────────────────────────────────────────
-    ///   턴 종료(날짜 변경) 시점에 모든 구역을 체크합니다.
-    ///   플레이어가 원하는 캐릭터들을 배치하고 날짜 변경 버튼을 누르면
-    ///   각 구역의 조합을 판별해 대사를 0→1→2→3 순서로 재생합니다.
+    /// ─── 우선순위 ────────────────────────────────────────────────────────
+    ///   1. Core    — 핵심 대화 (RewardFragmentId 미수집)
+    ///   2. Hint    — 힌트 대화
+    ///   3. Special — 그 외 대사
+    ///   4. Normal  — 일반 대화 (이미 출력됐으면 AlreadySeenLines 폴백)
+    ///   같은 우선순위 내에서 ParticipantIds 수 정확 일치 우선
     ///
-    /// ─── 대사 출력 조건 ──────────────────────────────────────────────────
-    ///   1. Phase2 활성 상태
-    ///   2. 이번 씬 진입 이후 아직 출력하지 않은 조합 (씬 재시작 시 리셋)
-    ///   3. 해당 조합의 대화 조각이 아직 미수집
+    /// ─── 트리거 흐름 ─────────────────────────────────────────────────────
+    ///   [턴 종료 진입]
+    ///     ↓ OnTurnEndEntered
+    ///   [컨텍스트 캐싱 — 사망/기믹 스냅샷]
+    ///     ↓
+    ///   [턴 종료 다이얼로그 재생 완료]
+    ///     ↓ OnTurnEndDialogueFinished
+    ///   [1초 대기 — 페이드 아웃 마무리]
+    ///     ↓
+    ///   [활성 구역 순회 → 대사 출력]
+    ///     ↓
+    ///   [완료 — 다음 턴 대기]
     ///
-    /// ─── 씬 배치 ─────────────────────────────────────────────────────────
-    ///   _CampaignSystem 하위 GameObject에 컴포넌트로 추가합니다.
+    /// ─── 외부 의존성 ─────────────────────────────────────────────────────
+    ///   - CampaignModeManager : 진입/종료 트리거, 시간대 정보 (추후 연계)
+    ///   - GameFlowController  : 턴 상태머신 이벤트, GameState 접근
+    ///   - DialoguePlayer      : 실제 대사 화면 출력
+    ///   - FragmentCollector   : 핵심 조각 수집/조회
+    ///   - DialogueProgressTracker : 출력 기록 추적
     ///
     /// ─── Inspector 연결 ──────────────────────────────────────────────────
     ///   Dialogue Data      → CampaignDialogueSO 에셋
-    ///   Dialogue Player    → _CampaignSystem/DialoguePlayer
-    ///   Fragment Collector → _CampaignSystem/FragmentCollector
-    ///   Active Zones [0~3] → 각 구역의 대사 활성화 여부
+    ///   Dialogue Player    → DialoguePlayer 컴포넌트
+    ///   Fragment Collector → FragmentCollector 컴포넌트
+    ///   Active Zones       → 구역별 대사 활성화 여부 (인덱스 = ZoneId)
     /// </summary>
     [DisallowMultipleComponent]
     public class DialogueTriggerManager : MonoBehaviour
     {
         public static DialogueTriggerManager Instance { get; private set; }
-        // ── Inspector ────────────────────────────────────────────────────
+
+        // ═══════════════════════════════════════════════════════════════
+        // Inspector 필드
+        // ═══════════════════════════════════════════════════════════════
 
         [Header("데이터")]
-        [Tooltip("이 스테이지의 캠페인 다이얼로그 데이터입니다.")]
+        [Tooltip("이 캠페인 씬의 다이얼로그 데이터입니다.")]
         [SerializeField] private CampaignDialogueSO _dialogueData;
 
         [Header("컴포넌트 참조")]
@@ -51,51 +71,58 @@ namespace HTH.Campaign
 
         [Header("구역 대사 활성화 (0 → 1 → 2 → 3 순서)")]
         [Tooltip("체크된 구역만 턴 종료 시 대사를 체크합니다.\n" +
-                 "인덱스 = ZoneId (0=Zone0, 1=Zone1, 2=Zone2, 3=Zone3)")]
-        [SerializeField] private bool[] _activeZones = new bool[GameState.ZoneCount] { true, true, true, true };
+                 "인덱스 = ZoneId (0=Zone0, 1=Zone1, 2=Zone2, 3=Zone3)\n" +
+                 "조사 구역은 일반적으로 Zone2입니다.")]
+        [SerializeField]
+        private bool[] _activeZones =
+            new bool[GameState.ZoneCount] { true, true, true, true };
 
-        // ── 내부 상태 ─────────────────────────────────────────────────────
+        [Header("타이밍")]
+        [Tooltip("턴 종료 다이얼로그 완료 후 캠페인 대사 트리거까지의 대기 시간입니다.")]
+        [SerializeField] private float _triggerDelay = 1f;
 
-        /// <summary>이번 씬 진입 이후 출력된 조합을 기록합니다. (씬 재시작 시 리셋)</summary>
+        // ═══════════════════════════════════════════════════════════════
+        // 내부 상태
+        // ═══════════════════════════════════════════════════════════════
+
+        /// <summary>출력 기록 추적기입니다.</summary>
         private DialogueProgressTracker _progressTracker;
 
-        /// <summary>대사 출력 조건을 판별합니다.</summary>
+        /// <summary>대사 출력 조건 평가기입니다.</summary>
         private DialogueConditionEvaluator _conditionEvaluator;
 
-        // ✅ 추가 — 필드
-        /// <summary>캠페인 대사 트리거 대기 중 클릭 차단 여부</summary>
-        public bool IsWaitingForDialogue { get; private set; }
+        /// <summary>턴 종료 시점에 캐싱된 컨텍스트입니다.</summary>
+        private ConditionContext _cachedCtx = new();
 
-        /// <summary>Phase2가 활성화되고 초기화가 완료됐는지 여부입니다.</summary>
+        /// <summary>초기화 완료 여부입니다.</summary>
         private bool _isInitialized;
 
-        // ✅ 추가
-        private HashSet<int> _cachedDeadThisTurn = new HashSet<int>();
-        private bool _cachedWandererKill;
-        private bool _cachedSacrifice;
-        private int _cachedTotalDeathCount;
+        /// <summary>캠페인 대사 대기 중 클릭 차단 여부입니다.</summary>
+        public bool IsWaitingForDialogue { get; private set; }
 
-        // ── Unity ────────────────────────────────────────────────────────
+        /// <summary>현재 진행 중인 시간대입니다. CampaignModeManager가 설정합니다.</summary>
+        public TimeOfDay CurrentTimeOfDay { get; set; } = TimeOfDay.Morning;
+
+        // ═══════════════════════════════════════════════════════════════
+        // Unity 라이프사이클
+        // ═══════════════════════════════════════════════════════════════
 
         private void Awake()
         {
             Instance = this;
-
             _progressTracker = new DialogueProgressTracker();
             _conditionEvaluator = new DialogueConditionEvaluator();
         }
 
         private void Start()
         {
-            if (CampaignModeManager.Instance != null)
-                CampaignModeManager.Instance.OnPhase2Entered += OnPhase2Entered;
-
+            // GameFlowController 이벤트 구독
+            // CampaignModeManager 연계는 추후 별도로 구독 처리
             var turnSM = GameFlowController.Instance?.GetTurnSM();
             if (turnSM != null)
             {
-                turnSM.OnPlayerActionStarted += OnPlayerActionStarted;
                 turnSM.OnTurnEndEntered += OnTurnEndEntered;
-                turnSM.OnTurnEndDialogueFinished += OnTurnEndDialogueFinished; // ★ 추가
+                turnSM.OnTurnEndDialogueFinished += OnTurnEndDialogueFinished;
             }
         }
 
@@ -103,26 +130,23 @@ namespace HTH.Campaign
         {
             if (Instance == this) Instance = null;
 
-            if (CampaignModeManager.Instance != null)
-                CampaignModeManager.Instance.OnPhase2Entered -= OnPhase2Entered;
-
             var turnSM = GameFlowController.Instance?.GetTurnSM();
             if (turnSM != null)
             {
-                turnSM.OnPlayerActionStarted -= OnPlayerActionStarted;
                 turnSM.OnTurnEndEntered -= OnTurnEndEntered;
-                turnSM.OnTurnEndDialogueFinished -= OnTurnEndDialogueFinished; // ★ 추가
+                turnSM.OnTurnEndDialogueFinished -= OnTurnEndDialogueFinished;
             }
         }
 
-        // ── 이벤트 핸들러 ─────────────────────────────────────────────────
+        // ═══════════════════════════════════════════════════════════════
+        // 외부 API — CampaignModeManager에서 호출
+        // ═══════════════════════════════════════════════════════════════
 
         /// <summary>
-        /// Phase2 진입 시 호출됩니다.
-        /// ProgressTracker는 메모리만 초기화합니다 (PlayerPrefs 저장 없음).
-        /// FragmentCollector는 이전 수집 기록을 PlayerPrefs에서 로드합니다.
+        /// 캠페인 씬 초기화입니다. CampaignModeManager에서 호출합니다.
+        /// SO 데이터, 출력 기록, 조각 수집기를 초기화합니다.
         /// </summary>
-        private void OnPhase2Entered(string stageId)
+        public void Initialize(string stageId)
         {
             if (_dialogueData == null)
             {
@@ -132,273 +156,195 @@ namespace HTH.Campaign
 
             _progressTracker.Initialize(stageId);
             _fragmentCollector?.Initialize(stageId);
-
             _isInitialized = true;
-            Debug.Log($"[DialogueTriggerManager] Phase2 활성화 — {stageId}");
+
+            Debug.Log($"[DialogueTriggerManager] 초기화 완료 — {stageId}");
         }
 
-        // ✅ 추가
+        /// <summary>
+        /// 시간대별 대사를 트리거합니다.
+        /// CampaignModeManager가 시간대 변경 시 호출합니다.
+        /// </summary>
+        public void TriggerTimeOfDayDialogue(TimeOfDay timeOfDay)
+        {
+            if (!_isInitialized) return;
+            if (_dialogueData == null) return;
+
+            CurrentTimeOfDay = timeOfDay;
+            var entry = _dialogueData.FindByTimeOfDay(timeOfDay);
+            if (entry == null || entry.Lines == null || entry.Lines.Count == 0) return;
+
+            Debug.Log($"[DTM] 시간대 대사 트리거 — {timeOfDay}");
+            StartCoroutine(PlayTimeOfDayDialogue(entry));
+        }
+
+        // ═══════════════════════════════════════════════════════════════
+        // 이벤트 핸들러 — 턴 흐름
+        // ═══════════════════════════════════════════════════════════════
+
+        /// <summary>
+        /// 턴 종료 진입 시 호출됩니다.
+        /// 사망/기믹 정보를 캐싱해 이후 대사 트리거 시 사용합니다.
+        /// </summary>
         private void OnTurnEndEntered(IReadOnlyList<string> roleLog, bool isLastTurn)
         {
             if (!_isInitialized) return;
-
-            var gameState = GameFlowController.Instance?.GameState;
-            _cachedDeadThisTurn = new HashSet<int>();
-            _cachedWandererKill = false;
-            _cachedSacrifice = false;
-
-            if (gameState != null)
-            {
-                foreach (int id in gameState.GetAllCharacterIds())
-                {
-                    if (!gameState.IsMarkedForDeath(id)) continue;
-                    _cachedDeadThisTurn.Add(id);
-                    _cachedTotalDeathCount++;
-                }
-
-                int saturnPrev = gameState.GetPreviousZone(7);
-                int saturnCurrent = gameState.GetZone(7);
-                if (saturnPrev != saturnCurrent)
-                    foreach (int deadId in _cachedDeadThisTurn)
-                        if (gameState.GetZone(deadId) == saturnPrev)
-                        { _cachedWandererKill = true; break; }
-
-                _cachedSacrifice = gameState.IsMarkedForDeath(6);
-            }
-
-            Debug.Log($"[DTM] TurnEnd 캐싱 — [{string.Join(",", _cachedDeadThisTurn)}] 배회자={_cachedWandererKill} 희생양={_cachedSacrifice}");
+            CacheConditionContext();
         }
-        // ✅ 추가 — 페이드 아웃 완료 후 1초 뒤 트리거
+
+        /// <summary>
+        /// 턴 종료 다이얼로그 재생이 완료되면 호출됩니다.
+        /// 페이드 아웃 마무리를 기다린 후 캠페인 대사 트리거를 시작합니다.
+        /// </summary>
         private void OnTurnEndDialogueFinished()
         {
             if (!_isInitialized) return;
-            if (!CampaignModeManager.IsPhase2Active) return;
-
-            StartCoroutine(TriggerDialoguesDelayed(1f));
+            StartCoroutine(TriggerDialoguesDelayed(_triggerDelay));
         }
 
+        /// <summary>지정한 시간만큼 대기 후 대사 트리거를 실행합니다.</summary>
         private IEnumerator TriggerDialoguesDelayed(float delay)
         {
-            IsWaitingForDialogue = true;  // ★ 클릭 차단 시작
+            IsWaitingForDialogue = true;
             yield return new WaitForSeconds(delay);
-            IsWaitingForDialogue = false; // ★ 클릭 차단 해제
+            IsWaitingForDialogue = false;
+
             TriggerDialoguesForAllZones();
         }
 
+        // ═══════════════════════════════════════════════════════════════
+        // 컨텍스트 캐싱
+        // ═══════════════════════════════════════════════════════════════
+
         /// <summary>
-        /// 다음 턴 PlayerAction이 시작될 때 호출됩니다.
-        /// 이전 턴의 캐릭터 배치를 기준으로 대사를 트리거합니다.
+        /// 턴 종료 시점의 사망/기믹 정보를 캐싱합니다.
+        ///
+        /// 캐싱 항목:
+        ///   1. 전체 사망자 ID 집합
+        ///   2. 조사 구역(Zone2) 내 사망자 집합
+        ///   3. Killer 기믹 — 토니(#5) Zone2 생존 + 사망 발생
+        ///   4. Wanderer 기믹 — 새턴(#7) 이동 + 이전 구역 사망
+        ///   5. Sacrifice 기믹 — 프리드(#6) 사망 + 같은 구역 생존자 존재
+        ///   6. Avenger 기믹 — 살인자(#5) 사망 + 메이(#2) 같은 구역
+        ///   7. LoverChain 기믹 — 데우스(#3) + 루이스(#4) 동시 사망
         /// </summary>
-        private void OnPlayerActionStarted()
+        private void CacheConditionContext()
         {
-            Debug.Log($"[DTM] OnPlayerActionStarted — isInitialized={_isInitialized}, IsPhase2={CampaignModeManager.IsPhase2Active}");
+            var ctx = new ConditionContext();
+            var gameState = GameFlowController.Instance?.GameState;
+
+            if (gameState == null)
+            {
+                _cachedCtx = ctx;
+                return;
+            }
+
+            // ── 1. 전체 사망자 수집 ────────────────────────────────────
+            foreach (int id in gameState.GetAllCharacterIds())
+            {
+                if (!gameState.IsMarkedForDeath(id)) continue;
+                ctx.AllDeadThisTurn.Add(id);
+                ctx.TotalDeathCount++;
+            }
+
+            // ── 2. 조사 구역(Zone2) 내 사망자 수집 ────────────────────
+            const int investigationZoneId = 2;
+            foreach (var c in gameState.GetCharactersInZone(investigationZoneId))
+                if (ctx.AllDeadThisTurn.Contains(c.CharacterId))
+                    ctx.ZoneDeadIds.Add(c.CharacterId);
+
+            // ── 3. Killer 기믹 감지 ────────────────────────────────────
+            // 토니(#5)가 Zone2에 생존하고 사망 사건이 발생했을 때
+            ctx.KillerActed = ctx.AllDeadThisTurn.Count > 0
+                && gameState.GetZone(5) == investigationZoneId
+                && !ctx.AllDeadThisTurn.Contains(5);
+
+            // ── 4. Wanderer 기믹 감지 ──────────────────────────────────
+            // 새턴(#7)이 이동했고, 이동 전 구역에 사망자가 발생했을 때
+            int saturnPrev = gameState.GetPreviousZone(7);
+            int saturnCurrent = gameState.GetZone(7);
+            if (saturnPrev != saturnCurrent)
+            {
+                foreach (int deadId in ctx.AllDeadThisTurn)
+                {
+                    if (gameState.GetPreviousZone(deadId) == saturnPrev)
+                    {
+                        ctx.WandererActed = true;
+                        break;
+                    }
+                }
+            }
+
+            // ── 5. Sacrifice 기믹 감지 ─────────────────────────────────
+            // 프리드(#6)가 사망했고, 같은 구역에 생존자가 있을 때
+            ctx.SacrificeActed = ctx.AllDeadThisTurn.Contains(6);
+            if (ctx.SacrificeActed)
+            {
+                int friedZone = gameState.GetPreviousZone(6);
+                foreach (var c in gameState.GetCharactersInZone(friedZone))
+                    if (c.CharacterId != 6 && !ctx.AllDeadThisTurn.Contains(c.CharacterId))
+                        ctx.SacrificeTargetIds.Add(c.CharacterId);
+            }
+
+            // ── 6. Avenger 기믹 감지 ───────────────────────────────────
+            // 살인자(#5)가 사망했고, 메이(#2)가 같은 구역(이전)에 있었을 때
+            ctx.AvengerActed = ctx.AllDeadThisTurn.Contains(5)
+                && gameState.GetPreviousZone(2) == gameState.GetPreviousZone(5)
+                && !ctx.AllDeadThisTurn.Contains(2);
+
+            // ── 7. LoverChain 기믹 감지 ────────────────────────────────
+            // 데우스(#3)와 루이스(#4)가 모두 이번 턴에 사망 마킹됐을 때
+            // (한쪽이 이전 턴에 이미 죽어있었다면 발동하지 않음 — AllDeadThisTurn에 없음)
+            ctx.LoverChainActed = ctx.AllDeadThisTurn.Contains(3)
+                                && ctx.AllDeadThisTurn.Contains(4);
+
+            _cachedCtx = ctx;
+
+            Debug.Log($"[DTM] 컨텍스트 캐싱 완료 — " +
+                      $"전체사망:[{string.Join(",", ctx.AllDeadThisTurn)}] " +
+                      $"구역내사망:[{string.Join(",", ctx.ZoneDeadIds)}] " +
+                      $"Killer={ctx.KillerActed} Wanderer={ctx.WandererActed} " +
+                      $"Sacrifice={ctx.SacrificeActed} Avenger={ctx.AvengerActed} " +
+                      $"LoverChain={ctx.LoverChainActed}");
         }
 
-        // ── Private — 전체 구역 순회 ─────────────────────────────────────
+        // ═══════════════════════════════════════════════════════════════
+        // 구역 순회 및 출력
+        // ═══════════════════════════════════════════════════════════════
 
         /// <summary>
-        /// 활성화된 구역을 0→1→2→3 순서로 순회하며
+        /// 활성화된 구역을 0 → 1 → 2 → 3 순서로 순회하며
         /// 캐릭터 조합에 맞는 대사를 찾아 순차 재생합니다.
         /// </summary>
         private void TriggerDialoguesForAllZones()
         {
-            var pendingEntries = new List<(GroupDialogueEntry entry, HashSet<int> ids)>();
-            var ctx = BuildConditionContext();
+            var pending = new List<PendingDialogue>();
 
             for (int zoneId = 0; zoneId < GameState.ZoneCount; zoneId++)
             {
-                if (_activeZones == null
-                    || zoneId >= _activeZones.Length
-                    || !_activeZones[zoneId])
-                    continue;
+                if (!IsZoneActive(zoneId)) continue;
 
                 var characterIds = GetCharactersInZone(zoneId);
                 Debug.Log($"[DTM] Zone{zoneId} 캐릭터: [{string.Join(",", characterIds)}]");
                 if (characterIds.Count == 0) continue;
 
-                var candidates = FindCandidateEntries(characterIds);
-                foreach (var entry in candidates)
-                {
-                    if (!_conditionEvaluator.CanPlay(
-                            entry, characterIds, _progressTracker, _fragmentCollector, ctx))
-                        continue;
-
-                    pendingEntries.Add((entry, characterIds));
-                    break; // 구역당 1개 대사
-                }
+                var resolved = ResolveDialogueForZone(characterIds);
+                if (resolved.HasValue)
+                    pending.Add(resolved.Value);
             }
 
-            if (pendingEntries.Count == 0) return;
-
-            StartCoroutine(PlaySequential(pendingEntries));
+            if (pending.Count == 0) return;
+            StartCoroutine(PlaySequential(pending));
         }
 
-        /// <summary>현재 턴의 ConditionContext를 생성합니다.</summary>
-        private ConditionContext BuildConditionContext()
-        {
-            return new ConditionContext
-            {
-                AllDeadThisTurn = _cachedDeadThisTurn,
-                TotalDeathCount = _cachedTotalDeathCount,
-                WandererKillOccurred = _cachedWandererKill,
-                SacrificeOccurred = _cachedSacrifice,
-            };
-        }
+        /// <summary>구역이 활성 상태인지 확인합니다.</summary>
+        private bool IsZoneActive(int zoneId)
+            => _activeZones != null
+               && zoneId >= 0
+               && zoneId < _activeZones.Length
+               && _activeZones[zoneId];
 
-        /// <summary>
-        /// 구역 캐릭터 조합에 맞는 후보를 전부 반환합니다.
-        /// 우선순위 정렬은 여기서 하고, 상황 조건 필터링은 CanPlay()에서 처리합니다.
-        ///
-        /// 우선순위
-        ///   1. 프로파일 핵심문장 (fragmentId 있음, 미수집)
-        ///   2. 사망 반응 계열
-        ///   3. 생존 조합 대사 / 2인 대화 / 3인 대화 (일반 대화, 정확한 조합 우선)
-        ///   4. 개인 독백
-        ///   5. 프로파일 유도대사
-        /// </summary>
-        private List<GroupDialogueEntry> FindCandidateEntries(HashSet<int> characterIds)
-        {
-            Debug.Log($"[DTM] FindCandidateEntries — 캐릭터: [{string.Join(",", characterIds)}], 전체 엔트리 수: {_dialogueData?.GroupDialogues?.Count ?? 0}");
-            if (_dialogueData == null) return new List<GroupDialogueEntry>();
-
-            var priority1 = new List<GroupDialogueEntry>(); // 프로파일 핵심문장
-            var priority2 = new List<GroupDialogueEntry>(); // 사망 반응 계열
-            var priority3 = new List<GroupDialogueEntry>(); // 일반 대화
-            var priority4 = new List<GroupDialogueEntry>(); // 개인 독백
-            var priority5 = new List<GroupDialogueEntry>(); // 프로파일 유도대사
-
-            foreach (var entry in _dialogueData.GroupDialogues)
-            {
-                if (entry == null) continue;
-                if (!MatchesAnyComboKey(entry.ComboKey, characterIds)) continue;
-
-                // ★ 추가
-                Debug.Log($"[DTM] 후보 엔트리 — ComboId:{entry.ComboId} SituationType:{entry.SituationType} FragmentId:{entry.FragmentId} UnlockConditionId:{entry.UnlockConditionId}");
-
-                switch (entry.SituationType)
-                {
-                    // ✅ 수정 — FragmentId 없어도 프로파일 핵심문장이면 priority1
-                    case "프로파일 핵심문장":
-                        if (string.IsNullOrEmpty(entry.FragmentId))
-                        {
-                            // FragmentId 없는 프로파일 핵심문장도 우선순위 1로 처리
-                            priority1.Add(entry);
-                        }
-                        else if (!(_fragmentCollector?.HasFragment(entry.FragmentId) ?? false))
-                        {
-                            priority1.Add(entry);
-                        }
-                        // 이미 수집된 건 priority3(일반대화)으로 폴백
-                        else
-                        {
-                            priority3.Add(entry);
-                        }
-                        break;
-
-                    case "사망 반응":
-                    case "사망 반응 / 연인 연쇄":
-                    case "사망 반응 / 배회자":
-                    case "사망 반응 / 살인자":
-                    case "사망 반응 / 복수자":
-                    case "사망 반응 / 희생양":
-                        priority2.Add(entry);
-                        break;
-
-                    case "개인 독백":
-                        priority4.Add(entry);
-                        break;
-
-                    case "프로파일 유도대사":
-                        priority5.Add(entry);
-                        break;
-
-                    default: // 생존 조합 대사, 2인 대화, 3인 대화, 전체 파티 대화
-                        priority3.Add(entry);
-                        break;
-                }
-            }
-
-            // 정확한 조합 우선 정렬 (participantIds.Count == characterIds.Count)
-            SortByMatchScore(priority1, characterIds);
-            SortByMatchScore(priority2, characterIds);
-            SortByMatchScore(priority3, characterIds);
-
-            // 우선순위 순서대로 합쳐서 반환
-            // TriggerDialoguesForAllZones에서 CanPlay()로 상황 조건 필터링 후 첫 번째 사용
-            var result = new List<GroupDialogueEntry>();
-            result.AddRange(priority1);
-            result.AddRange(priority2);
-            result.AddRange(priority3);
-            result.AddRange(priority4);
-            result.AddRange(priority5);
-            return result;
-        }
-
-        private void SortByMatchScore(List<GroupDialogueEntry> list, HashSet<int> characterIds)
-        {
-            list.Sort((a, b) =>
-            {
-                int scoreA = a.ParticipantIds.Count == characterIds.Count ? 2 : 1;
-                int scoreB = b.ParticipantIds.Count == characterIds.Count ? 2 : 1;
-                return scoreB.CompareTo(scoreA);
-            });
-        }
-
-        private bool MatchesAnyComboKey(string comboKey, HashSet<int> characterIds)
-        {
-            if (string.IsNullOrEmpty(comboKey)) return false;
-
-            string[] orKeys = comboKey.Split(
-                new[] { " 또는 " }, System.StringSplitOptions.RemoveEmptyEntries);
-
-            foreach (string key in orKeys)
-                if (MatchesComboKey(key.Trim(), characterIds)) return true;
-
-            return false;
-        }
-
-        private bool MatchesComboKey(string comboKey, HashSet<int> characterIds)
-        {
-            if (string.IsNullOrEmpty(comboKey)) return false;
-
-            bool hasAny = comboKey.Contains("ANY");
-            var parts = comboKey.Split('|');
-            var requiredIds = new List<int>();
-
-            foreach (string part in parts)
-            {
-                string p = part.Trim().Replace("#", "");
-                if (p == "ANY") continue;
-                if (int.TryParse(p, out int id))
-                    requiredIds.Add(id);
-            }
-
-            foreach (int rid in requiredIds)
-                if (!characterIds.Contains(rid)) return false;
-
-            if (!hasAny && requiredIds.Count == 1)
-                return characterIds.Count == 1;
-
-            return true;
-        }
-
-        /// <summary>
-        /// 여러 구역의 대사를 순서대로 재생합니다.
-        /// </summary>
-        private IEnumerator PlaySequential(
-            List<(GroupDialogueEntry entry, HashSet<int> ids)> entries)
-        {
-            foreach (var (entry, characterIds) in entries)
-            {
-                bool done = false;
-                PlayGroupDialogue(entry, characterIds, onComplete: () => done = true);
-                yield return new WaitUntil(() => done);
-            }
-        }
-
-        // ── Private — 조우 판별 ───────────────────────────────────────────
-
-        /// <summary>특정 구역 내의 생존 캐릭터 ID 집합을 반환합니다.</summary>
+        /// <summary>특정 구역에 있는 생존 캐릭터 ID 집합을 반환합니다.</summary>
         private HashSet<int> GetCharactersInZone(int zoneId)
         {
             var result = new HashSet<int>();
@@ -411,16 +357,181 @@ namespace HTH.Campaign
             return result;
         }
 
-        // ── Private — 다이얼로그 재생 ─────────────────────────────────────
+        /// <summary>
+        /// 한 구역에서 출력할 대사를 결정합니다.
+        /// 우선순위 후보를 순회하며 첫 번째 통과 엔트리를 반환합니다.
+        /// 통과 엔트리가 없고 Normal이 모두 출력됐으면 AlreadySeenLines로 폴백합니다.
+        /// </summary>
+        private PendingDialogue? ResolveDialogueForZone(HashSet<int> characterIds)
+        {
+            var candidates = FindCandidateEntries(characterIds);
+
+            // 우선순위 순으로 평가
+            foreach (var entry in candidates)
+            {
+                if (_conditionEvaluator.CanPlay(
+                        entry, characterIds, _progressTracker, _fragmentCollector, _cachedCtx))
+                {
+                    return new PendingDialogue
+                    {
+                        Entry = entry,
+                        CharacterIds = characterIds,
+                        UseFallback = false,
+                    };
+                }
+            }
+
+            // 출력할 엔트리 없음 → AlreadySeenLines 폴백
+            // 단, 해당 조합에 매칭되는 일반 엔트리가 존재했을 때만 폴백
+            if (HasAnyMatchingEntry(candidates))
+            {
+                var fallbackLines = _dialogueData?.AlreadySeenLines;
+                if (fallbackLines != null && fallbackLines.Count > 0)
+                {
+                    return new PendingDialogue
+                    {
+                        Entry = null,
+                        CharacterIds = characterIds,
+                        UseFallback = true,
+                    };
+                }
+            }
+
+            return null;
+        }
+
+        /// <summary>후보 리스트에 매칭 엔트리가 하나라도 있는지 확인합니다.</summary>
+        private bool HasAnyMatchingEntry(List<DialogueEntry> candidates)
+            => candidates != null && candidates.Count > 0;
+
+        // ═══════════════════════════════════════════════════════════════
+        // 후보 선별 및 우선순위 정렬
+        // ═══════════════════════════════════════════════════════════════
 
         /// <summary>
-        /// 그룹 대사를 재생합니다.
-        /// 완료 후 출력 기록, 조각 수집, 이름 공개를 처리합니다.
+        /// 구역 캐릭터 조합에 매칭되는 후보 엔트리를 우선순위 순으로 반환합니다.
+        ///
+        /// 우선순위:
+        ///   1. Core    (RewardFragmentId 미수집)
+        ///   2. Hint
+        ///   3. Special
+        ///   4. Normal  (Core 수집 완료된 것은 여기로 폴백)
+        ///   같은 우선순위 내에서 ParticipantIds 수 정확 일치 우선
         /// </summary>
-        private void PlayGroupDialogue(
-            GroupDialogueEntry entry,
+        private List<DialogueEntry> FindCandidateEntries(HashSet<int> characterIds)
+        {
+            if (_dialogueData == null) return new List<DialogueEntry>();
+
+            var p1 = new List<DialogueEntry>(); // Core (미수집)
+            var p2 = new List<DialogueEntry>(); // Hint
+            var p3 = new List<DialogueEntry>(); // Special
+            var p4 = new List<DialogueEntry>(); // Normal (Core 수집 완료 폴백 포함)
+
+            foreach (var entry in _dialogueData.Dialogues)
+            {
+                if (entry == null) continue;
+
+                var participantIds = entry.GetParticipantIds();
+                if (!ContainsRequiredParticipants(participantIds, characterIds)) continue;
+
+                switch (entry.Type)
+                {
+                    case DialogueType.Core:
+                        // 미수집은 p1, 수집 완료는 p4 폴백
+                        bool collected = !string.IsNullOrEmpty(entry.RewardFragmentId)
+                            && (_fragmentCollector?.HasFragment(entry.RewardFragmentId) ?? false);
+                        if (collected) p4.Add(entry);
+                        else p1.Add(entry);
+                        break;
+
+                    case DialogueType.Hint: p2.Add(entry); break;
+                    case DialogueType.Special: p3.Add(entry); break;
+                    case DialogueType.Normal:
+                    default: p4.Add(entry); break;
+                }
+            }
+
+            SortByExactMatch(p1, characterIds);
+            SortByExactMatch(p2, characterIds);
+            SortByExactMatch(p3, characterIds);
+            SortByExactMatch(p4, characterIds);
+
+            var result = new List<DialogueEntry>(p1.Count + p2.Count + p3.Count + p4.Count);
+            result.AddRange(p1);
+            result.AddRange(p2);
+            result.AddRange(p3);
+            result.AddRange(p4);
+            return result;
+        }
+
+        /// <summary>
+        /// ParticipantIds의 모든 ID가 characterIds에 포함되는지 확인합니다.
+        /// 단독 대사는 정확히 1명일 때만 true를 반환합니다.
+        /// </summary>
+        private bool ContainsRequiredParticipants(
+            List<int> participantIds, HashSet<int> characterIds)
+        {
+            if (participantIds == null || participantIds.Count == 0) return false;
+            foreach (int id in participantIds)
+                if (!characterIds.Contains(id)) return false;
+
+            // 단독 대사는 정확히 1명이어야 함
+            if (participantIds.Count == 1)
+                return characterIds.Count == 1;
+
+            return true;
+        }
+
+        /// <summary>참가자 수가 정확히 일치하는 엔트리를 앞으로 정렬합니다.</summary>
+        private void SortByExactMatch(List<DialogueEntry> list, HashSet<int> characterIds)
+        {
+            list.Sort((a, b) =>
+            {
+                int countA = a.GetParticipantIds().Count;
+                int countB = b.GetParticipantIds().Count;
+                int sa = countA == characterIds.Count ? 2 : 1;
+                int sb = countB == characterIds.Count ? 2 : 1;
+                return sb.CompareTo(sa);
+            });
+        }
+
+        // ═══════════════════════════════════════════════════════════════
+        // 대사 재생
+        // ═══════════════════════════════════════════════════════════════
+
+        /// <summary>여러 구역의 대사를 순서대로 재생합니다.</summary>
+        private IEnumerator PlaySequential(List<PendingDialogue> entries)
+        {
+            foreach (var pending in entries)
+            {
+                bool done = false;
+                if (pending.UseFallback)
+                    PlayFallbackLines(pending.CharacterIds, () => done = true);
+                else
+                    PlayDialogueEntry(pending.Entry, pending.CharacterIds, () => done = true);
+
+                yield return new WaitUntil(() => done);
+            }
+        }
+
+        /// <summary>시간대별 대사를 재생합니다.</summary>
+        private IEnumerator PlayTimeOfDayDialogue(TimeOfDayDialogueEntry entry)
+        {
+            if (_dialoguePlayer == null) yield break;
+
+            bool done = false;
+            _dialoguePlayer.Play(entry.Lines, onComplete: () => done = true);
+            yield return new WaitUntil(() => done);
+        }
+
+        /// <summary>
+        /// 일반 대사 엔트리를 재생합니다.
+        /// 재생 완료 후 출력 기록 마킹, 보상 조각 수집, 알림 출력을 처리합니다.
+        /// </summary>
+        private void PlayDialogueEntry(
+            DialogueEntry entry,
             HashSet<int> characterIds,
-            Action onComplete = null)
+            Action onComplete)
         {
             if (_dialoguePlayer == null)
             {
@@ -430,130 +541,103 @@ namespace HTH.Campaign
 
             _dialoguePlayer.Play(entry.Lines, onComplete: () =>
             {
-                _progressTracker.MarkComboPlayed(entry.ComboId);
+                // 일반 대사만 DialogueId 마킹 (Core는 RewardFragmentId로 관리)
+                if (string.IsNullOrEmpty(entry.RewardFragmentId))
+                    _progressTracker.MarkComboPlayed(entry.DialogueId);
 
-                // 조각 수집
-                bool fragmentCollected = !string.IsNullOrEmpty(entry.FragmentId)
-                    && TryCollectAndCheck(entry.FragmentId);
+                // 보상 조각 수집
+                bool fragmentCollected = !string.IsNullOrEmpty(entry.RewardFragmentId)
+                    && TryCollectFragment(entry.RewardFragmentId);
 
-                // 이름 공개 수집 및 등록
-                var revealedNames = CollectRevealedNames(entry.Lines);
-                RegisterRevealedNames(revealedNames);
+                Debug.Log($"[DTM] 대사 완료 — {entry.DialogueId} " +
+                          $"[{string.Join(",", characterIds)}]");
 
-                // 획득 알림
-                var notifications = BuildNotifications(
-                    entry.FragmentId, fragmentCollected, revealedNames);
-
-                Debug.Log($"[DialogueTriggerManager] 그룹 대사 완료 — " +
-                          $"{string.Join(",", characterIds)}");
-
-                if (notifications.Count > 0)
-                    _dialoguePlayer.PlayNotification(notifications, onComplete);
+                // 보상 알림 출력
+                if (fragmentCollected)
+                    PlayFragmentNotification(entry.RewardFragmentId, onComplete);
                 else
                     onComplete?.Invoke();
             });
         }
 
-        /// <summary>조각 수집을 시도하고 실제로 수집됐는지 반환합니다.</summary>
-        private bool TryCollectAndCheck(string fragmentId)
+        /// <summary>이미 본 대화 대체 라인을 재생합니다.</summary>
+        private void PlayFallbackLines(HashSet<int> characterIds, Action onComplete)
+        {
+            if (_dialoguePlayer == null || _dialogueData == null)
+            {
+                onComplete?.Invoke();
+                return;
+            }
+
+            // IReadOnlyList<DialogueLine> → List<DialogueLine> 변환
+            // DialoguePlayer.Play()가 List<T>를 요구하므로 변환 필요
+            var lines = new List<DialogueLine>(_dialogueData.AlreadySeenLines);
+            if (lines.Count == 0)
+            {
+                onComplete?.Invoke();
+                return;
+            }
+
+            Debug.Log($"[DTM] 이미 본 대화 폴백 — [{string.Join(",", characterIds)}]");
+            _dialoguePlayer.Play(lines, onComplete: onComplete);
+        }
+
+        /// <summary>보상 조각 획득 알림을 출력합니다.</summary>
+        private void PlayFragmentNotification(string fragmentId, Action onComplete)
+        {
+            int charId = ParseCharacterIdFromFragment(fragmentId);
+            string name = CharacterRecordPanelManager.Instance?.GetCollectedName(charId);
+            string label = !string.IsNullOrEmpty(name) ? $"'{name}'" : $"#{charId}";
+            string msg = $"{label}의 대화 조각을 획득했습니다.\n인물 기록장에서 확인할 수 있습니다.";
+
+            _dialoguePlayer.PlayNotification(new List<string> { msg }, onComplete);
+        }
+
+        // ═══════════════════════════════════════════════════════════════
+        // 헬퍼 메서드
+        // ═══════════════════════════════════════════════════════════════
+
+        /// <summary>보상 조각 수집을 시도하고 실제로 수집됐는지 반환합니다.</summary>
+        private bool TryCollectFragment(string fragmentId)
         {
             if (_fragmentCollector == null) return false;
             if (_fragmentCollector.HasFragment(fragmentId)) return false;
-
             _fragmentCollector.TryCollectFragment(fragmentId);
             return true;
         }
 
-        /// <summary>대사 줄에서 공개될 이름 목록을 수집합니다.</summary>
-        private List<(int characterId, string name)> CollectRevealedNames(
-            List<DialogueLine> lines)
-        {
-            var result = new List<(int, string)>();
-            if (lines == null) return result;
-
-            foreach (var line in lines)
-            {
-                if (line == null) continue;
-                if (line.RevealCharacterId < 0) continue;
-                if (string.IsNullOrEmpty(line.RevealCharacterName)) continue;
-
-                // 이미 수집된 이름 제외
-                string existing = CharacterRecordPanelManager.Instance?
-                    .GetCollectedName(line.RevealCharacterId);
-                if (!string.IsNullOrEmpty(existing)) continue;
-
-                // 중복 방지
-                bool alreadyInList = false;
-                foreach (var r in result)
-                    if (r.Item1 == line.RevealCharacterId) { alreadyInList = true; break; }
-
-                if (!alreadyInList)
-                    result.Add((line.RevealCharacterId, line.RevealCharacterName));
-            }
-
-            return result;
-        }
-
-        /// <summary>수집된 이름을 CharacterRecordPanelManager에 등록합니다.</summary>
-        private void RegisterRevealedNames(List<(int characterId, string name)> revealedNames)
-        {
-            foreach (var (id, name) in revealedNames)
-                CharacterRecordPanelManager.Instance?.RegisterCharacterName(id, name);
-        }
-
-        /// <summary>획득 알림 메시지 목록을 생성합니다.</summary>
-        private List<string> BuildNotifications(
-            string fragmentId,
-            bool fragmentCollected,
-            List<(int characterId, string name)> revealedNames)
-        {
-            var messages = new List<string>();
-
-            foreach (var (id, name) in revealedNames)
-                messages.Add($"'{name}'의 이름을 알게 됐습니다.\n인물 기록장에서 확인할 수 있습니다.");
-
-            if (fragmentCollected && !string.IsNullOrEmpty(fragmentId))
-            {
-                int charId = ParseCharacterIdFromFragment(fragmentId);
-                string charLabel = charId >= 0 ? $"#{charId}" : "캐릭터";
-                string charName = CharacterRecordPanelManager.Instance?.GetCollectedName(charId);
-
-                if (!string.IsNullOrEmpty(charName))
-                    charLabel = $"'{charName}'";
-
-                messages.Add($"{charLabel}의 대화 조각을 획득했습니다.\n인물 기록장에서 확인할 수 있습니다.");
-            }
-
-            return messages;
-        }
-
         /// <summary>
-        /// P01_01 형식의 FragmentId에서 캐릭터 ID를 파싱합니다.
+        /// FragmentId(P01_01 형식)에서 캐릭터 ID를 파싱합니다.
         /// 예: "P01_01" → 1 / "P07_05" → 7
         /// </summary>
         private int ParseCharacterIdFromFragment(string fragmentId)
         {
-            if (string.IsNullOrEmpty(fragmentId)) return -1;
-
-            if (fragmentId.Length >= 3 && fragmentId[0] == 'P')
-            {
-                int underscoreIdx = fragmentId.IndexOf('_');
-                if (underscoreIdx > 1)
-                {
-                    string charPart = fragmentId.Substring(1, underscoreIdx - 1);
-                    if (int.TryParse(charPart, out int charId))
-                        return charId;
-                }
-            }
-
-            return -1;
+            if (string.IsNullOrEmpty(fragmentId) || fragmentId[0] != 'P') return -1;
+            int idx = fragmentId.IndexOf('_');
+            if (idx <= 1) return -1;
+            return int.TryParse(fragmentId.Substring(1, idx - 1), out int id) ? id : -1;
         }
 
-        // ── 테스트용 (배포 전 제거) ───────────────────────────────────────
+        // ═══════════════════════════════════════════════════════════════
+        // 내부 데이터 구조
+        // ═══════════════════════════════════════════════════════════════
 
-        [ContextMenu("테스트: Phase2 강제 진입")]
-        private void TestEnterPhase2()
-            => CampaignModeManager.Instance?.OnFirstRunCleared("Stage_1");
+        /// <summary>출력 대기 중인 대사 정보입니다.</summary>
+        private struct PendingDialogue
+        {
+            /// <summary>출력할 대사 엔트리. UseFallback=true면 null.</summary>
+            public DialogueEntry Entry;
+
+            /// <summary>해당 구역의 캐릭터 ID 집합.</summary>
+            public HashSet<int> CharacterIds;
+
+            /// <summary>true면 AlreadySeenLines 대체 출력.</summary>
+            public bool UseFallback;
+        }
+
+        // ═══════════════════════════════════════════════════════════════
+        // 테스트용 (배포 전 제거)
+        // ═══════════════════════════════════════════════════════════════
 
         [ContextMenu("테스트: PlayerPrefs 초기화")]
         private void TestClearPlayerPrefs()

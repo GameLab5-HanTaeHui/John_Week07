@@ -240,14 +240,6 @@ namespace HTH.Campaign
 
         private IEnumerator PlayCoroutine(List<DialogueLine> lines)
         {
-            // 패널 활성화 전 첫 번째 줄을 미리 세팅합니다.
-            var firstLine = lines[0];
-            if (firstLine != null)
-            {
-                UpdateCharacterDisplay(firstLine.SpeakerId);
-                if (_dialogueText != null)
-                    _dialogueText.text = BuildDialogueText(firstLine.Text);
-            }
 
             if (_dialoguePanel != null)
                 _dialoguePanel.SetActive(true);
@@ -271,7 +263,6 @@ namespace HTH.Campaign
                 }
                 else
                 {
-                    UpdateCharacterDisplay(line.SpeakerId);
                     if (_dialogueText != null)
                         _dialogueText.text = BuildDialogueText(line.Text);
                 }

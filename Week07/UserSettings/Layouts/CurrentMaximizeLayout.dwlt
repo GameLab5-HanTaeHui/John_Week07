@@ -24,7 +24,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 112}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 40038
+  controlID: 47412
   draggingID: 0
 --- !u!114 &2
 MonoBehaviour:
@@ -101,7 +101,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 112}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 39976
+  controlID: 47413
   draggingID: 0
 --- !u!114 &4
 MonoBehaviour:
@@ -127,7 +127,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 56}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 39963
+  controlID: 47414
   draggingID: 0
 --- !u!114 &5
 MonoBehaviour:
@@ -201,6 +201,12 @@ MonoBehaviour:
       m_LastClickedID:
         m_Data: 0
       m_ExpandedIDs:
+      - m_Data: -448228
+      - m_Data: -425012
+      - m_Data: -424030
+      - m_Data: -419768
+      - m_Data: -417538
+      - m_Data: -417382
       - m_Data: -412196
       - m_Data: -411214
       - m_Data: -406960
@@ -294,6 +300,8 @@ MonoBehaviour:
       - m_Data: 410280
       - m_Data: 411092
       - m_Data: 438254
+      - m_Data: 568124
+      - m_Data: 568294
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -329,7 +337,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: BuildProfileWindow
+  m_Name: SceneView
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
@@ -338,15 +346,15 @@ MonoBehaviour:
     y: 0
     width: 1249
     height: 727
-  m_MinSize: {x: 727, y: 426}
+  m_MinSize: {x: 202, y: 226}
   m_MaxSize: {x: 4002, y: 4026}
-  m_ActualView: {fileID: 10}
+  m_ActualView: {fileID: 8}
   m_Panes:
   - {fileID: 8}
   - {fileID: 9}
   - {fileID: 10}
-  m_Selected: 2
-  m_LastSelected: 0
+  m_Selected: 0
+  m_LastSelected: 2
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -928,9 +936,9 @@ MonoBehaviour:
   m_AudioPlay: 0
   m_DebugDrawModesUseInteractiveLightBakingData: 0
   m_Position:
-    m_Target: {x: -0.73252493, y: 22.126797, z: -1.244983}
+    m_Target: {x: -1.2648247, y: 20.442415, z: -4.356296}
     speed: 2
-    m_Value: {x: -0.73252493, y: 22.126797, z: -1.244983}
+    m_Value: {x: -1.2648247, y: 20.442415, z: -4.356296}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -976,13 +984,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: -0.046052895, y: 0.9104939, z: -0.3959289, w: -0.11362066}
+    m_Target: {x: 0.049097933, y: 0.78155476, z: -0.61992484, w: 0.05695914}
     speed: 2
-    m_Value: {x: -0.046052895, y: 0.91049385, z: -0.3959289, w: -0.113620654}
+    m_Value: {x: 0.04907856, y: 0.7812464, z: -0.6196802, w: 0.056936666}
   m_Size:
-    m_Target: 1.51812
+    m_Target: 6.409318
     speed: 2
-    m_Value: 1.51812
+    m_Value: 6.409318
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -1254,7 +1262,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: ProjectBrowser
+  m_Name: ConsoleWindow
   m_EditorClassIdentifier: UnityEditor.dll::UnityEditor.DockArea
   m_Children: []
   m_Position:
@@ -1263,15 +1271,15 @@ MonoBehaviour:
     y: 727
     width: 1561
     height: 326
-  m_MinSize: {x: 231, y: 276}
-  m_MaxSize: {x: 10001, y: 10026}
-  m_ActualView: {fileID: 13}
+  m_MinSize: {x: 101, y: 126}
+  m_MaxSize: {x: 4001, y: 4026}
+  m_ActualView: {fileID: 12}
   m_Panes:
   - {fileID: 12}
   - {fileID: 13}
   - {fileID: 14}
-  m_Selected: 1
-  m_LastSelected: 0
+  m_Selected: 0
+  m_LastSelected: 1
 --- !u!114 &12
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -1359,7 +1367,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 0
     m_Folders:
-    - Assets/HTH/CampaignSO/Stage01Profile
+    - Assets/HTH/Campaign
     m_Globs: []
     m_ProductIds: 
     m_AnyWithAssetOrigin: 0
@@ -1369,7 +1377,7 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 72
   m_LastFolders:
-  - Assets/HTH/CampaignSO/Stage01Profile
+  - Assets/HTH/Campaign
   m_LastFoldersGridSize: 72
   m_LastProjectPath: C:\Users\jungle\Desktop\Git\John_Week07\Week07
   m_LockTracker:
@@ -1378,9 +1386,9 @@ MonoBehaviour:
   m_FolderTreeState:
     scrollPos: {x: 0, y: 79}
     m_SelectedIDs:
-    - m_Data: 98900
+    - m_Data: 66324
     m_LastClickedID:
-      m_Data: 98900
+      m_Data: 66324
     m_ExpandedIDs:
     - m_Data: 0
     - m_Data: 66146
@@ -1461,7 +1469,7 @@ MonoBehaviour:
     m_SelectedInstanceIDs:
     - m_Data: 57852
     m_LastClickedInstanceID: 57852
-    m_HadKeyboardFocusLastEvent: 1
+    m_HadKeyboardFocusLastEvent: 0
     m_ExpandedInstanceIDs:
     - m_Data: 48954
     - m_Data: 64280

@@ -455,17 +455,7 @@ namespace HTH.Campaign
                 || _currentProfile.EpilogueLines.Count == 0) yield break;
 
             var lines = new List<DialogueLine>();
-            foreach (var text in _currentProfile.EpilogueLines)
-            {
-                if (string.IsNullOrWhiteSpace(text)) continue;
-                lines.Add(new DialogueLine
-                {
-                    SpeakerId = _currentCharacterId,
-                    Text = text.Trim(),
-                    RevealCharacterId = -1,
-                    RevealCharacterName = string.Empty
-                });
-            }
+
 
             if (lines.Count == 0) yield break;
 

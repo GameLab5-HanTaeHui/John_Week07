@@ -205,13 +205,6 @@ namespace HTH.Campaign
             {
                 var lines = new System.Collections.Generic.List<DialogueLine>
                 {
-                    new DialogueLine
-                    {
-                        SpeakerId           = _transitionSpeakerId,
-                        Text                = _phase2TransitionLines.Trim(),
-                        RevealCharacterId   = -1,
-                        RevealCharacterName = string.Empty,
-                    }
                 };
                 bool done = false;
                 _phase2TransitionPlayer.Play(lines, onComplete: () => done = true);
