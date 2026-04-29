@@ -19,7 +19,7 @@ namespace HTH.Campaign
     public class CampaignCharacterSpawner : MonoBehaviour
     {
         [SerializeField] private CharacterRegistry _characterRegistry;
-        [SerializeField] private ZoneLayout _zoneLayout;
+        [SerializeField] private CampaignZoneLayout _zoneLayout;
 
         /// <summary>모든 CharacterView를 GameState의 Zone 슬롯 위치로 스냅합니다.</summary>
         public void SyncViewsToGameState(GameState gameState, Dictionary<int, CharacterView> views)

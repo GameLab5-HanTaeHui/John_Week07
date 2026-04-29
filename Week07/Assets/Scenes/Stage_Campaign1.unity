@@ -36308,7 +36308,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HTH.ButtonColor
   _buttonText: {fileID: 1216311774}
-  _originColor: {r: 1, g: 1, b: 1, a: 1}
+  _originColor: {r: 0, g: 0, b: 0, a: 1}
   _ChangeColor: {r: 0, g: 1, b: 0, a: 1}
 --- !u!1 &1266154417
 GameObject:
@@ -38330,7 +38330,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HTH.ButtonColor
   _buttonText: {fileID: 968844812}
-  _originColor: {r: 1, g: 1, b: 1, a: 1}
+  _originColor: {r: 0, g: 0, b: 0, a: 1}
   _ChangeColor: {r: 0, g: 1, b: 0, a: 1}
 --- !u!1 &1322798818
 GameObject:
@@ -40336,8 +40336,8 @@ MonoBehaviour:
   _dialogueData: {fileID: 11400000, guid: 71758b0369409d743afa035ecbeacf5a, type: 2}
   _dialoguePlayer: {fileID: 2077496617}
   _fragmentCollector: {fileID: 81887182}
-  _activeZones: 00000100
-  _useCharacterBasedZone: 0
+  _activeZones: 01010101
+  _useCharacterBasedZone: 1
   _anchorCharacterId: 1
   _triggerDelay: 1
 --- !u!1 &1386920848
@@ -45931,6 +45931,8 @@ GameObject:
   - component: {fileID: 1606167512}
   - component: {fileID: 1606167514}
   - component: {fileID: 1606167513}
+  - component: {fileID: 1606167516}
+  - component: {fileID: 1606167515}
   m_Layer: 5
   m_Name: FadePanel
   m_TagString: Untagged
@@ -45996,6 +45998,39 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1606167511}
   m_CullTransparentMesh: 1
+--- !u!114 &1606167515
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1606167511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f2216d9ca6121941ba0fadecee6a620, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RaycastBlocker
+--- !u!65 &1606167516
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1606167511}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1607479228
 GameObject:
   m_ObjectHideFlags: 0
@@ -49964,14 +49999,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 1763139384}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f847307f09b28904f94326cda7e82055, type: 3}
+  m_Script: {fileID: 11500000, guid: c7b7ff8b11eac4548bbb1382d1616c68, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ZoneLayout
+  m_EditorClassIdentifier: Assembly-CSharp::HTH.Campaign.CampaignZoneLayout
   _zones:
   - {fileID: 137149188}
   - {fileID: 202144440}
   - {fileID: 1576250530}
   - {fileID: 1273087942}
+  _investigationZoneId: 2
 --- !u!1 &1766179981
 GameObject:
   m_ObjectHideFlags: 0

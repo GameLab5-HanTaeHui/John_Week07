@@ -20,9 +20,13 @@ namespace HTH.Campaign
     ///   → Start() → InitializeCampaign()
     ///   → OnCampaignInitialized 이벤트 발생
     ///
+    ///   [에디터 직접 실행 폴백]
+    ///   → NewGameConfig 미설정이면 _editorStageId로 강제 초기화
+    ///
     /// ─── Inspector 연결 ──────────────────────────────────────────────────
-    ///   Lobby Scene Name  → "LobbyScene"
-    ///   Ending Scene Name → 엔딩 씬 이름 (비우면 로비로 이동)
+    ///   Lobby Scene Name   → "LobbyScene"
+    ///   Ending Scene Name  → 엔딩 씬 이름 (비우면 로비로 이동)
+    ///   Editor Stage Id    → 에디터 직접 실행 시 사용할 StageId (기본 "CampaignMode")
     /// </summary>
     [DisallowMultipleComponent]
     public class CampaignModeManager : SingletonMonobehaviour<CampaignModeManager>
@@ -35,6 +39,11 @@ namespace HTH.Campaign
 
         [Tooltip("엔딩 씬 이름입니다. 비워두면 로비로 이동합니다.")]
         [SerializeField] private string _endingSceneName = "";
+
+        [Header("에디터 직접 실행 설정")]
+        [Tooltip("NewGameConfig가 설정되지 않은 상태(에디터 직접 실행)일 때 사용할 StageId입니다.\n" +
+                 "로비를 통해 진입하면 NewGameConfig.StageId가 우선됩니다.")]
+        [SerializeField] private string _editorStageId = "CampaignMode";
 
         // ── 상태 ─────────────────────────────────────────────────────────
 
@@ -54,10 +63,20 @@ namespace HTH.Campaign
         private void Start()
         {
             if (NewGameConfig.IsTutorial) return;
-            if (!NewGameConfig.ForceStartAsPhase2) return;
 
-            NewGameConfig.ForceStartAsPhase2 = false;
-            StartCoroutine(InitializeCampaign(NewGameConfig.StageId));
+            if (NewGameConfig.ForceStartAsPhase2)
+            {
+                // 정상 진입 — 로비에서 ForceStartAsPhase2 설정
+                NewGameConfig.ForceStartAsPhase2 = false;
+                StartCoroutine(InitializeCampaign(NewGameConfig.StageId));
+            }
+            else
+            {
+                // ★ 에디터 직접 실행 폴백 — NewGameConfig 미설정 시 _editorStageId 사용
+                Debug.LogWarning("[CampaignModeManager] NewGameConfig 미설정 — " +
+                                 $"에디터 직접 실행으로 간주, StageId: {_editorStageId}");
+                StartCoroutine(InitializeCampaign(_editorStageId));
+            }
         }
 
         // ── Private ──────────────────────────────────────────────────────

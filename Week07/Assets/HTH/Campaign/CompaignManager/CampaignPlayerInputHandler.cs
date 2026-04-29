@@ -24,7 +24,7 @@ namespace HTH.Campaign
         [SerializeField] private Camera _mainCamera;
         [SerializeField] private LayerMask _zoneLayerMask;
         [SerializeField] private LayerMask _characterLayerMask;
-        [SerializeField] private ZoneLayout _zoneLayout;
+        [SerializeField] private CampaignZoneLayout _zoneLayout;
 
         private const float DragThreshold = 8f;
 
