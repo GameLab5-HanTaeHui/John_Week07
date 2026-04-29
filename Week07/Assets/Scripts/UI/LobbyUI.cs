@@ -50,9 +50,9 @@ public class LobbyUI : MonoBehaviour
     [Header("스테이지 설정")]
     [SerializeField] private string _stageId = "Stage_1";
 
-    [Header("캠페인 모드 설정")]
-    [Tooltip("true = 처음부터 기본 모드 없이 캠페인 모드만 실행")]
-    [SerializeField] private bool _alwaysStartAsPhase2 = false;
+    //[Header("캠페인 모드 설정")]
+    //[Tooltip("true = 처음부터 기본 모드 없이 캠페인 모드만 실행")]
+    //[SerializeField] private bool _alwaysStartAsPhase2 = false;
 
     // ✅ 추가 — 필드
     [Header("캠페인 이어하기")]

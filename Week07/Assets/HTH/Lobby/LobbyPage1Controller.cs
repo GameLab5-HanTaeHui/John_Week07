@@ -109,7 +109,7 @@ namespace HTH.Campaign
 
         private void OnNextPageClicked()
         {
-            var bookAnimator = FindObjectOfType<TitleBookAnimator>();
+            var bookAnimator = FindFirstObjectByType<TitleBookAnimator>();
             bookAnimator?.TurnPage();
         }
 

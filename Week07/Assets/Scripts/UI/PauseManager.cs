@@ -67,7 +67,7 @@ public class PauseManager : MonoBehaviour
         // ★ 캠페인 모드에서 로비 이탈 시 수집된 조각 강제 저장
         if (HTH.Campaign.CampaignModeManager.IsPhase2Active)
         {
-            var fragmentCollector = FindObjectOfType<HTH.Campaign.FragmentCollector>();
+            var fragmentCollector = FindFirstObjectByType<HTH.Campaign.FragmentCollector>();
             fragmentCollector?.Save();
             Debug.Log("[PauseManager] 캠페인 모드 — 로비 이탈 전 조각 데이터 저장");
         }

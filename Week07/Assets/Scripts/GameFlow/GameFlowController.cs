@@ -4,17 +4,13 @@ using UnityEngine.SceneManagement;
 
 /// <summary>
 /// 게임 흐름의 진입점입니다. LoopStateMachine을 소유하고 매 프레임 Tick을 전달합니다.
-/// UI의 추리 선언 버튼은 이 클래스의 RequestDeduction()에 연결하세요.
+/// 기본모드 전용입니다. 캠페인 모드는 CampaignGameFlowController를 사용하세요.
 ///
 /// Inspector 필수 연결:
-///   OrderConfig         → RoleActivationOrderConfig 에셋 (직업 능력 발동 순서)
-///   CharacterRegistry   → CharacterRegistry 에셋 (7개 캐릭터 데이터)
-///   StageRoleConfig     → StageRoleConfig 에셋 (현재 스테이지 역할 풀)
+///   OrderConfig         → RoleActivationOrderConfig 에셋
+///   CharacterRegistry   → CharacterRegistry 에셋
+///   StageRoleConfig     → StageRoleConfig 에셋
 ///   CharacterSpawner    → 씬의 CharacterSpawner 컴포넌트
-///
-/// 실행 순서:
-///   DefaultExecutionOrder(-10)으로 PlayerTurnInputHandler보다 먼저 Start()가 실행됩니다.
-///   PlayerTurnInputHandler.Start()에서 CharacterViews / PlayerActionState를 안전하게 참조할 수 있습니다.
 /// </summary>
 [DefaultExecutionOrder(-10)]
 [DisallowMultipleComponent]
@@ -27,13 +23,9 @@ public class GameFlowController : SingletonMonobehaviour<GameFlowController>
     [SerializeField] private CharacterSpawner _characterSpawner;
     [SerializeField] private string _lobbySceneName = "LobbyScene";
 
-    /// <summary>이 씬의 스테이지 식별자입니다. 클리어 기록 저장 및 다음 스테이지 해금에 사용됩니다.</summary>
     [SerializeField] private string _stageId;
-
-    /// <summary>이 씬의 스테이지 식별자입니다.</summary>
     public string StageId => !string.IsNullOrEmpty(NewGameConfig.StageId)
-        ? NewGameConfig.StageId
-        : _stageId;
+        ? NewGameConfig.StageId : _stageId;
 
     [Tooltip("이 스테이지를 클리어하면 로비에서 엔딩 다이얼로그를 재생합니다.")]
     [SerializeField] private bool _triggerEndingDialogueOnWin;
@@ -41,15 +33,11 @@ public class GameFlowController : SingletonMonobehaviour<GameFlowController>
     private LoopStateMachine _loopSM;
     private Dictionary<int, CharacterView> _characterViews;
 
-    /// <summary>characterId → CharacterView. SpawnAll 이후 유효합니다.</summary>
     public IReadOnlyDictionary<int, CharacterView> CharacterViews => _characterViews;
-
     public CharacterSpawner GetCharacterSpawner() => _characterSpawner;
 
-    /// <summary>
-    /// 루프 리셋(GameState 재생성 완료) 시 발생합니다.
-    /// PlayerTurnInputHandler 등 외부 컴포넌트가 구독해 내부 상태를 동기화할 수 있습니다.
-    /// </summary>
+    // ── 이벤트 ────────────────────────────────────────────────────────────────
+
     public event System.Action OnLoopReset
     {
         add => _loopSM.OnLoopReset += value;
@@ -74,30 +62,22 @@ public class GameFlowController : SingletonMonobehaviour<GameFlowController>
         remove => _loopSM.OnFinalDecisionExited -= value;
     }
 
-    /// <summary>게임 종료(승/패) 시 발생합니다. isWin = true 이면 클리어, false 이면 실패.</summary>
     public event System.Action<bool> OnGameEnded
     {
         add => _loopSM.OnGameEnded += value;
         remove => _loopSM.OnGameEnded -= value;
     }
 
-    /// <summary>
-    /// 최종 결정 제출 직후 발생합니다. DialogueManager에서 구독해 승/패 다이얼로그를 재생하세요.
-    /// 다이얼로그 완료 후 FinishGameEndDialogue()를 호출해야 WinState/LoseState로 전환됩니다.
-    /// </summary>
     public event System.Action<bool> OnGameEndDialogueRequested
     {
         add => _loopSM.OnGameEndDialogueRequested += value;
         remove => _loopSM.OnGameEndDialogueRequested -= value;
     }
 
-    /// <summary>
-    /// 게임 종료 다이얼로그가 끝난 직후 발생합니다. FinalDecisionUI에서 구독해 결과 패널을 표시하세요.
-    /// </summary>
     public event System.Action<bool> OnGameEndDialogueComplete;
-
-    /// <summary>DialogueManager가 게임 종료 다이얼로그를 완료한 후 호출합니다.</summary>
     public void NotifyGameEndDialogueComplete(bool isWin) => OnGameEndDialogueComplete?.Invoke(isWin);
+
+    // ── Unity ────────────────────────────────────────────────────────────────
 
     protected override void Awake()
     {
@@ -108,7 +88,6 @@ public class GameFlowController : SingletonMonobehaviour<GameFlowController>
 
     private void Start()
     {
-        // StartGame()은 동기 실행 — 완료 시점에 GameState가 준비되어 있습니다.
         _loopSM.StartGame();
         SpawnCharacters();
         _loopSM.OnLoopReset += HandleLoopReset;
@@ -118,118 +97,11 @@ public class GameFlowController : SingletonMonobehaviour<GameFlowController>
         if (turnSM != null)
         {
             turnSM.OnTurnEndEntered += (_, __) => RefreshAllCharacterViews();
-            // 파도 구역 효과가 PlayerActionState.Enter()에서 적용된 뒤 뷰를 재동기화합니다.
             turnSM.OnPlayerActionStarted += SyncViewsAfterZoneEffects;
         }
     }
 
-    private void Update()
-    {
-        _loopSM.Tick();
-    }
-
-    /// <summary>
-    /// HoldToEnterFinalDecision이 완료됐을 때 호출합니다.
-    /// PlayerAction 단계 또는 AwaitingFinalDecision 상태에서만 유효합니다.
-    /// </summary>
-    public void EnterFinalDecision() => _loopSM?.EnterFinalDecision();
-
-    /// <summary>FinalDecisionUI 판정 완료 후 호출합니다.</summary>
-    public void SubmitFinalDecision(bool isWin) => _loopSM?.GetFinalDecisionState()?.SubmitDecision(isWin);
-
-    /// <summary>현재 GameState의 특정 캐릭터 실제 역할을 반환합니다.</summary>
-    public RoleType GetActualRole(int characterId) => _loopSM?.GameState?.GetRole(characterId) ?? default;
-
-    /// <summary>HoldToEnterFinalDecision 활성화 가능 여부입니다.</summary>
-    public bool CanEnterFinalDecision
-    {
-        get
-        {
-            var loop = CurrentLoopState;
-            return loop == LoopStateType.AwaitingFinalDecision
-                || (loop == LoopStateType.RunningTurn && CurrentTurnState == TurnStateType.PlayerAction);
-        }
-    }
-
-    // ── HUD 정보 노출 ─────────────────────────────────────────────────────────
-
-    /// <summary>현재 GameState입니다. PlayerTurnInputHandler에서 구역 조회에 사용합니다.</summary>
-    public IGameState GameState => _loopSM?.GameState;
-
-    /// <summary>현재 루프 번호 (1-based). GameHUD 표시용.</summary>
-    public int LoopCount => (_loopSM?.LoopCount ?? 0) + 1;
-    /// <summary>현재 턴 번호 (1-based). GameHUD 표시용.</summary>
-    public int TurnCount => (_loopSM?.TurnCount ?? 0) + 1;
-    public LoopStateType CurrentLoopState => _loopSM?.CurrentState ?? default;
-    public TurnStateType CurrentTurnState => _loopSM?.TurnSM?.CurrentState ?? default;
-
-    /// <summary>GameHUD에서 TurnSM 이벤트 구독에 사용합니다.</summary>
-    //[HTH추가]
-    /// <summary>현재 일차 (1~5, 루프 번호 기반)</summary>
-    public int CurrentDay => (_loopSM?.LoopCount ?? 0) + 1;
-
-    /// <summary>현재 시간대 문자열 (턴 번호 기반)</summary>
-    public string CurrentTimeOfDay => (_loopSM?.TurnCount ?? 0) switch
-    {
-        0 => "morning",
-        1 => "lunch",
-        2 => "evening",
-        _ => "unknown"
-    };
-
-    public TurnStateMachine GetTurnSM() => _loopSM?.TurnSM;
-
-    /// <summary>DialogueManager가 다이어로그 재생을 마친 후 호출합니다.</summary>
-    public void FinishTurnEnd() => _loopSM?.TurnSM?.FinishTurnEnd();
-
-    /// <summary>DialogueManager가 승/패 다이얼로그를 완료한 후 호출합니다.</summary>
-    public void FinishGameEndDialogue() => _loopSM?.FinishGameEndDialogue();
-
-    /// <summary>턴 종료 버튼에서 호출합니다. 미확정 캐릭터는 현 위치 유지, 특수능력 정상 발동.</summary>
-    public void ForceEndTurn()
-    {
-        bool isRunning = CurrentLoopState == LoopStateType.RunningTurn;
-        bool isPhase2Win = CurrentLoopState == LoopStateType.WinState
-                        && HTH.Campaign.CampaignModeManager.IsPhase2Active;
-        if (!isRunning && !isPhase2Win) return;
-        _loopSM?.ForceEndPlayerAction();
-    }
-
-    // ── 입력 라우팅 (PlayerTurnInputHandler → 여기 → LoopSM → TurnSM → PlayerActionState) ──
-
-    /// <summary>PlayerTurnInputHandler에서 캐릭터 클릭 시 호출합니다.</summary>
-    public void NotifyCharacterClicked(int characterId)
-    {
-        bool isRunning = CurrentLoopState == LoopStateType.RunningTurn;
-        bool isPhase2Win = CurrentLoopState == LoopStateType.WinState
-                        && HTH.Campaign.CampaignModeManager.IsPhase2Active;
-        if (!isRunning && !isPhase2Win) return;
-        _loopSM?.NotifyCharacterClicked(characterId);
-    }
-
-    /// <summary>PlayerTurnInputHandler에서 구역 클릭 시 호출합니다.</summary>
-    public void NotifyZoneClicked(int zoneId)
-    {
-        bool isRunning = CurrentLoopState == LoopStateType.RunningTurn;
-        bool isPhase2Win = CurrentLoopState == LoopStateType.WinState
-                        && HTH.Campaign.CampaignModeManager.IsPhase2Active;
-        if (!isRunning && !isPhase2Win) return;
-        _loopSM?.NotifyZoneClicked(zoneId);
-    }
-
-    /// <summary>
-    /// 드래그 시작/취소 시 호출합니다. 재클릭=대기 로직을 우회해 강제 선택합니다.
-    /// characterId=-1이면 선택 해제.
-    /// </summary>
-    public void BeginDragSelect(int characterId) => _loopSM?.BeginDragSelect(characterId);
-
-    /// <summary>
-    /// PlayerTurnInputHandler에서 이벤트 구독 대상인 PlayerActionState를 가져옵니다.
-    /// GameFlowController.Start() 이후에 호출하세요.
-    /// </summary>
-    public PlayerActionState GetPlayerActionState() => _loopSM?.GetPlayerActionState();
-
-    // ── Private ──────────────────────────────────────────────────────────────
+    private void Update() => _loopSM.Tick();
 
     private void OnDestroy()
     {
@@ -244,39 +116,88 @@ public class GameFlowController : SingletonMonobehaviour<GameFlowController>
             turnSM.OnPlayerActionStarted -= SyncViewsAfterZoneEffects;
     }
 
+    // ── 공개 API ─────────────────────────────────────────────────────────────
+
+    public void EnterFinalDecision() => _loopSM?.EnterFinalDecision();
+    public void SubmitFinalDecision(bool isWin) => _loopSM?.GetFinalDecisionState()?.SubmitDecision(isWin);
+    public RoleType GetActualRole(int characterId) => _loopSM?.GameState?.GetRole(characterId) ?? default;
+
+    public bool CanEnterFinalDecision
+    {
+        get
+        {
+            var loop = CurrentLoopState;
+            return loop == LoopStateType.AwaitingFinalDecision
+                || (loop == LoopStateType.RunningTurn && CurrentTurnState == TurnStateType.PlayerAction);
+        }
+    }
+
+    // ── HUD 정보 노출 ─────────────────────────────────────────────────────────
+
+    public IGameState GameState => _loopSM?.GameState;
+    public int LoopCount => (_loopSM?.LoopCount ?? 0) + 1;
+    public int TurnCount => (_loopSM?.TurnCount ?? 0) + 1;
+    public int CurrentDay => (_loopSM?.LoopCount ?? 0) + 1;
+    public string CurrentTimeOfDay => (_loopSM?.TurnCount ?? 0) switch
+    {
+        0 => "morning",
+        1 => "lunch",
+        2 => "evening",
+        _ => "unknown"
+    };
+
+    public LoopStateType CurrentLoopState => _loopSM?.CurrentState ?? default;
+    public TurnStateType CurrentTurnState => _loopSM?.TurnSM?.CurrentState ?? default;
+
+    public TurnStateMachine GetTurnSM() => _loopSM?.TurnSM;
+    public void FinishTurnEnd() => _loopSM?.TurnSM?.FinishTurnEnd();
+    public void FinishGameEndDialogue() => _loopSM?.FinishGameEndDialogue();
+
+    public void ForceEndTurn()
+    {
+        if (CurrentLoopState != LoopStateType.RunningTurn) return;
+        _loopSM?.ForceEndPlayerAction();
+    }
+
+    // ── 입력 라우팅 ───────────────────────────────────────────────────────────
+
+    public void NotifyCharacterClicked(int characterId)
+    {
+        if (CurrentLoopState != LoopStateType.RunningTurn) return;
+        _loopSM?.NotifyCharacterClicked(characterId);
+    }
+
+    public void NotifyZoneClicked(int zoneId)
+    {
+        if (CurrentLoopState != LoopStateType.RunningTurn) return;
+        _loopSM?.NotifyZoneClicked(zoneId);
+    }
+
+    public void BeginDragSelect(int characterId) => _loopSM?.BeginDragSelect(characterId);
+    public PlayerActionState GetPlayerActionState() => _loopSM?.GetPlayerActionState();
+
+    // ── Private ──────────────────────────────────────────────────────────────
+
     private void HandleGameEnded(bool isWin)
     {
-        // ★ [HTH추가] 게임 결과 로그
         GameLogger.Instance?.LogEvent("game_end", new Dictionary<string, object>
         {
             { "result",      isWin ? "win" : "lose" },
-            { "mode",        HTH.Campaign.CampaignModeManager.IsPhase2Active
-                                 ? "phase2_campaign"
-                                 : "phase1_normal" },
+            { "mode",        "phase1_normal" },
             { "total_loops", _loopSM?.LoopCount ?? 0 },
             { "total_turns", _loopSM?.TurnCount ?? 0 },
         });
 
         if (isWin)
         {
-            string idToRecord = !string.IsNullOrEmpty(NewGameConfig.StageId)
-                ? NewGameConfig.StageId : _stageId;
+            string idToRecord = !string.IsNullOrEmpty(NewGameConfig.StageId) ? NewGameConfig.StageId : _stageId;
             if (!string.IsNullOrEmpty(idToRecord))
                 StageClearRepository.Instance.RecordClear(idToRecord);
 
             if (_triggerEndingDialogueOnWin)
                 LobbyDialogueManager.PendingEndingDialogue = true;
-
-            // ★ 튜토리얼이면 캠페인 분기 무조건 스킵
-            if (!NewGameConfig.IsTutorial &&
-                HTH.Campaign.CampaignModeManager.Instance != null)
-            {
-                string phase1StageId = !string.IsNullOrEmpty(NewGameConfig.StageId)
-                    ? NewGameConfig.StageId : _stageId;
-                HTH.Campaign.CampaignModeManager.Instance.OnFirstRunCleared(phase1StageId);
-                return;
-            }
         }
+
         SceneManager.LoadScene(_lobbySceneName);
     }
 
@@ -307,73 +228,21 @@ public class GameFlowController : SingletonMonobehaviour<GameFlowController>
     private void SpawnCharacters()
     {
         if (_characterSpawner == null) return;
-
         var gameState = _loopSM.GameState;
         if (gameState == null)
         {
-            Debug.LogError("[GameFlowController] GameState가 없습니다. CharacterSpawner를 건너뜁니다.");
+            Debug.LogError("[GameFlowController] GameState가 없습니다.");
             return;
         }
-
         _characterViews = _characterSpawner.SpawnAll(gameState);
         _characterSpawner.ApplyZoneRulesToGameState(gameState);
     }
 
-    /// <summary>
-    /// [HTH추가] Phase2 진입 시 역할 배정을 교체합니다.
-    /// CampaignModeManager.Phase2TransitionCoroutine() 5단계에서 호출합니다.
-    /// SO 파일은 CampaignModeManager Inspector에서 연결합니다.
-    /// </summary>
-    public void ReassignRolesForPhase2(StageRoleConfig phase2RoleConfig)
-    {
-        if (phase2RoleConfig == null)
-        {
-            Debug.LogError("[GameFlowController] ReassignRolesForPhase2 — phase2RoleConfig가 null입니다.");
-            return;
-        }
-
-        var gameState = _loopSM?.GameState;
-        if (gameState == null)
-        {
-            Debug.LogError("[GameFlowController] ReassignRolesForPhase2 — GameState가 없습니다.");
-            return;
-        }
-
-        var roles = phase2RoleConfig.Roles;
-        var characterIds = gameState.GetAllCharacterIds();
-
-        if (roles == null || roles.Count == 0)
-        {
-            Debug.LogError("[GameFlowController] ReassignRolesForPhase2 — Phase2 역할 목록이 비어있습니다.");
-            return;
-        }
-
-        if (roles.Count != characterIds.Count)
-        {
-            Debug.LogError($"[GameFlowController] ReassignRolesForPhase2 — " +
-                           $"역할 수({roles.Count})와 캐릭터 수({characterIds.Count})가 일치하지 않습니다.");
-            return;
-        }
-
-        // RoleAssignmentTable 재배정 (Phase2는 고정 순서)
-        var roleTable = gameState.GetRoleTable();
-        roleTable.Clear();
-        for (int i = 0; i < characterIds.Count; i++)
-            roleTable.Assign(characterIds[i], roles[i]);
-
-        RefreshAllCharacterViews();
-        Debug.Log($"[GameFlowController] Phase2 역할 재배정 완료 — {roles.Count}개");
-    }
-
     private void ValidateInspectorRefs()
     {
-        if (_orderConfig == null)
-            Debug.LogError("[GameFlowController] OrderConfig가 연결되지 않았습니다.");
-        if (_characterRegistry == null)
-            Debug.LogError("[GameFlowController] CharacterRegistry가 연결되지 않았습니다.");
-        if (_stageRoleConfig == null)
-            Debug.LogError("[GameFlowController] StageRoleConfig가 연결되지 않았습니다.");
-        if (_characterSpawner == null)
-            Debug.LogWarning("[GameFlowController] CharacterSpawner가 연결되지 않았습니다. 캐릭터가 스폰되지 않습니다.");
+        if (_orderConfig == null) Debug.LogError("[GameFlowController] OrderConfig가 연결되지 않았습니다.");
+        if (_characterRegistry == null) Debug.LogError("[GameFlowController] CharacterRegistry가 연결되지 않았습니다.");
+        if (_stageRoleConfig == null) Debug.LogError("[GameFlowController] StageRoleConfig가 연결되지 않았습니다.");
+        if (_characterSpawner == null) Debug.LogWarning("[GameFlowController] CharacterSpawner가 연결되지 않았습니다.");
     }
 }

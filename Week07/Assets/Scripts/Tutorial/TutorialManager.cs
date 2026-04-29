@@ -112,7 +112,7 @@ public class TutorialManager : SingletonMonobehaviour<TutorialManager>
         TutorialProgressRepository.Instance.MarkStarted();
 
         if (_notepadToggleManager == null)
-            _notepadToggleManager = FindObjectOfType<NotepadToggleManager>();
+            _notepadToggleManager = FindFirstObjectByType<NotepadToggleManager>();
 
         _TutoArrow.gameObject.SetActive(false);
 

@@ -543,7 +543,7 @@ namespace HTH.Campaign
             {
                 // 일반 대사만 DialogueId 마킹 (Core는 RewardFragmentId로 관리)
                 if (string.IsNullOrEmpty(entry.RewardFragmentId))
-                    _progressTracker.MarkComboPlayed(entry.DialogueId);
+                    _progressTracker.MarkPlayed(entry.DialogueId);
 
                 // 보상 조각 수집
                 bool fragmentCollected = !string.IsNullOrEmpty(entry.RewardFragmentId)

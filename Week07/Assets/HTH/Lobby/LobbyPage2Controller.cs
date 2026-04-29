@@ -586,7 +586,7 @@ namespace HTH.Campaign
                 foreach (var btn in _buttons)
                     btn?.SetSelected(false);
 
-            var bookAnimator = FindObjectOfType<TitleBookAnimator>();
+            var bookAnimator = FindFirstObjectByType<TitleBookAnimator>();
             bookAnimator?.TurnPageBack();
         }
     }

@@ -4,19 +4,16 @@ using UnityEngine;
 /// <summary>
 /// 게임 시작 시 CharacterRegistry의 프리팹을 인스턴스화하고
 /// ZoneLayout을 참조해 초기 구역 위치에 배치합니다.
+/// 기본모드 전용입니다. 캠페인 모드는 CampaignCharacterSpawner를 사용하세요.
 ///
 /// Inspector 필수 연결:
 ///   CharacterRegistry → 7개 캐릭터 데이터
 ///   ZoneLayout        → 씬의 구역 위치 마커
-///
-/// 사용법:
-///   GameState 생성 직후 SpawnAll(gameState)을 호출하세요.
-///   반환된 딕셔너리(characterId → CharacterView)를 PlayerActionState 등에서 활용합니다.
 /// </summary>
 public class CharacterSpawner : MonoBehaviour
 {
     [SerializeField] private CharacterRegistry _characterRegistry;
-    [SerializeField] private ZoneLayout        _zoneLayout;
+    [SerializeField] private ZoneLayout _zoneLayout;
 
     /// <summary>
     /// 모든 CharacterView를 GameState의 현재 Zone 슬롯 위치로 스냅합니다.
@@ -26,12 +23,11 @@ public class CharacterSpawner : MonoBehaviour
     {
         var charZoneMap = BuildCharZoneMap(gameState, views.Keys);
         _zoneLayout.InitSlots(charZoneMap);
-        var positions   = _zoneLayout.ComputeSlotPositions(charZoneMap);
-
+        var positions = _zoneLayout.ComputeSlotPositions(charZoneMap);
         var rotations = _zoneLayout.ComputeSlotRotations(charZoneMap);
+
         foreach (var kv in views)
         {
-            // 새 GameState로부터 CharacterState 참조를 재연결합니다.
             var state = gameState.GetCharacterState(kv.Key);
             if (state != null)
                 kv.Value.Init(state);
@@ -48,7 +44,6 @@ public class CharacterSpawner : MonoBehaviour
     /// <summary>
     /// 모든 캐릭터 프리팹을 스폰하고 초기 구역 슬롯 위치에 배치합니다.
     /// </summary>
-    /// <returns>characterId → CharacterView 딕셔너리</returns>
     public Dictionary<int, CharacterView> SpawnAll(GameState gameState)
     {
         var views = new Dictionary<int, CharacterView>();
@@ -57,19 +52,18 @@ public class CharacterSpawner : MonoBehaviour
         {
             if (data.Prefab == null)
             {
-                Debug.LogWarning($"[CharacterSpawner] '{data.CharacterName}'의 Prefab이 연결되지 않았습니다. 건너뜁니다.");
+                Debug.LogWarning($"[CharacterSpawner] '{data.CharacterName}'의 Prefab이 연결되지 않았습니다.");
                 continue;
             }
 
             var characterState = gameState.GetCharacterState(data.CharacterId);
             if (characterState == null)
             {
-                Debug.LogWarning($"[CharacterSpawner] CharacterId={data.CharacterId}에 해당하는 CharacterState가 없습니다. 건너뜁니다.");
+                Debug.LogWarning($"[CharacterSpawner] CharacterId={data.CharacterId}에 해당하는 CharacterState가 없습니다.");
                 continue;
             }
 
-            // 임시 위치로 스폰 후 슬롯 계산 결과로 재배치
-            var instance  = Instantiate(data.Prefab, Vector3.zero, Quaternion.identity);
+            var instance = Instantiate(data.Prefab, Vector3.zero, Quaternion.identity);
             instance.name = $"Character_{data.CharacterName}";
 
             var view = instance.GetComponent<CharacterView>();
@@ -84,11 +78,11 @@ public class CharacterSpawner : MonoBehaviour
             views[data.CharacterId] = view;
         }
 
-        // 전체 슬롯 위치·회전 일괄 계산 후 스냅
         var charZoneMap = BuildCharZoneMap(gameState, views.Keys);
         _zoneLayout.InitSlots(charZoneMap);
-        var positions   = _zoneLayout.ComputeSlotPositions(charZoneMap);
-        var rotations   = _zoneLayout.ComputeSlotRotations(charZoneMap);
+        var positions = _zoneLayout.ComputeSlotPositions(charZoneMap);
+        var rotations = _zoneLayout.ComputeSlotRotations(charZoneMap);
+
         foreach (var kv in views)
         {
             if (positions.TryGetValue(kv.Key, out var pos))
@@ -110,30 +104,15 @@ public class CharacterSpawner : MonoBehaviour
         var disabled = new bool[GameState.ZoneCount];
         var effects = new ZoneEffectConfig[GameState.ZoneCount];
 
-        bool isPhase2 = HTH.Campaign.CampaignModeManager.IsPhase2Active;
-
         for (int i = 0; i < GameState.ZoneCount; i++)
         {
             var zone = _zoneLayout?.GetZonePoint(i);
-            // ★ zone null 이면 그냥 false/null (튜토리얼 3존 대응)
-            disabled[i] = !isPhase2 && zone != null && zone.DisableAbilities;
+            disabled[i] = zone != null && zone.DisableAbilities;
             effects[i] = zone?.ZoneEffect;
         }
+
         gameState.InitZoneRules(disabled);
         gameState.InitZoneEffects(effects);
-    }
-
-    // ★ 추가 — Phase2 진입 시 CampaignModeManager에서 호출
-    public void DisableAllAbilityZones(bool disable)
-    {
-        if (_zoneLayout == null) return;
-        for (int i = 0; i < GameState.ZoneCount; i++)
-        {
-            var zone = _zoneLayout.GetZonePoint(i);
-            if (zone == null) continue; // ★ null 스킵 (튜토리얼 3존 대응)
-            if (zone.DisableAbilities)
-                zone.SetDisableAbilities(false);
-        }
     }
 
     // ── Private ──────────────────────────────────────────────────────────────

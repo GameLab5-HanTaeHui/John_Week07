@@ -91,14 +91,14 @@ namespace HTH.Campaign
 
                     // null 방어 (JsonUtility가 빈 리스트를 null로 역직렬화하는 경우)
                     CurrentSave.collectedFragmentIds ??= new();
-                    CurrentSave.playedComboIds ??= new();
+                    CurrentSave.playedDialogueIds ??= new();
                     CurrentSave.collectedNames ??= new();
                     CurrentSave.unlockedConceptCards ??= new();
                     CurrentSave.unlockedEpilogues ??= new();
 
                     Debug.Log($"[CampaignSaveManager] 로드 완료 — {stageId}\n" +
                               $"  조각 {CurrentSave.collectedFragmentIds.Count}개\n" +
-                              $"  ComboId {CurrentSave.playedComboIds.Count}개\n" +
+                              $"  ComboId {CurrentSave.playedDialogueIds.Count}개\n" +
                               $"  이름 {CurrentSave.collectedNames.Count}개\n" +
                               $"  컨셉카드 {CurrentSave.unlockedConceptCards.Count}개\n" +
                               $"  시점완결문 {CurrentSave.unlockedEpilogues.Count}개");
