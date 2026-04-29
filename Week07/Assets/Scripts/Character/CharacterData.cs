@@ -24,7 +24,7 @@ public class CharacterData : ScriptableObject
 #if UNITY_EDITOR
     private void OnValidate()
     {
-        if (characterId < 0 || characterId > 6)
+        if (characterId < 0 || characterId > 7)
             Debug.LogWarning($"[CharacterData] '{name}' characterId는 0~6 범위여야 합니다. 현재값: {characterId}");
 
         if (string.IsNullOrWhiteSpace(characterName))

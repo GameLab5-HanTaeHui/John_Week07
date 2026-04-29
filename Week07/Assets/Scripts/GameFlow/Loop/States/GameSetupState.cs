@@ -1,3 +1,4 @@
+using HTH.Campaign;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -17,7 +18,7 @@ public class GameSetupState : IState
     private readonly StageSetupConfig  _setupConfig;
 
     public GameSetupState(
-        LoopStateMachine  loopSM,
+        LoopStateMachine loopSM,
         CharacterRegistry characterRegistry,
         StageRoleConfig   stageRoleConfig,
         StageSetupConfig  setupConfig)

@@ -77,6 +77,15 @@ namespace HTH.Campaign
         private bool[] _activeZones =
             new bool[GameState.ZoneCount] { true, true, true, true };
 
+        [Header("구역 판별 방식")]
+        [Tooltip("true  — 캐릭터 기반: 앵커 캐릭터(#1)가 있는 Zone 하나만 대사 출력 구역으로 사용합니다.\n" +
+                 "false — Zone 기반: _activeZones에 체크된 모든 Zone을 순회합니다.")]
+        [SerializeField] private bool _useCharacterBasedZone = true;
+
+        [Tooltip("캐릭터 기반 모드에서 사용할 앵커 캐릭터 ID입니다.\n" +
+                 "이 캐릭터가 있는 Zone이 대사 출력 구역이 됩니다. (기본값 1 = 엔비)")]
+        [SerializeField] private int _anchorCharacterId = 1;
+
         [Header("타이밍")]
         [Tooltip("턴 종료 다이얼로그 완료 후 캠페인 대사 트리거까지의 대기 시간입니다.")]
         [SerializeField] private float _triggerDelay = 1f;
@@ -116,26 +125,35 @@ namespace HTH.Campaign
 
         private void Start()
         {
-            // GameFlowController 이벤트 구독
-            // CampaignModeManager 연계는 추후 별도로 구독 처리
-            var turnSM = GameFlowController.Instance?.GetTurnSM();
+            var turnSM = CampaignGameFlowController.Instance?.GetTurnSM();
             if (turnSM != null)
             {
                 turnSM.OnTurnEndEntered += OnTurnEndEntered;
                 turnSM.OnTurnEndDialogueFinished += OnTurnEndDialogueFinished;
             }
+
+            // ★ CampaignModeManager 초기화 완료 이벤트 구독
+            // OnCampaignInitialized 발생 시 Initialize(stageId) 자동 호출
+            if (CampaignModeManager.Instance != null)
+                CampaignModeManager.Instance.OnCampaignInitialized += Initialize;
+            else
+                Debug.LogWarning("[DialogueTriggerManager] CampaignModeManager를 찾을 수 없습니다. " +
+                                 "Initialize()가 호출되지 않으면 대사가 트리거되지 않습니다.");
         }
 
         private void OnDestroy()
         {
             if (Instance == this) Instance = null;
 
-            var turnSM = GameFlowController.Instance?.GetTurnSM();
+            var turnSM = CampaignGameFlowController.Instance?.GetTurnSM();
             if (turnSM != null)
             {
                 turnSM.OnTurnEndEntered -= OnTurnEndEntered;
                 turnSM.OnTurnEndDialogueFinished -= OnTurnEndDialogueFinished;
             }
+
+            if (CampaignModeManager.Instance != null)
+                CampaignModeManager.Instance.OnCampaignInitialized -= Initialize;
         }
 
         // ═══════════════════════════════════════════════════════════════
@@ -231,7 +249,7 @@ namespace HTH.Campaign
         private void CacheConditionContext()
         {
             var ctx = new ConditionContext();
-            var gameState = GameFlowController.Instance?.GameState;
+            var gameState = CampaignGameFlowController.Instance?.GameState;
 
             if (gameState == null)
             {
@@ -313,10 +331,59 @@ namespace HTH.Campaign
         // ═══════════════════════════════════════════════════════════════
 
         /// <summary>
-        /// 활성화된 구역을 0 → 1 → 2 → 3 순서로 순회하며
-        /// 캐릭터 조합에 맞는 대사를 찾아 순차 재생합니다.
+        /// 대사 트리거 진입점입니다.
+        /// _useCharacterBasedZone 값에 따라 두 가지 방식으로 분기합니다.
+        ///
+        ///   true  — 캐릭터 기반: 앵커 캐릭터(#1)가 있는 Zone 하나만 사용
+        ///   false — Zone 기반:   _activeZones에 체크된 모든 Zone 순회
         /// </summary>
         private void TriggerDialoguesForAllZones()
+        {
+            if (_useCharacterBasedZone)
+                TriggerByAnchorCharacter();
+            else
+                TriggerByActiveZones();
+        }
+
+        /// <summary>
+        /// [캐릭터 기반] 앵커 캐릭터(_anchorCharacterId)가 있는 Zone 하나만 사용합니다.
+        /// 해당 Zone의 캐릭터 조합으로 대사를 선별합니다.
+        ///
+        /// 기획 의도: 캐릭터 #1(엔비)가 있는 구역을 대화 출력 구역으로 고정합니다.
+        /// 앵커 캐릭터가 사망한 경우 대사를 출력하지 않습니다.
+        /// </summary>
+        private void TriggerByAnchorCharacter()
+        {
+            var gameState = CampaignGameFlowController.Instance?.GameState;
+            if (gameState == null) return;
+
+            // 앵커 캐릭터 생존 여부 확인
+            var anchor = gameState.GetCharacter(_anchorCharacterId);
+            if (anchor == null || !anchor.IsAlive)
+            {
+                Debug.Log($"[DTM] 캐릭터 기반 — 앵커 #{_anchorCharacterId} 사망, 대사 없음");
+                return;
+            }
+
+            int anchorZone = gameState.GetZone(_anchorCharacterId);
+            var characterIds = GetCharactersInZone(anchorZone);
+
+            Debug.Log($"[DTM] 캐릭터 기반 — 앵커 #{_anchorCharacterId} Zone{anchorZone}, " +
+                      $"캐릭터: [{string.Join(",", characterIds)}]");
+
+            if (characterIds.Count == 0) return;
+
+            var resolved = ResolveDialogueForZone(characterIds);
+            if (!resolved.HasValue) return;
+
+            StartCoroutine(PlaySequential(new List<PendingDialogue> { resolved.Value }));
+        }
+
+        /// <summary>
+        /// [Zone 기반] _activeZones에 체크된 모든 Zone을 0→1→2→3 순서로 순회합니다.
+        /// 각 Zone의 캐릭터 조합으로 대사를 선별해 순차 재생합니다.
+        /// </summary>
+        private void TriggerByActiveZones()
         {
             var pending = new List<PendingDialogue>();
 
@@ -325,7 +392,7 @@ namespace HTH.Campaign
                 if (!IsZoneActive(zoneId)) continue;
 
                 var characterIds = GetCharactersInZone(zoneId);
-                Debug.Log($"[DTM] Zone{zoneId} 캐릭터: [{string.Join(",", characterIds)}]");
+                Debug.Log($"[DTM] Zone 기반 — Zone{zoneId} 캐릭터: [{string.Join(",", characterIds)}]");
                 if (characterIds.Count == 0) continue;
 
                 var resolved = ResolveDialogueForZone(characterIds);
@@ -337,7 +404,7 @@ namespace HTH.Campaign
             StartCoroutine(PlaySequential(pending));
         }
 
-        /// <summary>구역이 활성 상태인지 확인합니다.</summary>
+        /// <summary>구역이 활성 상태인지 확인합니다. Zone 기반 모드에서 사용합니다.</summary>
         private bool IsZoneActive(int zoneId)
             => _activeZones != null
                && zoneId >= 0
@@ -348,7 +415,7 @@ namespace HTH.Campaign
         private HashSet<int> GetCharactersInZone(int zoneId)
         {
             var result = new HashSet<int>();
-            var gameState = GameFlowController.Instance?.GameState;
+            var gameState = CampaignGameFlowController.Instance?.GameState;
             if (gameState == null) return result;
 
             foreach (var c in gameState.GetCharactersInZone(zoneId))
@@ -624,15 +691,15 @@ namespace HTH.Campaign
 
         /// <summary>출력 대기 중인 대사 정보입니다.</summary>
         private struct PendingDialogue
-        {
-            /// <summary>출력할 대사 엔트리. UseFallback=true면 null.</summary>
-            public DialogueEntry Entry;
+    {
+        /// <summary>출력할 대사 엔트리. UseFallback=true면 null.</summary>
+        public DialogueEntry Entry;
 
-            /// <summary>해당 구역의 캐릭터 ID 집합.</summary>
-            public HashSet<int> CharacterIds;
+        /// <summary>해당 구역의 캐릭터 ID 집합.</summary>
+        public HashSet<int> CharacterIds;
 
-            /// <summary>true면 AlreadySeenLines 대체 출력.</summary>
-            public bool UseFallback;
+        /// <summary>true면 AlreadySeenLines 대체 출력.</summary>
+        public bool UseFallback;
         }
 
         // ═══════════════════════════════════════════════════════════════

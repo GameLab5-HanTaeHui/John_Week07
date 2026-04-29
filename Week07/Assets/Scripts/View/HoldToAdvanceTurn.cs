@@ -3,8 +3,10 @@ using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using HTH;
+
 /// <summary>
-/// 턴 넘기기 버튼 컴포넌트입니다.
+/// 턴 넘기기 버튼 컴포넌트입니다. 기본모드 전용입니다.
+/// 캠페인 모드는 CampaignHoldToAdvanceTurn을 사용하세요.
 ///
 /// ─── 동작 흐름 ────────────────────────────────────────────────────────────
 ///   1. 플레이어가 버튼을 클릭합니다.
@@ -72,7 +74,7 @@ public class HoldToAdvanceTurn : MonoBehaviour
         _fillTween?.Kill();
     }
 
-    // ── 외부 API (MapObjectInputHandler에서 호출) ─────────────────────────────
+    // ── 외부 API ─────────────────────────────────────────────────────────────
 
     public void BeginHold()
     {
@@ -113,7 +115,8 @@ public class HoldToAdvanceTurn : MonoBehaviour
     {
         _triggered = true;
 
-        ConfirmPanel.Instance?.Show(_confirmMessage, onConfirm: () =>
+        ConfirmPanel.Instance?.Show(_confirmMessage,
+            onConfirm: () =>
             {
                 _triggered = false;
                 HideFill();

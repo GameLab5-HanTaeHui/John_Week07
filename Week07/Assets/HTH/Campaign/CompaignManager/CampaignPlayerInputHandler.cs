@@ -184,11 +184,16 @@ namespace HTH.Campaign
                                     + offset.y;
                     var holdPos = new Vector3(groundPos.x + offset.x, liftY, groundPos.z + offset.z);
 
-                    //에러 사항 UpdateDragPosition이 없음
-                    //if (_draggingAnimator != null)
-                    //    _draggingAnimator.UpdateDragPosition(holdPos, currentPos);
-                    //else
-                    //    _draggingView.transform.position = holdPos;
+                    // ★ 마우스 위치로 캐릭터 이동 (UpdateDragPosition 없음 → 직접 세팅)
+                    var prevPos = _draggingView.transform.position;
+                    _draggingView.transform.position = holdPos;
+
+                    // ★ 이동 속도 기반 기울기 업데이트
+                    if (_draggingAnimator != null)
+                    {
+                        var worldVelocity = (holdPos - prevPos) / Time.deltaTime;
+                        _draggingAnimator.SetDragVelocity(worldVelocity);
+                    }
                 }
 
                 var zoneRay = _mainCamera.ScreenPointToRay(currentPos);

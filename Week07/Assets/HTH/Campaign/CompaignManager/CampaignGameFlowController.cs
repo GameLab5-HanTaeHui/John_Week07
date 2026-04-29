@@ -36,7 +36,7 @@ namespace HTH.Campaign
         public string StageId => !string.IsNullOrEmpty(NewGameConfig.StageId)
             ? NewGameConfig.StageId : _stageId;
 
-        private LoopStateMachine _loopSM;
+        private CampaignLoopStateMachine _loopSM;
         private Dictionary<int, CharacterView> _characterViews;
 
         public IReadOnlyDictionary<int, CharacterView> CharacterViews => _characterViews;
@@ -89,7 +89,7 @@ namespace HTH.Campaign
         {
             base.Awake();
             ValidateInspectorRefs();
-            _loopSM = new LoopStateMachine(_orderConfig, _characterRegistry, _stageRoleConfig, _setupConfig);
+            _loopSM = new CampaignLoopStateMachine(_orderConfig, _characterRegistry, _stageRoleConfig, _setupConfig);
         }
 
         private void Start()

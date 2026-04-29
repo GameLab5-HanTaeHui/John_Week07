@@ -64,14 +64,6 @@ public class PauseManager : MonoBehaviour
         { "time_of_day", gfc?.CurrentTimeOfDay ?? "" },
     });
 
-        // ★ 캠페인 모드에서 로비 이탈 시 수집된 조각 강제 저장
-        if (HTH.Campaign.CampaignModeManager.IsPhase2Active)
-        {
-            var fragmentCollector = FindFirstObjectByType<HTH.Campaign.FragmentCollector>();
-            fragmentCollector?.Save();
-            Debug.Log("[PauseManager] 캠페인 모드 — 로비 이탈 전 조각 데이터 저장");
-        }
-
         string fileName = GameLogger.Instance?.BuildUploadFileName();
         string stageId = GameLogger.Instance?.CurrentStageId;
         GameLogger.Instance?.StopStageLogging();

@@ -298,7 +298,7 @@ namespace HTH.Campaign
         private string BuildFragmentId(int characterId, int index)
         {
             // FragmentId 명명 규칙: {stageId}_char{characterId}_frag{index}
-            string stageId = HTH.Campaign.CampaignModeManager.Instance?.CurrentPhase2StageId
+            string stageId = HTH.Campaign.CampaignModeManager.Instance?.CurrentStageId
                              ?? "unknown";
             return $"{stageId}_char{characterId}_frag{index}";
         }
