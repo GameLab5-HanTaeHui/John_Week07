@@ -8,31 +8,37 @@ namespace HTH.Campaign
     /// <summary>
     /// 캠페인 씬의 다이얼로그 트리거 및 출력을 관리하는 매니저입니다.
     ///
-    /// ─── 구역 판별 방식 ──────────────────────────────────────────────────
-    ///   _useCharacterBasedZone = true  (기본값):
-    ///     앵커 캐릭터(#1)가 있는 Zone이 대사 출력 구역이자 조사 구역(InZone)입니다.
-    ///     _activeZones 무관.
+    /// ─── 일반퇴고 트리거 흐름 ────────────────────────────────────────────
+    ///   1. TurnEnd 진입 → CacheConditionContext (현재 캐릭터 조합 캐싱)
+    ///   2. FireTurnEndDialogueFinished
+    ///      → 현재 캐릭터 조합 기준 대사 후보 선조회 → _pendingDialogues 저장
+    ///      → FinishTurnEnd() 호출 (→ LoopReset → 페이드 중 캐릭터 재배치)
+    ///   3. OnLoopReset 수신 (재배치 완료)
+    ///      → _triggerDelay 대기 후 저장된 대사 출력
     ///
-    ///   _useCharacterBasedZone = false:
-    ///     _activeZones에 체크된 모든 Zone을 0→3 순서로 순회합니다.
-    ///     조사 구역은 앵커 캐릭터 Zone으로 자동 판별합니다.
+    /// ─── 강제퇴고 트리거 흐름 ────────────────────────────────────────────
+    ///   1. TurnEnd 진입 → CacheConditionContext
+    ///   2. FireTurnEndDialogueFinished
+    ///      → FinishTurnEnd() 즉시 (Zone 대사 없음)
     ///
-    /// ─── 트리거 흐름 ─────────────────────────────────────────────────────
-    ///   OnTurnEndEntered → CacheConditionContext()
-    ///   OnTurnEndDialogueFinished → TriggerDialoguesDelayed()
-    ///     → TriggerDialoguesForAllZones() → PlaySequential()
+    /// ─── 우선순위 ────────────────────────────────────────────────────────
+    ///   1. Core    — 핵심 대화 (RewardFragmentId 미수집)
+    ///   2. Hint    — 힌트 대화
+    ///   3. Special — 특수 대화
+    ///   4. Normal  — 일반 대화 (이미 출력됐으면 AlreadySeenLines 폴백)
+    ///   같은 우선순위 내에서 ParticipantIds 수 정확 일치 우선
     ///
     /// ─── Inspector 연결 ──────────────────────────────────────────────────
-    ///   Dialogue Data       → CampaignDialogueSO 에셋
-    ///   Dialogue Player     → DialoguePlayer 컴포넌트
-    ///   Fragment Collector  → FragmentCollector 컴포넌트
+    ///   Dialogue Data            → CampaignDialogueSO 에셋
+    ///   Dialogue Player          → DialoguePlayer 컴포넌트
+    ///   Fragment Collector       → FragmentCollector 컴포넌트
     ///   Use Character Based Zone → true=앵커 기반 / false=Zone 순회
-    ///   Anchor Character Id → 앵커 캐릭터 ID (기본 1 = 엔비)
-    ///   Active Zones        → Zone 순회 모드에서 활성화할 Zone (인덱스=ZoneId)
-    ///   Trigger Delay       → 턴종료 대사 완료 후 대기 시간
+    ///   Anchor Character Id      → 앵커 캐릭터 ID (기본 1 = 엔비)
+    ///   Active Zones             → Zone 순회 모드에서 활성화할 Zone
+    ///   Trigger Delay            → 루프 리셋 완료 후 대사 트리거까지 대기 시간
     /// </summary>
     [DisallowMultipleComponent]
-    [DefaultExecutionOrder(10)] // CampaignModeManager(-10)보다 늦게 실행
+    [DefaultExecutionOrder(10)]
     public class DialogueTriggerManager : MonoBehaviour
     {
         public static DialogueTriggerManager Instance { get; private set; }
@@ -42,10 +48,14 @@ namespace HTH.Campaign
         // ═══════════════════════════════════════════════════════════════
 
         [Header("데이터")]
+        [Tooltip("이 캠페인 씬의 다이얼로그 데이터입니다.")]
         [SerializeField] private CampaignDialogueSO _dialogueData;
 
         [Header("컴포넌트 참조")]
+        [Tooltip("대사를 화면에 출력하는 컴포넌트입니다.")]
         [SerializeField] private DialoguePlayer _dialoguePlayer;
+
+        [Tooltip("대화 조각 수집을 담당하는 컴포넌트입니다.")]
         [SerializeField] private FragmentCollector _fragmentCollector;
 
         [Header("구역 판별 방식")]
@@ -53,21 +63,17 @@ namespace HTH.Campaign
                  "false — _activeZones에 체크된 모든 Zone을 순회")]
         [SerializeField] private bool _useCharacterBasedZone = true;
 
-        [Tooltip("앵커 캐릭터 ID (기본 1 = 엔비)\n" +
-                 "이 캐릭터가 있는 Zone이 대사 출력 구역이 됩니다.")]
+        [Tooltip("앵커 캐릭터 ID (기본 1 = 엔비)\n이 캐릭터가 있는 Zone이 대사 출력 구역이 됩니다.")]
         [SerializeField] private int _anchorCharacterId = 1;
 
-        [Tooltip("Zone 순회 모드(_useCharacterBasedZone=false)에서 활성화할 Zone\n" +
-                 "인덱스 = ZoneId (0=Zone0 ~ 3=Zone3)")]
+        [Tooltip("Zone 순회 모드에서 활성화할 Zone\n인덱스 = ZoneId (0~3)")]
         [SerializeField]
         private bool[] _activeZones =
             new bool[GameState.ZoneCount] { true, true, true, true };
 
         [Header("타이밍")]
-        [Tooltip("턴 종료 대사 완료 후 캠페인 대사 트리거까지 대기 시간(초)")]
+        [Tooltip("루프 리셋 완료 후 대사 트리거까지 대기 시간(초)")]
         [SerializeField] private float _triggerDelay = 1f;
-
-
 
         // ═══════════════════════════════════════════════════════════════
         // 내부 상태
@@ -79,10 +85,16 @@ namespace HTH.Campaign
         private bool _isInitialized;
 
         /// <summary>
-        /// true = 강제퇴고 (주인공 사망) — 대사 출력 차단
-        /// false = 일반퇴고 (저녁 턴 종료) — 대사 출력 허용
+        /// true  = 강제퇴고 (주인공 사망) — Zone 대사 출력 차단
+        /// false = 일반퇴고 (저녁 턴 종료) — Zone 대사 출력 허용
         /// </summary>
         private bool _isForcedLoop;
+
+        /// <summary>
+        /// 일반퇴고 시 FinishTurnEnd 전에 선조회한 대사 목록입니다.
+        /// OnLoopReset 수신 후 재생합니다.
+        /// </summary>
+        private List<PendingDialogue> _pendingDialogues;
 
         public bool IsWaitingForDialogue { get; private set; }
         public TimeOfDay CurrentTimeOfDay { get; set; } = TimeOfDay.Morning;
@@ -97,22 +109,15 @@ namespace HTH.Campaign
             _progressTracker = new DialogueProgressTracker();
             _conditionEvaluator = new DialogueConditionEvaluator();
 
-            // CampaignModeManager가 Awake에서 이미 생성됐을 경우 바로 구독
             if (CampaignModeManager.Instance != null)
-            {
                 CampaignModeManager.Instance.OnCampaignInitialized += Initialize;
-                Debug.Log("[DTM] Awake — OnCampaignInitialized 구독 완료");
-            }
-            else
-            {
-                Debug.LogWarning("[DTM] Awake — CampaignModeManager.Instance 없음. Start()에서 재시도");
-            }
         }
 
         private void Start()
         {
-            // TurnSM 이벤트 구독
-            var turnSM = CampaignGameFlowController.Instance?.GetTurnSM();
+            var gfc = CampaignGameFlowController.Instance;
+            var turnSM = gfc?.GetTurnSM();
+
             if (turnSM != null)
             {
                 turnSM.OnTurnEndEntered += OnTurnEndEntered;
@@ -120,20 +125,15 @@ namespace HTH.Campaign
                 Debug.Log("[DTM] Start — TurnSM 이벤트 구독 완료");
             }
             else
-            {
                 Debug.LogWarning("[DTM] Start — CampaignGameFlowController 또는 TurnSM 없음");
-            }
 
-            // Awake에서 구독 실패한 경우 폴백
+            if (gfc != null)
+                gfc.OnLoopReset += OnLoopReset;
+
             if (CampaignModeManager.Instance != null && !_isInitialized)
             {
                 CampaignModeManager.Instance.OnCampaignInitialized -= Initialize;
                 CampaignModeManager.Instance.OnCampaignInitialized += Initialize;
-                Debug.Log("[DTM] Start — OnCampaignInitialized 구독 재시도");
-            }
-            else if (CampaignModeManager.Instance == null)
-            {
-                Debug.LogError("[DTM] Start — CampaignModeManager 없음. Initialize()가 호출되지 않습니다.");
             }
         }
 
@@ -141,12 +141,17 @@ namespace HTH.Campaign
         {
             if (Instance == this) Instance = null;
 
-            var turnSM = CampaignGameFlowController.Instance?.GetTurnSM();
+            var gfc = CampaignGameFlowController.Instance;
+            var turnSM = gfc?.GetTurnSM();
+
             if (turnSM != null)
             {
                 turnSM.OnTurnEndEntered -= OnTurnEndEntered;
                 turnSM.OnTurnEndDialogueFinished -= OnTurnEndDialogueFinished;
             }
+
+            if (gfc != null)
+                gfc.OnLoopReset -= OnLoopReset;
 
             if (CampaignModeManager.Instance != null)
                 CampaignModeManager.Instance.OnCampaignInitialized -= Initialize;
@@ -156,29 +161,21 @@ namespace HTH.Campaign
         // 외부 API
         // ═══════════════════════════════════════════════════════════════
 
-        /// <summary>CampaignModeManager.OnCampaignInitialized 이벤트에서 호출됩니다.</summary>
         public void Initialize(string stageId)
         {
-            Debug.Log($"[DTM] Initialize 호출 — stageId:{stageId}");
-
             if (_dialogueData == null)
             {
-                Debug.LogError("[DTM] CampaignDialogueSO가 연결되지 않았습니다. Inspector를 확인하세요.");
+                Debug.LogError("[DialogueTriggerManager] CampaignDialogueSO가 연결되지 않았습니다.");
                 return;
             }
-            if (_dialoguePlayer == null)
-                Debug.LogWarning("[DTM] DialoguePlayer가 연결되지 않았습니다. 대사가 출력되지 않습니다.");
 
             _progressTracker.Initialize(stageId);
             _fragmentCollector?.Initialize(stageId);
             _isInitialized = true;
 
-            Debug.Log($"[DTM] 초기화 완료 — stageId:{stageId}, " +
-                      $"Dialogues:{_dialogueData.Dialogues.Count}개, " +
-                      $"모드:{(_useCharacterBasedZone ? $"앵커기반(#{_anchorCharacterId})" : "Zone순회")}");
+            Debug.Log($"[DialogueTriggerManager] 초기화 완료 — {stageId}");
         }
 
-        /// <summary>시간대별 대사를 트리거합니다.</summary>
         public void TriggerTimeOfDayDialogue(TimeOfDay timeOfDay)
         {
             if (!_isInitialized) return;
@@ -188,45 +185,85 @@ namespace HTH.Campaign
             var entry = _dialogueData.FindByTimeOfDay(timeOfDay);
             if (entry == null || entry.Lines == null || entry.Lines.Count == 0) return;
 
-            Debug.Log($"[DTM] 시간대 대사 — {timeOfDay}");
+            Debug.Log($"[DTM] 시간대 대사 트리거 — {timeOfDay}");
             StartCoroutine(PlayTimeOfDayDialogue(entry));
         }
 
         // ═══════════════════════════════════════════════════════════════
-        // 이벤트 핸들러
+        // 이벤트 핸들러 — 턴 흐름
         // ═══════════════════════════════════════════════════════════════
 
         private void OnTurnEndEntered(IReadOnlyList<string> roleLog, bool isLastTurn)
         {
-            Debug.Log($"[DTM] OnTurnEndEntered — isInitialized:{_isInitialized}");
+            Debug.Log($"[DTM] OnTurnEndEntered — isInitialized:{_isInitialized}, 강제퇴고:{isLastTurn}");
             if (!_isInitialized) return;
 
+            _isForcedLoop = isLastTurn;
             CacheConditionContext();
         }
 
         private void OnTurnEndDialogueFinished()
         {
-            Debug.Log($"[DTM] OnTurnEndDialogueFinished — isInitialized:{_isInitialized}, 강제퇴고:{_isForcedLoop}");
+            Debug.Log($"[DTM] OnTurnEndDialogueFinished — 강제퇴고:{_isForcedLoop}");
             if (!_isInitialized) return;
 
-            // ★ 강제퇴고(주인공 사망) 시 Zone 대사 출력 차단
-            // 일반퇴고(저녁 턴 종료) 시만 대사 출력
             if (_isForcedLoop)
             {
-                Debug.Log("[DTM] 강제퇴고 — Zone 대사 출력 생략");
+                // 강제퇴고 — Zone 대사 없이 즉시 진행
+                Debug.Log("[DTM] 강제퇴고 — Zone 대사 생략, FinishTurnEnd 호출");
+                CampaignGameFlowController.Instance?.FinishTurnEnd();
                 return;
             }
 
-            StartCoroutine(TriggerDialoguesDelayed(_triggerDelay));
+            // ★ 페이드 전, 현재 캐릭터 조합 기준으로 대사 후보 선조회
+            _pendingDialogues = PreResolvePendingDialogues();
+
+            if (_pendingDialogues.Count == 0)
+            {
+                // 출력할 대사 없음 — 즉시 진행
+                Debug.Log("[DTM] 일반퇴고 — 출력할 대사 없음, FinishTurnEnd 호출");
+                _pendingDialogues = null;
+                CampaignGameFlowController.Instance?.FinishTurnEnd();
+                return;
+            }
+
+            // ★ 대사가 있으면 FinishTurnEnd 호출 후 OnLoopReset에서 재생
+            Debug.Log($"[DTM] 일반퇴고 — {_pendingDialogues.Count}개 선조회 완료, FinishTurnEnd 호출");
+            CampaignGameFlowController.Instance?.FinishTurnEnd();
         }
 
-        private IEnumerator TriggerDialoguesDelayed(float delay)
+        /// <summary>
+        /// 루프 리셋 완료(캐릭터 재배치 완료) 후 호출됩니다.
+        /// 페이드 화면이 끝나기를 기다린 뒤 선조회된 대사를 출력합니다.
+        /// </summary>
+        private void OnLoopReset()
+        {
+            if (_pendingDialogues == null || _pendingDialogues.Count == 0)
+            {
+                _pendingDialogues = null;
+                return;
+            }
+
+            Debug.Log("[DTM] OnLoopReset — 페이드 후 대사 출력 대기");
+            var dialoguesToPlay = _pendingDialogues;
+            _pendingDialogues = null;
+
+            StartCoroutine(PlayAfterLoopReset(dialoguesToPlay));
+        }
+
+        private IEnumerator PlayAfterLoopReset(List<PendingDialogue> dialogues)
         {
             IsWaitingForDialogue = true;
-            yield return new WaitForSeconds(delay);
+            yield return new WaitForSeconds(_triggerDelay);
             IsWaitingForDialogue = false;
-            Debug.Log("[DTM] 대기 완료 → 대사 트리거 시작");
-            TriggerDialoguesForAllZones();
+
+            Debug.Log("[DTM] 대기 완료 → 선조회 대사 출력 시작");
+
+            bool done = false;
+            StartCoroutine(PlaySequentialWithComplete(dialogues, () => done = true));
+            yield return new WaitUntil(() => done);
+
+            Debug.Log("[DTM] Zone 대사 완료");
         }
 
         // ═══════════════════════════════════════════════════════════════
@@ -245,7 +282,6 @@ namespace HTH.Campaign
                 return;
             }
 
-            // 1. 전체 사망자
             foreach (int id in gameState.GetAllCharacterIds())
             {
                 if (!gameState.IsMarkedForDeath(id)) continue;
@@ -253,26 +289,29 @@ namespace HTH.Campaign
                 ctx.TotalDeathCount++;
             }
 
-            // 2. 조사 구역(앵커 캐릭터 Zone) 내 사망자
             int investigationZoneId = GetInvestigationZoneId(gameState);
             foreach (var c in gameState.GetCharactersInZone(investigationZoneId))
                 if (ctx.AllDeadThisTurn.Contains(c.CharacterId))
                     ctx.ZoneDeadIds.Add(c.CharacterId);
 
-            // 3. Killer — 토니(#5)가 조사 구역에 생존 + 사망 발생
             ctx.KillerActed = ctx.AllDeadThisTurn.Count > 0
                 && gameState.GetZone(5) == investigationZoneId
                 && !ctx.AllDeadThisTurn.Contains(5);
 
-            // 4. Wanderer — 새턴(#7) 이동 + 이전 구역 사망
             int saturnPrev = gameState.GetPreviousZone(7);
             int saturnCurrent = gameState.GetZone(7);
             if (saturnPrev != saturnCurrent)
+            {
                 foreach (int deadId in ctx.AllDeadThisTurn)
+                {
                     if (gameState.GetPreviousZone(deadId) == saturnPrev)
-                    { ctx.WandererActed = true; break; }
+                    {
+                        ctx.WandererActed = true;
+                        break;
+                    }
+                }
+            }
 
-            // 5. Sacrifice — 프리드(#6) 사망 + 같은 구역 생존자
             ctx.SacrificeActed = ctx.AllDeadThisTurn.Contains(6);
             if (ctx.SacrificeActed)
             {
@@ -282,17 +321,16 @@ namespace HTH.Campaign
                         ctx.SacrificeTargetIds.Add(c.CharacterId);
             }
 
-            // 6. Avenger — 토니(#5) 사망 + 메이(#2) 같은 구역
             ctx.AvengerActed = ctx.AllDeadThisTurn.Contains(5)
                 && gameState.GetPreviousZone(2) == gameState.GetPreviousZone(5)
                 && !ctx.AllDeadThisTurn.Contains(2);
 
-            // 7. LoverChain — 데우스(#3) + 루이스(#4) 동시 사망
             ctx.LoverChainActed = ctx.AllDeadThisTurn.Contains(3)
-                               && ctx.AllDeadThisTurn.Contains(4);
+                                && ctx.AllDeadThisTurn.Contains(4);
 
             _cachedCtx = ctx;
-            Debug.Log($"[DTM] 컨텍스트 캐싱 — InZone:{investigationZoneId} " +
+
+            Debug.Log($"[DTM] 컨텍스트 캐싱 완료 — " +
                       $"전체사망:[{string.Join(",", ctx.AllDeadThisTurn)}] " +
                       $"구역내사망:[{string.Join(",", ctx.ZoneDeadIds)}] " +
                       $"Killer={ctx.KillerActed} Wanderer={ctx.WandererActed} " +
@@ -300,10 +338,6 @@ namespace HTH.Campaign
                       $"LoverChain={ctx.LoverChainActed}");
         }
 
-        /// <summary>
-        /// 조사 구역(InZone) ID를 반환합니다.
-        /// 앵커 캐릭터가 생존 중이면 그 Zone, 사망했으면 0을 반환합니다.
-        /// </summary>
         private int GetInvestigationZoneId(IGameState gameState)
         {
             var anchor = gameState.GetCharacter(_anchorCharacterId);
@@ -312,135 +346,114 @@ namespace HTH.Campaign
         }
 
         // ═══════════════════════════════════════════════════════════════
-        // 구역 순회 및 출력
+        // 대사 선조회
         // ═══════════════════════════════════════════════════════════════
 
-        private void TriggerDialoguesForAllZones()
-        {
-            Debug.Log($"[DTM] TriggerDialoguesForAllZones — 모드:{(_useCharacterBasedZone ? "앵커기반" : "Zone순회")}");
-            if (_useCharacterBasedZone)
-                TriggerByAnchorCharacter();
-            else
-                TriggerByActiveZones();
-        }
-
         /// <summary>
-        /// [앵커 기반] 앵커 캐릭터가 있는 Zone의 캐릭터 조합으로 대사를 선별합니다.
-        /// 앵커 캐릭터가 사망했으면 대사 없음.
+        /// FinishTurnEnd 호출 전, 현재 캐릭터 조합(루프 리셋 전)을 기준으로 대사 후보를 수집합니다.
         /// </summary>
-        private void TriggerByAnchorCharacter()
+        private List<PendingDialogue> PreResolvePendingDialogues()
         {
+            var result = new List<PendingDialogue>();
             var gameState = CampaignGameFlowController.Instance?.GameState;
-            if (gameState == null)
+            if (gameState == null) return result;
+
+            if (_useCharacterBasedZone)
             {
-                Debug.LogWarning("[DTM] TriggerByAnchorCharacter — GameState 없음");
-                return;
+                var anchor = gameState.GetCharacter(_anchorCharacterId);
+                if (anchor == null || !anchor.IsAlive)
+                {
+                    Debug.Log($"[DTM] 선조회 — 앵커 #{_anchorCharacterId} 사망, 대사 없음");
+                    return result;
+                }
+
+                int anchorZone = gameState.GetZone(_anchorCharacterId);
+                var characterIds = GetLivingCharactersInZone(anchorZone, gameState);
+
+                Debug.Log($"[DTM] 선조회 — Zone{anchorZone} 캐릭터:[{string.Join(",", characterIds)}]");
+
+                if (characterIds.Count > 0)
+                {
+                    var resolved = ResolveDialogueForZone(characterIds);
+                    if (resolved.HasValue) result.Add(resolved.Value);
+                }
+            }
+            else
+            {
+                for (int zoneId = 0; zoneId < GameState.ZoneCount; zoneId++)
+                {
+                    if (!IsZoneActive(zoneId)) continue;
+                    var characterIds = GetLivingCharactersInZone(zoneId, gameState);
+
+                    Debug.Log($"[DTM] 선조회 — Zone{zoneId} 캐릭터:[{string.Join(",", characterIds)}]");
+
+                    if (characterIds.Count == 0) continue;
+                    var resolved = ResolveDialogueForZone(characterIds);
+                    if (resolved.HasValue) result.Add(resolved.Value);
+                }
             }
 
-            var anchor = gameState.GetCharacter(_anchorCharacterId);
-            if (anchor == null || !anchor.IsAlive)
-            {
-                Debug.Log($"[DTM] 앵커 #{_anchorCharacterId} 사망 — 대사 없음");
-                return;
-            }
-
-            int anchorZone = gameState.GetZone(_anchorCharacterId);
-            var characterIds = GetLivingCharactersInZone(anchorZone, gameState);
-
-            Debug.Log($"[DTM] 앵커 #{_anchorCharacterId} Zone{anchorZone} — " +
-                      $"구역 캐릭터:[{string.Join(",", characterIds)}] ({characterIds.Count}명)");
-
-            if (characterIds.Count == 0)
-            {
-                Debug.LogWarning($"[DTM] Zone{anchorZone} 생존 캐릭터 없음");
-                return;
-            }
-
-            var resolved = ResolveDialogueForZone(characterIds);
-            if (!resolved.HasValue)
-            {
-                Debug.Log($"[DTM] Zone{anchorZone} — 출력할 대사 없음");
-                return;
-            }
-
-            StartCoroutine(PlaySequential(new List<PendingDialogue> { resolved.Value }));
-        }
-
-
-
-        /// <summary>[Zone 순회] _activeZones 체크된 모든 Zone 순회.</summary>
-        private void TriggerByActiveZones()
-        {
-            var pending = new List<PendingDialogue>();
-            var gameState = CampaignGameFlowController.Instance?.GameState;
-            if (gameState == null) return;
-
-            for (int zoneId = 0; zoneId < GameState.ZoneCount; zoneId++)
-            {
-                if (!IsZoneActive(zoneId)) continue;
-
-                var characterIds = GetLivingCharactersInZone(zoneId, gameState);
-                Debug.Log($"[DTM] Zone{zoneId} 캐릭터:[{string.Join(",", characterIds)}]");
-                if (characterIds.Count == 0) continue;
-
-                var resolved = ResolveDialogueForZone(characterIds);
-                if (resolved.HasValue)
-                    pending.Add(resolved.Value);
-            }
-
-            if (pending.Count == 0) { Debug.Log("[DTM] Zone 순회 — 출력할 대사 없음"); return; }
-            StartCoroutine(PlaySequential(pending));
-        }
-
-        private bool IsZoneActive(int zoneId)
-            => _activeZones != null
-            && zoneId >= 0
-            && zoneId < _activeZones.Length
-            && _activeZones[zoneId];
-
-        /// <summary>특정 구역의 생존 캐릭터 ID 집합을 반환합니다.</summary>
-        private HashSet<int> GetLivingCharactersInZone(int zoneId, IGameState gameState)
-        {
-            var result = new HashSet<int>();
-            foreach (var c in gameState.GetCharactersInZone(zoneId))
-                if (c.IsAlive)
-                    result.Add(c.CharacterId);
+            Debug.Log($"[DTM] 선조회 완료 — {result.Count}개 대사 대기");
             return result;
         }
 
         // ═══════════════════════════════════════════════════════════════
-        // 후보 선별
+        // 구역 유틸
         // ═══════════════════════════════════════════════════════════════
+
+        private bool IsZoneActive(int zoneId)
+            => _activeZones != null
+               && zoneId >= 0
+               && zoneId < _activeZones.Length
+               && _activeZones[zoneId];
+
+        private HashSet<int> GetLivingCharactersInZone(int zoneId, IGameState gameState)
+        {
+            var result = new HashSet<int>();
+            foreach (var ch in gameState.GetCharactersInZone(zoneId))
+                if (ch.IsAlive)
+                    result.Add(ch.CharacterId);
+            return result;
+        }
 
         private PendingDialogue? ResolveDialogueForZone(HashSet<int> characterIds)
         {
             var candidates = FindCandidateEntries(characterIds);
-            Debug.Log($"[DTM] ResolveDialogue — 조합:[{string.Join(",", characterIds)}] 후보:{candidates.Count}개");
 
             foreach (var entry in candidates)
             {
-                bool canPlay = _conditionEvaluator.CanPlay(
-                    entry, characterIds, _progressTracker, _fragmentCollector, _cachedCtx);
-                Debug.Log($"[DTM]   {entry.DialogueId} CanPlay:{canPlay}");
-                if (canPlay)
-                    return new PendingDialogue { Entry = entry, CharacterIds = characterIds, UseFallback = false };
+                if (_conditionEvaluator.CanPlay(
+                        entry, characterIds, _progressTracker, _fragmentCollector, _cachedCtx))
+                {
+                    return new PendingDialogue
+                    {
+                        Entry = entry,
+                        CharacterIds = characterIds,
+                        UseFallback = false,
+                    };
+                }
             }
 
-            if (HasAnyMatchingEntry(candidates))
+            if (candidates != null && candidates.Count > 0)
             {
-                var fallback = _dialogueData?.AlreadySeenLines;
-                if (fallback != null && fallback.Count > 0)
+                var fallbackLines = _dialogueData?.AlreadySeenLines;
+                if (fallbackLines != null && fallbackLines.Count > 0)
                 {
-                    Debug.Log("[DTM] AlreadySeenLines 폴백");
-                    return new PendingDialogue { Entry = null, CharacterIds = characterIds, UseFallback = true };
+                    return new PendingDialogue
+                    {
+                        Entry = null,
+                        CharacterIds = characterIds,
+                        UseFallback = true,
+                    };
                 }
             }
 
             return null;
         }
 
-        private bool HasAnyMatchingEntry(List<DialogueEntry> candidates)
-            => candidates != null && candidates.Count > 0;
+        // ═══════════════════════════════════════════════════════════════
+        // 후보 선별 및 우선순위 정렬
+        // ═══════════════════════════════════════════════════════════════
 
         private List<DialogueEntry> FindCandidateEntries(HashSet<int> characterIds)
         {
@@ -454,14 +467,13 @@ namespace HTH.Campaign
             foreach (var entry in _dialogueData.Dialogues)
             {
                 if (entry == null) continue;
+
                 var participantIds = entry.GetParticipantIds();
                 if (!ContainsRequiredParticipants(participantIds, characterIds)) continue;
 
                 switch (entry.Type)
                 {
                     case DialogueType.Core:
-                        // ★ 수집 완료된 Core는 후보에서 완전 제외
-                        // p4(Normal 폴백)에도 넣지 않음 → 해당 조합 내 다른 대사를 찾지 않음
                         bool collected = !string.IsNullOrEmpty(entry.RewardFragmentId)
                             && (_fragmentCollector?.HasFragment(entry.RewardFragmentId) ?? false);
                         if (!collected) p1.Add(entry);
@@ -478,27 +490,17 @@ namespace HTH.Campaign
             SortByExactMatch(p4, characterIds);
 
             var result = new List<DialogueEntry>(p1.Count + p2.Count + p3.Count + p4.Count);
-            result.AddRange(p1); result.AddRange(p2);
-            result.AddRange(p3); result.AddRange(p4);
+            result.AddRange(p1);
+            result.AddRange(p2);
+            result.AddRange(p3);
+            result.AddRange(p4);
             return result;
         }
 
-        /// <summary>
-        /// ParticipantIds와 Zone 캐릭터 조합이 완전히 일치하는지 확인합니다.
-        ///
-        /// ★ 완전 일치 — Zone 캐릭터 수와 참가자 수가 같아야 합니다.
-        ///   participantIds=[1,3,4], zoneIds={1,3,4} → true  (정확히 일치)
-        ///   participantIds=[3,4],   zoneIds={1,3,4} → false (Zone에 1이 더 있음)
-        ///   participantIds=[1,3,4], zoneIds={1,3}   → false (참가자에 4가 없음)
-        ///
-        /// 이 규칙으로 Zone 내 캐릭터 조합이 다를 때 다른 대사를 찾는 문제를 방지합니다.
-        /// </summary>
         private bool ContainsRequiredParticipants(List<int> participantIds, HashSet<int> characterIds)
         {
             if (participantIds == null || participantIds.Count == 0) return false;
             if (characterIds == null || characterIds.Count == 0) return false;
-
-            // ★ 수가 다르면 즉시 false — 조합이 달라지는 근본 원인 차단
             if (participantIds.Count != characterIds.Count) return false;
 
             foreach (int id in participantIds)
@@ -530,8 +532,16 @@ namespace HTH.Campaign
                     PlayFallbackLines(pending.CharacterIds, () => done = true);
                 else
                     PlayDialogueEntry(pending.Entry, pending.CharacterIds, () => done = true);
+
                 yield return new WaitUntil(() => done);
             }
+        }
+
+        private IEnumerator PlaySequentialWithComplete(List<PendingDialogue> entries,
+                                                       System.Action onComplete)
+        {
+            yield return StartCoroutine(PlaySequential(entries));
+            onComplete?.Invoke();
         }
 
         private IEnumerator PlayTimeOfDayDialogue(TimeOfDayDialogueEntry entry)
@@ -546,7 +556,7 @@ namespace HTH.Campaign
         {
             if (_dialoguePlayer == null) { onComplete?.Invoke(); return; }
 
-            _dialoguePlayer.Play(entry.Lines, onComplete: () =>
+            _dialoguePlayer.Play(entry.Lines, dialogueType: entry.Type, onComplete: () =>
             {
                 if (string.IsNullOrEmpty(entry.RewardFragmentId))
                     _progressTracker.MarkPlayed(entry.DialogueId);
@@ -570,7 +580,7 @@ namespace HTH.Campaign
             var lines = new List<DialogueLine>(_dialogueData.AlreadySeenLines);
             if (lines.Count == 0) { onComplete?.Invoke(); return; }
 
-            Debug.Log($"[DTM] 폴백 재생 — [{string.Join(",", characterIds)}]");
+            Debug.Log($"[DTM] 이미 본 대화 폴백 — [{string.Join(",", characterIds)}]");
             _dialoguePlayer.Play(lines, onComplete: onComplete);
         }
 
@@ -579,9 +589,8 @@ namespace HTH.Campaign
             int charId = ParseCharacterIdFromFragment(fragmentId);
             string name = CharacterRecordPanelManager.Instance?.GetCollectedName(charId);
             string label = !string.IsNullOrEmpty(name) ? $"'{name}'" : $"#{charId}";
-            _dialoguePlayer.PlayNotification(
-                new List<string> { $"{label}의 대화 조각을 획득했습니다.\n인물 기록장에서 확인할 수 있습니다." },
-                onComplete);
+            string msg = $"{label}의 대화 조각을 획득했습니다.\n인물 기록장에서 확인할 수 있습니다.";
+            _dialoguePlayer.PlayNotification(new List<string> { msg }, onComplete);
         }
 
         // ═══════════════════════════════════════════════════════════════
@@ -605,7 +614,7 @@ namespace HTH.Campaign
         }
 
         // ═══════════════════════════════════════════════════════════════
-        // 내부 구조체
+        // 내부 데이터 구조
         // ═══════════════════════════════════════════════════════════════
 
         private struct PendingDialogue
@@ -624,15 +633,7 @@ namespace HTH.Campaign
         {
             PlayerPrefs.DeleteAll();
             PlayerPrefs.Save();
-            Debug.Log("[DTM] PlayerPrefs 전체 초기화 완료");
-        }
-
-        [ContextMenu("테스트: 강제 대사 트리거")]
-        private void TestForceTrigger()
-        {
-            if (!_isInitialized) { Debug.LogError("[DTM] 초기화 안 됨"); return; }
-            Debug.Log("[DTM] 강제 대사 트리거");
-            TriggerDialoguesForAllZones();
+            Debug.Log("[DialogueTriggerManager] PlayerPrefs 전체 초기화 완료");
         }
     }
 }

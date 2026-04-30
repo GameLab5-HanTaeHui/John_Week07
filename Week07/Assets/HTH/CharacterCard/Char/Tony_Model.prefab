@@ -235,7 +235,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "#5\n<size=5>\uD1A0\uB2C8</size>"
+  m_text: "<size=5>#5</size>\n\uD1A0\uB2C8"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 18881673235070747af8383e5c68099b, type: 2}
   m_sharedMaterial: {fileID: -9072781599192229811, guid: 18881673235070747af8383e5c68099b, type: 2}
@@ -262,8 +262,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 10
-  m_fontSizeBase: 10
+  m_fontSize: 7
+  m_fontSizeBase: 7
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -763,7 +763,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 69f6102fd3265584cbea437d96696baa, type: 3}
       propertyPath: m_Layer
-      value: 7
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 69f6102fd3265584cbea437d96696baa, type: 3}
       propertyPath: m_IsActive

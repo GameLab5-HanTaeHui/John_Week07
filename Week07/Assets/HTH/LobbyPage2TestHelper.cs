@@ -37,7 +37,7 @@ namespace HTH.Campaign
         [SerializeField] private RewardSaveData _rewardSaveData;
 
         [Tooltip("LobbyPage2Controller 컴포넌트입니다.")]
-        [SerializeField] private LobbyPage2Controller _page2Controller;
+        [SerializeField] private LobbyPage02Manager _page2Controller;
 
         [Header("설정")]
         [Tooltip("스테이지 ID입니다.")]

@@ -370,7 +370,7 @@ MonoBehaviour:
   active: 1
   m_Sensitive:
     m_OverrideState: 1
-    m_Value: 0.001
+    m_Value: 0.1
   m_Thickness:
     m_OverrideState: 1
     m_Value: 0.1

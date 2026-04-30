@@ -1,12 +1,13 @@
 using System;
 using DG.Tweening;
 using UnityEngine;
+using HTH.Campaign.Lobby; // 새로 만든 매니저를 위해 네임스페이스 추가
 
 /// <summary>
 /// 타이틀 화면용 책 연출 (3D).
-/// LobbyUIManager / LobbyUI를 자동으로 찾아 애니메이션 시작/종료 시 UI를 최신화합니다.
+/// LobbyPageManager를 자동으로 찾아 애니메이션 시작/종료 시 UI를 최신화합니다.
 ///
-/// [최초 열림] 아무 키 입력 → 슬라이드 + OpenEntries 회전 → LobbyUIManager.Show()
+/// [최초 열림] 아무 키 입력 → 슬라이드 + OpenEntries 회전 → LobbyPageManager.ShowInitialPage()
 /// [페이지 넘김] TurnPage()     → 현재 챕터 인덱스에 맞는 TurnPageSet 정방향 재생
 /// [이전 페이지] TurnPageBack() → 이전 챕터 인덱스에 맞는 TurnPageSet 역방향 재생
 ///
@@ -32,7 +33,7 @@ public class TitleBookAnimator : MonoBehaviour
         public RotateMode rotateMode;
         public float duration;
         public float delay;
-        public Ease  ease;
+        public Ease ease;
     }
 
     [Serializable]
@@ -45,7 +46,7 @@ public class TitleBookAnimator : MonoBehaviour
     [Header("슬라이드 설정")]
     [SerializeField] private float _slideDistance = 5f;
     [SerializeField] private float _slideDuration = 0.6f;
-    [SerializeField] private Ease  _slideEase     = Ease.InOutQuart;
+    [SerializeField] private Ease _slideEase = Ease.InOutQuart;
 
     [Header("최초 열림 회전")]
     [SerializeField] private RotationEntry[] _openEntries;
@@ -53,18 +54,18 @@ public class TitleBookAnimator : MonoBehaviour
     [Header("페이지 넘김 회전 (챕터 전환 순서대로)")]
     [SerializeField] private TurnPageSet[] _turnPageSets;
 
-    private LobbyUIManager _uiManager;
-    private LobbyUI        _lobbyUI;
-    private bool           _opened;
-    private bool           _turning;
-    private bool           _inputReady = true;
+    // 바뀐 매니저 선언
+    private LobbyPageManager _pageManager;
+    private bool _opened;
+    private bool _turning;
+    private bool _inputReady = true;
 
     // ── Unity ─────────────────────────────────────────────────────────────────
 
     private void Awake()
     {
-        _uiManager = FindFirstObjectByType<LobbyUIManager>();
-        _lobbyUI   = FindFirstObjectByType<LobbyUI>();
+        // 바뀐 매니저 찾기 (LobbyUI는 안 쓰므로 삭제했습니다)
+        _pageManager = FindFirstObjectByType<LobbyPageManager>();
     }
 
     /// <summary>LobbyDialogueManager가 다이얼로그 완료 후 true로 설정해 책 열기를 허용합니다.</summary>
@@ -82,17 +83,19 @@ public class TitleBookAnimator : MonoBehaviour
     public void TurnPage()
     {
         if (_turning) return;
-        if (_uiManager != null && !_uiManager.CanGoNext) return;
 
-        int setIndex = _uiManager != null ? _uiManager.CurrentChapterIndex : 0;
-        var entries  = GetTurnEntries(setIndex);
+        // 현재 페이지 인덱스 가져오기
+        int setIndex = _pageManager != null ? _pageManager.CurrentPageIndex : 0;
+        var entries = GetTurnEntries(setIndex);
 
         _turning = true;
-        _uiManager?.OnAnimationStart();
+        _pageManager?.OnAnimationStart();
+
         PlayEntries(entries, () =>
         {
             _turning = false;
-            _uiManager?.ShowNextChapter();
+            // 바뀐 함수명 적용
+            _pageManager?.ShowNextPage();
         });
     }
 
@@ -100,19 +103,25 @@ public class TitleBookAnimator : MonoBehaviour
     public void TurnPageBack()
     {
         if (_turning) return;
-        if (_uiManager != null && !_uiManager.CanGoBack) return;
 
-        int setIndex = _uiManager != null ? _uiManager.CurrentChapterIndex - 1 : 0;
-        var entries  = GetTurnEntries(setIndex);
+        int setIndex = _pageManager != null ? _pageManager.CurrentPageIndex - 1 : 0;
+
+        // 0페이지 미만으로 넘어가는 현상 방지
+        if (setIndex < 0) return;
+
+        var entries = GetTurnEntries(setIndex);
 
         _turning = true;
-        _uiManager?.OnAnimationStart();
+        _pageManager?.OnAnimationStart();
+
         PlayEntriesReverse(entries, () =>
         {
             _turning = false;
-            _uiManager?.ShowPreviousChapter();
+            // 바뀐 함수명 적용
+            _pageManager?.ShowPreviousPage();
         });
     }
+
     /// <summary>게임 종료.</summary>
     public void GameQuit()
     {
@@ -132,18 +141,20 @@ public class TitleBookAnimator : MonoBehaviour
     private void PlayOpen()
     {
         _opened = true;
-        _uiManager?.OnAnimationStart();
+        _pageManager?.OnAnimationStart();
 
         var slideTween = transform.DOLocalMoveX(transform.localPosition.x + _slideDistance, _slideDuration)
                                   .SetEase(_slideEase);
 
         if (_openEntries == null || _openEntries.Length == 0)
         {
-            slideTween.OnComplete(() => _uiManager?.Show());
+            // 바뀐 함수명 적용
+            slideTween.OnComplete(() => _pageManager?.ShowInitialPage());
             return;
         }
 
-        PlayEntries(_openEntries, () => _uiManager?.Show());
+        // 바뀐 함수명 적용
+        PlayEntries(_openEntries, () => _pageManager?.ShowInitialPage());
     }
 
     private void PlayEntries(RotationEntry[] entries, Action onComplete)

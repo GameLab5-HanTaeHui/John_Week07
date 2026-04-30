@@ -50,6 +50,10 @@ namespace HTH.Campaign
         [Tooltip("캐릭터별 힌트 텍스트 데이터입니다.")]
         [SerializeField] private FragmentHintDataSO _hintData;
 
+        [Header("의존성")]
+        [Tooltip("조각 수집 상태를 확인하기 위한 참조입니다.")]
+        [SerializeField] private FragmentCollector _fragmentCollector;
+
         [Header("UI 참조")]
         [Tooltip("힌트 텍스트 TMP_Text 5개입니다.")]
         [SerializeField] private TMP_Text[] _hintTexts = new TMP_Text[5];
@@ -292,7 +296,38 @@ namespace HTH.Campaign
             for (int i = 0; i < _hintTexts.Length; i++)
             {
                 if (_hintTexts[i] == null) continue;
-                _hintTexts[i].text = i < hints.Count ? hints[i] : "";
+
+                if (i < hints.Count)
+                {
+                    string baseHint = hints[i];
+
+                    // 조각 ID 생성 (예: 1번 캐릭터의 1번째 단서면 "P01_01")
+                    // 인덱스 i는 0부터 시작하므로 +1 해줍니다.
+                    string fragmentId = $"P{_currentCharacterId:00}_{i + 1:00}";
+
+                    // FragmentCollector에서 해당 조각을 수집했는지 확인
+                    bool isCollected = false;
+                    if (_fragmentCollector != null)
+                    {
+                        isCollected = _fragmentCollector.HasFragment(fragmentId);
+                    }
+
+                    // 수집 완료 시 취소선 <s> 태그 적용 (투명도 조절은 취향껏 빼셔도 됩니다)
+                    if (isCollected)
+                    {
+                        _hintTexts[i].text = $"<alpha=#88><s>{baseHint}</s>";
+                    }
+                    else
+                    {
+                        // 미수집 상태면 기본 텍스트
+                        _hintTexts[i].text = baseHint;
+                    }
+                }
+                else
+                {
+                    // 힌트 개수가 모자란 남는 슬롯은 비워둠
+                    _hintTexts[i].text = "";
+                }
             }
         }
     }

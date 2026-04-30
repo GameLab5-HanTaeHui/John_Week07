@@ -7,25 +7,31 @@ namespace HTH.Campaign
     /// 캠페인 씬 전용 CharacterSpawner입니다.
     /// 기본모드 CharacterSpawner와 완전히 분리됩니다.
     ///
-    /// ─── 기본모드와의 차이 ───────────────────────────────────────────────────
-    ///   ApplyZoneRulesToGameState — 능력 무효화 구역을 항상 비활성(false)으로 강제.
-    ///     Phase2에서는 Zone의 DisableAbilities 설정을 무시합니다.
-    ///   DisableAllAbilityZones() 메서드 유지 (CampaignModeManager 연계).
+    /// ─── 슬롯 초기화 규칙 ────────────────────────────────────────────────────
+    ///   InitSlots 호출은 반드시 아래 두 시점에만 수행합니다.
+    ///   1. SpawnAll        — 게임 최초 시작 시
+    ///   2. ResetSlots      — 퇴고/강제퇴고(루프 리셋) 시 HandleLoopReset에서 호출
+    ///   SyncViewsToGameState는 슬롯 맵을 건드리지 않고 위치만 반영합니다.
     ///
-    /// Inspector 필수 연결:
-    ///   CharacterRegistry → 7개 캐릭터 데이터
-    ///   ZoneLayout        → 씬의 구역 위치 마커
+    /// ─── Inspector 연결 ──────────────────────────────────────────────────────
+    ///   CharacterRegistry → 캐릭터 데이터 에셋
+    ///   ZoneLayout        → 씬의 CampaignZoneLayout 컴포넌트
     /// </summary>
     public class CampaignCharacterSpawner : MonoBehaviour
     {
         [SerializeField] private CharacterRegistry _characterRegistry;
         [SerializeField] private CampaignZoneLayout _zoneLayout;
 
-        /// <summary>모든 CharacterView를 GameState의 Zone 슬롯 위치로 스냅합니다.</summary>
+        // ── 공개 API ─────────────────────────────────────────────────────────
+
+        /// <summary>
+        /// 모든 CharacterView를 GameState의 Zone 슬롯 위치로 스냅합니다.
+        /// ★ 슬롯 맵을 초기화하지 않습니다 — 기존 슬롯 배치를 유지합니다.
+        ///    루프 리셋 시에는 이 함수 전에 ResetSlots()를 먼저 호출하세요.
+        /// </summary>
         public void SyncViewsToGameState(GameState gameState, Dictionary<int, CharacterView> views)
         {
             var charZoneMap = BuildCharZoneMap(gameState, views.Keys);
-            _zoneLayout.InitSlots(charZoneMap);
             var positions = _zoneLayout.ComputeSlotPositions(charZoneMap);
             var rotations = _zoneLayout.ComputeSlotRotations(charZoneMap);
 
@@ -42,6 +48,16 @@ namespace HTH.Campaign
 
                 kv.Value.RefreshView();
             }
+        }
+
+        /// <summary>
+        /// 퇴고/강제퇴고(루프 리셋) 시 슬롯 맵을 GameState 기준으로 재초기화합니다.
+        /// HandleLoopReset → ResetSlots → SyncViewsToGameState 순서로 호출하세요.
+        /// </summary>
+        public void ResetSlots(GameState gameState, Dictionary<int, CharacterView> views)
+        {
+            var charZoneMap = BuildCharZoneMap(gameState, views.Keys);
+            _zoneLayout.InitSlots(charZoneMap);
         }
 
         /// <summary>모든 캐릭터 프리팹을 스폰하고 초기 구역 슬롯 위치에 배치합니다.</summary>
@@ -79,6 +95,7 @@ namespace HTH.Campaign
                 views[data.CharacterId] = view;
             }
 
+            // ★ SpawnAll에서만 InitSlots 호출 — 이후 SyncViews는 슬롯 맵 유지
             var charZoneMap = BuildCharZoneMap(gameState, views.Keys);
             _zoneLayout.InitSlots(charZoneMap);
             var positions = _zoneLayout.ComputeSlotPositions(charZoneMap);
@@ -97,19 +114,18 @@ namespace HTH.Campaign
         }
 
         /// <summary>
-        /// ★ Phase2 전용 — 능력 무효화 구역을 항상 비활성(false)으로 강제 적용합니다.
+        /// 능력 무효화 구역을 항상 비활성(false)으로 강제 적용합니다.
         /// ZonePoint.DisableAbilities 설정을 무시합니다.
         /// </summary>
         public void ApplyZoneRulesToGameState(GameState gameState)
         {
-            var disabled = new bool[GameState.ZoneCount];   // 전부 false
+            var disabled = new bool[GameState.ZoneCount];
             var effects = new ZoneEffectConfig[GameState.ZoneCount];
 
             for (int i = 0; i < GameState.ZoneCount; i++)
             {
                 var zone = _zoneLayout?.GetZonePoint(i);
                 effects[i] = zone?.ZoneEffect;
-                // disabled[i] = false → Phase2에서는 모든 구역 능력 활성
             }
 
             gameState.InitZoneRules(disabled);

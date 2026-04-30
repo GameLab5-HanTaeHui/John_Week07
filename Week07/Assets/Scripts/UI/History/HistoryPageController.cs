@@ -29,6 +29,7 @@ using UnityEngine.UI;
 [DisallowMultipleComponent]
 public class HistoryPageController : MonoBehaviour
 {
+    public static HistoryPageController Instance { get; private set; }
     // ── 2D 배열 Inspector 래퍼 ───────────────────────────────────────────────
 
     /// <summary>
@@ -88,6 +89,7 @@ public class HistoryPageController : MonoBehaviour
 
     private void Awake()
     {
+        Instance = this;
         BuildPanelArray();
         InitAllPanels();
     }
@@ -104,8 +106,8 @@ public class HistoryPageController : MonoBehaviour
 
     private void OnDestroy()
     {
+        if (Instance == this) Instance = null;
         TurnHistoryRepository.Instance.OnRecordCommitted -= HandleRecordCommitted;
-
     }
 
     // ── 초기화 ────────────────────────────────────────────────────────────────

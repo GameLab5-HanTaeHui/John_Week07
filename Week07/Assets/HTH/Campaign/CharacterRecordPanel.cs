@@ -458,7 +458,7 @@ namespace HTH.Campaign
             _fragmentCountText.text = $"획득한 대화조각 ({collected}/{total})";
 
             if (_flipToBackButton != null)
-                _flipToBackButton.gameObject.SetActive(collected >= total - 4);
+                _flipToBackButton.gameObject.SetActive(collected >= total);
         }
 
         /// <summary>

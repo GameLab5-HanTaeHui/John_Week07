@@ -163,6 +163,9 @@ namespace HTH.Campaign
             // ★ 스왑 시작 즉시 버튼 비활성화
             SetButtonInteractable(false);
 
+            HistoryPageController.Instance?.CollapseExpanded();
+            CharacterRecordPanelManager.Instance?.CloseCurrentPanel();
+
             if (target == UIState.CharacterRecord)
             {
                 SlideDownAndHide(_historyPanel, _historyOriginY);
@@ -205,7 +208,7 @@ namespace HTH.Campaign
         private void SetButtonInteractable(bool interactable)
         {
             if (_swapButton != null)
-                _swapButton.interactable = interactable;
+                _swapButton.gameObject.SetActive(interactable);
         }
 
         // ── 애니메이션 헬퍼 ──────────────────────────────────────────────

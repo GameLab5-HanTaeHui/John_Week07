@@ -11,9 +11,15 @@ namespace HTH.Campaign
     /// ─── 기본모드와의 차이 ───────────────────────────────────────────────────
     ///   참조 대상: CampaignGameFlowController (기본: GameFlowController)
     ///   DialogueTriggerManager.IsWaitingForDialogue 차단 로직 포함
-    ///   WinState에서도 입력 처리 (조각 수집 루프 유지)
     ///
-    /// Inspector 필수 연결:
+    /// ─── 캐릭터 위치 재배치 규칙 ─────────────────────────────────────────────
+    ///   위치 재배치(ReplaceTo/SnapToPosition)는 아래 두 경우에만 수행합니다.
+    ///   1. HandleActionConfirmed — 플레이어가 직접 드래그해서 Zone에 드롭
+    ///   2. HandleLoopReset      — 퇴고/강제퇴고 시 슬롯 맵 재초기화
+    ///   SyncAssignedZonesFromGameState는 _assignedZones 값만 동기화하며
+    ///   위치 이동 또는 슬롯 맵 초기화를 수행하지 않습니다.
+    ///
+    /// ─── Inspector 연결 ──────────────────────────────────────────────────────
     ///   MainCamera         → 레이캐스트용 카메라
     ///   ZoneLayerMask      → ZonePoint 레이어 마스크
     ///   CharacterLayerMask → 캐릭터 레이어 마스크
@@ -100,6 +106,7 @@ namespace HTH.Campaign
 
             var turnSM = gfc.GetTurnSM();
             if (turnSM != null)
+                // ★ _assignedZones 값 동기화만 — 위치 이동 없음
                 turnSM.OnPlayerActionStarted += SyncAssignedZonesFromGameState;
 
             gfc.OnLoopReset += HandleLoopReset;
@@ -116,13 +123,12 @@ namespace HTH.Campaign
             }
 
             var gfc = CampaignGameFlowController.Instance;
-            if (gfc != null)
-            {
-                gfc.OnLoopReset -= HandleLoopReset;
-                var turnSM = gfc.GetTurnSM();
-                if (turnSM != null)
-                    turnSM.OnPlayerActionStarted -= SyncAssignedZonesFromGameState;
-            }
+            if (gfc == null) return;
+
+            gfc.OnLoopReset -= HandleLoopReset;
+            var turnSM = gfc.GetTurnSM();
+            if (turnSM != null)
+                turnSM.OnPlayerActionStarted -= SyncAssignedZonesFromGameState;
         }
 
         private void Update()
@@ -133,7 +139,7 @@ namespace HTH.Campaign
             if (loopState == LoopStateType.FinalDecision ||
                 loopState == LoopStateType.AwaitingFinalDecision) return;
 
-            // ★ 캠페인 대사 대기 중 입력 차단
+            // 캠페인 대사 대기 중 입력 차단
             if (DialogueTriggerManager.Instance != null &&
                 DialogueTriggerManager.Instance.IsWaitingForDialogue) return;
 
@@ -173,7 +179,7 @@ namespace HTH.Campaign
 
             _dragOriginalRot = view.transform.rotation;
             _groundPlane = new Plane(Vector3.up, view.transform.position);
-            _draggingAnimator = view.GetComponent<CharacterPickupAnimator>();
+            _draggingAnimator = anim;
 
             if (_draggingAnimator != null)
                 _draggingAnimator.PickUp(view.transform.rotation);
@@ -206,11 +212,9 @@ namespace HTH.Campaign
                                     + offset.y;
                     var holdPos = new Vector3(groundPos.x + offset.x, liftY, groundPos.z + offset.z);
 
-                    // ★ 마우스 위치로 캐릭터 이동 (UpdateDragPosition 없음 → 직접 세팅)
                     var prevPos = _draggingView.transform.position;
                     _draggingView.transform.position = holdPos;
 
-                    // ★ 이동 속도 기반 기울기 업데이트
                     if (_draggingAnimator != null)
                     {
                         var worldVelocity = (holdPos - prevPos) / Time.deltaTime;
@@ -279,6 +283,11 @@ namespace HTH.Campaign
 
         // ── 이벤트 핸들러 ────────────────────────────────────────────────────
 
+        /// <summary>
+        /// 퇴고/강제퇴고 시 호출됩니다.
+        /// 슬롯 맵을 GameState 기준으로 재초기화하고 캐릭터를 원래 위치로 되돌립니다.
+        /// 위치 재배치가 허용되는 두 경우 중 하나입니다.
+        /// </summary>
         private void HandleLoopReset()
         {
             var gs = CampaignGameFlowController.Instance?.GameState;
@@ -291,6 +300,12 @@ namespace HTH.Campaign
             _lastClickTimePerCharacter.Clear();
         }
 
+        /// <summary>
+        /// 매 턴 시작(OnPlayerActionStarted) 시 호출됩니다.
+        /// ★ _assignedZones 값만 동기화합니다.
+        ///    InitSlots, ReplaceTo, SnapToPosition을 호출하지 않습니다.
+        ///    위치 재배치는 HandleActionConfirmed와 HandleLoopReset에서만 수행합니다.
+        /// </summary>
         private void SyncAssignedZonesFromGameState()
         {
             var gs = CampaignGameFlowController.Instance?.GameState;
@@ -298,21 +313,6 @@ namespace HTH.Campaign
 
             foreach (var charId in _characterViews.Keys)
                 _assignedZones[charId] = gs.GetZone(charId);
-
-            if (_zoneLayout == null) return;
-
-            _zoneLayout.InitSlots(_assignedZones);
-
-            var positions = _zoneLayout.ComputeSlotPositions(_assignedZones);
-            var rotations = _zoneLayout.ComputeSlotRotations(_assignedZones);
-            foreach (var kv in _characterViews)
-            {
-                if (!positions.TryGetValue(kv.Key, out var pos)) continue;
-                var rot = rotations.TryGetValue(kv.Key, out var r) ? r : kv.Value.transform.rotation;
-                var anim = kv.Value.GetComponent<CharacterPickupAnimator>();
-                if (anim != null) anim.ReplaceTo(pos, rot);
-                else kv.Value.SnapToPosition(pos);
-            }
         }
 
         private void HandleCharacterSelected(int characterId)
@@ -321,11 +321,15 @@ namespace HTH.Campaign
                 kv.Value.SetSelected(kv.Key == characterId);
         }
 
+        /// <summary>
+        /// 플레이어가 드래그로 캐릭터를 Zone에 드롭 확정 시 호출됩니다.
+        /// 위치 재배치가 허용되는 두 경우 중 하나입니다.
+        /// </summary>
         private void HandleActionConfirmed(int characterId, int targetZoneId)
         {
             if (!_characterViews.TryGetValue(characterId, out var view)) return;
 
-            // ★ 앵커 캐릭터 이동 확정 시 Zone 색상 갱신
+            // 앵커 캐릭터 이동 확정 시 Zone 색상 갱신
             if (_anchorCharacterActive && characterId == _anchorCharacterId && targetZoneId >= 0)
                 RefreshAnchorZoneColor(targetZoneId);
 
@@ -344,12 +348,8 @@ namespace HTH.Campaign
             view.RefreshView();
         }
 
-        // ── 구역 색상 갱신 ──────────────────────────────────────────────────
+        // ── 구역 색상 갱신 ───────────────────────────────────────────────────
 
-        /// <summary>
-        /// 앵커 캐릭터가 이동한 Zone을 활성색으로, 나머지를 기본색으로 갱신합니다.
-        /// HandleActionConfirmed()에서 앵커 캐릭터 이동 확정 시 호출합니다.
-        /// </summary>
         private void RefreshAnchorZoneColor(int anchorZone)
         {
             if (_zoneRenderers == null) return;
@@ -406,10 +406,6 @@ namespace HTH.Campaign
                 : Physics.Raycast(ray, out hit, Mathf.Infinity);
 
             if (!hasHit) return null;
-
-            RaycastHit hit2;
-            Physics.Raycast(ray, out hit2, Mathf.Infinity,
-                _characterLayerMask.value != 0 ? _characterLayerMask : ~0);
 
             hit.collider.TryGetComponent(out CharacterView view);
             if (view == null)

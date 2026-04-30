@@ -95,7 +95,7 @@ namespace HTH.Campaign
 
             _pool = new TextPool(_textPrefab, _textRoot);
 
-            if(_dialoguePanel.activeSelf) _dialoguePanel.SetActive(false);
+            if (_dialoguePanel.activeSelf) _dialoguePanel.SetActive(false);
 
             HandleGameStarted();
         }
@@ -139,9 +139,10 @@ namespace HTH.Campaign
             BuildLines(eventLog, isLoopCondition);
             BeginPlay(() =>
             {
-                // ★ CampaignGameFlowController 참조
+                // ★ FireTurnEndDialogueFinished만 호출
+                // FinishTurnEnd()는 DialogueTriggerManager의 대사 출력 완료 후 호출됩니다.
+                // 강제퇴고(_isForcedLoop=true)일 때는 DTM이 대사 없이 바로 FinishTurnEnd() 호출.
                 _turnSM.FireTurnEndDialogueFinished();
-                CampaignGameFlowController.Instance.FinishTurnEnd();
             });
         }
 

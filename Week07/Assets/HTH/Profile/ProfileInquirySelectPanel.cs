@@ -54,6 +54,20 @@ namespace HTH.Campaign
         [Tooltip("캐릭터 아이콘/이름/프로파일 데이터입니다.")]
         [SerializeField] private ProfileDataSO _profileData;
 
+        // ── 퍼스널 컬러 ───────────────────────────────────────────────────
+
+        private static readonly Color[] PersonalColors =
+        {
+            Color.white,                                    // [0] 미사용
+            new Color(0xC8/255f, 0xA8/255f, 0x88/255f),   // [1] 엔비  #C8A888
+            new Color(0x48/255f, 0x78/255f, 0x48/255f),   // [2] 메이  #487848
+            new Color(0x58/255f, 0x58/255f, 0x88/255f),   // [3] 데우스 #585888
+            new Color(0xD8/255f, 0xD8/255f, 0xE8/255f),   // [4] 루이스 #D8D8E8
+            new Color(0xE8/255f, 0xD8/255f, 0x98/255f),   // [5] 토니  #E8D898
+            new Color(0xE8/255f, 0x88/255f, 0x68/255f),   // [6] 프리드 #E88868
+            new Color(0x98/255f, 0x88/255f, 0x68/255f),   // [7] 새턴  #988868
+        };
+
         // ── 내부 상태 ─────────────────────────────────────────────────────
 
         private CharacterIconButton[] _buttons;
@@ -122,12 +136,8 @@ namespace HTH.Campaign
                 bool canInquire = _fragmentCollector?.CanInquire(capturedId) ?? false;
 
                 var btn = Instantiate(_iconButtonPrefab, _iconGrid);
-                btn.Setup(
-                    characterId: capturedId,
-                    icon: icon,
-                    collectedName: name,
-                    onClicked: () => OnCharacterSelected(capturedId)
-                );
+                btn.Setup(characterId: capturedId, icon: icon, collectedName: name, 
+                    onClicked: () => OnCharacterSelected(capturedId));
 
                 // 조각 10개 미달 시 비활성화
                 var button = btn.GetComponent<UnityEngine.UI.Button>();
@@ -136,6 +146,7 @@ namespace HTH.Campaign
 
                 _buttons[i] = btn;
             }
+            RefreshButtonStates();
         }
 
         /// <summary>
@@ -154,9 +165,25 @@ namespace HTH.Campaign
                 // FragmentCollector.CanInquire() 기준 (10개)으로 통일
                 bool canInquire = _fragmentCollector?.CanInquire(capturedId) ?? false;
 
+                // 해당 캐릭터를 클리어 했는가?
+                bool isCleared = _fragmentCollector?.IsEpilogueUnlocked(capturedId) ?? false;
+
                 var button = _buttons[i].GetComponent<UnityEngine.UI.Button>();
                 if (button != null)
-                    button.interactable = canInquire;
+                {
+                    ColorBlock cb = button.colors;
+
+                    if(isCleared)
+                    {
+                        button.interactable = false;
+                        cb.disabledColor = PersonalColors[capturedId];
+                    }
+                    else
+                    {
+                        button.interactable = canInquire;
+                    }
+                    button.colors = cb;
+                }
             }
         }
 

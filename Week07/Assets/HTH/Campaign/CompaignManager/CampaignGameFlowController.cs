@@ -8,11 +8,19 @@ namespace HTH.Campaign
     /// 캠페인 씬 전용 게임 흐름 컨트롤러입니다.
     /// 기본모드 GameFlowController와 씬을 완전히 분리합니다.
     ///
-    /// ─── 기본모드와의 차이 ───────────────────────────────────────────────────
-    ///   WinState에서도 캐릭터 이동/클릭 허용 (Phase2 조각 수집)
-    ///   ReassignRolesForPhase2() 지원
-    ///   HandleGameEnded — 로비 이동 없이 Phase2 루프 유지
-    ///   ForceEndTurn — WinState에서도 호출 가능
+    /// ─── 턴 종료 흐름 ────────────────────────────────────────────────────────
+    ///   [TurnEnd 진입]
+    ///     → OnTurnEndEntered 발행
+    ///     → CampaignInGameDialogueManager 가 턴종료 대사 재생
+    ///     → FireTurnEndDialogueFinished 호출
+    ///     → DialogueTriggerManager.OnTurnEndDialogueFinished
+    ///         강제퇴고 → FinishTurnEnd() 즉시
+    ///         일반퇴고 → Zone 대사 재생 완료 → FinishTurnEnd()
+    ///
+    /// ─── 캐릭터 위치 동기화 규칙 ─────────────────────────────────────────────
+    ///   SyncViewsToGameState — 위치만 반영, 슬롯 맵 유지
+    ///   ResetSlots           — 퇴고/강제퇴고 시에만 슬롯 맵 재초기화
+    ///   OnTurnEndEntered     — RefreshAllCharacterViews만 호출 (위치 이동 없음)
     ///
     /// ─── Inspector 연결 ──────────────────────────────────────────────────────
     ///   OrderConfig         → RoleActivationOrderConfig 에셋
@@ -89,7 +97,8 @@ namespace HTH.Campaign
         {
             base.Awake();
             ValidateInspectorRefs();
-            _loopSM = new CampaignLoopStateMachine(_orderConfig, _characterRegistry, _stageRoleConfig, _setupConfig);
+            _loopSM = new CampaignLoopStateMachine(
+                _orderConfig, _characterRegistry, _stageRoleConfig, _setupConfig);
         }
 
         private void Start()
@@ -102,8 +111,8 @@ namespace HTH.Campaign
             var turnSM = GetTurnSM();
             if (turnSM != null)
             {
+                // 턴 종료 진입 — 뷰 갱신만 (위치 이동 없음)
                 turnSM.OnTurnEndEntered += (_, __) => RefreshAllCharacterViews();
-                turnSM.OnPlayerActionStarted += SyncViewsAfterZoneEffects;
             }
         }
 
@@ -111,15 +120,9 @@ namespace HTH.Campaign
 
         private void OnDestroy()
         {
-            if (_loopSM != null)
-            {
-                _loopSM.OnLoopReset -= HandleLoopReset;
-                _loopSM.OnGameEnded -= HandleGameEnded;
-            }
-
-            var turnSM = GetTurnSM();
-            if (turnSM != null)
-                turnSM.OnPlayerActionStarted -= SyncViewsAfterZoneEffects;
+            if (_loopSM == null) return;
+            _loopSM.OnLoopReset -= HandleLoopReset;
+            _loopSM.OnGameEnded -= HandleGameEnded;
         }
 
         // ── 공개 API ─────────────────────────────────────────────────────────
@@ -134,7 +137,8 @@ namespace HTH.Campaign
             {
                 var loop = CurrentLoopState;
                 return loop == LoopStateType.AwaitingFinalDecision
-                    || (loop == LoopStateType.RunningTurn && CurrentTurnState == TurnStateType.PlayerAction);
+                    || (loop == LoopStateType.RunningTurn
+                        && CurrentTurnState == TurnStateType.PlayerAction);
             }
         }
 
@@ -159,110 +163,59 @@ namespace HTH.Campaign
         public void FinishTurnEnd() => _loopSM?.TurnSM?.FinishTurnEnd();
         public void FinishGameEndDialogue() => _loopSM?.FinishGameEndDialogue();
 
-        /// <summary>
-        /// ★ 캠페인 전용 — WinState에서도 ForceEndTurn 허용 (조각 수집 루프 유지)
-        /// </summary>
         public void ForceEndTurn()
         {
-            bool isRunning = CurrentLoopState == LoopStateType.RunningTurn;
-            bool isWinLoop = CurrentLoopState == LoopStateType.WinState;
-            if (!isRunning && !isWinLoop) return;
+            if (CurrentLoopState != LoopStateType.RunningTurn) return;
             _loopSM?.ForceEndPlayerAction();
         }
 
         // ── 입력 라우팅 ───────────────────────────────────────────────────────
 
-        /// <summary>★ 캠페인 전용 — WinState에서도 캐릭터 클릭 허용</summary>
         public void NotifyCharacterClicked(int characterId)
         {
-            bool isRunning = CurrentLoopState == LoopStateType.RunningTurn;
-            bool isWinLoop = CurrentLoopState == LoopStateType.WinState;
-            if (!isRunning && !isWinLoop) return;
+            if (CurrentLoopState != LoopStateType.RunningTurn) return;
             _loopSM?.NotifyCharacterClicked(characterId);
         }
 
-        /// <summary>★ 캠페인 전용 — WinState에서도 Zone 클릭 허용</summary>
         public void NotifyZoneClicked(int zoneId)
         {
-            bool isRunning = CurrentLoopState == LoopStateType.RunningTurn;
-            bool isWinLoop = CurrentLoopState == LoopStateType.WinState;
-            if (!isRunning && !isWinLoop) return;
+            if (CurrentLoopState != LoopStateType.RunningTurn) return;
             _loopSM?.NotifyZoneClicked(zoneId);
         }
 
         public void BeginDragSelect(int characterId) => _loopSM?.BeginDragSelect(characterId);
         public PlayerActionState GetPlayerActionState() => _loopSM?.GetPlayerActionState();
 
-        // ── Phase2 역할 재배정 ────────────────────────────────────────────────
-
-        /// <summary>
-        /// Phase2 진입 시 역할 배정을 교체합니다.
-        /// CampaignModeManager.EnterPhase2Direct()에서 호출합니다.
-        /// </summary>
-        public void ReassignRolesForPhase2(StageRoleConfig phase2RoleConfig)
-        {
-            if (phase2RoleConfig == null)
-            {
-                Debug.LogError("[CampaignGameFlowController] ReassignRolesForPhase2 — config가 null입니다.");
-                return;
-            }
-
-            var gameState = _loopSM?.GameState;
-            if (gameState == null)
-            {
-                Debug.LogError("[CampaignGameFlowController] ReassignRolesForPhase2 — GameState가 없습니다.");
-                return;
-            }
-
-            var roles = phase2RoleConfig.Roles;
-            var characterIds = gameState.GetAllCharacterIds();
-
-            if (roles == null || roles.Count == 0 || roles.Count != characterIds.Count)
-            {
-                Debug.LogError($"[CampaignGameFlowController] ReassignRolesForPhase2 — " +
-                               $"역할 수({roles?.Count ?? 0})와 캐릭터 수({characterIds.Count}) 불일치.");
-                return;
-            }
-
-            var roleTable = gameState.GetRoleTable();
-            roleTable.Clear();
-            for (int i = 0; i < characterIds.Count; i++)
-                roleTable.Assign(characterIds[i], roles[i]);
-
-            RefreshAllCharacterViews();
-            Debug.Log($"[CampaignGameFlowController] Phase2 역할 재배정 완료 — {roles.Count}개");
-        }
-
         // ── Private ──────────────────────────────────────────────────────────
 
-        /// <summary>
-        /// ★ 캠페인 전용 HandleGameEnded — 승리해도 로비로 이동하지 않음.
-        /// Phase2 루프는 CampaignModeManager가 종료를 관리합니다.
-        /// </summary>
         private void HandleGameEnded(bool isWin)
         {
             GameLogger.Instance?.LogEvent("game_end", new Dictionary<string, object>
             {
                 { "result",      isWin ? "win" : "lose" },
-                { "mode",        "phase2_campaign" },
+                { "mode",        "campaign" },
                 { "total_loops", _loopSM?.LoopCount ?? 0 },
                 { "total_turns", _loopSM?.TurnCount ?? 0 },
             });
 
-            if (!isWin)
-            {
-                // 패배 시만 로비로 이동
-                SceneManager.LoadScene(_lobbySceneName);
-            }
-            // 승리 시: WinState 유지 → 캐릭터 이동/조각 수집 계속
+            // 승패 무관하게 로비로 이동
+            SceneManager.LoadScene(_lobbySceneName);
         }
 
+        /// <summary>
+        /// 퇴고/강제퇴고 시 호출됩니다.
+        /// 슬롯 맵을 GameState 기준으로 재초기화한 후 위치를 동기화합니다.
+        /// </summary>
         private void HandleLoopReset()
         {
             if (_characterSpawner == null || _characterViews == null) return;
             var gameState = _loopSM.GameState;
             if (gameState == null) return;
+
             _characterSpawner.ApplyZoneRulesToGameState(gameState);
+            // ★ ResetSlots 먼저 — 슬롯 맵 재초기화
+            _characterSpawner.ResetSlots(gameState, _characterViews);
+            // ★ SyncViews — 재초기화된 슬롯 맵 기준으로 위치 이동
             _characterSpawner.SyncViewsToGameState(gameState, _characterViews);
         }
 
@@ -271,14 +224,6 @@ namespace HTH.Campaign
             if (_characterViews == null) return;
             foreach (var view in _characterViews.Values)
                 view.RefreshView();
-        }
-
-        private void SyncViewsAfterZoneEffects()
-        {
-            if (_characterSpawner == null || _characterViews == null) return;
-            var gameState = _loopSM?.GameState;
-            if (gameState == null) return;
-            _characterSpawner.SyncViewsToGameState(gameState, _characterViews);
         }
 
         private void SpawnCharacters()

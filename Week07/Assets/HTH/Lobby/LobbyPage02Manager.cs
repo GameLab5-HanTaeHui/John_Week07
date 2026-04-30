@@ -43,7 +43,7 @@ namespace HTH.Campaign
     ///   Secret Time Limit     → 순서 입력 제한 시간 (초, 0이면 무제한)
     /// </summary>
     [DisallowMultipleComponent]
-    public class LobbyPage2Controller : MonoBehaviour
+    public class LobbyPage02Manager : MonoBehaviour
     {
         // ── Inspector ────────────────────────────────────────────────────
 
