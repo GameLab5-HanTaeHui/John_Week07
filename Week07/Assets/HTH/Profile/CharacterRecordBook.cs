@@ -112,10 +112,6 @@ namespace HTH.Campaign
                 _fragmentCollector.OnFragmentCollected += OnFragmentCollected;
                 _fragmentCollector.OnConceptCardUnlockable += OnConceptCardUnlockable;
             }
-
-            // Phase2 진입 시 그리드 초기화
-            if (CampaignModeManager.Instance != null)
-                CampaignModeManager.Instance.OnPhase2Entered += OnPhase2Entered;
         }
 
         private void OnDestroy()
@@ -126,8 +122,6 @@ namespace HTH.Campaign
                 _fragmentCollector.OnConceptCardUnlockable -= OnConceptCardUnlockable;
             }
 
-            if (CampaignModeManager.Instance != null)
-                CampaignModeManager.Instance.OnPhase2Entered -= OnPhase2Entered;
 
             _openButton?.onClick.RemoveListener(Open);
             _closeButton?.onClick.RemoveListener(Close);

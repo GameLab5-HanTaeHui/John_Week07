@@ -10,51 +10,18 @@ namespace HTH.Campaign
     /// StreamingAssets/Campaign 폴더의 JSON 파일에서
     /// CampaignDialogueSO 데이터를 임포트하는 에디터 도구입니다.
     ///
-    /// ─── 파일 경로 ───────────────────────────────────────────────────────
-    ///   StreamingAssets/Campaign/dialogue_{stageId}.json
-    ///   예: dialogue_Stage_1_Phase2.json
-    ///
-    /// ─── JSON 구조 ───────────────────────────────────────────────────────
-    ///   {
-    ///     "stageId": "Stage_1_Phase2",
-    ///     "groupDialogues": [
-    ///       {
-    ///         "comboId": "C001",
-    ///         "comboKey": "#1|#2",
-    ///         "participantIds": [1, 2],
-    ///         "situationType": "2인 대화",
-    ///         "trigger": "",
-    ///         "visibility": "",
-    ///         "fragmentId": "",
-    ///         "triggerDeadIds": [],
-    ///         "unlockConditionId": "",
-    ///         "hintOfConditionId": "",
-    ///         "lines": [
-    ///           {
-    ///             "speakerId": 1,
-    ///             "text": "대사 내용",
-    ///             "isProfileClue": false,
-    ///             "profileClueId": "",
-    ///             "profileCategory": ""
-    ///           }
-    ///         ]
-    ///       }
-    ///     ],
-    ///     "soloDialogues": []
-    ///   }
-    ///
-    /// ─── 주의사항 ─────────────────────────────────────────────────────────
-    ///   revealCharacterId는 JSON에 없으면 -1(공개 없음)로 처리됩니다.
-    ///   JsonUtility가 누락 필드를 0으로 초기화하기 때문에
-    ///   임포트 시 0 → -1 변환을 명시적으로 처리합니다.
+    /// ─── JSON 키 규칙 (PascalCase) ───────────────────────────────────────
+    ///   StageId / Dialogues / TimeOfDayDialogues / AlreadySeenLines
+    ///   Dialogues[]: DialogueId / ParticipantsRaw / Type / Scope / Alive
+    ///                Gimmick / SituationCharactersRaw / UnlockConditionId
+    ///                RewardFragmentId / Lines / DeveloperNote
+    ///   Lines[]: TextId / Text
     /// </summary>
     [CustomEditor(typeof(CampaignDialogueSO))]
     public class CampaignDialogueImporter : Editor
     {
-        /// <summary>임포트할 JSON 파일명 (확장자 제외)입니다.</summary>
         private string _fileNameInput = "";
 
-        /// <summary>StreamingAssets/Campaign 폴더 경로입니다.</summary>
         private static string CampaignFolderPath
             => Path.Combine(Application.streamingAssetsPath, "Campaign");
 
@@ -73,7 +40,6 @@ namespace HTH.Campaign
 
             string previewPath = Path.Combine(CampaignFolderPath, $"{_fileNameInput}.json");
             EditorGUILayout.HelpBox($"경로: {previewPath}", MessageType.None);
-
             EditorGUILayout.Space(4);
 
             GUI.enabled = !string.IsNullOrEmpty(_fileNameInput);
@@ -86,16 +52,14 @@ namespace HTH.Campaign
 
             EditorGUILayout.Space(6);
             EditorGUILayout.HelpBox(
-                "FragmentId 형식: P01_01\n" +
-                "총 216개 GroupDialogue 임포트 지원\n" +
-                "revealCharacterId: JSON 누락 시 -1(공개 없음) 처리",
+                "JSON 키는 PascalCase를 사용합니다.\n" +
+                "예: StageId / Dialogues / RewardFragmentId / TextId",
                 MessageType.Info);
         }
 
         private void ImportFromStreamingAssets(string fileName)
         {
             EnsureCampaignFolderExists();
-
             string path = Path.Combine(CampaignFolderPath, $"{fileName}.json");
 
             if (!File.Exists(path))
@@ -112,193 +76,112 @@ namespace HTH.Campaign
 
                 if (data == null)
                 {
-                    Debug.LogError("[CampaignDialogueImporter] JSON 파싱 실패");
+                    Debug.LogError("[CampaignDialogueImporter] JSON 파싱 실패 — null 반환");
                     return;
                 }
+
+                Debug.Log($"[CampaignDialogueImporter] 파싱 결과 — StageId:{data.StageId}, " +
+                          $"Dialogues:{data.Dialogues?.Length ?? 0}개");
 
                 var so = (CampaignDialogueSO)target;
                 var serialized = new SerializedObject(so);
 
-                // stageId
-                serialized.FindProperty("_stageId").stringValue = data.stageId ?? "";
+                serialized.FindProperty("_stageId").stringValue = data.StageId ?? "";
 
-                // groupDialogues 초기화
-                var groupProp = serialized.FindProperty("_groupDialogues");
-                groupProp.ClearArray();
+                // dialogues
+                var dialoguesProp = serialized.FindProperty("_dialogues");
+                dialoguesProp.ClearArray();
 
-                if (data.groupDialogues != null)
+                if (data.Dialogues != null)
                 {
-                    for (int i = 0; i < data.groupDialogues.Length; i++)
+                    for (int i = 0; i < data.Dialogues.Length; i++)
                     {
-                        var gd = data.groupDialogues[i];
-                        groupProp.InsertArrayElementAtIndex(i);
-                        var elem = groupProp.GetArrayElementAtIndex(i);
+                        var d = data.Dialogues[i];
+                        dialoguesProp.InsertArrayElementAtIndex(i);
+                        var elem = dialoguesProp.GetArrayElementAtIndex(i);
 
-                        // 식별
-                        elem.FindPropertyRelative("ComboId").stringValue
-                            = gd.comboId ?? "";
-                        elem.FindPropertyRelative("ComboKey").stringValue
-                            = gd.comboKey ?? "";
+                        elem.FindPropertyRelative("DialogueId").stringValue = d.DialogueId ?? "";
+                        elem.FindPropertyRelative("ParticipantsRaw").stringValue = d.ParticipantsRaw ?? "";
+                        elem.FindPropertyRelative("Type").enumValueIndex = ParseEnum<DialogueType>(d.Type, DialogueType.Normal);
+                        elem.FindPropertyRelative("Scope").enumValueIndex = ParseEnum<SituationScope>(d.Scope, SituationScope.InZone);
+                        elem.FindPropertyRelative("Alive").enumValueIndex = ParseEnum<SituationAlive>(d.Alive, SituationAlive.AllSurvived);
+                        elem.FindPropertyRelative("Gimmick").enumValueIndex = ParseEnum<SituationGimmick>(d.Gimmick, SituationGimmick.None);
+                        elem.FindPropertyRelative("SituationCharactersRaw").stringValue = d.SituationCharactersRaw ?? "";
+                        elem.FindPropertyRelative("UnlockConditionId").stringValue = d.UnlockConditionId ?? "";
+                        elem.FindPropertyRelative("RewardFragmentId").stringValue = d.RewardFragmentId ?? "";
+                        elem.FindPropertyRelative("DeveloperNote").stringValue = d.DeveloperNote ?? "";
 
-                        // 참가자 ID
-                        var participantsProp = elem.FindPropertyRelative("ParticipantIds");
-                        participantsProp.ClearArray();
-                        if (gd.participantIds != null)
-                        {
-                            for (int j = 0; j < gd.participantIds.Length; j++)
-                            {
-                                participantsProp.InsertArrayElementAtIndex(j);
-                                participantsProp.GetArrayElementAtIndex(j).intValue
-                                    = gd.participantIds[j];
-                            }
-                        }
-
-                        // 상황
-                        elem.FindPropertyRelative("SituationType").stringValue
-                            = gd.situationType ?? "";
-                        elem.FindPropertyRelative("Trigger").stringValue
-                            = gd.trigger ?? "";
-                        elem.FindPropertyRelative("Visibility").stringValue
-                            = gd.visibility ?? "";
-
-                        // ProfileClue 연결
-                        elem.FindPropertyRelative("FragmentId").stringValue
-                            = gd.fragmentId ?? "";
-
-                        // 사망 트리거 ID
-                        var deadIdsProp = elem.FindPropertyRelative("TriggerDeadIds");
-                        deadIdsProp.ClearArray();
-                        if (gd.triggerDeadIds != null)
-                        {
-                            for (int j = 0; j < gd.triggerDeadIds.Length; j++)
-                            {
-                                deadIdsProp.InsertArrayElementAtIndex(j);
-                                deadIdsProp.GetArrayElementAtIndex(j).intValue
-                                    = gd.triggerDeadIds[j];
-                            }
-                        }
-
-                        // 조건
-                        elem.FindPropertyRelative("UnlockConditionId").stringValue
-                            = gd.unlockConditionId ?? "";
-                        elem.FindPropertyRelative("HintOfConditionId").stringValue
-                            = gd.hintOfConditionId ?? "";
-
-                        // 대사 라인
-                        var linesProp = elem.FindPropertyRelative("Lines");
-                        linesProp.ClearArray();
-                        if (gd.lines != null)
-                        {
-                            for (int j = 0; j < gd.lines.Length; j++)
-                            {
-                                var ld = gd.lines[j];
-                                linesProp.InsertArrayElementAtIndex(j);
-                                var lineProp = linesProp.GetArrayElementAtIndex(j);
-
-                                lineProp.FindPropertyRelative("SpeakerId").intValue
-                                    = ld.speakerId;
-                                lineProp.FindPropertyRelative("Text").stringValue
-                                    = ld.text ?? "";
-
-                                // JSON에 revealCharacterId가 없으면 JsonUtility가 0으로 초기화
-                                // DialogueLine의 기본값은 -1(공개 없음)이므로 0 → -1 변환
-                                lineProp.FindPropertyRelative("RevealCharacterId").intValue
-                                    = ld.revealCharacterId == 0 ? -1 : ld.revealCharacterId;
-                                lineProp.FindPropertyRelative("RevealCharacterName").stringValue
-                                    = ld.revealCharacterName ?? "";
-
-                                lineProp.FindPropertyRelative("IsProfileClue").boolValue
-                                    = ld.isProfileClue;
-                                lineProp.FindPropertyRelative("ProfileClueId").stringValue
-                                    = ld.profileClueId ?? "";
-                                lineProp.FindPropertyRelative("ProfileCategory").stringValue
-                                    = ld.profileCategory ?? "";
-                            }
-                        }
-
-                        // Condition (하위 호환)
-                        var condProp = elem.FindPropertyRelative("Condition");
-                        condProp.FindPropertyRelative("RequiredFragmentId").stringValue = "";
-                        condProp.FindPropertyRelative("MinLoopCount").intValue = 0;
+                        SetLines(elem.FindPropertyRelative("Lines"), d.Lines);
                     }
                 }
 
-                // soloDialogues 초기화
-                var soloProp = serialized.FindProperty("_soloDialogues");
-                soloProp.ClearArray();
+                // timeOfDayDialogues
+                var todProp = serialized.FindProperty("_timeOfDayDialogues");
+                todProp.ClearArray();
 
-                if (data.soloDialogues != null)
+                if (data.TimeOfDayDialogues != null)
                 {
-                    for (int i = 0; i < data.soloDialogues.Length; i++)
+                    for (int i = 0; i < data.TimeOfDayDialogues.Length; i++)
                     {
-                        var sd = data.soloDialogues[i];
-                        soloProp.InsertArrayElementAtIndex(i);
-                        var elem = soloProp.GetArrayElementAtIndex(i);
+                        var tod = data.TimeOfDayDialogues[i];
+                        todProp.InsertArrayElementAtIndex(i);
+                        var elem = todProp.GetArrayElementAtIndex(i);
 
-                        elem.FindPropertyRelative("CharacterId").intValue
-                            = sd.characterId;
-                        elem.FindPropertyRelative("FragmentId").stringValue
-                            = sd.fragmentId ?? "";
-
-                        var linesProp = elem.FindPropertyRelative("Lines");
-                        linesProp.ClearArray();
-                        if (sd.lines != null)
-                        {
-                            for (int j = 0; j < sd.lines.Length; j++)
-                            {
-                                var ld = sd.lines[j];
-                                linesProp.InsertArrayElementAtIndex(j);
-                                var lineProp = linesProp.GetArrayElementAtIndex(j);
-
-                                lineProp.FindPropertyRelative("SpeakerId").intValue
-                                    = ld.speakerId;
-                                lineProp.FindPropertyRelative("Text").stringValue
-                                    = ld.text ?? "";
-
-                                // JSON에 revealCharacterId가 없으면 0 → -1 변환
-                                lineProp.FindPropertyRelative("RevealCharacterId").intValue
-                                    = ld.revealCharacterId == 0 ? -1 : ld.revealCharacterId;
-                                lineProp.FindPropertyRelative("RevealCharacterName").stringValue
-                                    = ld.revealCharacterName ?? "";
-
-                                lineProp.FindPropertyRelative("IsProfileClue").boolValue
-                                    = ld.isProfileClue;
-                                lineProp.FindPropertyRelative("ProfileClueId").stringValue
-                                    = ld.profileClueId ?? "";
-                                lineProp.FindPropertyRelative("ProfileCategory").stringValue
-                                    = ld.profileCategory ?? "";
-                            }
-                        }
+                        elem.FindPropertyRelative("TimeOfDay").enumValueIndex = ParseEnum<TimeOfDay>(tod.TimeOfDay, TimeOfDay.Morning);
+                        elem.FindPropertyRelative("DeveloperNote").stringValue = tod.DeveloperNote ?? "";
+                        SetLines(elem.FindPropertyRelative("Lines"), tod.Lines);
                     }
                 }
+
+                // alreadySeenLines
+                var seenProp = serialized.FindProperty("_alreadySeenLines");
+                SetLines(seenProp, data.AlreadySeenLines);
 
                 serialized.ApplyModifiedProperties();
                 EditorUtility.SetDirty(so);
                 AssetDatabase.SaveAssets();
 
-                int groupCount = data.groupDialogues?.Length ?? 0;
-                int fragCount = 0;
-                if (data.groupDialogues != null)
-                    foreach (var g in data.groupDialogues)
-                        if (!string.IsNullOrEmpty(g.fragmentId)) fragCount++;
+                int dialogueCount = data.Dialogues?.Length ?? 0;
+                int coreCount = 0;
+                if (data.Dialogues != null)
+                    foreach (var d in data.Dialogues)
+                        if (string.Equals(d.Type, "Core", StringComparison.OrdinalIgnoreCase))
+                            coreCount++;
 
                 Debug.Log($"[CampaignDialogueImporter] 임포트 완료 — " +
-                          $"StageId: {data.stageId}, " +
-                          $"GroupDialogue: {groupCount}개, " +
-                          $"ProfileClue 연결: {fragCount}개");
+                          $"StageId:{data.StageId}, Dialogue:{dialogueCount}개, Core:{coreCount}개");
 
-                EditorUtility.DisplayDialog(
-                    "임포트 완료",
-                    $"StageId: {data.stageId}\n" +
-                    $"GroupDialogue: {groupCount}개\n" +
-                    $"ProfileClue 연결: {fragCount}개",
-                    "확인");
+                EditorUtility.DisplayDialog("임포트 완료",
+                    $"StageId: {data.StageId}\nDialogue: {dialogueCount}개\nCore: {coreCount}개", "확인");
             }
             catch (Exception e)
             {
-                Debug.LogError($"[CampaignDialogueImporter] 임포트 실패 — {e.Message}");
+                Debug.LogError($"[CampaignDialogueImporter] 임포트 실패 — {e.Message}\n{e.StackTrace}");
                 EditorUtility.DisplayDialog("임포트 실패", e.Message, "확인");
             }
+        }
+
+        private static void SetLines(SerializedProperty linesProp, DialogueJsonLine[] lines)
+        {
+            linesProp.ClearArray();
+            if (lines == null) return;
+
+            for (int j = 0; j < lines.Length; j++)
+            {
+                linesProp.InsertArrayElementAtIndex(j);
+                var lineProp = linesProp.GetArrayElementAtIndex(j);
+                lineProp.FindPropertyRelative("TextId").stringValue = lines[j].TextId ?? "";
+                lineProp.FindPropertyRelative("Text").stringValue = lines[j].Text ?? "";
+            }
+        }
+
+        private static int ParseEnum<T>(string value, T defaultValue) where T : Enum
+        {
+            if (string.IsNullOrEmpty(value)) return Convert.ToInt32(defaultValue);
+            if (Enum.TryParse(typeof(T), value, ignoreCase: true, out var result))
+                return Convert.ToInt32(result);
+            Debug.LogWarning($"[CampaignDialogueImporter] 알 수 없는 enum '{value}' ({typeof(T).Name})");
+            return Convert.ToInt32(defaultValue);
         }
 
         private void OpenCampaignFolder()
@@ -317,55 +200,46 @@ namespace HTH.Campaign
         }
     }
 
-    // ── JSON 데이터 구조 ──────────────────────────────────────────────────
+    // ── JSON 데이터 구조 (PascalCase — JSON 파일과 일치) ─────────────────
 
     [Serializable]
-    internal class DialogueJsonRoot
+    public class DialogueJsonRoot
     {
-        public string stageId;
-        public DialogueJsonGroup[] groupDialogues;
-        public DialogueJsonSolo[] soloDialogues;
+        public string StageId;
+        public DialogueJsonEntry[] Dialogues;
+        public DialogueJsonTimeOfDay[] TimeOfDayDialogues;
+        public DialogueJsonLine[] AlreadySeenLines;
     }
 
     [Serializable]
-    internal class DialogueJsonGroup
+    public class DialogueJsonEntry
     {
-        public string comboId;
-        public string comboKey;
-        public int[] participantIds;
-        public string situationType;
-        public string trigger;
-        public string visibility;
-        public string fragmentId;
-        public int[] triggerDeadIds;
-        public string unlockConditionId;
-        public string hintOfConditionId;
-        public DialogueJsonLine[] lines;
+        public string DialogueId;
+        public string ParticipantsRaw;
+        public string Type;
+        public string Scope;
+        public string Alive;
+        public string Gimmick;
+        public string SituationCharactersRaw;
+        public string UnlockConditionId;
+        public string RewardFragmentId;
+        public DialogueJsonLine[] Lines;
+        public string DeveloperNote;
     }
 
     [Serializable]
-    internal class DialogueJsonSolo
+    public class DialogueJsonTimeOfDay
     {
-        public int characterId;
-        public string fragmentId;
-        public DialogueJsonLine[] lines;
+        public string TimeOfDay;
+        public DialogueJsonLine[] Lines;
+        public string DeveloperNote;
     }
 
     [Serializable]
-    internal class DialogueJsonLine
+    public class DialogueJsonLine
     {
-        public int speakerId;
-        public string text;
-
-        /// <summary>
-        /// JSON에 없으면 JsonUtility가 0으로 초기화합니다.
-        /// ImportFromStreamingAssets()에서 0 → -1 변환을 처리합니다.
-        /// </summary>
-        public int revealCharacterId;
-        public string revealCharacterName;
-        public bool isProfileClue;
-        public string profileClueId;
-        public string profileCategory;
+        public string TextId;
+        public string Text;
     }
 }
 #endif

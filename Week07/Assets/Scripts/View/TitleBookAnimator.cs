@@ -63,8 +63,8 @@ public class TitleBookAnimator : MonoBehaviour
 
     private void Awake()
     {
-        _uiManager = FindObjectOfType<LobbyUIManager>();
-        _lobbyUI   = FindObjectOfType<LobbyUI>();
+        _uiManager = FindFirstObjectByType<LobbyUIManager>();
+        _lobbyUI   = FindFirstObjectByType<LobbyUI>();
     }
 
     /// <summary>LobbyDialogueManager가 다이얼로그 완료 후 true로 설정해 책 열기를 허용합니다.</summary>

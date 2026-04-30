@@ -8,33 +8,16 @@ using UnityEngine.UI;
 /// Inspector에서 직접 할당된 HistoryPagePanel을 5루프 × 3턴 구조로 관리합니다.
 /// TurnHistoryRepository.OnRecordCommitted를 구독하여
 /// 턴이 완료될 때마다 해당 패널을 SetActive(true)로 활성화합니다.
-///
-/// ─── 동작 원칙 ────────────────────────────────────────────────────────────
-///   • 비활성 패널    : SetActive(false) — 씬에 배치되어 있으나 보이지 않음
-///   • 대기 패널      : SetActive(true)  — 오리진 위치에 그대로 있음
-///   • 펼쳐진 패널    : 오리진 Y + _expandOffset 위치로 슬라이드업
-///
-///   새 기록 도착   → SetActive(true), 오리진 위치에서 대기
-///   헤더 버튼 클릭 → 현재 패널 오리진으로 복귀, 클릭 패널 위로 슬라이드업
+/// 기본모드 전용입니다.
 ///
 /// ─── Inspector 할당 방법 ─────────────────────────────────────────────────
 ///   _loopPanels 배열 크기를 5로 설정한 뒤,
 ///   각 LoopPanelRow의 Turns 배열 크기를 3으로 설정하고
 ///   씬에 미리 배치된 HistoryPagePanel을 순서대로 연결합니다.
-///     _loopPanels[0].Turns[0] → Loop0 Turn0 패널
-///     _loopPanels[0].Turns[1] → Loop0 Turn1 패널
-///     ...
-///     _loopPanels[4].Turns[2] → Loop4 Turn2 패널
 /// </summary>
 [DisallowMultipleComponent]
 public class HistoryPageController : MonoBehaviour
 {
-    // ── 2D 배열 Inspector 래퍼 ───────────────────────────────────────────────
-
-    /// <summary>
-    /// Unity Inspector는 2차원 배열을 직접 지원하지 않으므로
-    /// 루프 1개 분량의 턴 패널 묶음을 래핑합니다.
-    /// </summary>
     [Serializable]
     public class LoopPanelRow
     {
@@ -45,36 +28,24 @@ public class HistoryPageController : MonoBehaviour
     // ── Inspector ─────────────────────────────────────────────────────────────
 
     [Header("패널 할당 — [루프 인덱스][턴 인덱스]")]
-    [Tooltip("크기를 5로 고정하고 각 Row의 Turns를 3개씩 씬 오브젝트로 연결하세요.")]
     [SerializeField] private LoopPanelRow[] _loopPanels = new LoopPanelRow[5];
 
-    [Header("Backdrop — 패널 뒤 전체화면 투명 버튼")]
-    [Tooltip("Image(alpha=0) + Button 컴포넌트. 패널이 펼쳐질 때만 SetActive(true).")]
+    [Header("Backdrop")]
     [SerializeField] private Button _backdropButton;
 
     [Header("애니메이션")]
-    [Tooltip("버튼 클릭 시 오리진 Y에서 위로 올라가는 거리 (px)")]
     [SerializeField] private float _expandOffset = 450f;
-    [Tooltip("최초 등장 시 오리진 아래에서 시작하는 거리 (px)")]
     [SerializeField] private float _spawnBelowOffset = 200f;
 
     // ── 이벤트 ───────────────────────────────────────────────────────────────
 
-    /// <summary>어떤 패널의 헤더(포스트잇)가 클릭되었을 때 발생합니다. TutorialManager에서 구독합니다.</summary>
     public event Action OnAnyPanelHeaderClicked;
-
-    /// <summary> 패널이 닫힐 때 발생하는 이벤트
     public event Action OnAnyPanelCollapsed;
 
     // ── 내부 상태 ─────────────────────────────────────────────────────────────
 
-    /// <summary>[loopIndex][turnIndex] 형태의 런타임 2D 참조 — Awake에서 구성됩니다.</summary>
     private HistoryPagePanel[][] _panels;
-
-    /// <summary>현재 펼쳐진 패널 (없으면 null)</summary>
     private HistoryPagePanel _expandedPanel;
-
-    /// <summary>이번 세션에서 히스토리 패널을 열람한 총 횟수</summary>
     private int _historyOpenCount;
 
     // ── Unity ─────────────────────────────────────────────────────────────────
@@ -89,36 +60,13 @@ public class HistoryPageController : MonoBehaviour
     {
         TurnHistoryRepository.Instance.OnRecordCommitted += HandleRecordCommitted;
 
-        // 디스크에서 복구된 기존 기록 반영 (게임 재시작 시)
         foreach (var record in TurnHistoryRepository.Instance.GetAllRecords())
             HandleRecordCommitted(record);
-
-        // Phase2 진입 시 이벤트 구독 해제
-        if (HTH.Campaign.CampaignModeManager.Instance != null)
-            HTH.Campaign.CampaignModeManager.Instance.OnPhase2Entered += OnPhase2Entered;
     }
 
     private void OnDestroy()
     {
         TurnHistoryRepository.Instance.OnRecordCommitted -= HandleRecordCommitted;
-
-        if (HTH.Campaign.CampaignModeManager.Instance != null)
-            HTH.Campaign.CampaignModeManager.Instance.OnPhase2Entered -= OnPhase2Entered;
-
-    }
-    /// <summary>
-    /// Phase2 진입 시 호출됩니다.
-    /// TurnHistoryRepository 이벤트 구독을 해제해
-    /// 비활성화된 HistoryPanel에 접근하는 것을 방지합니다.
-    /// </summary>
-    private void OnPhase2Entered(string stageId)
-    {
-        TurnHistoryRepository.Instance.OnRecordCommitted -= HandleRecordCommitted;
-
-        // 열려있는 패널도 닫기
-        CollapseExpanded();
-
-        Debug.Log("[HistoryPageController] Phase2 진입 — 이벤트 구독 해제");
     }
 
     // ── 초기화 ────────────────────────────────────────────────────────────────
@@ -137,7 +85,6 @@ public class HistoryPageController : MonoBehaviour
 
     private void InitAllPanels()
     {
-        // Backdrop: 시작 시 비활성, 클릭 시 펼쳐진 패널 닫기
         if (_backdropButton != null)
         {
             _backdropButton.gameObject.SetActive(false);
@@ -155,28 +102,17 @@ public class HistoryPageController : MonoBehaviour
                     continue;
                 }
                 panel.Init(loop, turn);
-
-                panel.OnHeaderClicked      += HandlePanelHeaderClicked;
+                panel.OnHeaderClicked += HandlePanelHeaderClicked;
                 panel.gameObject.SetActive(false);
             }
         }
     }
-    /// <summary>
-    /// 패널 바깥 투명 버튼(_backdropButton) 클릭 시 호출됩니다.
-    ///
-    /// ─── 동작 조건 ────────────────────────────────────────────────────────
-    ///   FinalDecision 상태  → 차단 (버튼으로만 닫기)
-    ///   튜토리얼 중         → 차단 (튜토리얼 흐름 우선)
-    ///   일반 인게임         → CollapseExpanded() 호출
-    /// </summary>
+
     private void OnBackdropClicked()
     {
         if (GameFlowController.Instance?.CurrentLoopState == LoopStateType.FinalDecision)
             return;
-
-        // 튜토리얼 씬 전체에서 backdrop 클릭으로 닫기 차단
         if (TutorialManager.IsActive) return;
-
         CollapseExpanded();
     }
 
@@ -193,10 +129,9 @@ public class HistoryPageController : MonoBehaviour
         var panel = _panels[record.LoopIndex][record.TurnIndex];
         if (panel.IsActivated) return;
 
-        // SetActive(true) → 패널 Awake 실행 (오리진 Y 저장, 버튼 리스너 등록)
         panel.gameObject.SetActive(true);
         panel.Activate(record);
-        panel.SpawnIn(_spawnBelowOffset); // 오리진 아래에서 슬라이드업
+        panel.SpawnIn(_spawnBelowOffset);
     }
 
     private void HandlePanelHeaderClicked(HistoryPagePanel clicked)
@@ -207,11 +142,9 @@ public class HistoryPageController : MonoBehaviour
             return;
         }
 
-        // ★ [HTH추가] 히스토리 열람 로그 (지표 #12)
         _historyOpenCount++;
         var gfc = GameFlowController.Instance;
 
-        // 클릭한 히스토리 패널의 시간대 계산
         string historyTimeOfDay = clicked.TurnIndex switch
         {
             0 => "morning",
@@ -222,12 +155,12 @@ public class HistoryPageController : MonoBehaviour
 
         GameLogger.Instance?.LogEvent("history_open", new Dictionary<string, object>
         {
-            { "target_loop",             clicked.LoopIndex + 1 },
-            { "target_turn",             clicked.TurnIndex + 1 },
-            { "target_day",              clicked.LoopIndex + 1 },
-            { "target_time_of_day",      historyTimeOfDay },
-            { "current_day",             gfc?.CurrentDay ?? 0 },
-            { "current_time_of_day",     gfc?.CurrentTimeOfDay ?? "" },
+            { "target_loop",              clicked.LoopIndex + 1 },
+            { "target_turn",              clicked.TurnIndex + 1 },
+            { "target_day",               clicked.LoopIndex + 1 },
+            { "target_time_of_day",       historyTimeOfDay },
+            { "current_day",              gfc?.CurrentDay ?? 0 },
+            { "current_time_of_day",      gfc?.CurrentTimeOfDay ?? "" },
             { "click_count_this_session", _historyOpenCount },
         });
 
@@ -246,14 +179,9 @@ public class HistoryPageController : MonoBehaviour
         target.Expand(_expandOffset, instant);
         SetBackdropActive(true);
 
-        // PanelManager에 닫기 콜백 등록
         PanelManager.Instance?.RegisterPanel(CollapseExpanded);
     }
 
-    /// <summary>
-    /// 현재 펼쳐진 패널을 닫습니다.
-    /// Backdrop 클릭 시 호출됩니다.
-    /// </summary>
     public void CollapseExpanded()
     {
         if (_expandedPanel == null) return;
@@ -261,9 +189,7 @@ public class HistoryPageController : MonoBehaviour
         _expandedPanel = null;
         SetBackdropActive(false);
 
-        // PanelManager 등록 해제
         PanelManager.Instance?.UnregisterPanel(CollapseExpanded);
-
         OnAnyPanelCollapsed?.Invoke();
     }
 
@@ -273,7 +199,6 @@ public class HistoryPageController : MonoBehaviour
             _backdropButton.gameObject.SetActive(active);
     }
 
-    /// <summary>특정 TurnRecord에 해당하는 패널을 찾아 펼칩니다. HistoryManager에서 호출합니다.</summary>
     public void ExpandByRecord(TurnRecord record)
     {
         if (!IsValidIndex(record.LoopIndex, record.TurnIndex)) return;
@@ -288,12 +213,10 @@ public class HistoryPageController : MonoBehaviour
         => loopIndex >= 0 && loopIndex < _panels.Length
         && turnIndex >= 0 && turnIndex < _panels[loopIndex].Length;
 
-    // ── Editor 방어 ───────────────────────────────────────────────────────────
-
 #if UNITY_EDITOR
     private void OnValidate()
     {
-if (_loopPanels == null || _loopPanels.Length == 0)
+        if (_loopPanels == null || _loopPanels.Length == 0)
         {
             Debug.LogWarning("[HistoryPageController] _loopPanels가 비어 있습니다.");
             return;
@@ -304,10 +227,8 @@ if (_loopPanels == null || _loopPanels.Length == 0)
             var row = _loopPanels[loop];
             if (row == null || row.Turns == null) continue;
             for (int turn = 0; turn < row.Turns.Length; turn++)
-            {
                 if (row.Turns[turn] == null)
                     Debug.LogWarning($"[HistoryPageController] 패널 미연결 — L{loop} T{turn}");
-            }
         }
     }
 #endif

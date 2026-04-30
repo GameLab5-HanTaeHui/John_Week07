@@ -1,3 +1,4 @@
+using HTH.Campaign;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -17,7 +18,7 @@ public class GameSetupState : IState
     private readonly StageSetupConfig  _setupConfig;
 
     public GameSetupState(
-        LoopStateMachine  loopSM,
+        LoopStateMachine loopSM,
         CharacterRegistry characterRegistry,
         StageRoleConfig   stageRoleConfig,
         StageSetupConfig  setupConfig)
@@ -83,7 +84,6 @@ public class GameSetupState : IState
 
     // 게임 세션 전체에서 사용할 고정 시드. 첫 루프에서 결정된 뒤 모든 루프에서 재사용됩니다.
     private int  _sessionSeed     = -1;
-    private bool _startedFromLobby;
 
     private int GetSeed(int characterCount, int roleCount, int zoneCount)
     {
@@ -91,7 +91,6 @@ public class GameSetupState : IState
 
         if (NewGameConfig.IsSet)
         {
-            _startedFromLobby = true;
             if (!string.IsNullOrEmpty(NewGameConfig.StageId))
                 _loopSM.StageId = NewGameConfig.StageId;
 

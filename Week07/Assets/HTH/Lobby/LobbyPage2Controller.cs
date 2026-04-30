@@ -451,24 +451,6 @@ namespace HTH.Campaign
                 yield return cg.DOFade(1f, 0.5f).WaitForCompletion();
             }
 
-            // DialoguePlayer로 대사 재생
-            if (_hiddenEndingPlayer != null && _hiddenEndingLines.Count > 0)
-            {
-                var lines = new List<DialogueLine>();
-                foreach (var text in _hiddenEndingLines)
-                    lines.Add(new DialogueLine
-                    {
-                        SpeakerId = 0,
-                        Text = text,
-                        RevealCharacterId = -1,
-                        RevealCharacterName = string.Empty
-                    });
-
-                bool done = false;
-                _hiddenEndingPlayer.Play(lines, onComplete: () => done = true);
-                yield return new WaitUntil(() => done);
-            }
-
             // 검은 화면 페이드 아웃
             if (_hiddenEndingPanel != null)
             {
@@ -604,7 +586,7 @@ namespace HTH.Campaign
                 foreach (var btn in _buttons)
                     btn?.SetSelected(false);
 
-            var bookAnimator = FindObjectOfType<TitleBookAnimator>();
+            var bookAnimator = FindFirstObjectByType<TitleBookAnimator>();
             bookAnimator?.TurnPageBack();
         }
     }

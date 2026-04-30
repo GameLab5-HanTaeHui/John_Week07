@@ -16,6 +16,12 @@ namespace HTH.Campaign
     ///   클릭으로 다음 줄로 넘어갑니다.
     ///   모든 대사가 끝나면 onComplete 콜백을 호출해 DialogueTriggerManager에 알립니다.
     ///
+    /// ─── 변경 사항 (IReadOnlyList 마이그레이션) ──────────────────────────
+    ///   Play(List<DialogueLine>) → Play(IReadOnlyList<DialogueLine>)
+    ///   PlayCoroutine도 동일하게 변경.
+    ///   List / 배열 / SO의 IReadOnlyList 등 모든 컬렉션 타입 호환.
+    ///   첫 줄 텍스트가 세팅되지 않던 버그 수정 (isFirst 분기 제거).
+    ///
     /// ─── 글리치 모드 상세 ────────────────────────────────────────────────
     ///   이름 글리치 (GlitchName):
     ///     true이면 미수집 이름을 글리치 문자로 표시합니다.
@@ -38,14 +44,11 @@ namespace HTH.Campaign
     /// ─── Inspector 연결 ──────────────────────────────────────────────────
     ///   Dialogue Panel       → Canvas/DialoguePanel (전체 패널 GameObject)
     ///   Character Image      → DialoguePanel 하위 Image 컴포넌트 (화자 이미지)
+    ///   Id Text              → DialoguePanel 하위 TMP_Text (화자 #번호)
     ///   Name Text            → DialoguePanel 하위 TMP_Text (화자 이름)
     ///   Dialogue Text        → DialoguePanel 하위 TMP_Text (대사 내용)
-    ///   Character Record Book → _CampaignSystem/CharacterRecordBook
     ///   Character Sprites    → 캐릭터별 스프라이트 배열 (인덱스 = CharacterId)
     ///                          [0] 비워두기, [1]=#1, [2]=#2, ... [7]=#7
-    ///   Glitch Name          → 미수집 이름 글리치 여부 (기본값 true)
-    ///   Glitch Dialogue      → 대사 텍스트 글리치 여부 (기본값 false)
-    ///   Glitch Chars         → 글리치 대체 문자 목록
     ///   Click To Advance     → true (클릭으로 다음 줄 진행)
     ///   Click Block Duration → 대사 시작 후 클릭 차단 시간 (기본값 1.5초)
     /// </summary>
@@ -62,13 +65,13 @@ namespace HTH.Campaign
         [Tooltip("다이얼로그 전체 패널입니다.\nCanvas/DialoguePanel을 연결합니다.")]
         [SerializeField] private GameObject _dialoguePanel;
 
-        [Tooltip("화자의 이미지를 표시하는 Image 컴포넌트입니다.\n항상 보입니다.")]
+        [Tooltip("화자의 이미지를 표시하는 Image 컴포넌트입니다.")]
         [SerializeField] private Image _characterImage;
 
         [Tooltip("화자의 ID를 표시하는 TMP_Text입니다.\n예: '#1'")]
         [SerializeField] private TMP_Text _idText;
 
-        [Tooltip("화자의 이름을 표시하는 TMP_Text입니다.\n예: '#1' 또는 '새턴'")]
+        [Tooltip("화자의 이름을 표시하는 TMP_Text입니다.\n예: '새턴'")]
         [SerializeField] private TMP_Text _nameText;
 
         [Tooltip("대사 내용을 표시하는 TMP_Text입니다.")]
@@ -95,11 +98,13 @@ namespace HTH.Campaign
                  "기본값 1.5초.")]
         [SerializeField] private float _clickBlockDuration = 1.5f;
 
+        // ── 퍼스널 컬러 ───────────────────────────────────────────────────
+
         /// <summary>
         /// 캐릭터별 퍼스널 컬러입니다.
         /// 인덱스 = CharacterId (0은 사용 안 함)
         /// </summary>
-        private static readonly Color[] PersonalColors = new Color[]
+        private static readonly Color[] PersonalColors =
         {
             Color.white,                                    // [0] 미사용
             new Color(0xC8/255f, 0xA8/255f, 0x88/255f),   // [1] 엔비  #C8A888
@@ -136,7 +141,9 @@ namespace HTH.Campaign
 
             if (_waitingForClick && _clickToAdvance)
             {
-                if (Input.GetMouseButtonUp(0))
+                // ★ GetMouseButtonDown — 누르는 순간 다음 줄로 진행
+                // GetMouseButtonUp은 버튼을 떼는 순간만 감지해 첫 줄 공란 버그 발생
+                if (Input.GetMouseButtonDown(0))
                     _waitingForClick = false;
             }
         }
@@ -151,9 +158,9 @@ namespace HTH.Campaign
 
         /// <summary>
         /// 대사 목록을 순서대로 재생합니다.
-        /// DialogueTriggerManager.PlayGroupDialogue()에서 호출합니다.
+        /// IReadOnlyList를 받으므로 List / 배열 / SO IReadOnlyList 모두 호환됩니다.
         /// </summary>
-        public void Play(List<DialogueLine> lines, Action onComplete = null)
+        public void Play(IReadOnlyList<DialogueLine> lines, Action onComplete = null)
         {
             if (_isPlaying)
             {
@@ -184,9 +191,9 @@ namespace HTH.Campaign
 
             FinishPlay();
         }
+
         /// <summary>
         /// 획득 알림 텍스트를 순서대로 표시합니다.
-        /// DialogueTriggerManager에서 대사 완료 후 호출합니다.
         /// 화자 이미지 없이 텍스트만 표시합니다.
         /// </summary>
         public void PlayNotification(List<string> messages, Action onComplete = null)
@@ -200,21 +207,59 @@ namespace HTH.Campaign
             StartCoroutine(NotificationCoroutine(messages, onComplete));
         }
 
-        private IEnumerator NotificationCoroutine(List<string> messages, Action onComplete)
+        // ── Private — 재생 코루틴 ─────────────────────────────────────────
+
+        private IEnumerator PlayCoroutine(IReadOnlyList<DialogueLine> lines)
         {
-            // 패널이 닫혀있으면 열기
             if (_dialoguePanel != null)
                 _dialoguePanel.SetActive(true);
 
-            // 화자 이미지 숨김
+            // 이전 화면 클릭 잔여 방지
+            yield return new WaitUntil(() => !Input.GetMouseButton(0));
+            _clickBlocked = true;
+            yield return new WaitForSeconds(_clickBlockDuration);
+            _clickBlocked = false;
+
+            // ★ 모든 줄을 동일하게 처리 (isFirst 분기 제거 → 첫 줄 누락 버그 수정)
+            for (int i = 0; i < lines.Count; i++)
+            {
+                var line = lines[i];
+                if (line == null) continue;
+
+                // 화자 표시 업데이트
+                if (int.TryParse(line.TextId, out int speakerId))
+                    UpdateCharacterDisplay(speakerId);
+
+                // 대사 텍스트 세팅
+                if (_dialogueText != null)
+                    _dialogueText.text = BuildDialogueText(line.Text);
+
+                // 진행 대기
+                if (_clickToAdvance)
+                {
+                    _waitingForClick = true;
+                    yield return new WaitUntil(() => !_waitingForClick);
+                }
+                else
+                {
+                    yield return new WaitForSeconds(_autoAdvanceDelay);
+                }
+            }
+
+            FinishPlay();
+        }
+
+        private IEnumerator NotificationCoroutine(List<string> messages, Action onComplete)
+        {
+            if (_dialoguePanel != null)
+                _dialoguePanel.SetActive(true);
+
             if (_characterImage != null)
                 _characterImage.enabled = false;
 
-            // 이름 텍스트 비움
             if (_nameText != null)
                 _nameText.text = "";
 
-            // 클릭 차단 (이전 클릭 잔여 방지)
             _clickBlocked = true;
             yield return new WaitForSeconds(0.3f);
             _clickBlocked = false;
@@ -236,60 +281,6 @@ namespace HTH.Campaign
             onComplete?.Invoke();
         }
 
-        // ── Private — 재생 코루틴 ─────────────────────────────────────────
-
-        private IEnumerator PlayCoroutine(List<DialogueLine> lines)
-        {
-            // 패널 활성화 전 첫 번째 줄을 미리 세팅합니다.
-            var firstLine = lines[0];
-            if (firstLine != null)
-            {
-                UpdateCharacterDisplay(firstLine.SpeakerId);
-                if (_dialogueText != null)
-                    _dialogueText.text = BuildDialogueText(firstLine.Text);
-            }
-
-            if (_dialoguePanel != null)
-                _dialoguePanel.SetActive(true);
-
-            yield return new WaitUntil(() => !Input.GetMouseButton(0));
-            _clickBlocked = true;
-            yield return new WaitForSeconds(_clickBlockDuration);
-            _clickBlocked = false;
-
-            // 첫 번째 줄은 이미 세팅됐으므로 클릭 대기만 합니다.
-            // 이후 줄부터 정상 출력합니다.
-            bool isFirst = true;
-            foreach (var line in lines)
-            {
-                if (line == null) continue;
-
-                if (isFirst)
-                {
-                    // 첫 줄: 텍스트는 이미 세팅됨, 클릭 대기만
-                    isFirst = false;
-                }
-                else
-                {
-                    UpdateCharacterDisplay(line.SpeakerId);
-                    if (_dialogueText != null)
-                        _dialogueText.text = BuildDialogueText(line.Text);
-                }
-
-                if (_clickToAdvance)
-                {
-                    _waitingForClick = true;
-                    yield return new WaitUntil(() => !_waitingForClick);
-                }
-                else
-                {
-                    yield return new WaitForSeconds(_autoAdvanceDelay);
-                }
-            }
-
-            FinishPlay();
-        }
-
         private void FinishPlay()
         {
             _isPlaying = false;
@@ -307,16 +298,8 @@ namespace HTH.Campaign
 
         // ── Private — 텍스트 빌드 ─────────────────────────────────────────
 
-        /// <summary>
-        /// 화자 ID 텍스트를 생성합니다.
-        /// 항상 '#번호' 형식으로 퍼스널 컬러와 함께 표시합니다.
-        /// </summary>
         private string BuildIdText(int speakerId) => $"#{speakerId}";
 
-        /// <summary>
-        /// 화자 이름 텍스트를 생성합니다.
-        /// 수집된 이름이 있으면 실제 이름, 없으면 빈 문자열을 반환합니다.
-        /// </summary>
         private string BuildNameText(int speakerId)
         {
             // 수집된 이름 우선
@@ -325,22 +308,16 @@ namespace HTH.Campaign
             if (!string.IsNullOrEmpty(collectedName))
                 return collectedName;
 
-            // 미수집 시 ProfileDataSO에서 실제 이름 표시
+            // ProfileDataSO 폴백
             var profile = _profileData?.FindProfile(speakerId);
             if (profile != null && !string.IsNullOrEmpty(profile.CharacterFullName))
                 return profile.CharacterFullName;
 
-            // 최후 폴백
             return $"#{speakerId}";
         }
 
-        /// <summary>대사 텍스트를 반환합니다.</summary>
         private string BuildDialogueText(string text) => text ?? "";
 
-        /// <summary>
-        /// 캐릭터 ID에 해당하는 퍼스널 컬러를 반환합니다.
-        /// 범위 밖이면 흰색을 반환합니다.
-        /// </summary>
         private Color GetPersonalColor(int characterId)
         {
             if (characterId < 0 || characterId >= PersonalColors.Length)
@@ -348,30 +325,24 @@ namespace HTH.Campaign
             return PersonalColors[characterId];
         }
 
-        // ── Private — 이미지 처리 ─────────────────────────────────────────
+        // ── Private — 화자 표시 ───────────────────────────────────────────
 
-        /// <summary>
-        /// 화자 ID, 이름, 이미지, 퍼스널 컬러를 한 번에 업데이트합니다.
-        /// </summary>
         private void UpdateCharacterDisplay(int characterId)
         {
             Color color = GetPersonalColor(characterId);
 
-            // ID 텍스트
             if (_idText != null)
             {
                 _idText.text = BuildIdText(characterId);
                 _idText.color = color;
             }
 
-            // 이름 텍스트
             if (_nameText != null)
             {
                 _nameText.text = BuildNameText(characterId);
                 _nameText.color = color;
             }
 
-            // 캐릭터 이미지
             if (_characterImage != null)
             {
                 Sprite sprite = GetSpriteById(characterId);

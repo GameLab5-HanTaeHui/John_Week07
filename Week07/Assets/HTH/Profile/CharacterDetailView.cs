@@ -291,18 +291,6 @@ namespace HTH.Campaign
                 return $"[대화 조각 {index + 1}]";
 
             string fragmentId = BuildFragmentId(characterId, index);
-            var entry = _dialogueData.FindGroupDialogueByFragment(fragmentId);
-
-            if (entry == null || entry.Lines == null || entry.Lines.Count == 0)
-                return $"[대화 조각 {index + 1}]";
-
-            // 해당 캐릭터가 말한 첫 번째 줄을 표시합니다.
-            foreach (var line in entry.Lines)
-            {
-                if (line == null) continue;
-                if (!string.IsNullOrEmpty(line.Text))
-                    return line.Text;
-            }
 
             return $"[대화 조각 {index + 1}]";
         }
@@ -310,7 +298,7 @@ namespace HTH.Campaign
         private string BuildFragmentId(int characterId, int index)
         {
             // FragmentId 명명 규칙: {stageId}_char{characterId}_frag{index}
-            string stageId = HTH.Campaign.CampaignModeManager.Instance?.CurrentPhase2StageId
+            string stageId = HTH.Campaign.CampaignModeManager.Instance?.CurrentStageId
                              ?? "unknown";
             return $"{stageId}_char{characterId}_frag{index}";
         }

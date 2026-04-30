@@ -34,8 +34,8 @@ public class TutorialUIManager : MonoBehaviour
     [SerializeField] private float _bounceScale     = 1.2f;
     [Tooltip("팝 애니메이션 총 시간(초)")]
     [SerializeField] private float _bounceDuration  = 0.4f;
-    [Tooltip("가이드 텍스트 팝인 시간(초)")]
-    [SerializeField] private float _guidePopDuration = 0.3f;
+    //[Tooltip("가이드 텍스트 팝인 시간(초)")]
+    //[SerializeField] private float _guidePopDuration = 0.3f;
 
     [Header("영역 바운스 설정 (보조 바운스)")]
     [Tooltip("영역 원본 스케일 기준 최대 배율")]

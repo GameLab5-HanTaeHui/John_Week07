@@ -43,28 +43,7 @@ namespace HTH.Campaign
             _button.interactable = true;
         }
 
-        private void Start()
-        {
-            if (CampaignModeManager.Instance != null)
-                CampaignModeManager.Instance.OnPhase2Entered += OnPhase2Entered;
-        }
-
-        private void OnDestroy()
-        {
-            _button?.onClick.RemoveListener(OnClicked);
-
-            if (CampaignModeManager.Instance != null)
-                CampaignModeManager.Instance.OnPhase2Entered -= OnPhase2Entered;
-        }
-
         // ── 이벤트 ───────────────────────────────────────────────────────
-
-        private void OnPhase2Entered(string stageId)
-        {
-            // Phase2 진입 시 버튼 활성화
-            if (_button != null)
-                _button.interactable = true;
-        }
 
         private void OnClicked()
         {

@@ -122,7 +122,6 @@ public class FinalDecisionUI : MonoBehaviour
             if (_pendingCampaignTransition)
             {
                 _pendingCampaignTransition = false;
-                HTH.Campaign.CampaignModeManager.Instance?.OnFirstRunCleared(_pendingStageId);
             }
         }
     }

@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 36f49a3c9b8ae7e4aa1e0c8b42ff4383, type: 3}
-  m_Name: StageRoleConfig_2_2
+  m_Name: CampaignRole
   m_EditorClassIdentifier: Assembly-CSharp::StageRoleConfig
-  _stageId: 
+  _stageId: CampaignMode
   roles:
   - {fileID: 11400000, guid: d7ff040d2f02c02468a5e1637830dff2, type: 2}
   - {fileID: 11400000, guid: ec675c6a6cd09884798ecbb9ad315b8e, type: 2}

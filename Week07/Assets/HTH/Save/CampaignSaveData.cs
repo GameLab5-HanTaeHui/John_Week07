@@ -10,11 +10,16 @@ namespace HTH.Campaign
     ///   Application.persistentDataPath/HTH/campaign_save_{stageId}.json
     ///
     /// ─── 저장 내용 ───────────────────────────────────────────────────────
-    ///   대화 조각 수집 목록      (FragmentCollector)
-    ///   재생된 ComboId 목록      (DialogueProgressTracker)
-    ///   수집된 캐릭터 이름 목록  (CharacterRecordPanelManager)
-    ///   해금된 컨셉 카드 목록    (RewardSaveData)
-    ///   해금된 시점 완결문 목록  (RewardSaveData)
+    ///   대화 조각 수집 목록       (FragmentCollector)
+    ///   재생된 DialogueId 목록    (DialogueProgressTracker)
+    ///   수집된 캐릭터 이름 목록   (CharacterRecordPanelManager)
+    ///   해금된 컨셉 카드 목록     (RewardSaveData)
+    ///   해금된 시점 완결문 목록   (RewardSaveData)
+    ///
+    /// ─── 변경 이력 ───────────────────────────────────────────────────────
+    ///   playedComboIds → playedDialogueIds
+    ///   ComboId / SoloId 이중 구조를 DialogueId 단일 기준으로 통합.
+    ///   (DialogueProgressTracker 리팩토링에 따른 변경)
     /// </summary>
     [Serializable]
     public class CampaignSaveData
@@ -39,11 +44,11 @@ namespace HTH.Campaign
         // ── 대사 기록 ─────────────────────────────────────────────────────
 
         /// <summary>
-        /// 이번 씬에서 재생된 ComboId 목록입니다.
+        /// 재생된 DialogueId 목록입니다.
         /// 씬 재진입 시 이어하기에 사용합니다.
-        /// 예: ["COND_P01_01", "C026", "C001"]
+        /// 예: ["CORE_P01_01", "HINT_P01_02", "NORMAL_C001"]
         /// </summary>
-        public List<string> playedComboIds = new();
+        public List<string> playedDialogueIds = new();
 
         // ── 캐릭터 이름 ───────────────────────────────────────────────────
 
@@ -69,7 +74,7 @@ namespace HTH.Campaign
         /// <summary>진행 데이터가 존재하는지 여부입니다.</summary>
         public bool HasProgress =>
             collectedFragmentIds.Count > 0 ||
-            playedComboIds.Count > 0 ||
+            playedDialogueIds.Count > 0 ||
             collectedNames.Count > 0 ||
             unlockedConceptCards.Count > 0 ||
             unlockedEpilogues.Count > 0;
