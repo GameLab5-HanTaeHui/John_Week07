@@ -26,11 +26,29 @@ namespace HTH.Campaign
         [SerializeField] private LayerMask _characterLayerMask;
         [SerializeField] private CampaignZoneLayout _zoneLayout;
 
+        [Header("구역 연출")]
+        [Tooltip("Zone 0~3의 SpriteRenderer 배열입니다.\n" +
+                 "인덱스 = ZoneId (Element 0 = Zone0, Element 3 = Zone3)\n" +
+                 "앵커 캐릭터가 드롭된 Zone이 활성색으로 바뀝니다.")]
+        [SerializeField] private SpriteRenderer[] _zoneRenderers = new SpriteRenderer[4];
+
+        [Tooltip("앵커 캐릭터가 있는 Zone의 활성 색상입니다.")]
+        [SerializeField] private Color _activeZoneColor = Color.green;
+
+        [Tooltip("비활성 Zone의 기본 색상입니다.")]
+        [SerializeField] private Color _defaultZoneColor = Color.white;
+
         private const float DragThreshold = 8f;
 
         [Header("캐릭터 클릭 쿨타임")]
         [Tooltip("캐릭터 클릭 후 다음 클릭까지 대기 시간(초)")]
         [SerializeField] private float _clickCooldown = 0.7f;
+
+        [Header("앵커 캐릭터")]
+        [Tooltip("Zone 색상 갱신 기준이 되는 앵커 캐릭터 ID입니다.\n" +
+                 "DialogueTriggerManager의 _anchorCharacterId와 동일하게 설정하세요.\n" +
+                 "기본값 1 = 엔비")]
+        [SerializeField] private int _anchorCharacterId = 1;
 
         private readonly Dictionary<int, float> _lastClickTimePerCharacter = new();
 
@@ -303,6 +321,10 @@ namespace HTH.Campaign
         {
             if (!_characterViews.TryGetValue(characterId, out var view)) return;
 
+            // ★ 앵커 캐릭터 이동 확정 시 Zone 색상 갱신
+            if (characterId == _anchorCharacterId && targetZoneId >= 0)
+                RefreshAnchorZoneColor(targetZoneId);
+
             if (targetZoneId >= 0)
             {
                 int prevZone = _assignedZones.TryGetValue(characterId, out var z) ? z : targetZoneId;
@@ -316,6 +338,25 @@ namespace HTH.Campaign
             }
 
             view.RefreshView();
+        }
+
+        // ── 구역 색상 갱신 ──────────────────────────────────────────────────
+
+        /// <summary>
+        /// 앵커 캐릭터가 이동한 Zone을 활성색으로, 나머지를 기본색으로 갱신합니다.
+        /// HandleActionConfirmed()에서 앵커 캐릭터 이동 확정 시 호출합니다.
+        /// </summary>
+        private void RefreshAnchorZoneColor(int anchorZone)
+        {
+            if (_zoneRenderers == null) return;
+            for (int i = 0; i < _zoneRenderers.Length; i++)
+            {
+                if (_zoneRenderers[i] == null) continue;
+                _zoneRenderers[i].color = (i == anchorZone)
+                    ? _activeZoneColor
+                    : _defaultZoneColor;
+            }
+            Debug.Log($"[CampaignPlayerInputHandler] Zone 색상 갱신 — 앵커 Zone{anchorZone} 활성");
         }
 
         private void ResyncZones(params int[] zoneIds)

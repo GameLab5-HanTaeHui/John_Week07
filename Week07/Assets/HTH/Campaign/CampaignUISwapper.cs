@@ -104,7 +104,7 @@ namespace HTH.Campaign
             if (_characterRecordRoot != null) _characterOriginY = _characterRecordRoot.anchoredPosition.y;
 
             // 초기 상태 — HistoryMemo 활성, CharacterRecord 비활성
-            SetActiveInstant(_characterRecordRoot, false, _characterOriginY - _hideOffset);
+            SetActiveInstant(_characterRecordRoot, true, _characterOriginY - _hideOffset);
             SetActiveInstant(_historyPanel, true, _historyOriginY);
             SetActiveInstant(_memoPanel, true, _memoOriginY);
             _currentState = UIState.HistoryMemo;
@@ -215,8 +215,11 @@ namespace HTH.Campaign
         {
             if (rect == null) return;
             rect.DOAnchorPosY(originY - _hideOffset, _animDuration)
-                .SetEase(_hideEase)
-                .OnComplete(() => rect.gameObject.SetActive(false));
+                .SetEase(_hideEase);
+
+            // 오브젝트 비활성화 코드
+            //.SetEase(_hideEase)
+            //.OnComplete(() => rect.gameObject.SetActive(false));
         }
 
         /// <summary>SetActive(true) 후 아래에서 슬라이드업. 완료까지 대기.</summary>
@@ -224,8 +227,9 @@ namespace HTH.Campaign
         {
             if (rect == null) yield break;
 
-            rect.gameObject.SetActive(true);
-            yield return null;
+            // 오브젝트 활성화
+            //rect.gameObject.SetActive(true);
+            //yield return null;
 
             SetY(rect, originY - _hideOffset);
             yield return null;

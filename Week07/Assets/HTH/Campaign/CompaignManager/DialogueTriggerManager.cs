@@ -67,6 +67,8 @@ namespace HTH.Campaign
         [Tooltip("턴 종료 대사 완료 후 캠페인 대사 트리거까지 대기 시간(초)")]
         [SerializeField] private float _triggerDelay = 1f;
 
+
+
         // ═══════════════════════════════════════════════════════════════
         // 내부 상태
         // ═══════════════════════════════════════════════════════════════
@@ -192,6 +194,7 @@ namespace HTH.Campaign
         {
             Debug.Log($"[DTM] OnTurnEndEntered — isInitialized:{_isInitialized}");
             if (!_isInitialized) return;
+
             CacheConditionContext();
         }
 
@@ -347,6 +350,8 @@ namespace HTH.Campaign
 
             StartCoroutine(PlaySequential(new List<PendingDialogue> { resolved.Value }));
         }
+
+
 
         /// <summary>[Zone 순회] _activeZones 체크된 모든 Zone 순회.</summary>
         private void TriggerByActiveZones()

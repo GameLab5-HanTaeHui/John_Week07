@@ -13545,8 +13545,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 891412033}
   - {fileID: 1266154420}
+  - {fileID: 891412033}
   - {fileID: 2141765339}
   - {fileID: 1236399121}
   m_Father: {fileID: 0}
@@ -23966,6 +23966,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HTH.Campaign.CampaignModeManager
   _lobbySceneName: LobbyScene
   _endingSceneName: 
+  _editorStageId: CampaignMode
 --- !u!114 &823990037 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5260083507098806351, guid: 7115691e4ae54ba44b124ed927c49a80, type: 3}
@@ -26092,7 +26093,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: 1f504256629ae4744a6cc2fc54c0246d, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 1, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -26905,7 +26906,15 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   _zoneLayout: {fileID: 1763139386}
+  _zoneRenderers:
+  - {fileID: 1266154419}
+  - {fileID: 891412032}
+  - {fileID: 2141765338}
+  - {fileID: 1236399120}
+  _activeZoneColor: {r: 0, g: 1, b: 0, a: 1}
+  _defaultZoneColor: {r: 1, g: 1, b: 1, a: 1}
   _clickCooldown: 0.7
+  _anchorCharacterId: 1
 --- !u!1 &931151774
 GameObject:
   m_ObjectHideFlags: 0
@@ -40336,9 +40345,9 @@ MonoBehaviour:
   _dialogueData: {fileID: 11400000, guid: 71758b0369409d743afa035ecbeacf5a, type: 2}
   _dialoguePlayer: {fileID: 2077496617}
   _fragmentCollector: {fileID: 81887182}
-  _activeZones: 01010101
   _useCharacterBasedZone: 1
   _anchorCharacterId: 1
+  _activeZones: 01010101
   _triggerDelay: 1
 --- !u!1 &1386920848
 GameObject:
@@ -50007,7 +50016,6 @@ MonoBehaviour:
   - {fileID: 202144440}
   - {fileID: 1576250530}
   - {fileID: 1273087942}
-  _investigationZoneId: 2
 --- !u!1 &1766179981
 GameObject:
   m_ObjectHideFlags: 0

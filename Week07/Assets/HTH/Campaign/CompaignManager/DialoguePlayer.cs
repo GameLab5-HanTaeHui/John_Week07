@@ -141,7 +141,9 @@ namespace HTH.Campaign
 
             if (_waitingForClick && _clickToAdvance)
             {
-                if (Input.GetMouseButtonUp(0))
+                // ★ GetMouseButtonDown — 누르는 순간 다음 줄로 진행
+                // GetMouseButtonUp은 버튼을 떼는 순간만 감지해 첫 줄 공란 버그 발생
+                if (Input.GetMouseButtonDown(0))
                     _waitingForClick = false;
             }
         }
