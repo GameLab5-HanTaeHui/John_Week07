@@ -42,8 +42,8 @@ MonoBehaviour:
       \uBCF4\uC138\uC694."
   - Phase: 12
     GuideText: "\uD574\uB2F9\uD558\uB294 \uACA9\uC790 \uCE78\uC5D0 <color=green>\uB9C8\uC6B0\uC2A4
-      \uC67C\uD074\uB9AD(\uD074\uB9AD)</color>\uD558\uC5EC X / <color=red>O</color>
-      / <color=blue>\u25B3</color> \uBA54\uBAA8\uAC00 \uAC00\uB2A5\uD569\uB2C8\uB2E4.\\n
+      \uC67C\uD074\uB9AD, \uC6B0\uD074\uB9AD(\uD074\uB9AD)</color>\uD558\uC5EC X
+      / <color=red>O</color> / <color=blue>\u25B3</color> \uBA54\uBAA8\uAC00 \uAC00\uB2A5\uD569\uB2C8\uB2E4.\\n
       \uACA9\uC790\uCE78\uC744 \uB20C\uB7EC\uBCF4\uC138\uC694!"
   - Phase: 9
     GuideText: "\uC798 \uD558\uC168\uC2B5\uB2C8\uB2E4!\\n\uAC19\uC740 \uACF3\uC744

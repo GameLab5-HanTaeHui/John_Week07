@@ -3592,6 +3592,7 @@ MonoBehaviour:
     - {fileID: 720213308}
     - {fileID: 548405561}
   _backdropButton: {fileID: 1273171413}
+  _cycleOnOverflow: 0
   _expandOffset: 600
   _spawnBelowOffset: 200
 --- !u!1 &330142882
@@ -5763,8 +5764,6 @@ MonoBehaviour:
   _fillObject: {fileID: 399591545}
   _fillDuration: 0.5
   _confirmMessage: "\uCD5C\uC885 \uCD94\uB9AC\uB97C \uC2DC\uC791\uD558\uC2DC\uACA0\uC2B5\uB2C8\uAE4C?"
-  _confirmMessagePhase2: "\uC778\uBB3C \uCD94\uB9AC\uB97C \uC2DC\uC791\uD558\uC2DC\uACA0\uC2B5\uB2C8\uAE4C?"
-  _profileInquirySelectPanel: {fileID: 0}
 --- !u!1001 &548405559
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6977,7 +6976,7 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: 5906fe762b30c3346910af313a7a3e55, type: 3}
     - target: {fileID: 2078732290592646873, guid: 93517c00edcb142479233bfe5274b838, type: 3}
       propertyPath: m_text
-      value: "<size=10>1\uC77C\uCC28</size>\n<size=15>\uC544\uCE68</size>"
+      value: "<size=10>1\uC77C\uCC28</size>\n<size=15>\uC810\uC2EC</size>"
       objectReference: {fileID: 0}
     - target: {fileID: 2078732290592646873, guid: 93517c00edcb142479233bfe5274b838, type: 3}
       propertyPath: m_VerticalAlignment
@@ -7862,7 +7861,6 @@ MonoBehaviour:
   _worldHighlightFx: {fileID: 0}
   _bounceScale: 1.2
   _bounceDuration: 0.45
-  _guidePopDuration: 0.3
   _secondaryBounceScale: 1.05
   _secondaryBounceDuration: 0.5
   _idleRepeatInterval: 2
@@ -8116,7 +8114,7 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: 5906fe762b30c3346910af313a7a3e55, type: 3}
     - target: {fileID: 2078732290592646873, guid: 93517c00edcb142479233bfe5274b838, type: 3}
       propertyPath: m_text
-      value: "<size=10>1\uC77C\uCC28</size>\n<size=15>\uC544\uCE68</size>"
+      value: "<size=10>1\uC77C\uCC28</size>\n<size=15>\uC800\uB141</size>"
       objectReference: {fileID: 0}
     - target: {fileID: 2078732290592646873, guid: 93517c00edcb142479233bfe5274b838, type: 3}
       propertyPath: m_VerticalAlignment
@@ -12538,6 +12536,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HTH.ButtonColor
   _buttonText: {fileID: 2037173741}
+  _originColor: {r: 0, g: 0, b: 0, a: 1}
   _ChangeColor: {r: 0, g: 1, b: 0, a: 1}
 --- !u!114 &1134789574
 MonoBehaviour:
@@ -16627,6 +16626,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HTH.ButtonColor
   _buttonText: {fileID: 219420231}
+  _originColor: {r: 0, g: 0, b: 0, a: 1}
   _ChangeColor: {r: 0, g: 1, b: 0, a: 1}
 --- !u!114 &1553077889
 MonoBehaviour:

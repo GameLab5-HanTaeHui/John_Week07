@@ -61,8 +61,8 @@ namespace HTH.Campaign
             if (_loopTurnText == null) return;
             var gfc = CampaignGameFlowController.Instance;
             if (gfc == null) return;
-            int daysLeft = CampaignLoopStateMachine.MaxLoops - gfc.LoopCount + 1;
-            _loopTurnText.text = $"마감일까지 {daysLeft}일";
+            // ★ 캠페인은 마감일 없음 — 현재 날짜(루프) 표시
+            _loopTurnText.text = $"{gfc.LoopCount}일차";
         }
 
         private void RefreshPhaseText()

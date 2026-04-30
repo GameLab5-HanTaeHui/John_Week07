@@ -650,6 +650,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HTH.ButtonColor
   _buttonText: {fileID: 1344426256}
+  _originColor: {r: 1, g: 1, b: 1, a: 1}
   _ChangeColor: {r: 0, g: 1, b: 0, a: 1}
 --- !u!114 &89026085
 MonoBehaviour:
@@ -1842,6 +1843,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HTH.ButtonColor
   _buttonText: {fileID: 1741159762}
+  _originColor: {r: 1, g: 1, b: 1, a: 1}
   _ChangeColor: {r: 0, g: 1, b: 0, a: 1}
 --- !u!1 &278492655
 GameObject:
@@ -1971,6 +1973,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HTH.ButtonColor
   _buttonText: {fileID: 2045154891}
+  _originColor: {r: 1, g: 1, b: 1, a: 1}
   _ChangeColor: {r: 0, g: 1, b: 0, a: 1}
 --- !u!114 &279926288
 MonoBehaviour:
@@ -2674,6 +2677,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HTH.ButtonColor
   _buttonText: {fileID: 697584642}
+  _originColor: {r: 1, g: 1, b: 1, a: 1}
   _ChangeColor: {r: 0, g: 1, b: 0, a: 1}
 --- !u!1 &446635967
 GameObject:
@@ -2763,7 +2767,7 @@ GameObject:
   - component: {fileID: 476462581}
   - component: {fileID: 476462580}
   m_Layer: 0
-  m_Name: Lobby
+  m_Name: LobbyUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2781,10 +2785,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a7b3934df71e63458edcd20110f740b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LobbyUI
-  _gameSceneName: Stage_1
-  _tutorialSceneName: Tutorial
-  _tutorialRetrySceneName: TutorialRetryScene
-  _tutorialFixedSeed: 7520
+  _config: {fileID: 11400000, guid: cdd2823c46802164298a5783c1fb1d01, type: 2}
   _mainPanel: {fileID: 0}
   _continueButton: {fileID: 88878827}
   _newGameButton: {fileID: 1445180796}
@@ -2794,9 +2795,6 @@ MonoBehaviour:
   _startSeedButton: {fileID: 2131945129}
   _startRandomButton: {fileID: 1001079175}
   _backButton: {fileID: 0}
-  _stageId: Stage_1
-  _alwaysStartAsPhase2: 0
-  _campaignContinueButton: {fileID: 0}
 --- !u!4 &476462581
 Transform:
   m_ObjectHideFlags: 0
@@ -3846,7 +3844,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &733747676
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3880,6 +3878,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HTH.ButtonColor
   _buttonText: {fileID: 1290952310}
+  _originColor: {r: 1, g: 1, b: 1, a: 1}
   _ChangeColor: {r: 0, g: 1, b: 0, a: 1}
 --- !u!114 &733747678
 MonoBehaviour:
@@ -3893,13 +3892,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 422071be77b653743b44560620f33608, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LobbyPresetSeedButton
-  _seed: 7474
-  _stageId: Stage_1
-  _gameSceneName: Stage_1
+  _mode: 2
+  _seed: 7777
+  _stageId: CampaignMode
+  _gameSceneName: Stage_Campaign1
   _isEnabled: 1
   _label: {fileID: 0}
-  _isTutorial: 0
-  _tutorialFixedSeed: 0
 --- !u!114 &733747679
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5535,13 +5533,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 422071be77b653743b44560620f33608, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LobbyPresetSeedButton
+  _mode: 2
   _seed: 34237518
   _stageId: Stage_2_1
   _gameSceneName: Stage_3
   _isEnabled: 1
   _label: {fileID: 0}
-  _isTutorial: 0
-  _tutorialFixedSeed: 0
 --- !u!114 &974203998
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5637,6 +5634,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HTH.ButtonColor
   _buttonText: {fileID: 554083876}
+  _originColor: {r: 1, g: 1, b: 1, a: 1}
   _ChangeColor: {r: 0, g: 1, b: 0, a: 1}
 --- !u!1 &980214660
 GameObject:
@@ -6421,7 +6419,53 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HTH.ButtonColor
   _buttonText: {fileID: 1907859298}
+  _originColor: {r: 1, g: 1, b: 1, a: 1}
   _ChangeColor: {r: 0, g: 1, b: 0, a: 1}
+--- !u!1 &1040546572
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1040546573}
+  - component: {fileID: 1040546574}
+  m_Layer: 0
+  m_Name: LobbyNavigator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1040546573
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1040546572}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -1435.647, y: 21.87635, z: -464.26733}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1724971161}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1040546574
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1040546572}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e833e8287dafba4192a6c2342abc50e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HTH.Campaign.CampaignLobbyNavigator
+  _config: {fileID: 11400000, guid: cdd2823c46802164298a5783c1fb1d01, type: 2}
 --- !u!1 &1073418576
 GameObject:
   m_ObjectHideFlags: 0
@@ -6437,7 +6481,7 @@ GameObject:
   - component: {fileID: 1073418583}
   - component: {fileID: 1073418578}
   m_Layer: 5
-  m_Name: Stage_1Button
+  m_Name: CampaignButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6476,6 +6520,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HTH.ButtonColor
   _buttonText: {fileID: 1378618862}
+  _originColor: {r: 1, g: 1, b: 1, a: 1}
   _ChangeColor: {r: 0, g: 1, b: 0, a: 1}
 --- !u!114 &1073418580
 MonoBehaviour:
@@ -6571,13 +6616,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 422071be77b653743b44560620f33608, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LobbyPresetSeedButton
-  _seed: 7474
-  _stageId: Stage_1
-  _gameSceneName: Stage_1
+  _mode: 1
+  _seed: 7777
+  _stageId: CampaignMode
+  _gameSceneName: Stage_Campaign1
   _isEnabled: 1
   _label: {fileID: 0}
-  _isTutorial: 0
-  _tutorialFixedSeed: 0
 --- !u!1 &1116647861
 GameObject:
   m_ObjectHideFlags: 0
@@ -7011,6 +7055,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HTH.ButtonColor
   _buttonText: {fileID: 1404257373}
+  _originColor: {r: 1, g: 1, b: 1, a: 1}
   _ChangeColor: {r: 0, g: 1, b: 0, a: 1}
 --- !u!1 &1129571359
 GameObject:
@@ -7065,13 +7110,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 422071be77b653743b44560620f33608, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LobbyPresetSeedButton
+  _mode: 2
   _seed: 26044171
   _stageId: Stage_2_2
   _gameSceneName: Stage_3
   _isEnabled: 1
   _label: {fileID: 0}
-  _isTutorial: 0
-  _tutorialFixedSeed: 0
 --- !u!114 &1129571362
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7167,6 +7211,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HTH.ButtonColor
   _buttonText: {fileID: 686292351}
+  _originColor: {r: 1, g: 1, b: 1, a: 1}
   _ChangeColor: {r: 0, g: 1, b: 0, a: 1}
 --- !u!1 &1188444901
 GameObject:
@@ -7599,6 +7644,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HTH.ButtonColor
   _buttonText: {fileID: 498078811}
+  _originColor: {r: 1, g: 1, b: 1, a: 1}
   _ChangeColor: {r: 0, g: 1, b: 0, a: 1}
 --- !u!1 &1290952308
 GameObject:
@@ -7828,8 +7874,6 @@ MonoBehaviour:
   _nextPageButton: {fileID: 423510021}
   _warningDialog: {fileID: 1688536673}
   _rewardSaveData: {fileID: 11400000, guid: a9a937f157d7ba24abcb1607e860d056, type: 2}
-  _stageId: Stage_1_Phase2
-  _campaignSceneName: Stage_1
 --- !u!1 &1334182448
 GameObject:
   m_ObjectHideFlags: 0
@@ -7977,6 +8021,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HTH.ButtonColor
   _buttonText: {fileID: 1951171987}
+  _originColor: {r: 1, g: 1, b: 1, a: 1}
   _ChangeColor: {r: 0, g: 1, b: 0, a: 1}
 --- !u!1 &1339040861
 GameObject:
@@ -8125,6 +8170,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HTH.ButtonColor
   _buttonText: {fileID: 945780024}
+  _originColor: {r: 1, g: 1, b: 1, a: 1}
   _ChangeColor: {r: 0, g: 1, b: 0, a: 1}
 --- !u!1 &1340914224
 GameObject:
@@ -8410,7 +8456,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uC0C8\uB85C \uC4F0\uAE30"
+  m_text: "\uC774\uC57C\uAE30 \uC4F0\uAE30"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 45461fa7f3c562f458fc696e4c6c4008, type: 2}
   m_sharedMaterial: {fileID: 5040206823531127963, guid: 45461fa7f3c562f458fc696e4c6c4008, type: 2}
@@ -8637,13 +8683,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 422071be77b653743b44560620f33608, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LobbyPresetSeedButton
+  _mode: 2
   _seed: 7520
   _stageId: Tutorial
   _gameSceneName: Tutorial
   _isEnabled: 1
   _label: {fileID: 0}
-  _isTutorial: 1
-  _tutorialFixedSeed: 0
 --- !u!114 &1400545859
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8739,6 +8784,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HTH.ButtonColor
   _buttonText: {fileID: 604707175}
+  _originColor: {r: 1, g: 1, b: 1, a: 1}
   _ChangeColor: {r: 0, g: 1, b: 0, a: 1}
 --- !u!1 &1404257371
 GameObject:
@@ -9824,6 +9870,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HTH.ButtonColor
   _buttonText: {fileID: 1009462893}
+  _originColor: {r: 1, g: 1, b: 1, a: 1}
   _ChangeColor: {r: 0, g: 1, b: 0, a: 1}
 --- !u!1 &1596435726
 GameObject:
@@ -10637,6 +10684,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HTH.ButtonColor
   _buttonText: {fileID: 139029476}
+  _originColor: {r: 1, g: 1, b: 1, a: 1}
   _ChangeColor: {r: 0, g: 1, b: 0, a: 1}
 --- !u!1 &1703331683
 GameObject:
@@ -10714,6 +10762,7 @@ Transform:
   m_Children:
   - {fileID: 1645901815}
   - {fileID: 476462581}
+  - {fileID: 1040546573}
   - {fileID: 841784487}
   - {fileID: 112011992}
   - {fileID: 1291691580}
@@ -12282,7 +12331,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a091c781fc913f94b8a7035afbe53d6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HTH.Campaign.SaveDataVersionManager
-  _currentVersion: 0.1.6
+  _currentVersion: 0.1.7
   _rewardSaveData: {fileID: 11400000, guid: a9a937f157d7ba24abcb1607e860d056, type: 2}
 --- !u!114 &2012912115
 MonoBehaviour:
@@ -13126,6 +13175,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HTH.ButtonColor
   _buttonText: {fileID: 1674362066}
+  _originColor: {r: 1, g: 1, b: 1, a: 1}
   _ChangeColor: {r: 0, g: 1, b: 0, a: 1}
 --- !u!1 &2124205000
 GameObject:

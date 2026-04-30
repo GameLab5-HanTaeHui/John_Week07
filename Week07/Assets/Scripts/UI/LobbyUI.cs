@@ -5,86 +5,75 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 /// <summary>
-/// 로비 화면을 관리합니다.
+/// 로비 화면의 기본 진입 흐름을 관리합니다.
 ///
-/// 진입 시 튜토리얼 진행 여부를 확인합니다.
-///   - 미진행 → 튜토리얼 씬으로 자동 이동
-///   - 진행 후(실패 포함) → 로비 표시, "튜토리얼 다시하기" 버튼 노출
+/// ─── 책임 ────────────────────────────────────────────────────────────
+///   튜토리얼 미진행 감지 → 튜토리얼 씬 자동 이동
+///   MainPanel ↔ NewGamePanel 전환
+///   씬 이름 / 스테이지 ID / 시드는 LobbyConfig SO에서만 읽습니다.
 ///
-/// Canvas 구조 예시:
-///   LobbyUI
-///   ├── MainPanel
-///   │   ├── ContinueButton       ← 세이브 없으면 비활성
-///   │   ├── NewGameButton
-///   │   └── TutorialRetryButton  ← IsStarted 일 때만 노출
-///   └── NewGamePanel
-///       ├── SeedInputField
-///       ├── StartSeedButton
-///       ├── StartRandomButton
-///       └── BackButton
+/// ─── Inspector 연결 ──────────────────────────────────────────────────
+///   Config            → LobbyConfig 에셋 (필수)
+///   Main Panel        → 메인 패널 GameObject
+///   New Game Panel    → 새로하기 패널 GameObject
+///   Continue Button   → 이어하기 버튼 (기본모드)
+///   New Game Button   → 새로하기 버튼
+///   Tutorial Retry Button → 튜토리얼 다시하기 버튼
+///   Seed Input Field  → 시드 입력 필드
+///   Start Seed Button → 시드로 시작 버튼
+///   Start Random Button → 랜덤 시드 시작 버튼
+///   Back Button       → 새로하기 패널 닫기 버튼
 /// </summary>
 public class LobbyUI : MonoBehaviour
 {
-    [Header("씬 이름")]
-    [SerializeField] private string _gameSceneName         = "GameScene";
-    [SerializeField] private string _tutorialSceneName     = "TutorialScene";
-    [SerializeField] private string _tutorialRetrySceneName = "TutorialRetryScene";
-
-    [Header("튜토리얼 고정 시드")]
-    [SerializeField] private int _tutorialFixedSeed = 0;
+    [Header("설정")]
+    [Tooltip("씬 이름 / 스테이지 ID / 시드 설정 에셋입니다.")]
+    [SerializeField] private HTH.Campaign.LobbyConfig _config;
 
     [Header("메인 패널")]
     [SerializeField] private GameObject _mainPanel;
-    [SerializeField] private Button     _continueButton;
-    [SerializeField] private Button     _newGameButton;
-    [SerializeField] private Button     _tutorialRetryButton;
+    [SerializeField] private Button _continueButton;
+    [SerializeField] private Button _newGameButton;
+    [SerializeField] private Button _tutorialRetryButton;
 
     [Header("새로하기 패널")]
-    [SerializeField] private GameObject     _newGamePanel;
+    [SerializeField] private GameObject _newGamePanel;
     [SerializeField] private TMP_InputField _seedInputField;
-    [SerializeField] private Button         _startSeedButton;
-    [SerializeField] private Button         _startRandomButton;
-    [SerializeField] private Button         _backButton;
+    [SerializeField] private Button _startSeedButton;
+    [SerializeField] private Button _startRandomButton;
+    [SerializeField] private Button _backButton;
 
-    // ✅ 추가
-    [Header("스테이지 설정")]
-    [SerializeField] private string _stageId = "Stage_1";
-
-    //[Header("캠페인 모드 설정")]
-    //[Tooltip("true = 처음부터 기본 모드 없이 캠페인 모드만 실행")]
-    //[SerializeField] private bool _alwaysStartAsPhase2 = false;
-
-    // ✅ 추가 — 필드
-    [Header("캠페인 이어하기")]
-    [SerializeField] private Button _campaignContinueButton;
-
-    // ── Unity ────────────────────────────────────────────────────────────────
+    // ── Unity ────────────────────────────────────────────────────────────
 
     private void Start()
     {
+        if (_config == null)
+        {
+            Debug.LogError("[LobbyUI] LobbyConfig가 연결되지 않았습니다.");
+            return;
+        }
+
         TutorialProgressRepository.Instance.TryLoad();
 
-        // 튜토리얼 미진행 → 자동으로 튜토리얼 씬 이동
         if (!TutorialProgressRepository.Instance.IsStarted)
         {
-            NewGameConfig.SetTutorial(_tutorialFixedSeed);
-            SceneManager.LoadScene(_tutorialSceneName);
+            CampaignLobbyNavigator.Instance?.StartTutorial();
             return;
         }
 
         SetupButtons();
     }
 
-    // ── 버튼 설정 ─────────────────────────────────────────────────────────────
+    // ── 버튼 설정 ─────────────────────────────────────────────────────────
 
     private void SetupButtons()
     {
         if (_continueButton != null)
             _continueButton.interactable = false;
 
-        // 튜토리얼 다시하기: 진행한 적 있을 때만 표시
         if (_tutorialRetryButton != null)
-            _tutorialRetryButton.gameObject.SetActive(TutorialProgressRepository.Instance.IsStarted);
+            _tutorialRetryButton.gameObject.SetActive(
+                TutorialProgressRepository.Instance.IsStarted);
 
         _continueButton?.onClick.AddListener(OnContinueClicked);
         _newGameButton?.onClick.AddListener(OnNewGameClicked);
@@ -92,48 +81,25 @@ public class LobbyUI : MonoBehaviour
         _startSeedButton?.onClick.AddListener(OnStartWithSeedClicked);
         _startRandomButton?.onClick.AddListener(OnStartRandomClicked);
         _backButton?.onClick.AddListener(ShowMain);
-
-        // ★ 캠페인 이어하기 버튼 — Phase2 저장 데이터 있을 때만 표시
-        string phase2StageId = _stageId + "_Phase2";
-        bool hasCampaignSave = CampaignSaveManager.Instance != null
-            && CampaignSaveManager.Instance.HasSave(phase2StageId);
-
-        if (_campaignContinueButton != null)
-        {
-            _campaignContinueButton.gameObject.SetActive(hasCampaignSave);
-            _campaignContinueButton.onClick.AddListener(OnCampaignContinueClicked);
-        }
     }
 
-    // ✅ 추가 — 캠페인 이어하기 버튼 콜백
-    private void OnCampaignContinueClicked()
-    {
-        TurnHistoryRepository.Instance.ClearAll();
-        NewGameConfig.SetRandom(_stageId);
-        NewGameConfig.ForceStartAsPhase2 = true;
-        SceneManager.LoadScene(_gameSceneName);
-    }
-
-    // ── 버튼 콜백 ─────────────────────────────────────────────────────────────
+    // ── 버튼 콜백 ─────────────────────────────────────────────────────────
 
     private void OnContinueClicked()
     {
         NewGameConfig.Clear();
-        SceneManager.LoadScene(_gameSceneName);
+        SceneManager.LoadScene(_config.DefaultGameSceneName);
     }
 
     private void OnNewGameClicked()
     {
-        if (_mainPanel != null)    _mainPanel.SetActive(false);
-        if (_newGamePanel != null) _newGamePanel.SetActive(true);
+        _mainPanel?.SetActive(false);
+        _newGamePanel?.SetActive(true);
         if (_seedInputField != null) _seedInputField.text = "";
     }
 
     private void OnTutorialRetryClicked()
-    {
-        NewGameConfig.SetTutorial(_tutorialFixedSeed);
-        SceneManager.LoadScene(_tutorialRetrySceneName);
-    }
+        => CampaignLobbyNavigator.Instance?.RetryTutorial();
 
     private void OnStartWithSeedClicked()
     {
@@ -142,24 +108,15 @@ public class LobbyUI : MonoBehaviour
             Debug.LogWarning("[LobbyUI] 유효한 숫자 시드를 입력하세요.");
             return;
         }
-        TurnHistoryRepository.Instance.ClearAll();
-        NewGameConfig.SetSeed(seed, _stageId);
-        NewGameConfig.ForceStartAsPhase2 = false; // ★ 항상 기본모드부터
-        SceneManager.LoadScene(_gameSceneName);
+        CampaignLobbyNavigator.Instance?.StartWithSeed(seed);
     }
 
     private void OnStartRandomClicked()
-    {
-        TurnHistoryRepository.Instance.ClearAll();
-        NewGameConfig.SetRandom(_stageId);
-        NewGameConfig.ForceStartAsPhase2 = false; // ★ 항상 기본모드부터
-        SceneManager.LoadScene(_gameSceneName);
-    }
+        => CampaignLobbyNavigator.Instance?.StartRandom();
 
-    // ── Private ──────────────────────────────────────────────────────────────
     public void ShowMain()
     {
-        if (_mainPanel != null)    _mainPanel.SetActive(true);
-        if (_newGamePanel != null) _newGamePanel.SetActive(false);
+        _mainPanel?.SetActive(true);
+        _newGamePanel?.SetActive(false);
     }
 }

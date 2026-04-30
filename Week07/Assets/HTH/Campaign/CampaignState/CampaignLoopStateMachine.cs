@@ -27,7 +27,7 @@ namespace HTH.Campaign
     /// </summary>
     public class CampaignLoopStateMachine : StateMachine
     {
-        public const int MaxLoops = 5;
+        // ★ 캠페인은 마감일 없음 — MaxLoops 제거, 무한 루프
         public const int TurnsPerLoop = 3;
 
         public LoopStateType CurrentState { get; private set; }
@@ -67,7 +67,7 @@ namespace HTH.Campaign
 
         private bool _pendingIsWin;
 
-        public CampaignLoopStateMachine( RoleActivationOrderConfig orderConfig, CharacterRegistry characterRegistry,
+        public CampaignLoopStateMachine(RoleActivationOrderConfig orderConfig, CharacterRegistry characterRegistry,
             StageRoleConfig stageRoleConfig, StageSetupConfig setupConfig = null)
         {
             _turnSM = new TurnStateMachine(orderConfig,
@@ -165,18 +165,15 @@ namespace HTH.Campaign
         }
 
         /// <summary>
-        /// ★ 캠페인 전용 — MaxLoops 도달 시 LoopCount=1로 리셋 후 GameSetup 반복.
-        /// AwaitingFinalDecision / 루프 종료 없음. 모든 캐릭터 기록 완성까지 무한 루프.
+        /// ★ 캠페인 전용 — 마감일 없음, 무한 루프.
+        /// LoopCount를 계속 증가시키며 GameSetup을 반복합니다.
         /// </summary>
         public void AdvanceLoop()
         {
             LoopCount++;
 
-            if (LoopCount >= MaxLoops)
-            {
-                LoopCount = 1;
-                Debug.Log("[CampaignLoopSM] MaxLoops 도달 — LoopCount=1로 리셋, GameSetup 진입");
-            }
+            // ★ 캠페인은 MaxLoops 없음 — 무한 반복
+            Debug.Log($"[CampaignLoopSM] Loop {LoopCount} 시작 — GameSetup 진입");
 
             CurrentState = LoopStateType.GameSetup;
             ChangeState(_gameSetup);

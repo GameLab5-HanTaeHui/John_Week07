@@ -1,9 +1,28 @@
-﻿using TMPro;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 namespace HTH.Campaign
 {
+    /// <summary>
+    /// 캠페인 로비 1페이지 UI를 관리합니다.
+    ///
+    /// ─── 책임 ────────────────────────────────────────────────────────────
+    ///   버튼 표시/비활성화 상태 관리
+    ///   WarningDialog 표시 (새로 쓰기 시 경고)
+    ///   씬 이동은 CampaignLobbyNavigator에 위임합니다.
+    ///
+    /// ─── 의존성 ──────────────────────────────────────────────────────────
+    ///   CampaignLobbyNavigator — 씬 이동 전담
+    ///   CampaignSaveManager    — 세이브 존재 확인
+    ///   RewardSaveData         — 에필로그 해금 확인
+    ///
+    /// ─── Inspector 연결 ──────────────────────────────────────────────────
+    ///   New Game Button    → 새로 쓰기 버튼
+    ///   Continue Button    → 이어 쓰기 버튼 (세이브 있을 때만 표시)
+    ///   Next Page Button   → 도감 페이지 버튼 (에필로그 1개 이상 해금 시 표시)
+    ///   Warning Dialog     → 새로 쓰기 경고창
+    ///   Reward Save Data   → 에필로그 해금 확인용
+    /// </summary>
     [DisallowMultipleComponent]
     public class LobbyPage1Controller : MonoBehaviour
     {
@@ -23,13 +42,6 @@ namespace HTH.Campaign
         [Header("데이터")]
         [SerializeField] private RewardSaveData _rewardSaveData;
 
-        [Header("씬/스테이지 설정")]
-        [Tooltip("캠페인 스테이지 ID (예: Stage_1_Phase2)")]
-        [SerializeField] private string _stageId = "Stage_1_Phase2";
-
-        [Tooltip("캠페인 씬 이름")]
-        [SerializeField] private string _campaignSceneName = "Stage_1";
-
         // ── Unity ────────────────────────────────────────────────────────
 
         private void Start()
@@ -41,36 +53,33 @@ namespace HTH.Campaign
                             ?.onClick.AddListener(OnNextPageClicked);
         }
 
+        private void OnEnable() => Refresh();
+
+        /// <summary>버튼 표시 상태를 갱신합니다.</summary>
         public void Refresh()
         {
-            bool hasSave = CampaignSaveManager.Instance != null &&
-                            CampaignSaveManager.Instance.HasSave(_stageId);
+            bool hasSave = CampaignLobbyNavigator.Instance?.HasCampaignSave() ?? false;
             bool hasCodex = CheckCodexUnlocked();
 
             // 새로 쓰기 — 항상 표시
-            if (_newGameButton != null)
-                _newGameButton.gameObject.SetActive(true);
+            _newGameButton?.gameObject.SetActive(true);
 
             // 이어 쓰기 — 저장 데이터 있을 때만 표시
-            if (_continueButton != null)
-                _continueButton.gameObject.SetActive(hasSave);
+            _continueButton?.gameObject.SetActive(hasSave);
 
             // 도감 버튼 — 에필로그 1개 이상 해금 시 표시
-            if (_nextPageButton != null)
-                _nextPageButton.SetActive(hasCodex);
+            _nextPageButton?.SetActive(hasCodex);
         }
 
-        // ── Private ──────────────────────────────────────────────────────
+        // ── 버튼 콜백 ────────────────────────────────────────────────────
 
-        /// <summary>새로 쓰기 — 저장 데이터 초기화 경고 후 처음부터 시작</summary>
+        /// <summary>새로 쓰기 — 세이브 있으면 경고창, 없으면 바로 시작</summary>
         private void OnNewGameClicked()
         {
-            bool hasSave = CampaignSaveManager.Instance != null &&
-                           CampaignSaveManager.Instance.HasSave(_stageId);
+            bool hasSave = CampaignLobbyNavigator.Instance?.HasCampaignSave() ?? false;
 
             if (hasSave)
             {
-                // 저장 데이터 있으면 경고창 표시
                 _warningDialog?.Show(
                     message: "이야기 진행 데이터를 초기화하고\n처음부터 시작합니다.\n이 작업은 되돌릴 수 없습니다.",
                     onConfirm: StartNewGame,
@@ -84,28 +93,11 @@ namespace HTH.Campaign
         }
 
         private void StartNewGame()
-        {
-            CampaignSaveManager.Instance?.Delete(_stageId);
-            TurnHistoryRepository.Instance.ClearAll();
-            string baseStageId = _stageId.Replace("_Phase2", "");
-            NewGameConfig.SetSeed(0, baseStageId);
-            NewGameConfig.ForceStartAsPhase2 = false; // ★ 기본모드부터
-            UnityEngine.SceneManagement.SceneManager.LoadScene(_campaignSceneName);
-        }
+            => CampaignLobbyNavigator.Instance?.StartNewCampaign();
 
-        /// <summary>이어 쓰기 — 저장 데이터 있으면 캠페인 모드로 진입</summary>
+        /// <summary>이어 쓰기 — 세이브 있으면 캠페인 모드, 없으면 기본모드</summary>
         private void OnContinueClicked()
-        {
-            // ★ 저장 데이터 있으면 Phase2부터, 없으면 기본모드부터
-            bool hasSave = CampaignSaveManager.Instance != null &&
-                           CampaignSaveManager.Instance.HasSave(_stageId);
-
-            TurnHistoryRepository.Instance.ClearAll();
-            string baseStageId = _stageId.Replace("_Phase2", "");
-            NewGameConfig.SetSeed(0, baseStageId);
-            NewGameConfig.ForceStartAsPhase2 = hasSave;
-            UnityEngine.SceneManagement.SceneManager.LoadScene(_campaignSceneName);
-        }
+            => CampaignLobbyNavigator.Instance?.ContinueCampaign();
 
         private void OnNextPageClicked()
         {

@@ -78,6 +78,12 @@ namespace HTH.Campaign
         private ConditionContext _cachedCtx = new();
         private bool _isInitialized;
 
+        /// <summary>
+        /// true = 강제퇴고 (주인공 사망) — 대사 출력 차단
+        /// false = 일반퇴고 (저녁 턴 종료) — 대사 출력 허용
+        /// </summary>
+        private bool _isForcedLoop;
+
         public bool IsWaitingForDialogue { get; private set; }
         public TimeOfDay CurrentTimeOfDay { get; set; } = TimeOfDay.Morning;
 
@@ -200,8 +206,17 @@ namespace HTH.Campaign
 
         private void OnTurnEndDialogueFinished()
         {
-            Debug.Log($"[DTM] OnTurnEndDialogueFinished — isInitialized:{_isInitialized}");
+            Debug.Log($"[DTM] OnTurnEndDialogueFinished — isInitialized:{_isInitialized}, 강제퇴고:{_isForcedLoop}");
             if (!_isInitialized) return;
+
+            // ★ 강제퇴고(주인공 사망) 시 Zone 대사 출력 차단
+            // 일반퇴고(저녁 턴 종료) 시만 대사 출력
+            if (_isForcedLoop)
+            {
+                Debug.Log("[DTM] 강제퇴고 — Zone 대사 출력 생략");
+                return;
+            }
+
             StartCoroutine(TriggerDialoguesDelayed(_triggerDelay));
         }
 

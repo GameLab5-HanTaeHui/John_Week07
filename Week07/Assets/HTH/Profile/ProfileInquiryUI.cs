@@ -150,7 +150,7 @@ namespace HTH.Campaign
 
         // ── Unity ────────────────────────────────────────────────────────
 
-        private void OnEnable()
+        private void Awake()
         {
             if (_panel != null) _panel.SetActive(false);
             if (_wrongAnswerPanel != null) _wrongAnswerPanel.SetActive(false);
@@ -200,7 +200,18 @@ namespace HTH.Campaign
             _currentCharacterId = characterId;
             _currentProfile = profile;
 
-            if (_panel != null) _panel.SetActive(true);
+            // ★ 디버그 — 패널 연결 확인
+            Debug.Log($"[ProfileInquiryUI] Show({characterId}) 호출 — " +
+                      $"_panel 연결: {_panel != null}, " +
+                      $"_profileClueData 연결: {_profileClueData != null}");
+
+            if (_panel == null)
+            {
+                Debug.LogError("[ProfileInquiryUI] Panel이 연결되지 않았습니다. Inspector를 확인하세요.");
+                return;
+            }
+
+            _panel.SetActive(true);
             IsOpen = true;
 
             if (_submitButton != null)
@@ -219,6 +230,11 @@ namespace HTH.Campaign
             Debug.Log($"[ProfileInquiryUI] 열림 — #{characterId}");
         }
 
+        /// <summary>
+        /// Close 버튼 클릭 시 호출됩니다.
+        /// 슬롯에 꽂힌 카드를 제자리로 돌려보내고 Submit을 비활성화합니다.
+        /// 패널은 닫지 않습니다.
+        /// </summary>
         /// <summary>
         /// Close 버튼 클릭 시 호출됩니다.
         ///
@@ -241,13 +257,9 @@ namespace HTH.Campaign
             }
 
             if (anySlotFilled)
-            {
-                // 슬롯에 카드가 있으면 전부 되돌리기
                 ResetCards();
-            }
             else
             {
-                // 슬롯이 전부 비어있으면 패널 닫기
                 Hide();
                 _selectPanel?.Hide();
             }
@@ -293,21 +305,9 @@ namespace HTH.Campaign
         private void SetupCharacterInfo(int characterId)
         {
             if (_characterNameText == null) return;
-
-            // 1순위: 수집된 이름 (CharacterRecordPanelManager)
             string name = CharacterRecordPanelManager.Instance?
                 .GetCollectedName(characterId);
-
-            // 2순위: ProfileDataSO 이름
-            if (string.IsNullOrEmpty(name))
-            {
-                var profile = _profileData?.FindProfile(characterId);
-                name = profile?.CharacterFullName;
-            }
-
-            // 3순위: 번호 표시 (폴백)
-            _characterNameText.text = string.IsNullOrEmpty(name)
-                ? $"#{characterId}" : name;
+            _characterNameText.text = string.IsNullOrEmpty(name) ? name : $"#{characterId}";
         }
 
         /// <summary>

@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::StageRoleConfig
   _stageId: CampaignMode
   roles:
-  - {fileID: 11400000, guid: d7ff040d2f02c02468a5e1637830dff2, type: 2}
+  - {fileID: 11400000, guid: 82e20f86993259846ad1a4c2637ff772, type: 2}
   - {fileID: 11400000, guid: ec675c6a6cd09884798ecbb9ad315b8e, type: 2}
   - {fileID: 11400000, guid: 1ee73209c45f7104a810e56cc9c464c6, type: 2}
   - {fileID: 11400000, guid: 4ea50a4ecce8aa6488315e8d9157ec33, type: 2}
   - {fileID: 11400000, guid: 1786fc53ae6c5064591c0c765eb18e31, type: 2}
   - {fileID: 11400000, guid: a1c7014b26f6712418da0d0062b53868, type: 2}
   - {fileID: 11400000, guid: f038699cb723aab4f8979673e711c5b2, type: 2}
-  _loopCondition: {fileID: 11400000, guid: d956bc5587be1a94d8668f3726b73486, type: 2}
+  _loopCondition: {fileID: 11400000, guid: 6620be0bfd10de44ba69e51400ef8481, type: 2}
