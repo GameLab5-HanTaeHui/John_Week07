@@ -445,9 +445,11 @@ namespace HTH.Campaign
                 switch (entry.Type)
                 {
                     case DialogueType.Core:
+                        // ★ 수집 완료된 Core는 후보에서 완전 제외
+                        // p4(Normal 폴백)에도 넣지 않음 → 해당 조합 내 다른 대사를 찾지 않음
                         bool collected = !string.IsNullOrEmpty(entry.RewardFragmentId)
                             && (_fragmentCollector?.HasFragment(entry.RewardFragmentId) ?? false);
-                        if (collected) p4.Add(entry); else p1.Add(entry);
+                        if (!collected) p1.Add(entry);
                         break;
                     case DialogueType.Hint: p2.Add(entry); break;
                     case DialogueType.Special: p3.Add(entry); break;
@@ -466,13 +468,27 @@ namespace HTH.Campaign
             return result;
         }
 
+        /// <summary>
+        /// ParticipantIds와 Zone 캐릭터 조합이 완전히 일치하는지 확인합니다.
+        ///
+        /// ★ 완전 일치 — Zone 캐릭터 수와 참가자 수가 같아야 합니다.
+        ///   participantIds=[1,3,4], zoneIds={1,3,4} → true  (정확히 일치)
+        ///   participantIds=[3,4],   zoneIds={1,3,4} → false (Zone에 1이 더 있음)
+        ///   participantIds=[1,3,4], zoneIds={1,3}   → false (참가자에 4가 없음)
+        ///
+        /// 이 규칙으로 Zone 내 캐릭터 조합이 다를 때 다른 대사를 찾는 문제를 방지합니다.
+        /// </summary>
         private bool ContainsRequiredParticipants(List<int> participantIds, HashSet<int> characterIds)
         {
             if (participantIds == null || participantIds.Count == 0) return false;
+            if (characterIds == null || characterIds.Count == 0) return false;
+
+            // ★ 수가 다르면 즉시 false — 조합이 달라지는 근본 원인 차단
+            if (participantIds.Count != characterIds.Count) return false;
+
             foreach (int id in participantIds)
                 if (!characterIds.Contains(id)) return false;
-            if (participantIds.Count == 1)
-                return characterIds.Count == 1;
+
             return true;
         }
 

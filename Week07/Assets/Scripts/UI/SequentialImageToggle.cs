@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 /// <summary>
@@ -25,6 +26,7 @@ public class SequentialImageToggle : MonoBehaviour
     [SerializeField] private Button _toggleButton;
 
     private int _currentIndex;
+    private EventTrigger.Entry _clickEntry; // 이벤트 해제를 위한 참조 저장
 
     /// <summary>인덱스가 변경될 때 발생합니다. 인수는 새 인덱스 값입니다.</summary>
     public event Action<int> OnIndexChanged;
@@ -37,15 +39,32 @@ public class SequentialImageToggle : MonoBehaviour
     private void Start()
     {
         if (_toggleButton != null)
-            _toggleButton.onClick.AddListener(OnToggleClicked);
+        {
+            // 1. 기존 Button의 onClick 기능을 끄고 EventTrigger를 사용합니다.
+            EventTrigger trigger = _toggleButton.gameObject.GetComponent<EventTrigger>();
+            if (trigger == null)
+            {
+                trigger = _toggleButton.gameObject.AddComponent<EventTrigger>();
+            }
+
+            _clickEntry = new EventTrigger.Entry { eventID = EventTriggerType.PointerClick };
+            _clickEntry.callback.AddListener(data => OnPointerClick((PointerEventData)data));
+            trigger.triggers.Add(_clickEntry);
+        }
 
         ApplySprite(_currentIndex);
     }
 
     private void OnDestroy()
     {
-        if (_toggleButton != null)
-            _toggleButton.onClick.RemoveListener(OnToggleClicked);
+        if (_toggleButton != null && _clickEntry != null)
+        {
+            EventTrigger trigger = _toggleButton.gameObject.GetComponent<EventTrigger>();
+            if (trigger != null)
+            {
+                trigger.triggers.Remove(_clickEntry);
+            }
+        }
     }
 
     // ── 공개 API ──────────────────────────────────────────────────────────────
@@ -60,9 +79,28 @@ public class SequentialImageToggle : MonoBehaviour
 
     // ── 버튼 콜백 ─────────────────────────────────────────────────────────────
 
+    // 2. EventTrigger를 통해 들어온 클릭 데이터를 분석하여 좌우를 나눕니다.
+    private void OnPointerClick(PointerEventData eventData)
+    {
+        if (eventData.button == PointerEventData.InputButton.Left)
+        {
+            OnToggleClicked();
+        }
+        else if (eventData.button == PointerEventData.InputButton.Right)
+        {
+            OnBackToggleClicked();
+        }
+    }
+
     private void OnToggleClicked()
     {
         _currentIndex = (_currentIndex + 1) % _sprites.Length;
+        ApplySprite(_currentIndex);
+        OnIndexChanged?.Invoke(_currentIndex);
+    }
+    private void OnBackToggleClicked()
+    {
+        _currentIndex = (_currentIndex - 1 + _sprites.Length) % _sprites.Length;
         ApplySprite(_currentIndex);
         OnIndexChanged?.Invoke(_currentIndex);
     }

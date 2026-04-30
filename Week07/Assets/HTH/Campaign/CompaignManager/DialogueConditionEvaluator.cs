@@ -49,9 +49,8 @@ namespace HTH.Campaign
         /// <param name="tracker">출력 기록 추적기 (null이면 기록 체크 생략)</param>
         /// <param name="collector">대화 조각 수집기 (null이면 수집 체크 생략)</param>
         /// <param name="ctx">턴 컨텍스트 (사망/기믹 정보, null이면 AllSurvived 가정)</param>
-        public bool CanPlay(DialogueEntry entry, HashSet<int> zoneCharacterIds,
-            DialogueProgressTracker tracker, FragmentCollector collector,
-            ConditionContext ctx = null)
+        public bool CanPlay(DialogueEntry entry, HashSet<int> zoneCharacterIds, DialogueProgressTracker tracker,
+            FragmentCollector collector, ConditionContext ctx = null)
         {
             if (entry == null) return false;
 
@@ -89,8 +88,7 @@ namespace HTH.Campaign
         ///   - DialogueId가 이미 출력 기록에 있으면 false
         ///   - 미출력이면 true
         /// </summary>
-        private bool CheckRewardOrPlayedRecord(DialogueEntry entry,
-            DialogueProgressTracker tracker, FragmentCollector collector)
+        private bool CheckRewardOrPlayedRecord(DialogueEntry entry, DialogueProgressTracker tracker, FragmentCollector collector)
         {
             // Core 대사 — RewardFragmentId 기준
             if (!string.IsNullOrEmpty(entry.RewardFragmentId))
@@ -121,12 +119,17 @@ namespace HTH.Campaign
         /// </summary>
         private bool CheckUnlockCondition(string unlockConditionId, FragmentCollector collector)
         {
+            // 조건 없음 → 통과
             if (string.IsNullOrEmpty(unlockConditionId)) return true;
+
+            // collector 없으면 조건 충족 불가
             if (collector == null) return false;
 
+            // OR 조건 분리
             string[] orConditions = unlockConditionId.Split(
                 new[] { " 또는 " }, System.StringSplitOptions.RemoveEmptyEntries);
 
+            // 하나라도 수집되어 있으면 통과
             foreach (string cond in orConditions)
                 if (collector.HasFragment(cond.Trim()))
                     return true;
@@ -152,16 +155,20 @@ namespace HTH.Campaign
         ///       ParticipantIds=[1, 2], zoneIds={1, 2, 7} → true
         ///       ParticipantIds=[1, 2], zoneIds={1} → false
         /// </summary>
+        /// <summary>
+        /// ★ 완전 일치 매칭 — Zone 캐릭터 수와 참가자 수가 동일해야 합니다.
+        ///   participantIds=[1,3,4], zoneIds={1,3,4} → true
+        ///   participantIds=[3,4],   zoneIds={1,3,4} → false (Zone에 1이 더 있음)
+        ///   participantIds=[1,3,4], zoneIds={1,3}   → false (참가자에 4 없음)
+        /// </summary>
         private bool MatchesParticipants(List<int> participantIds, HashSet<int> zoneIds)
         {
-            if (participantIds == null || participantIds.Count == 0) return true;
+            if (participantIds == null || participantIds.Count == 0) return false;
             if (zoneIds == null || zoneIds.Count == 0) return false;
 
-            // 단독 대사 — 정확히 1명만 있어야 함
-            if (participantIds.Count == 1)
-                return zoneIds.Count == 1 && zoneIds.Contains(participantIds[0]);
+            // ★ 수가 다르면 즉시 false
+            if (participantIds.Count != zoneIds.Count) return false;
 
-            // 조합 대사 — 모든 참가자가 구역에 포함
             foreach (int id in participantIds)
                 if (!zoneIds.Contains(id)) return false;
 
@@ -174,12 +181,15 @@ namespace HTH.Campaign
 
         /// <summary>
         /// Scope + Alive + Gimmick 조합 평가 진입점입니다.
+        /// 모든 하위 조건을 순차적으로 평가합니다.
         /// </summary>
         private bool MatchesSituation(DialogueEntry entry, HashSet<int> zoneIds, ConditionContext ctx)
         {
+            // Scope + Alive 조합 평가
             if (!MatchesScopeAlive(entry.Scope, entry.Alive, ctx))
                 return false;
 
+            // Gimmick 평가 (None이면 항상 통과)
             if (!MatchesGimmick(entry.Gimmick, entry.GetSituationCharacterIds(), zoneIds, ctx))
                 return false;
 
@@ -203,6 +213,7 @@ namespace HTH.Campaign
         /// </summary>
         private bool MatchesScopeAlive(SituationScope scope, SituationAlive alive, ConditionContext ctx)
         {
+            // 컨텍스트 없으면 사망 없는 상태로 간주
             if (ctx == null)
                 return alive == SituationAlive.AllSurvived;
 
@@ -228,17 +239,36 @@ namespace HTH.Campaign
 
         /// <summary>
         /// 역할 기믹 발동 여부를 평가합니다.
+        /// SituationCharacterIds가 지정되면 추가로 관련 캐릭터 검증합니다.
         ///
         /// Killer (살인자) — 토니(#5)가 Zone2에서 살해
+        ///   조건: KillerActed=true, 토니가 Zone2에 생존
+        ///   추가: SituationCharacterIds = 피해자 ID (해당 캐릭터가 사망해야 함)
+        ///
         /// Wanderer (배회자) — 새턴(#7)이 이동 전 구역 사망 후 Zone2 진입
+        ///   조건: WandererActed=true, 새턴이 Zone2에 위치
+        ///   추가: SituationCharacterIds = 사망한 캐릭터 ID
+        ///
         /// Sacrifice (희생양) — 프리드(#6)가 타인 대신 사망
+        ///   조건: SacrificeActed=true (프리드 사망 + 대상자 생존)
+        ///   추가: SituationCharacterIds = 원래 죽을 뻔했던 캐릭터 ID
+        ///
         /// Avenger (복수자) — 메이(#2)가 살인자 처치
+        ///   조건: AvengerActed=true (살인자 사망 + 메이가 같은 구역 생존)
+        ///   추가: SituationCharacterIds = 처치된 살인자 ID
+        ///
         /// LoverChain (연인 연쇄) — 연인A 사망 시 연인B 같은 턴 사망
+        ///   조건: LoverChainActed=true (둘 다 이번 턴 사망 마킹)
+        ///   주의: 한쪽이 이전 턴에 이미 죽어있으면 발동하지 않음
+        ///   추가: SituationCharacterIds = [연인A ID, 연인B ID]
         /// </summary>
         private bool MatchesGimmick(SituationGimmick gimmick, List<int> situationCharacterIds,
             HashSet<int> zoneIds, ConditionContext ctx)
         {
+            // 기믹 없음 → 항상 통과
             if (gimmick == SituationGimmick.None) return true;
+
+            // 컨텍스트 없으면 기믹 검증 불가
             if (ctx == null) return false;
 
             switch (gimmick)
@@ -255,6 +285,7 @@ namespace HTH.Campaign
 
                 case SituationGimmick.Sacrifice:
                     if (!ctx.SacrificeActed) return false;
+                    // SituationCharacters = 원래 죽을 뻔했던 캐릭터 (생존 상태로 검증)
                     if (situationCharacterIds != null && situationCharacterIds.Count > 0)
                         foreach (int id in situationCharacterIds)
                             if (!ctx.SacrificeTargetIds.Contains(id)) return false;
@@ -297,6 +328,12 @@ namespace HTH.Campaign
     /// ─── 책임 ────────────────────────────────────────────────────────────
     ///   현재 턴의 사망 정보와 역할 기믹 발동 여부를 저장합니다.
     ///   DialogueTriggerManager가 턴 종료 시점에 GameState를 분석하여 생성합니다.
+    ///
+    /// ─── 사용법 ──────────────────────────────────────────────────────────
+    ///   var ctx = new ConditionContext();
+    ///   ctx.AllDeadThisTurn = ...;
+    ///   ctx.KillerActed = ...;
+    ///   evaluator.CanPlay(entry, zoneIds, tracker, collector, ctx);
     /// </summary>
     public class ConditionContext
     {

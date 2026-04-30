@@ -15,4 +15,4 @@ MonoBehaviour:
   characterId: 7
   characterName: "#7 \uC0C8\uD134"
   portrait: {fileID: 0}
-  prefab: {fileID: 1689494175059677126, guid: 92208caaca889814f95468356cdf328b, type: 3}
+  prefab: {fileID: 244673540369223436, guid: b4c0425839a603f48af4c1a3d3566a1f, type: 3}

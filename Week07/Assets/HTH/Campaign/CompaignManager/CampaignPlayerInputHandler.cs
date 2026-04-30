@@ -45,6 +45,10 @@ namespace HTH.Campaign
         [SerializeField] private float _clickCooldown = 0.7f;
 
         [Header("앵커 캐릭터")]
+        [Tooltip("true이면 앵커 캐릭터 이동 시 Zone 색상을 갱신합니다.\n" +
+                 "false이면 Zone 색상 변경 없음.")]
+        [SerializeField] private bool _anchorCharacterActive = false;
+
         [Tooltip("Zone 색상 갱신 기준이 되는 앵커 캐릭터 ID입니다.\n" +
                  "DialogueTriggerManager의 _anchorCharacterId와 동일하게 설정하세요.\n" +
                  "기본값 1 = 엔비")]
@@ -322,7 +326,7 @@ namespace HTH.Campaign
             if (!_characterViews.TryGetValue(characterId, out var view)) return;
 
             // ★ 앵커 캐릭터 이동 확정 시 Zone 색상 갱신
-            if (characterId == _anchorCharacterId && targetZoneId >= 0)
+            if (_anchorCharacterActive && characterId == _anchorCharacterId && targetZoneId >= 0)
                 RefreshAnchorZoneColor(targetZoneId);
 
             if (targetZoneId >= 0)

@@ -211,6 +211,17 @@ namespace HTH.Campaign
 
         private IEnumerator PlayCoroutine(IReadOnlyList<DialogueLine> lines)
         {
+            // ★ 첫 줄 내용을 먼저 세팅한 뒤 패널 활성화
+            // 활성화와 동시에 첫 대사가 표시됩니다.
+            var firstLine = lines[0];
+            if (firstLine != null)
+            {
+                if (int.TryParse(firstLine.TextId, out int firstSpeakerId))
+                    UpdateCharacterDisplay(firstSpeakerId);
+                if (_dialogueText != null)
+                    _dialogueText.text = BuildDialogueText(firstLine.Text);
+            }
+
             if (_dialoguePanel != null)
                 _dialoguePanel.SetActive(true);
 
@@ -220,21 +231,29 @@ namespace HTH.Campaign
             yield return new WaitForSeconds(_clickBlockDuration);
             _clickBlocked = false;
 
-            // ★ 모든 줄을 동일하게 처리 (isFirst 분기 제거 → 첫 줄 누락 버그 수정)
-            for (int i = 0; i < lines.Count; i++)
+            // 첫 줄 클릭 대기
+            if (_clickToAdvance)
+            {
+                _waitingForClick = true;
+                yield return new WaitUntil(() => !_waitingForClick);
+            }
+            else
+            {
+                yield return new WaitForSeconds(_autoAdvanceDelay);
+            }
+
+            // 두 번째 줄부터 순서대로 처리
+            for (int i = 1; i < lines.Count; i++)
             {
                 var line = lines[i];
                 if (line == null) continue;
 
-                // 화자 표시 업데이트
                 if (int.TryParse(line.TextId, out int speakerId))
                     UpdateCharacterDisplay(speakerId);
 
-                // 대사 텍스트 세팅
                 if (_dialogueText != null)
                     _dialogueText.text = BuildDialogueText(line.Text);
 
-                // 진행 대기
                 if (_clickToAdvance)
                 {
                     _waitingForClick = true;
