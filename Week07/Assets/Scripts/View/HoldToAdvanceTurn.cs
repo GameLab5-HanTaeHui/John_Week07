@@ -47,6 +47,8 @@ public class HoldToAdvanceTurn : MonoBehaviour
 
     [Header("확인 패널 메시지")]
     [SerializeField] private string _confirmMessage = "대화를 시작 하겠습니까?";
+    [SerializeField] private string _confirmEnterMessage = "대화하기";
+    [SerializeField] private string _confirmUndoMessage = "더 생각하기";
 
     private Vector3 _fullScale;
     private bool _triggered;
@@ -114,7 +116,7 @@ public class HoldToAdvanceTurn : MonoBehaviour
     {
         _triggered = true;
 
-        ConfirmPanel.Instance?.Show(_confirmMessage,
+        ConfirmPanel.Instance?.Show(_confirmMessage, _confirmEnterMessage, _confirmUndoMessage,
             onConfirm: () =>
             {
                 _triggered = false;

@@ -37,6 +37,8 @@ public class HoldToEnterFinalDecision : MonoBehaviour
 
     [Header("확인 패널 메시지")]
     [SerializeField] private string _confirmMessage = "최종 추리를 시작하시겠습니까?";
+    [SerializeField] private string _confirmEnterMessage = "최종 추리를 시작하시겠습니까?";
+    [SerializeField] private string _confirmUndoMessage = "최종 추리를 시작하시겠습니까?";
 
     private Vector3 _fullScale;
     private bool _triggered;
@@ -91,7 +93,7 @@ public class HoldToEnterFinalDecision : MonoBehaviour
     {
         _triggered = true;
 
-        ConfirmPanel.Instance?.Show(_confirmMessage,
+        ConfirmPanel.Instance?.Show(_confirmMessage, _confirmEnterMessage, _confirmUndoMessage,
             onConfirm: () =>
             {
                 _triggered = false;

@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d583cc00779fe6445b510972547a4ef4, type: 3}
   m_Name: LoopCondition_Campaign
   m_EditorClassIdentifier: Assembly-CSharp::HTH.Campaign.CampaignLoopConditionConfig
+  _enableForcedLoop: 1
   _protagonistId: 1

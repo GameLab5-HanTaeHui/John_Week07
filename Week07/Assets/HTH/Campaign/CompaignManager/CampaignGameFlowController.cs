@@ -20,13 +20,16 @@ namespace HTH.Campaign
     /// ─── 캐릭터 위치 동기화 규칙 ─────────────────────────────────────────────
     ///   SyncViewsToGameState — 위치만 반영, 슬롯 맵 유지
     ///   ResetSlots           — 퇴고/강제퇴고 시에만 슬롯 맵 재초기화
-    ///   OnTurnEndEntered     — RefreshAllCharacterViews만 호출 (위치 이동 없음)
+    ///   ReviveDeadOnly       — 사망자만 부활 위치 스냅, 생존자 위치 유지
+    ///   OnTurnEndEntered     — RefreshAllCharacterViews + CaptureDeadCharacters만 호출
     ///
     /// ─── Inspector 연결 ──────────────────────────────────────────────────────
     ///   OrderConfig         → RoleActivationOrderConfig 에셋
     ///   CharacterRegistry   → CharacterRegistry 에셋
-    ///   StageRoleConfig     → StageRoleConfig 에셋
+    ///   StageRoleConfig     → StageRoleConfig 에셋 (캠페인에서는 선택 사항)
+    ///   StageSetupConfig    → StageSetupConfig 에셋 (캠페인에서는 선택 사항)
     ///   CharacterSpawner    → 씬의 CampaignCharacterSpawner 컴포넌트
+    ///   Anchor Character Id → 대화 구역 판별 기준 캐릭터 ID (기본 1 = 엔비)
     ///   Lobby Scene Name    → "LobbyScene"
     /// </summary>
     [DefaultExecutionOrder(-10)]
@@ -44,6 +47,12 @@ namespace HTH.Campaign
                  "연결하지 않으면 시드 없이 기본 Zone 배치를 사용합니다.")]
         [SerializeField] private StageSetupConfig _setupConfig;
 
+        [Tooltip("캠페인 전용 강제퇴고 조건입니다.\n" +
+                 "CampaignLoopConditionConfig 에셋을 연결하세요.\n" +
+                 "연결하지 않으면 StageRoleConfig.LoopCondition을 사용합니다.\n" +
+                 "★ StageRoleConfig 없이 캠페인만 쓸 경우 반드시 연결해야 강제퇴고가 동작합니다.")]
+        [SerializeField] private LoopConditionConfig _loopConditionConfig;
+
         [SerializeField] private CampaignCharacterSpawner _characterSpawner;
         [SerializeField] private string _lobbySceneName = "LobbyScene";
 
@@ -54,15 +63,22 @@ namespace HTH.Campaign
                  "기본값 1 = 엔비")]
         [SerializeField] private int _anchorCharacterId = 1;
 
+        [SerializeField] private string _stageId;
+
         /// <summary>대화 구역 판별 기준 앵커 캐릭터 ID입니다.</summary>
         public int AnchorCharacterId => _anchorCharacterId;
 
-        [SerializeField] private string _stageId;
         public string StageId => !string.IsNullOrEmpty(NewGameConfig.StageId)
             ? NewGameConfig.StageId : _stageId;
 
         private CampaignLoopStateMachine _loopSM;
         private Dictionary<int, CharacterView> _characterViews;
+
+        /// <summary>
+        /// 루프 리셋 시 부활 처리를 위해 TurnEnd 진입 시점에 캡처한 사망자 ID 집합입니다.
+        /// OnLoopReset에서 ReviveDeadOnly()에 전달 후 즉시 null로 초기화합니다.
+        /// </summary>
+        private HashSet<int> _deadCharactersAtTurnEnd;
 
         public IReadOnlyDictionary<int, CharacterView> CharacterViews => _characterViews;
         public CampaignCharacterSpawner GetCharacterSpawner() => _characterSpawner;
@@ -115,7 +131,8 @@ namespace HTH.Campaign
             base.Awake();
             ValidateInspectorRefs();
             _loopSM = new CampaignLoopStateMachine(
-                _orderConfig, _characterRegistry, _stageRoleConfig, _setupConfig);
+                _orderConfig, _characterRegistry, _stageRoleConfig, _setupConfig,
+                _loopConditionConfig);
         }
 
         private void Start()
@@ -128,8 +145,12 @@ namespace HTH.Campaign
             var turnSM = GetTurnSM();
             if (turnSM != null)
             {
-                // 턴 종료 진입 — 뷰 갱신만 (위치 이동 없음)
-                turnSM.OnTurnEndEntered += (_, __) => RefreshAllCharacterViews();
+                // 턴 종료 진입 — 뷰 갱신 + 사망자 캡처 (루프 리셋 부활 처리용)
+                turnSM.OnTurnEndEntered += (_, __) =>
+                {
+                    RefreshAllCharacterViews();
+                    CaptureDeadCharacters();
+                };
             }
         }
 
@@ -221,7 +242,7 @@ namespace HTH.Campaign
 
         /// <summary>
         /// 퇴고/강제퇴고 시 호출됩니다.
-        /// 슬롯 맵을 GameState 기준으로 재초기화한 후 위치를 동기화합니다.
+        /// ★ 캠페인 전용 — 사망자만 부활 위치로 스냅, 생존자 위치 유지
         /// </summary>
         private void HandleLoopReset()
         {
@@ -230,10 +251,37 @@ namespace HTH.Campaign
             if (gameState == null) return;
 
             _characterSpawner.ApplyZoneRulesToGameState(gameState);
-            // ★ ResetSlots 먼저 — 슬롯 맵 재초기화
+
+            // ★ ResetSlots — 슬롯 맵 재초기화 (Zone 배치 갱신)
             _characterSpawner.ResetSlots(gameState, _characterViews);
-            // ★ SyncViews — 재초기화된 슬롯 맵 기준으로 위치 이동
-            _characterSpawner.SyncViewsToGameState(gameState, _characterViews);
+
+            // ★ ReviveDeadOnly — 사망자만 스냅, 생존자 위치 유지
+            _characterSpawner.ReviveDeadOnly(gameState, _characterViews, _deadCharactersAtTurnEnd);
+
+            // 사용 완료 후 초기화
+            _deadCharactersAtTurnEnd = null;
+        }
+
+        /// <summary>
+        /// TurnEnd 진입 시 호출됩니다.
+        /// GameState가 갱신되기 전 시점의 사망자 ID를 캡처합니다.
+        /// OnLoopReset에서 ReviveDeadOnly()에 전달하는 데 사용합니다.
+        /// </summary>
+        private void CaptureDeadCharacters()
+        {
+            var gameState = _loopSM?.GameState;
+            if (gameState == null) return;
+
+            _deadCharactersAtTurnEnd = new HashSet<int>();
+            foreach (int id in gameState.GetAllCharacterIds())
+            {
+                var ch = gameState.GetCharacter(id);
+                if (ch != null && !ch.IsAlive)
+                    _deadCharactersAtTurnEnd.Add(id);
+            }
+
+            if (_deadCharactersAtTurnEnd.Count > 0)
+                Debug.Log($"[GFC] 사망자 캡처 — [{string.Join(",", _deadCharactersAtTurnEnd)}]");
         }
 
         private void RefreshAllCharacterViews()
@@ -262,11 +310,19 @@ namespace HTH.Campaign
             if (_characterRegistry == null) Debug.LogError("[CampaignGameFlowController] CharacterRegistry 미연결.");
             if (_characterSpawner == null) Debug.LogWarning("[CampaignGameFlowController] CharacterSpawner 미연결.");
 
-            // 캠페인 모드에서는 선택 사항 — 없으면 경고만 출력
+            // 캠페인 모드에서는 선택 사항 — 없으면 경고만
             if (_stageRoleConfig == null)
                 Debug.LogWarning("[CampaignGameFlowController] StageRoleConfig 미연결 — 역할 배정 없이 진행합니다.");
             if (_setupConfig == null)
                 Debug.LogWarning("[CampaignGameFlowController] StageSetupConfig 미연결 — 기본 Zone 배치를 사용합니다.");
+
+            // ★ 강제퇴고 조건 누락 경고
+            bool hasCondition = _loopConditionConfig != null
+                || (_stageRoleConfig != null && _stageRoleConfig.LoopCondition != null);
+            if (!hasCondition)
+                Debug.LogWarning("[CampaignGameFlowController] LoopConditionConfig 미연결 — " +
+                                 "강제퇴고(주인공 사망) 조건이 동작하지 않습니다.\n" +
+                                 "CampaignLoopConditionConfig 에셋을 Loop Condition Config 슬롯에 연결하세요.");
         }
     }
 }

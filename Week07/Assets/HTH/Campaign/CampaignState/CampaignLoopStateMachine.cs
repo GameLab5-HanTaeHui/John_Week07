@@ -67,16 +67,25 @@ namespace HTH.Campaign
 
         private bool _pendingIsWin;
 
-        public CampaignLoopStateMachine(RoleActivationOrderConfig orderConfig, CharacterRegistry characterRegistry,
-            StageRoleConfig stageRoleConfig, StageSetupConfig setupConfig = null)
+        public CampaignLoopStateMachine(
+            RoleActivationOrderConfig orderConfig,
+            CharacterRegistry characterRegistry,
+            StageRoleConfig stageRoleConfig,
+            StageSetupConfig setupConfig = null,
+            LoopConditionConfig loopCondition = null)
         {
+            // ★ loopCondition이 직접 주입되면 우선 사용
+            // 없으면 StageRoleConfig.LoopCondition 폴백
+            var resolvedCondition = loopCondition
+                ?? (stageRoleConfig != null ? stageRoleConfig.LoopCondition : null);
+
             _turnSM = new TurnStateMachine(orderConfig,
                 () => GameState,
                 TurnHistoryRepository.Instance,
                 () => CurrentSeed,
                 () => LoopCount,
                 () => TurnCount,
-                () => stageRoleConfig != null ? stageRoleConfig.LoopCondition : null);
+                () => resolvedCondition);
 
 
             _gameSetup = new CampaignGameSetupState(this, characterRegistry, stageRoleConfig, setupConfig);

@@ -50,6 +50,8 @@ namespace HTH.Campaign
 
         [Header("확인 패널 메시지")]
         [SerializeField] private string _confirmMessage = "다음날로 넘어가시겠습니까?";
+        [SerializeField] private string _confirmEnterMessage = "대화하기";
+        [SerializeField] private string _confirmUndoMessage = "더 생각하기";
 
         private Vector3 _fullScale;
         private bool _triggered;
@@ -117,7 +119,7 @@ namespace HTH.Campaign
         {
             _triggered = true;
 
-            ConfirmPanel.Instance?.Show(_confirmMessage,
+            ConfirmPanel.Instance?.Show(_confirmMessage, _confirmEnterMessage, _confirmUndoMessage,
                 onConfirm: () =>
                 {
                     _triggered = false;

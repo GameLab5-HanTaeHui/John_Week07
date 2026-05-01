@@ -42,6 +42,8 @@ namespace HTH.Campaign
 
         [Header("확인 패널 메시지")]
         [SerializeField] private string _confirmMessage = "인물 추리를 시작하시겠습니까?";
+        [SerializeField] private string _confirmEnterMessage = "추리하기";
+        [SerializeField] private string _confirmUndoMessage = "더 생각하기";
 
         [Header("캠페인 전용 — 캐릭터 선택 패널")]
         [Tooltip("확인 후 표시할 ProfileInquirySelectPanel입니다.")]
@@ -97,7 +99,7 @@ namespace HTH.Campaign
         {
             _triggered = true;
 
-            ConfirmPanel.Instance?.Show(_confirmMessage,
+            ConfirmPanel.Instance?.Show(_confirmMessage, _confirmEnterMessage, _confirmUndoMessage,
                 onConfirm: () =>
                 {
                     _triggered = false;

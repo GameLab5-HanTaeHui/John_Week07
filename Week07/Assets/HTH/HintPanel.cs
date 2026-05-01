@@ -315,12 +315,12 @@ namespace HTH.Campaign
                     // 수집 완료 시 취소선 <s> 태그 적용 (투명도 조절은 취향껏 빼셔도 됩니다)
                     if (isCollected)
                     {
-                        _hintTexts[i].text = $"<alpha=#88><s>{baseHint}</s>";
+                        _hintTexts[i].text = $"<alpha=#88><s>{i + 1}. {baseHint}</s>";
                     }
                     else
                     {
                         // 미수집 상태면 기본 텍스트
-                        _hintTexts[i].text = baseHint;
+                        _hintTexts[i].text = $"{i + 1}. {baseHint}";
                     }
                 }
                 else

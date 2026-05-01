@@ -20,9 +20,9 @@ public class GameState : IGameState
     public const int ZoneCount = 4;
 
     private readonly List<CharacterState> _characters;
-    private readonly RoleAssignmentTable  _roleTable;
-    private readonly List<DeathRecord>    _deathMarks = new List<DeathRecord>();
-    private readonly List<string>         _eventLog   = new List<string>();
+    private readonly RoleAssignmentTable _roleTable;
+    private readonly List<DeathRecord> _deathMarks = new List<DeathRecord>();
+    private readonly List<string> _eventLog = new List<string>();
 
     public int TotalDeathsThisLoop { get; private set; }
 
@@ -34,6 +34,14 @@ public class GameState : IGameState
     /// true인 동안 파도 구역 효과를 건너뜁니다. 첫 턴 Enter() 직후 false로 전환됩니다.
     /// </summary>
     public bool IsFirstTurnOfLoop { get; set; } = true;
+
+    /// <summary>
+    /// 주인공 면역 활성화 여부입니다.
+    /// true  = 기본모드 — ConfirmDeaths()에서 주인공 사망 마크를 자동 제거 (무적)
+    /// false = 캠페인  — 주인공도 사망 가능. CampaignLoopConditionConfig에서 강제퇴고 처리
+    /// CampaignGameSetupState에서 GameState 생성 후 false로 설정하세요.
+    /// </summary>
+    public bool ProtagonistImmuneEnabled { get; set; } = true;
 
     // zoneId 인덱스로 접근. InitZoneRules()로 초기화됩니다.
     private bool[] _abilityDisabledZones = new bool[ZoneCount];
@@ -51,7 +59,7 @@ public class GameState : IGameState
     public GameState(List<CharacterState> characters, RoleAssignmentTable roleTable)
     {
         _characters = characters;
-        _roleTable  = roleTable;
+        _roleTable = roleTable;
     }
 
     // ══════════════════════════════════════════════════════════════════════
@@ -101,10 +109,13 @@ public class GameState : IGameState
     /// </summary>
     public void ConfirmDeaths()
     {
-        // 주인공 면역: 사망 확정 전 마크 제거 (발동 순서 무관)
-        var protagonistStatus = GetCharacterByRole(RoleType.Protagonist);
-        if (protagonistStatus != null)
-            ClearDeathMark(protagonistStatus.CharacterId);
+        // 주인공 면역: 기본모드에서만 활성화. 캠페인은 ProtagonistImmuneEnabled=false
+        if (ProtagonistImmuneEnabled)
+        {
+            var protagonistStatus = GetCharacterByRole(RoleType.Protagonist);
+            if (protagonistStatus != null)
+                ClearDeathMark(protagonistStatus.CharacterId);
+        }
 
         // 대리자 ID 캐시 (살아있고 자신이 사망 마크되지 않은 경우에만 유효)
         int deputyId = -1;
@@ -132,8 +143,8 @@ public class GameState : IGameState
         // 순교자 사망 지연: MartyrAbility가 자기희생 마크를 남긴 경우 Phase 1에서 즉시 죽이지 않고
         // 모든 처리가 끝난 뒤 맨 마지막에 사망 확정합니다 (Phase 2 체인에서도 스킬 사용 가능).
         bool martyrDeathDeferred = false;
-        int  martyrDeferredId    = -1;
-        var  martyrStatusCheck   = GetCharacterByRole(RoleType.Martyr);
+        int martyrDeferredId = -1;
+        var martyrStatusCheck = GetCharacterByRole(RoleType.Martyr);
         if (martyrStatusCheck != null && IsMarkedForDeath(martyrStatusCheck.CharacterId))
         {
             // 능력 봉인 구역에 있는 순교자는 패시브 발동 안 됨
@@ -213,7 +224,7 @@ public class GameState : IGameState
             if (!martyrDeathDeferred && TryMartyrSubstituteChain(character, out int chainMartyrId))
             {
                 martyrDeathDeferred = true;
-                martyrDeferredId    = chainMartyrId;
+                martyrDeferredId = chainMartyrId;
                 continue; // 원래 대상 생존
             }
 

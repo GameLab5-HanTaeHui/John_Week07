@@ -54,10 +54,21 @@ namespace HTH.Campaign
 
             // ── 3. 역할 배정 + GameState 생성 ────────────────────────────
             var roleTable = new RoleAssignmentTable();
+            var assignmentLog = new System.Text.StringBuilder("[GameSetupState] 역할 배정 결과:\n");
             for (int i = 0; i < characterStates.Count; i++)
-                roleTable.Assign(characterStates[i].CharacterId, roles[rolePerm[i]]);
+            {
+                var charId = characterStates[i].CharacterId;
+                var roleData = roles[rolePerm[i]];
+                roleTable.Assign(charId, roleData);
+                assignmentLog.AppendLine($"  #{charId} → {roleData.RoleType} (rolePerm[{i}]={rolePerm[i]})");
+            }
+            Debug.Log(assignmentLog.ToString());
 
             var gameState = new GameState(characterStates, roleTable);
+            // ★ 캠페인 — 주인공 무적 비활성화
+            // 기본모드 ConfirmDeaths()의 주인공 면역 로직을 건너뜁니다.
+            // 주인공 사망 시 CampaignLoopConditionConfig.ShouldLoop()에서 강제퇴고를 처리합니다.
+            gameState.ProtagonistImmuneEnabled = false;
             _loopSM.GameState = gameState;
 
             // ── 4. 구역 배치 적용 ─────────────────────────────────────────

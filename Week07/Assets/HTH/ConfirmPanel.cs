@@ -22,6 +22,8 @@ namespace HTH
 
         [SerializeField] private GameObject _panel;
         [SerializeField] private TMP_Text _messageText;
+        [SerializeField] private TMP_Text _enterText;
+        [SerializeField] private TMP_Text _undoText;
         [SerializeField] private Button _confirmButton;
         [SerializeField] private Button _cancelButton;
 
@@ -52,10 +54,16 @@ namespace HTH
         /// <param name="message">패널에 표시할 메시지</param>
         /// <param name="onConfirm">확인 버튼 클릭 시 콜백</param>
         /// <param name="onCancel">취소 버튼 클릭 시 콜백</param>
-        public void Show(string message, Action onConfirm, Action onCancel = null)
+        public void Show(string message, string enterMessage, string undoMessage,Action onConfirm, Action onCancel = null)
         {
             if (_messageText != null)
                 _messageText.text = message;
+
+            if (_enterText != null)
+                _enterText.text = enterMessage;
+
+            if (_undoText != null)
+                _undoText.text = undoMessage;
 
             _onConfirm = onConfirm;
             _onCancel = onCancel;
