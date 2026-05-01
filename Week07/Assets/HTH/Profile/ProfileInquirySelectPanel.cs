@@ -70,7 +70,7 @@ namespace HTH.Campaign
 
         // ── 내부 상태 ─────────────────────────────────────────────────────
 
-        private CharacterIconButton[] _buttons;
+        public CharacterIconButton[] _buttons;
         private bool _isBuilt;
 
         // ── Unity ────────────────────────────────────────────────────────
@@ -130,23 +130,53 @@ namespace HTH.Campaign
                 int capturedId = i + 1;
 
                 var profile = _profileData?.FindProfile(capturedId);
+                // 0. 이미지 가져오기
                 Sprite icon = profile?.CharacterIcon;
-                string name = profile?.CharacterFullName ?? $"#{capturedId}";
+                // 1. 기본 이름 가져오기
+                string baseName = profile?.CharacterFullName ?? $"#{capturedId}";
+
+                // 2. 현재 수집된 조각 개수 가져오기
+                int currentFragments = _fragmentCollector?.GetTotalFragmentCount(capturedId) ?? 0;
+
+                // 3. 이름과 조각 개수를 줄바꿈(\n)으로 합치기
+                // <size> 태그를 이용해 조각 개수 텍스트 크기를 살짝 줄이면 시각적으로 더 깔끔합니다.
+                string displayName = $"#{capturedId} {baseName}\n<size=90%>조각 ({currentFragments * 2}/10)</size>";
+
+                // 4. 해당 캐릭터를 클리어 했는가?
+                bool isCleared = _fragmentCollector?.IsEpilogueUnlocked(capturedId) ?? false;
+
                 // FragmentCollector.CanInquire() 기준 (10개)으로 통일
                 bool canInquire = _fragmentCollector?.CanInquire(capturedId) ?? false;
 
+                // 5. 모든 text 셋업 전달
                 var btn = Instantiate(_iconButtonPrefab, _iconGrid);
-                btn.Setup(characterId: capturedId, icon: icon, collectedName: name, 
+
+                btn.Setup(characterId: capturedId, icon: icon, collectedName: displayName, 
                     onClicked: () => OnCharacterSelected(capturedId));
 
                 // 조각 10개 미달 시 비활성화
                 var button = btn.GetComponent<UnityEngine.UI.Button>();
                 if (button != null)
-                    button.interactable = canInquire;
+                {
+                    ColorBlock cb = button.colors;
+
+                    if (isCleared)
+                    {
+                        button.interactable = false;
+                        cb.disabledColor = PersonalColors[capturedId];
+                    }
+                    else
+                    {
+                        button.interactable = canInquire;
+                    }
+                    button.colors = cb;
+                }
 
                 _buttons[i] = btn;
+
+
+                _buttons[i].SetClearedState(isCleared);
             }
-            RefreshButtonStates();
         }
 
         /// <summary>
@@ -167,6 +197,8 @@ namespace HTH.Campaign
 
                 // 해당 캐릭터를 클리어 했는가?
                 bool isCleared = _fragmentCollector?.IsEpilogueUnlocked(capturedId) ?? false;
+
+                _buttons[i].SetClearedState(isCleared);
 
                 var button = _buttons[i].GetComponent<UnityEngine.UI.Button>();
                 if (button != null)

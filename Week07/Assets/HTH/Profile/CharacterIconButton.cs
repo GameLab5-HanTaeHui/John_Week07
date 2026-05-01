@@ -45,6 +45,10 @@ namespace HTH.Campaign
                  "Rect Transform → Anchor: Bottom Right으로 설정하세요.")]
         [SerializeField] private TMP_Text _nameText;
 
+        [Tooltip("아이콘 우측 하단에 표시되는 이름 텍스트입니다.\n" +
+                 "Rect Transform → Anchor: Bottom Right으로 설정하세요.")]
+        [SerializeField] private GameObject _completeText;
+
         [Header("선택 상태 색상")]
         [Tooltip("선택되지 않은 상태의 배경색")]
         [SerializeField] private Color _normalColor = new Color(0.2f, 0.2f, 0.2f, 0f);
@@ -102,17 +106,7 @@ namespace HTH.Campaign
             if (_button == null)
                 _button = GetComponent<Button>();
 
-            //Debug.Log($"[CharacterIconButton] Setup #{characterId} — " +
-            //          $"button={_button != null}, " +
-            //          $"interactable={_button?.interactable}, " +
-            //          $"transition={_button?.transition}");
-
-            _button?.onClick.AddListener(() =>
-            {
-                //Debug.Log($"[CharacterIconButton] 클릭 — #{_characterId}, isSelected={_isSelected}");
-                if (_isSelected) return;
-                _onClicked?.Invoke();
-            });
+            _button?.onClick.AddListener(() => { if (_isSelected) return; _onClicked?.Invoke(); });
         }
 
         // ── 상태 갱신 ─────────────────────────────────────────────────────
@@ -140,6 +134,20 @@ namespace HTH.Campaign
             _collectedName = name;
             if (_nameText != null)
                 _nameText.text = string.IsNullOrEmpty(name) ? "" : name;
+        }
+
+        // ── 클리어 상태 갱신 ──────────────────────────────────
+        /// <summary>
+        /// 클리어(에필로그 해금) 여부에 따라 전용 텍스트/마크를 켜거나 끕니다.
+        /// ProfileInquirySelectPanel.RefreshButtonStates()에서 호출합니다.
+        /// </summary>
+        public void SetClearedState(bool isCleared)
+        {
+            if (isCleared) _completeText.SetActive(isCleared);
+            else _completeText.SetActive(isCleared);
+
+            // 로그를 통해 실제로 활성화 됐는지, 그리고 이 오브젝트가 '복제본'이 맞는지 확인
+            Debug.Log($"[#{_characterId}] {gameObject.name}의 텍스트 상태: {_completeText.activeSelf} / 오브젝트 경로: {(_completeText)}");
         }
 
         // ── Private ──────────────────────────────────────────────────────
