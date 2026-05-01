@@ -32,6 +32,23 @@ public class MapObjectInputHandler : MonoBehaviour
             return;
         }
 
+        // [추가됨] 튜토리얼 방어선:
+        // 튜토리얼 중이고, '캐릭터 이동'이나 '턴 종료' 등의 월드 조작 권한이 아예 없는 상태
+        // (예: 대화만 읽어야 하는 상태)라면, 마우스 호버 및 클릭(바운스)을 완전히 무시합니다.
+        if (TutorialManager.IsActive &&
+            !TutorialManager.Instance.IsInputAllowed(TutorialInputPermission.CharacterMove) &&
+            !TutorialManager.Instance.IsInputAllowed(TutorialInputPermission.AdvanceTurn) &&
+            !TutorialManager.Instance.IsInputAllowed(TutorialInputPermission.FinalDecision))
+        {
+            // 이전에 호버된 오브젝트가 있다면 호버 해제
+            if (_hoveredActivator != null)
+            {
+                _hoveredActivator.OnHoverExit();
+                _hoveredActivator = null;
+            }
+            return; // 아래의 UpdateHover와 HandleInput 실행을 원천 차단!
+        }
+
         UpdateHover();
         HandleInput();
     }

@@ -120,11 +120,25 @@ public class DialogueManager : MonoBehaviour
                 if (!string.IsNullOrEmpty(line))
                     _lines.Add(line);
 
-        if (_lines.Count == 0) return;
-
-        // ★ 완료 콜백 없어도 FinishDialogue()에서 패널은 닫힘
-        // 단, 게임이 이미 Start()에서 진행 중이므로 별도 콜백 불필요
-        BeginPlay(onComplete: null);
+        if (_lines.Count == 0)
+        {
+            TryStartTutorial();
+            return;
+        }
+        BeginPlay(onComplete: TryStartTutorial);
+    }
+    // ── 튜토리얼 연결 유틸 추가 ──
+    private void TryStartTutorial()
+    {
+        Debug.Log("다이얼로그 완전히 종료됨! 이제 튜토리얼 가이드를 호출합니다.");
+        Debug.Log($"{TutorialManager.Instance != null} {TutorialManager.IsActive}");
+        // TutorialManager가 존재하고 활성화되어 있다면, 1단계(Dialog_Intro1) 진입
+        if (TutorialManager.Instance != null)
+        {
+            // EnterPhase는 내부(private) 메서드이므로, 
+            // TutorialManager에 공개 API(예: StartTutorial)를 만들어서 호출하는 것이 좋습니다.
+            TutorialManager.Instance.StartTutorial();
+        }
     }
 
     private void HandleTurnEndEntered(IReadOnlyList<string> eventLog, bool isLoopCondition)

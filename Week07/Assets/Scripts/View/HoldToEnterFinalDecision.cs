@@ -63,12 +63,9 @@ public class HoldToEnterFinalDecision : MonoBehaviour
         if (_triggered) return;
         if (!CanActivate()) return;
 
-        if (TutorialManager.IsActive &&
-            !TutorialManager.Instance.IsInputAllowed(TutorialInputPermission.EnterFinalDecision))
+        // [수정됨] 최종 추리 집필 권한이 없다면 게이지가 오르지 않도록 차단
+        if (!TutorialManager.Instance.IsInputAllowed(TutorialInputPermission.FinalDecision))
             return;
-
-        if (TutorialManager.IsActive)
-            TutorialManager.Instance?.NotifyFinalDecisionBookClicked();
 
         PlayFillAnimation();
     }
@@ -100,21 +97,12 @@ public class HoldToEnterFinalDecision : MonoBehaviour
                 _triggered = false;
                 HideFill();
 
-                if (TutorialManager.IsActive)
-                {
-                    TutorialManager.Instance?.RestoreClickAdvanceAfterBlock();
-                    return;
-                }
-
                 GameFlowController.Instance?.EnterFinalDecision();
             },
             onCancel: () =>
             {
                 _triggered = false;
                 HideFill();
-
-                if (TutorialManager.IsActive)
-                    TutorialManager.Instance?.NotifyFinalDecisionCancelled();
             });
     }
 

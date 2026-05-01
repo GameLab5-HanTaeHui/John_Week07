@@ -18,7 +18,7 @@ MonoBehaviour:
   _seed: 7520
   _previewSetup:
   - characterId: 1
-    roleIndex: 0
+    roleIndex: 3
     zoneId: 0
   - characterId: 2
     roleIndex: 2
@@ -27,7 +27,7 @@ MonoBehaviour:
     roleIndex: 1
     zoneId: 2
   - characterId: 4
-    roleIndex: 4
+    roleIndex: 0
     zoneId: 1
   - characterId: 5
     roleIndex: 3

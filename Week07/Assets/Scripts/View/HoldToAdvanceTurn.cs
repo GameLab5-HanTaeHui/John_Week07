@@ -46,7 +46,7 @@ public class HoldToAdvanceTurn : MonoBehaviour
     [SerializeField] private float _blockTextDuration = 1f;
 
     [Header("확인 패널 메시지")]
-    [SerializeField] private string _confirmMessage = "다음날로 넘어가시겠습니까?";
+    [SerializeField] private string _confirmMessage = "대화를 시작 하겠습니까?";
 
     private Vector3 _fullScale;
     private bool _triggered;
@@ -80,8 +80,7 @@ public class HoldToAdvanceTurn : MonoBehaviour
     {
         if (_triggered) return;
 
-        if (TutorialManager.IsActive &&
-            !TutorialManager.Instance.IsInputAllowed(TutorialInputPermission.AdvanceTurn))
+        if (!TutorialManager.Instance.IsInputAllowed(TutorialInputPermission.AdvanceTurn))
             return;
 
         var playerAction = GameFlowController.Instance?.GetPlayerActionState();

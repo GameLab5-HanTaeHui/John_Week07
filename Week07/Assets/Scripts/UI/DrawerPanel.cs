@@ -54,6 +54,11 @@ public class DrawerPanel : MonoBehaviour
     [Tooltip("펼쳐졌을 때 활성화되는 버튼들. 누르면 드로어가 닫힙니다.")]
     [SerializeField] private Button _drawerButton;
 
+    // [추가됨] 튜토리얼 방어용 변수
+    [Header("튜토리얼 권한 설정")]
+    [Tooltip("튜토리얼 중 이 패널을 조작하기 위해 필요한 권한입니다. None이면 튜토리얼 검사를 하지 않습니다.")]
+    [SerializeField] private TutorialInputPermission _tutorialPermission = TutorialInputPermission.None;
+
     // ── 이벤트 ───────────────────────────────────────────────────────────────
 
     /// <summary>Show 애니메이션이 완전히 끝났을 때 발생합니다.</summary>
@@ -117,14 +122,14 @@ public class DrawerPanel : MonoBehaviour
     /// <summary>현재 상태의 반대로 패널을 열거나 닫습니다.</summary>
     public void Toggle(bool instant = false)
     {
-        // 튜토리얼 씬에서는 TutorialInputPermission으로만 열고 닫기 허용
-        if (TutorialManager.IsActive)
+        // [수정됨] 범용적인 튜토리얼 방어 로직
+        // None이 아닐 때만 튜토리얼 매니저의 권한을 검사합니다.
+        if (_tutorialPermission != TutorialInputPermission.None && TutorialManager.IsActive)
         {
-            if (!IsShown)
+            if (!TutorialManager.Instance.IsInputAllowed(_tutorialPermission))
             {
-                bool canOpen = TutorialManager.Instance.IsInputAllowed(TutorialInputPermission.MemoOpen)
-                            || TutorialManager.Instance.IsInputAllowed(TutorialInputPermission.RoleDocUI);
-                if (!canOpen) return;
+                // 권한이 없으면 조작 무시
+                return;
             }
         }
 

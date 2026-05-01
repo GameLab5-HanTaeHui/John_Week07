@@ -66,7 +66,7 @@ public class TutorialManager : SingletonMonobehaviour<TutorialManager>
     [Tooltip("책(HoldToEnterFinalDecision) Transform")]
     [SerializeField] private Transform _finalDecisionBookTransform;
     [Tooltip("살인자 캐릭터 Transform (게임 시작 후 런타임에 자동 할당 가능)")]
-    [SerializeField] private Transform _murdererCharacterTransform;
+    [SerializeField] private Transform _heroCharacterTransform;
 
     [Header("하이라이트 대상 RectTransform 참조 (UI 요소)")]
     [SerializeField] private RectTransform _roleDocHighlightRect;
@@ -79,7 +79,6 @@ public class TutorialManager : SingletonMonobehaviour<TutorialManager>
     [SerializeField] private Transform _TutoArrow;
 
     // ── 정적 상태 (기존 코드에서 TutorialManager.IsActive 로 체크) ──────────
-
     /// <summary>TutorialManager 인스턴스가 존재하고 활성화된 경우 true.</summary>
     public static bool IsActive => Instance != null && Instance._currentPhase != TutorialPhase.Inactive;
 
@@ -117,15 +116,20 @@ public class TutorialManager : SingletonMonobehaviour<TutorialManager>
         _TutoArrow.gameObject.SetActive(false);
 
         // Inspector 미연결 시 CharacterViews에서 자동 탐색
-        if (_murdererCharacterTransform == null)
+        if (_heroCharacterTransform == null)
         {
             var views = GameFlowController.Instance?.CharacterViews;
             if (views != null && views.TryGetValue(_restrictedCharacterId, out var view))
-                _murdererCharacterTransform = view.transform;
+                _heroCharacterTransform = view.transform;
         }
 
         SubscribeGameEvents();
-        EnterPhase(TutorialPhase.Initial);
+        EnterPhase(TutorialPhase.WaitIntro);
+    }
+    // DialogueManager에서 호출할 튜토리얼 시작 API
+    public void StartTutorial()
+    {
+        EnterPhase(TutorialPhase.Dialog_Intro1);
     }
 
     private void OnDestroy()
@@ -233,199 +237,228 @@ public class TutorialManager : SingletonMonobehaviour<TutorialManager>
 
         switch (phase)
         {
-            case TutorialPhase.Initial:
-                Debug.Log("1");
+            // 검은 화면 대기 단계
+            case TutorialPhase.WaitIntro:
+                // IsActive는 true가 되지만, 권한이 None이므로 
+                // 최종 추리 책, 턴 넘기기, 캐릭터 이동 등 모든 입력이 완벽히 차단됩니다!
                 SetInputPermission(TutorialInputPermission.None);
-                if (_murdererCharacterTransform != null)
-                    _uiManager?.SetBounceOnly(_murdererCharacterTransform);
-                ShowPhaseGuide(phase);
-                StartCoroutine(TransitionAfterDelay(TutorialPhase.RestrictedMove, 0.5f));
-                break;
-
-            case TutorialPhase.RestrictedMove: // 캐릭터 옮기기
-                Debug.Log("캐릭터 옮기기");
-                SetInputPermission(TutorialInputPermission.CharacterMove);
                 _uiManager?.SetClickAdvance(false);
-                if (_murdererCharacterTransform != null)
-                    _uiManager?.SetBounceOnly(_murdererCharacterTransform, loop: true);
-                if (_restrictedZoneTransform != null)
-                    _uiManager?.SetSecondaryBounce(_restrictedZoneTransform);
+                _uiManager?.HideGuide();
+                break;
+            // ── [클릭으로 대화만 넘기는 단계들 묶음] ──
+            case TutorialPhase.Dialog_Intro1:               // 이곳에서 대량 사건이...
+            case TutorialPhase.Dialog_Intro2:               // 저쪽 구역에 사람이 있네?...
+            case TutorialPhase.Dialog_PostMove:             // 좋아 대화 해봐야지...
+            case TutorialPhase.Dialog_Npc1:                 // 너는 누구야?
+            case TutorialPhase.Dialog_Hero1:                // 나는 (주인공)이고...
+            case TutorialPhase.Dialog_Npc2:                 // 사건을 추리하는 사람이야?
+            case TutorialPhase.Dialog_Npc3:                 // 우릴 도와줘!
+            case TutorialPhase.Dialog_Npc4:                 // 여태껏 정보들이 있는데...
+            case TutorialPhase.Dialog_SystemGuidePanels:    // 왼쪽 사건 기록지, 아래...
+            case TutorialPhase.Dialog_Hero2:                // 살인자..? 기록해봐야겠어.
+            case TutorialPhase.Dialog_Hero3:                // 사건 기록지..?
+            case TutorialPhase.Dialog_Hero4:                // 이건 역할을 기록하는 수첩이구나.
+            case TutorialPhase.Dialog_Hero5:                // 이건 상세 정보구나 힌트도...
+            case TutorialPhase.Dialog_Hero6:                // 좋아 사건 추리가 끝나면...
+                // 오직 대화 텍스트 넘기기(화면 클릭) 권한만 부여
+                SetInputPermission(TutorialInputPermission.DialogueAdvance);
+                _uiManager?.SetClickAdvance(true);
+
+                if (!_TutoArrow.gameObject.activeSelf)
+                    _TutoArrow.gameObject.SetActive(false);
+
+                    ShowPhaseGuide(phase);
+                break;
+
+            // ── [플레이어의 실제 조작이 필요한 단계들] ──
+            case TutorialPhase.Action_MoveCharacter:        // 캐릭터 이동
+                SetInputPermission(TutorialInputPermission.CharacterMove);
+                _uiManager?.SetClickAdvance(false); // 클릭 대화 넘기기 차단!
+                if (_heroCharacterTransform != null) _uiManager?.SetBounceOnly(_heroCharacterTransform, loop: true);
+                if (_restrictedZoneTransform != null) _uiManager?.SetSecondaryBounce(_restrictedZoneTransform);
                 ShowPhaseGuide(phase);
                 break;
 
-            case TutorialPhase.QuillPenUnlocked:// 깃털 다음날
-                Debug.Log("깃털");
+            case TutorialPhase.Action_TurnEnd:              // 턴 종료 (깃털펜)
+                SetInputPermission(TutorialInputPermission.AdvanceTurn);
+                _uiManager?.SetClickAdvance(false);
+                if (_quillPenTransform != null) _uiManager?.SetWorldHighlight(_quillPenTransform);
 
                 if (!_TutoArrow.gameObject.activeSelf)
                 {
                     _TutoArrow.gameObject.SetActive(true);
-                    _TutoArrow.localPosition = new Vector3(440f, 200f, 0f);
+                    _TutoArrow.localPosition = new Vector3(415f, 200f, 0f);
                     _TutoArrow.localRotation = Quaternion.Euler(0f, 0f, 0f);
                     _uiManager?.SetSecondaryBounce(_TutoArrow);
                 }
-                SetInputPermission(TutorialInputPermission.AdvanceTurn);
-                _uiManager?.ClearWorldHighlight();
-                if (_quillPenTransform != null)
-                    _uiManager?.SetWorldHighlight(_quillPenTransform);
+
                 ShowPhaseGuide(phase);
                 break;
 
-            case TutorialPhase.WaitingForTurnEnd:
-                Debug.Log("4");
-                SetInputPermission(TutorialInputPermission.None);
-                _uiManager?.ClearAll();
-                break;
-
-            case TutorialPhase.ResultDisplaying:
-                Debug.Log("5");
-                SetInputPermission(TutorialInputPermission.None);
-                ShowPhaseGuide(phase);
-                break;
-
-            case TutorialPhase.RoleDocGuide: // 왼쪽 역할 패널
-                Debug.Log("왼쪽 역할");
-
-                _TutoArrow.localPosition = new Vector3(-680f, 220f, 0f);
-                _TutoArrow.localRotation = Quaternion.Euler(0f, 0f, 180f);
-                _uiManager?.SetSecondaryBounce(_TutoArrow);
-
-                SetInputPermission(TutorialInputPermission.RoleDocUI);
+            case TutorialPhase.Action_OpenRoleDoc:          // 역할 패널 열기
+            case TutorialPhase.Action_CloseRoleDoc:         // 역할 패널 닫기
+                SetInputPermission(TutorialInputPermission.RoleDocToggle);
+                _uiManager?.SetClickAdvance(false);
                 SetDrawerInteractable(_roleDocGroup, true);
-                _uiManager?.SetClickAdvance(false);
-                if (_roleDocHighlightRect != null)
-                    _uiManager?.SetUIHighlight(_roleDocHighlightRect);
-                ShowPhaseGuide(phase);
-                break;
 
-            case TutorialPhase.RoleDocCloseGuide: // 왼쪽 역할 패널 닫기
-                Debug.Log("왼쪽 역할 닫기");
-                _TutoArrow.gameObject.SetActive(false);
-                SetInputPermission(TutorialInputPermission.RoleDocUI);
-                _uiManager?.SetClickAdvance(false);
-                if (_roleDocHighlightRect != null) _uiManager?.SetUIHighlight(_roleDocHighlightRect);
-                ShowPhaseGuide(phase);
-                break;
-
-            // ── 순서: MemoBook → MemoWrite → EventRecord ──────────────────────
-
-            case TutorialPhase.MemoBookGuide: // 오른쪽 하단 메모
-                Debug.Log("오른쪽 하단 메모");
-                if(!_TutoArrow.gameObject.activeSelf)
+                if (!_TutoArrow.gameObject.activeSelf)
                 {
                     _TutoArrow.gameObject.SetActive(true);
-                    _TutoArrow.localPosition = new Vector3(580f, -300f, 0f);
-                    _TutoArrow.localRotation = Quaternion.Euler(0f, 0f, 270f);
+                    _TutoArrow.localPosition = new Vector3(680f, 270f, 0f);
+                    _TutoArrow.localRotation = Quaternion.Euler(0f, 0f, -180f);
                     _uiManager?.SetSecondaryBounce(_TutoArrow);
                 }
 
-                SetInputPermission(TutorialInputPermission.RoleDocUI
-                                 | TutorialInputPermission.MemoOpen);
+                ShowPhaseGuide(phase);
+                break;
+
+            case TutorialPhase.Action_OpenHistory:          // 사건 기록지 열기
+            case TutorialPhase.Action_CloseHistory:         // 사건 기록지 닫기
+                SetInputPermission(TutorialInputPermission.HistoryToggle);
+                _uiManager?.SetClickAdvance(false);
+
+                if (!_TutoArrow.gameObject.activeSelf)
+                {
+                    _TutoArrow.gameObject.SetActive(true);
+                    _TutoArrow.localPosition = new Vector3(-510f, -340f, 0f);
+                    _TutoArrow.localRotation = Quaternion.Euler(0f, 0f, -180f);
+                    _uiManager?.SetSecondaryBounce(_TutoArrow);
+                }
+
+                ShowPhaseGuide(phase);
+                break;
+
+            case TutorialPhase.Action_OpenMemo:             // 메모 수첩 열기
+            case TutorialPhase.Action_CloseMemo:            // 메모 수첩 닫기
+                SetInputPermission(TutorialInputPermission.MemoToggle);
                 SetDrawerInteractable(_memoBookGroup, true);
                 _uiManager?.SetClickAdvance(false);
-                _uiManager?.ClearUIHighlight();
-                if (_memoBookHighlightRect != null)
-                    _uiManager?.SetUIHighlight(_memoBookHighlightRect);
-                ShowPhaseGuide(phase);
-                break;
-
-            case TutorialPhase.MemoWriteGuide: // 오른쪽 하단 메모 작성
-                Debug.Log("메모 기록");
-                SetInputPermission(TutorialInputPermission.RoleDocUI
-                                 | TutorialInputPermission.MemoOpen
-                                 | TutorialInputPermission.MemoWrite);
-                _uiManager?.SetClickAdvance(false);
-                _uiManager?.ClearUIHighlight();
-                ShowPhaseGuide(phase);
-                if (_notepadToggleManager != null)
-                    _notepadToggleManager.OnAnyToggleChanged += HandleMemoWriteToggled;
-                break;
-
-            case TutorialPhase.MemoBookCloseGuide: // 오른쪽 하단 메모 닫기
-                Debug.Log("메모북 닫기");
-                _TutoArrow.gameObject.SetActive(false);
-
-                SetInputPermission(TutorialInputPermission.RoleDocUI | TutorialInputPermission.MemoOpen);
-                _uiManager?.SetClickAdvance(false);
-                if (_memoBookHighlightRect != null) _uiManager?.SetUIHighlight(_memoBookHighlightRect);
-                ShowPhaseGuide(phase);
-                break;
-
-            case TutorialPhase.EventRecordGuide: // 왼쪽 하단 파일
-                Debug.Log("왼쪽 하단 파일");
-                if(!_TutoArrow.gameObject.activeSelf)
-                {
-                    _TutoArrow.gameObject.SetActive(true);
-                    _TutoArrow.localPosition = new Vector3(-725f, -250f, 0f);
-                    _TutoArrow.localRotation = Quaternion.Euler(0f, 0f, 270);
-                    _uiManager?.SetSecondaryBounce(_TutoArrow);
-                }
-
-                SetInputPermission(TutorialInputPermission.RoleDocUI
-                                 | TutorialInputPermission.MemoOpen
-                                 | TutorialInputPermission.MemoWrite
-                                 | TutorialInputPermission.EventRecord);
-                _uiManager?.SetClickAdvance(false);
-                _uiManager?.ClearUIHighlight();
-                if (_eventRecordHighlightRect != null)
-                    _uiManager?.SetUIHighlight(_eventRecordHighlightRect);
-                ShowPhaseGuide(phase);
-                break;
-
-            // 히스토리 닫기
-            case TutorialPhase.EventRecordCloseGuide: // 왼쪽 하단 파일 닫기
-                Debug.Log("히스토리 닫기");
-                _TutoArrow.gameObject.SetActive(false);
-
-                SetInputPermission(TutorialInputPermission.RoleDocUI | TutorialInputPermission.MemoOpen | TutorialInputPermission.EventRecord);
-                _uiManager?.SetClickAdvance(false);
-                if (_eventRecordHighlightRect != null) _uiManager?.SetUIHighlight(_eventRecordHighlightRect);
-                ShowPhaseGuide(phase);
-                break;
-
-            case TutorialPhase.FinalDecisionBookGuide:
-                Debug.Log("11");
 
                 if (!_TutoArrow.gameObject.activeSelf)
                 {
                     _TutoArrow.gameObject.SetActive(true);
-                    _TutoArrow.localPosition = new Vector3(500f, 70f, 0f);
-                    _TutoArrow.localRotation = Quaternion.Euler(0f, 0f, 0f);
+                    _TutoArrow.localPosition = new Vector3(690f, -290f, 0f);
+                    _TutoArrow.localRotation = Quaternion.Euler(0f, 0f, -90f);
                     _uiManager?.SetSecondaryBounce(_TutoArrow);
                 }
 
-                SetInputPermission(TutorialInputPermission.RoleDocUI
-                                 | TutorialInputPermission.MemoOpen
-                                 | TutorialInputPermission.MemoWrite
-                                 | TutorialInputPermission.EventRecord
-                                 | TutorialInputPermission.EnterFinalDecision);
-                _uiManager?.SetClickAdvance(true);
-                if (_finalDecisionBookTransform != null)
-                    _uiManager?.SetWorldHighlight(_finalDecisionBookTransform);
                 ShowPhaseGuide(phase);
                 break;
 
-            case TutorialPhase.DateUIGuide:
-                Debug.Log("12");
-                _TutoArrow.gameObject.SetActive(false);
-
-                SetInputPermission(TutorialInputPermission.All);
-                _uiManager?.SetClickAdvance(true);
-                _uiManager?.ClearWorldHighlight();
-                if (_dateUIHighlightRect != null)
-                    _uiManager?.SetUIHighlight(_dateUIHighlightRect);
+            case TutorialPhase.Action_WriteMemo:            // 메모 격자칸 작성
+                // 메모 작성이 가능하도록 메모 토글+작성 권한 동시 부여
+                SetInputPermission(TutorialInputPermission.MemoToggle | TutorialInputPermission.MemoWrite);
+                _uiManager?.SetClickAdvance(false);
                 ShowPhaseGuide(phase);
                 break;
 
-            case TutorialPhase.FullyUnlocked:
-                Debug.Log("13");
-                SetInputPermission(TutorialInputPermission.All);
-                _currentPhase = TutorialPhase.Inactive;
-                _uiManager?.ClearAll();
+            case TutorialPhase.Action_ClickSwapButton:      // 인물 카드 보기 버튼 클릭
+                SetInputPermission(TutorialInputPermission.HistorySwapButton);
+                _uiManager?.SetClickAdvance(false);
+
+                if (!_TutoArrow.gameObject.activeSelf)
+                {
+                    _TutoArrow.gameObject.SetActive(true);
+                    _TutoArrow.localPosition = new Vector3(270f, -350f, 0f);
+                    _TutoArrow.localRotation = Quaternion.Euler(0f, 0f, -90f);
+                    _uiManager?.SetSecondaryBounce(_TutoArrow);
+                }
+
+                ShowPhaseGuide(phase);
+                break;
+
+            case TutorialPhase.Action_OpenCharacterCard:    // 인물 카드 열기
+            case TutorialPhase.Action_CloseCharacterCard:   // 인물 카드 닫기
+                SetInputPermission(TutorialInputPermission.CharacterCardToggle);
+                _uiManager?.SetClickAdvance(false);
+
+                if (!_TutoArrow.gameObject.activeSelf)
+                {
+                    _TutoArrow.gameObject.SetActive(true);
+                    _TutoArrow.localPosition = new Vector3(-60f, -390f, 0f);
+                    _TutoArrow.localRotation = Quaternion.Euler(0f, 0f, -180f);
+                    _uiManager?.SetSecondaryBounce(_TutoArrow);
+                }
+
+                ShowPhaseGuide(phase);
+                break;
+
+            case TutorialPhase.Action_ClickHintPostIt:      // 힌트 포스트잇 열기
+            case TutorialPhase.Action_CloseHintPostIt:      // 힌트 포스트잇 닫기
+                SetInputPermission(TutorialInputPermission.HintPostItToggle);
+                _uiManager?.SetClickAdvance(false);
+
+                if (!_TutoArrow.gameObject.activeSelf)
+                {
+                    _TutoArrow.gameObject.SetActive(true);
+                    _TutoArrow.localPosition = new Vector3(-80f, -245f, 0f);
+                    _TutoArrow.localRotation = Quaternion.Euler(0f, 0f, -180f);
+                    _uiManager?.SetSecondaryBounce(_TutoArrow);
+                }
+
+                ShowPhaseGuide(phase);
+                break;
+
+            case TutorialPhase.Action_FinalDecision:        // 최종 집필 책 클릭
+                SetInputPermission(TutorialInputPermission.FinalDecision);
+                _uiManager?.SetClickAdvance(false);
+                if (_finalDecisionBookTransform != null) _uiManager?.SetWorldHighlight(_finalDecisionBookTransform);
+
+                if (!_TutoArrow.gameObject.activeSelf)
+                {
+                    _TutoArrow.gameObject.SetActive(true);
+                    _TutoArrow.localPosition = new Vector3(550f, 130f, 0f);
+                    _TutoArrow.localRotation = Quaternion.Euler(0f, 0f, -15f);
+                    _uiManager?.SetSecondaryBounce(_TutoArrow);
+                }
+
+                ShowPhaseGuide(phase);
                 break;
         }
     }
 
     // ── 이벤트형 안내 ─────────────────────────────────────────────────────────
+
+    /// <summary>
+    /// 대화 패널(화면)을 클릭했을 때 다음 대화나 행동으로 넘어가는 로직입니다.
+    /// </summary>
+    private void HandleGuideAdvanced()
+    {
+        if (!IsInputAllowed(TutorialInputPermission.DialogueAdvance)) return;
+
+        switch (_currentPhase)
+        {
+            // 1. 도입부 흐름
+            case TutorialPhase.Dialog_Intro1: EnterPhase(TutorialPhase.Dialog_Intro2); break;
+            case TutorialPhase.Dialog_Intro2: EnterPhase(TutorialPhase.Action_MoveCharacter); break; // 대화 후 조작 유도
+
+            // 2. 캐릭터 이동 후 대화 -> 턴 종료 유도
+            case TutorialPhase.Dialog_PostMove: EnterPhase(TutorialPhase.Action_TurnEnd); break;
+
+            // 3. 턴 종료 후 긴 대화 릴레이
+            case TutorialPhase.Dialog_Npc1: EnterPhase(TutorialPhase.Dialog_Hero1); break;
+            case TutorialPhase.Dialog_Hero1: EnterPhase(TutorialPhase.Dialog_Npc2); break;
+            case TutorialPhase.Dialog_Npc2: EnterPhase(TutorialPhase.Dialog_Npc3); break;
+            case TutorialPhase.Dialog_Npc3: EnterPhase(TutorialPhase.Dialog_Npc4); break;
+            case TutorialPhase.Dialog_Npc4: EnterPhase(TutorialPhase.Dialog_SystemGuidePanels); break;
+            case TutorialPhase.Dialog_SystemGuidePanels: EnterPhase(TutorialPhase.Dialog_Hero2); break;
+
+            // 4. 대화 끝, 역할 패널 조작 유도
+            case TutorialPhase.Dialog_Hero2: EnterPhase(TutorialPhase.Action_OpenRoleDoc); break;
+
+            // 5. 역할 패널 닫은 후 대화 -> 사건 기록지 조작 유도
+            case TutorialPhase.Dialog_Hero3: EnterPhase(TutorialPhase.Action_OpenHistory); break;
+
+            // 6. 사건 기록지 닫은 후 대화 -> 메모장 조작 유도
+            case TutorialPhase.Dialog_Hero4: EnterPhase(TutorialPhase.Action_OpenMemo); break;
+
+            // 7. 인물 카드 연 후 대화 -> 포스트잇 조작 유도
+            case TutorialPhase.Dialog_Hero5: EnterPhase(TutorialPhase.Action_ClickHintPostIt); break;
+
+            // 8. 인물 카드 완전히 닫은 후 최종 대화 -> 최종 집필 유도
+            case TutorialPhase.Dialog_Hero6: EnterPhase(TutorialPhase.Action_FinalDecision); break;
+        }
+    }
 
     /// <summary>일반 퇴고 (3턴 소진) 발생 시</summary>
     private void HandleLoopReset()
@@ -465,26 +498,24 @@ public class TutorialManager : SingletonMonobehaviour<TutorialManager>
         StartCoroutine(LoadRetrySceneAfterDelay(2f));
     }
 
-    // ── 순서형 이벤트 핸들러 ──────────────────────────────────────────────────
+    // ── 순서형 이벤트 핸들러 (UI 상호작용 및 게임 이벤트 감지) ────────────
 
+    // [캐릭터 이동 완료] -> Dialog_PostMove 대화로
     private void HandleActionConfirmed(int characterId, int targetZoneId)
     {
-        if (_currentPhase != TutorialPhase.RestrictedMove) return;
-        if (characterId != _restrictedCharacterId) return;
-        if (targetZoneId != _restrictedTargetZoneId) return;
-
-        EnterPhase(TutorialPhase.QuillPenUnlocked);
+        if (_currentPhase != TutorialPhase.Action_MoveCharacter) return;
+        if (characterId != _restrictedCharacterId || targetZoneId != _restrictedTargetZoneId) return;
+        EnterPhase(TutorialPhase.Dialog_PostMove);
     }
 
+    // [턴 종료 완료] -> Dialog_Npc1 대화로
     private void HandleTurnEndEntered(System.Collections.Generic.IReadOnlyList<string> _, bool __)
     {
-        if (_currentPhase == TutorialPhase.QuillPenUnlocked
-            || _currentPhase == TutorialPhase.WaitingForTurnEnd)
+        if (_currentPhase == TutorialPhase.Action_TurnEnd)
         {
-            EnterPhase(TutorialPhase.ResultDisplaying);
+            EnterPhase(TutorialPhase.Dialog_Npc1);
         }
 
-        // 마감일 체크
         var gfc = GameFlowController.Instance;
         if (gfc != null && gfc.LoopCount >= LoopStateMachine.MaxLoops - 1 && !_shownDeadlineGuide)
         {
@@ -493,155 +524,134 @@ public class TutorialManager : SingletonMonobehaviour<TutorialManager>
         }
     }
 
-    private void HandlePlayerActionStarted()
-    {
-        // 결과창이 끝나고 다음 PlayerAction 단계 시작 → UI 순차 가이드 시작
-        if (_currentPhase == TutorialPhase.ResultDisplaying)
-            EnterPhase(TutorialPhase.RoleDocGuide);
-    }
+    private void HandlePlayerActionStarted() { /* 필요 시 활용 */ }
 
+    // [역할 패널 열림] -> 패널 닫기 안내로
     private void HandleRoleDocShown()
     {
-        if (_currentPhase != TutorialPhase.RoleDocGuide) return;
-        EnterPhase(TutorialPhase.RoleDocCloseGuide);
+        if (_currentPhase != TutorialPhase.Action_OpenRoleDoc) return;
+        EnterPhase(TutorialPhase.Action_CloseRoleDoc);
     }
+
+    // [역할 패널 닫힘] -> Dialog_Hero3 대화로
     private void HandleRoleDocHidden()
     {
-        if (_currentPhase != TutorialPhase.RoleDocCloseGuide) return;
-        EnterPhase(TutorialPhase.MemoBookGuide); // 닫히면 -> 메모북 열기로 넘어감
+        if (_currentPhase != TutorialPhase.Action_CloseRoleDoc) return;
+        EnterPhase(TutorialPhase.Dialog_Hero3);
     }
 
-    private void HandleMemoBookShown()
-    {
-        if (_currentPhase != TutorialPhase.MemoBookGuide) return;
-        EnterPhase(TutorialPhase.MemoWriteGuide);
-    }
-
-    private void HandleMemoWriteToggled()
-    {
-        if (_currentPhase != TutorialPhase.MemoWriteGuide) return;
-        if (_notepadToggleManager != null)
-            _notepadToggleManager.OnAnyToggleChanged -= HandleMemoWriteToggled;
-        EnterPhase(TutorialPhase.MemoBookCloseGuide);
-    }
-    private void HandleMemoBookClose()
-    {
-        if (_currentPhase != TutorialPhase.MemoBookCloseGuide) return;
-        EnterPhase(TutorialPhase.EventRecordGuide);
-    }
-
+    // [사건 기록지 열림] -> 기록지 닫기 안내로
     private void HandleEventRecordClicked()
     {
-        if (_currentPhase != TutorialPhase.EventRecordGuide) return;
-        EnterPhase(TutorialPhase.EventRecordCloseGuide);
+        if (_currentPhase != TutorialPhase.Action_OpenHistory) return;
+        EnterPhase(TutorialPhase.Action_CloseHistory);
     }
+
+    // [사건 기록지 닫힘] -> Dialog_Hero4 대화로
     private void HandleEventRecordClosed()
     {
-        if (_currentPhase != TutorialPhase.EventRecordCloseGuide) return;
-        EnterPhase(TutorialPhase.FinalDecisionBookGuide);
+        if (_currentPhase != TutorialPhase.Action_CloseHistory) return;
+        EnterPhase(TutorialPhase.Dialog_Hero4);
     }
+
+    // [메모장 열림] -> 메모장 작성 안내로
+    private void HandleMemoBookShown()
+    {
+        if (_currentPhase != TutorialPhase.Action_OpenMemo) return;
+        EnterPhase(TutorialPhase.Action_WriteMemo);
+    }
+
+    // [메모 작성 (토글) 완료] -> 메모장 닫기 안내로
+    private void HandleMemoWriteToggled()
+    {
+        if (_currentPhase != TutorialPhase.Action_WriteMemo) return;
+        EnterPhase(TutorialPhase.Action_CloseMemo);
+    }
+
+    // [메모장 닫힘] -> 인물 카드 보기 버튼 안내로
+    private void HandleMemoBookClose()
+    {
+        if (_currentPhase != TutorialPhase.Action_CloseMemo) return;
+        EnterPhase(TutorialPhase.Action_ClickSwapButton);
+    }
+
+    // ── 새로 추가된 이벤트 핸들러 (다른 스크립트에서 호출해주어야 함) ──
+
+    public void NotifySwapButtonClicked()
+    {
+        if (_currentPhase != TutorialPhase.Action_ClickSwapButton) return;
+        EnterPhase(TutorialPhase.Action_OpenCharacterCard);
+    }
+
+    public void NotifyCharacterCardOpened()
+    {
+        if (_currentPhase != TutorialPhase.Action_OpenCharacterCard) return;
+        EnterPhase(TutorialPhase.Dialog_Hero5);
+    }
+
+    public void NotifyHintPostItOpened()
+    {
+        if (_currentPhase != TutorialPhase.Action_ClickHintPostIt) return;
+        EnterPhase(TutorialPhase.Action_CloseHintPostIt);
+    }
+
+    public void NotifyHintPostItClosed()
+    {
+        if (_currentPhase != TutorialPhase.Action_CloseHintPostIt) return;
+        EnterPhase(TutorialPhase.Action_CloseCharacterCard);
+    }
+
+    public void NotifyCharacterCardClosed()
+    {
+        if (_currentPhase != TutorialPhase.Action_CloseCharacterCard) return;
+        EnterPhase(TutorialPhase.Dialog_Hero6);
+    }
+
+    // ── 입력 허가 및 철벽 방어 API ────────────────────────────────────────────
 
     /// <summary>
-    /// TutorialUIManager의 Advance 버튼을 눌렀을 때 호출됩니다.
-    /// 현재 Phase에 따라 다음 Phase로 전환합니다.
+    /// 핵심 방어 로직: 현재 튜토리얼 단계에서 '해당 행동'이 허락되었는지 검사합니다.
+    /// 튜토리얼 중이 아닐 때(IsActive == false)만 자유 행동을 허용합니다.
     /// </summary>
-    private void HandleGuideAdvanced()
-    {
-        switch (_currentPhase)
-        {
-            // 텍스트 클릭 시 가이드만 숨김
-            // 실제 단계 진입은 책 클릭 → 취소 버튼(NotifyFinalDecisionCancelled)으로 처리
-            case TutorialPhase.FinalDecisionBookGuide:
-                _uiManager?.HideGuide();
-                break;
-            case TutorialPhase.DateUIGuide:
-                EnterPhase(TutorialPhase.FullyUnlocked);
-                break;
-            default:
-                _uiManager?.HideGuide();
-                break;
-        }
-    }
-
-    // ── 입력 허가 공개 API ────────────────────────────────────────────────────
-    /// <summary>
-    /// HoldToEnterFinalDecision의 확인 패널에서 취소(좀더 생각해보기) 버튼 클릭 시 호출됩니다.
-    /// FinalDecisionBookGuide 단계에서만 유효하며 DateUIGuide로 진입합니다.
-    /// </summary>
-    public void NotifyFinalDecisionCancelled()
-    {
-        if (_currentPhase != TutorialPhase.FinalDecisionBookGuide) return;
-        EnterPhase(TutorialPhase.DateUIGuide);
-    }
-    /// <summary>
-    /// 튜토리얼 중 최종 추리 진입이 차단된 후
-    /// 다시 책 클릭이 가능하도록 SetClickAdvance를 복원합니다.
-    /// HoldToEnterFinalDecision의 확인 버튼 차단 시 호출합니다.
-    /// </summary>
-    public void RestoreClickAdvanceAfterBlock()
-    {
-        if (_currentPhase != TutorialPhase.FinalDecisionBookGuide) return;
-
-        // 화살표와 바운스 복원
-        if (!_TutoArrow.gameObject.activeSelf)
-        {
-            _TutoArrow.gameObject.SetActive(true);
-            _TutoArrow.localPosition = new Vector3(500f, 70f, 0f);
-            _TutoArrow.localRotation = Quaternion.Euler(0f, 0f, 0f);
-            _uiManager?.SetSecondaryBounce(_TutoArrow);
-        }
-
-        // 가이드 텍스트 클릭 가능 복원
-        _uiManager?.SetClickAdvance(true);
-        ShowPhaseGuide(TutorialPhase.FinalDecisionBookGuide);
-    }
-    /// <summary>
-    /// HoldToEnterFinalDecision의 책 오브젝트 클릭 시 호출됩니다.
-    /// FinalDecisionBookGuide 단계에서 화살표를 숨깁니다.
-    /// ConfirmPanel이 열리는 동안 화살표가 표시되지 않도록 합니다.
-    /// </summary>
-    public void NotifyFinalDecisionBookClicked()
-    {
-        if (_currentPhase != TutorialPhase.FinalDecisionBookGuide) return;
-        _TutoArrow.gameObject.SetActive(false);
-        _uiManager?.ClearSecondaryBounce();
-
-        // 책 클릭 후 ConfirmPanel이 열리는 동안
-        // 화면 클릭으로 가이드 텍스트가 사라지지 않도록 차단
-        _uiManager?.SetClickAdvance(false);
-    }
-    /// <summary>지정한 입력 종류가 현재 허용되는지 반환합니다.</summary>
     public bool IsInputAllowed(TutorialInputPermission permission)
     {
+        // 튜토리얼이 끝났거나 비활성 상태면 프리패스!
         if (!IsActive) return true;
+
+        // 현재 단계(_allowedInputs)에 요청한 권한이 없으면 가차 없이 차단(false)
         return (_allowedInputs & permission) != 0;
     }
 
     /// <summary>
-    /// 해당 캐릭터를 드래그할 수 있는지 반환합니다.
-    /// CharacterMove 퍼미션이 있어야 하며, RestrictedMove 단계에서는 지정된 캐릭터만 허용됩니다.
+    /// [캐릭터 조작 방어] 해당 캐릭터를 드래그할 수 있는지 반환합니다.
     /// </summary>
     public bool IsCharacterDragAllowed(int characterId)
     {
         if (!IsActive) return true;
+
+        // 1차 방어: 지금이 캐릭터를 움직일 수 있는 타이밍인가? 아니면 차단.
         if (!IsInputAllowed(TutorialInputPermission.CharacterMove)) return false;
 
-        if (_currentPhase == TutorialPhase.RestrictedMove)
+        // 2차 방어: 캐릭터 이동 타이밍이 맞다면, '살인자' 캐릭터가 맞는가?
+        // (Action_MoveCharacter 단계에서는 지정된 캐릭터만 만질 수 있음)
+        if (_currentPhase == TutorialPhase.Action_MoveCharacter)
             return characterId == _restrictedCharacterId;
 
         return true;
     }
 
     /// <summary>
-    /// 해당 캐릭터를 해당 구역에 드롭할 수 있는지 반환합니다.
-    /// RestrictedMove 단계에서는 지정된 목표 구역만 허용됩니다.
+    /// [캐릭터 드롭 방어] 해당 캐릭터를 목표 구역에 놓을 수 있는지 반환합니다.
     /// </summary>
     public bool IsZoneDropAllowed(int characterId, int zoneId)
     {
         if (!IsActive) return true;
+
+        // 1차 방어: 이동 타이밍이 아니면 차단.
         if (!IsInputAllowed(TutorialInputPermission.CharacterMove)) return false;
 
-        if (_currentPhase == TutorialPhase.RestrictedMove)
+        // 2차 방어: 지정된 캐릭터를, 지정된 타겟 구역(하단 구역)에 놓았는가?
+        if (_currentPhase == TutorialPhase.Action_MoveCharacter)
             return characterId == _restrictedCharacterId && zoneId == _restrictedTargetZoneId;
 
         return true;
@@ -657,17 +667,23 @@ public class TutorialManager : SingletonMonobehaviour<TutorialManager>
     private void ShowPhaseGuide(TutorialPhase phase)
     {
         if (_guideData == null || _uiManager == null) return;
-        string text = _guideData.GetPhaseText(phase);
-        if (!string.IsNullOrEmpty(text))
-            _uiManager.ShowGuide(text);
+
+        if (_guideData.TryGetPhaseGuide(phase, out string text, out Sprite sprite))
+        {
+            if (!string.IsNullOrEmpty(text))
+                _uiManager.ShowGuide(text, sprite);
+        }
     }
 
     private void ShowEventGuide(TutorialEventType eventType)
     {
         if (_guideData == null || _uiManager == null) return;
-        string text = _guideData.GetEventText(eventType);
-        if (!string.IsNullOrEmpty(text))
-            _uiManager.ShowGuide(text);
+
+        if (_guideData.TryGetEventGuide(eventType, out string text, out Sprite sprite))
+        {
+            if (!string.IsNullOrEmpty(text))
+                _uiManager.ShowGuide(text, sprite);
+        }
     }
 
     /// <summary>DrawerPanel 루트의 CanvasGroup 인터랙션을 활성/비활성합니다.</summary>

@@ -21,6 +21,7 @@ public class TutorialUIManager : MonoBehaviour
     [Header("가이드 텍스트 패널")]
     [SerializeField] private GameObject _guideTextRoot;
     [SerializeField] private TMP_Text   _guideText;
+    [SerializeField] private Image _speakerImage;
 
     [Tooltip("ShowGuide 직후 이 시간(초) 동안 클릭 입력을 무시합니다.")]
     [SerializeField] private float _advanceInputDelay = 0.3f;
@@ -115,9 +116,24 @@ public class TutorialUIManager : MonoBehaviour
 
     // ── 가이드 텍스트 API ────────────────────────────────────────────────────
 
-    public void ShowGuide(string text)
+    public void ShowGuide(string text, Sprite sprite = null)
     {
         if (_guideText != null) _guideText.text = text;
+
+        // 스프라이트가 있으면 이미지를 켜고 교체, 없으면 이미지를 끔
+        if (_speakerImage != null)
+        {
+            if (sprite != null)
+            {
+                _speakerImage.sprite = sprite;
+                _speakerImage.gameObject.SetActive(true);
+            }
+            else
+            {
+                _speakerImage.gameObject.SetActive(false);
+            }
+        }
+
         _inputBlockTimer = _advanceInputDelay;
         SetGuideVisible(true);
     }

@@ -14,6 +14,8 @@ public class TutorialGuideData : ScriptableObject
     public struct PhaseGuideEntry
     {
         public TutorialPhase Phase;
+        [Tooltip("대화 시 출력될 캐릭터 이미지 (없으면 비워두세요)")]
+        public Sprite SpeakerSprite; // 캐릭터 이미지를 위한 변수 추가
         [TextArea(2, 6)] public string GuideText;
     }
 
@@ -21,6 +23,8 @@ public class TutorialGuideData : ScriptableObject
     public struct EventGuideEntry
     {
         public TutorialEventType EventType;
+        [Tooltip("이벤트 안내 시 출력될 캐릭터 이미지 (없으면 비워두세요)")]
+        public Sprite SpeakerSprite; // 이벤트에도 동일하게 추가
         [TextArea(2, 6)] public string GuideText;
     }
 
@@ -30,19 +34,47 @@ public class TutorialGuideData : ScriptableObject
     [Header("이벤트형 안내 텍스트 (최초 발생 시 1회 표시)")]
     public EventGuideEntry[] EventGuides;
 
-    public string GetPhaseText(TutorialPhase phase)
+    /// <summary>
+    /// Phase에 해당하는 텍스트와 스프라이트를 반환합니다.
+    /// </summary>
+    public bool TryGetPhaseGuide(TutorialPhase phase, out string text, out Sprite sprite)
     {
-        if (PhaseGuides == null) return string.Empty;
+        text = string.Empty;
+        sprite = null;
+
+        if (PhaseGuides == null) return false;
+
         foreach (var entry in PhaseGuides)
-            if (entry.Phase == phase) return entry.GuideText;
-        return string.Empty;
+        {
+            if (entry.Phase == phase)
+            {
+                text = entry.GuideText;
+                sprite = entry.SpeakerSprite;
+                return true;
+            }
+        }
+        return false;
     }
 
-    public string GetEventText(TutorialEventType eventType)
+    /// <summary>
+    /// EventType에 해당하는 텍스트와 스프라이트를 반환합니다.
+    /// </summary>
+    public bool TryGetEventGuide(TutorialEventType eventType, out string text, out Sprite sprite)
     {
-        if (EventGuides == null) return string.Empty;
+        text = string.Empty;
+        sprite = null;
+
+        if (EventGuides == null) return false;
+
         foreach (var entry in EventGuides)
-            if (entry.EventType == eventType) return entry.GuideText;
-        return string.Empty;
+        {
+            if (entry.EventType == eventType)
+            {
+                text = entry.GuideText;
+                sprite = entry.SpeakerSprite;
+                return true;
+            }
+        }
+        return false;
     }
 }
