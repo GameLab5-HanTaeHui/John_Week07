@@ -1,6 +1,7 @@
+using DG.Tweening;
 using System;
 using System.Collections.Generic;
-using DG.Tweening;
+using System.Drawing;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -316,10 +317,21 @@ public class HistoryPagePanel : MonoBehaviour
 
     private void SetHeaderLabel(TurnRecord record)
     {
+        if (record == null) return;
         if (_headerLabel == null) return;
-        _headerLabel.text = record != null
-            ? $"L{record.LoopIndex + 1}  T{record.TurnIndex + 1}"
-            : "---";
+
+        
+
+        string timeText = (record.TurnIndex % 3) switch
+        {
+            0 => "아침",
+            1 => "점심",
+            2 => "저녁",
+            _ => "알수없음"
+        };
+        _headerLabel.text = record != null 
+            ? $"<size=15>{LoopIndex + 1}일차</size>\n<size=20>{timeText}</size>" 
+            : "<size=15>미기록</size>";
     }
 
     private void SetLoopConditionIcon(bool active)
