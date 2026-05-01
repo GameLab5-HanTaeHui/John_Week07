@@ -91,6 +91,13 @@ namespace HTH.Campaign
                 return;
             }
 
+            // ★ GFC의 AnchorCharacterId로 동기화 — Inspector 값과 다를 때만 갱신
+            if (gfc.AnchorCharacterId != _anchorCharacterId)
+            {
+                _anchorCharacterId = gfc.AnchorCharacterId;
+                Debug.Log($"[CampaignPlayerInputHandler] 앵커 캐릭터 GFC 동기화 — #{_anchorCharacterId}");
+            }
+
             _playerAction = gfc.GetPlayerActionState();
             _characterViews = new Dictionary<int, CharacterView>(gfc.CharacterViews);
 
@@ -111,7 +118,7 @@ namespace HTH.Campaign
 
             gfc.OnLoopReset += HandleLoopReset;
 
-            Debug.Log($"[CampaignPlayerInputHandler] 초기화 완료 — 캐릭터 {_characterViews.Count}개");
+            Debug.Log($"[CampaignPlayerInputHandler] 초기화 완료 — 캐릭터 {_characterViews.Count}개, 앵커 #{_anchorCharacterId}");
         }
 
         private void OnDestroy()

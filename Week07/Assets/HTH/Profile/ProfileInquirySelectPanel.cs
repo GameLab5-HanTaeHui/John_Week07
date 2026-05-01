@@ -124,7 +124,7 @@ namespace HTH.Campaign
             _buttons = new CharacterIconButton[7];
             _isBuilt = true;
 
-            for (int i = 0; i < 7; i++)
+            for (int i = 1; i < 7; i++)
             {
                 // 클로저 캡처 버그 방지
                 int capturedId = i + 1;

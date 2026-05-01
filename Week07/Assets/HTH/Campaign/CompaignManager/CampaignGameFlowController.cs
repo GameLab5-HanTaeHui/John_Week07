@@ -35,10 +35,27 @@ namespace HTH.Campaign
     {
         [SerializeField] private RoleActivationOrderConfig _orderConfig;
         [SerializeField] private CharacterRegistry _characterRegistry;
+
+        [Tooltip("캠페인 모드에서는 선택 사항입니다.\n" +
+                 "연결하지 않으면 역할 배정 없이 캐릭터만 스폰합니다.")]
         [SerializeField] private StageRoleConfig _stageRoleConfig;
+
+        [Tooltip("캠페인 모드에서는 선택 사항입니다.\n" +
+                 "연결하지 않으면 시드 없이 기본 Zone 배치를 사용합니다.")]
         [SerializeField] private StageSetupConfig _setupConfig;
+
         [SerializeField] private CampaignCharacterSpawner _characterSpawner;
         [SerializeField] private string _lobbySceneName = "LobbyScene";
+
+        [Header("앵커 캐릭터")]
+        [Tooltip("대화 구역 판별 기준이 되는 앵커 캐릭터 ID입니다.\n" +
+                 "DialogueTriggerManager와 CampaignPlayerInputHandler의\n" +
+                 "Anchor Character Id와 동일하게 설정하세요.\n" +
+                 "기본값 1 = 엔비")]
+        [SerializeField] private int _anchorCharacterId = 1;
+
+        /// <summary>대화 구역 판별 기준 앵커 캐릭터 ID입니다.</summary>
+        public int AnchorCharacterId => _anchorCharacterId;
 
         [SerializeField] private string _stageId;
         public string StageId => !string.IsNullOrEmpty(NewGameConfig.StageId)
@@ -243,8 +260,13 @@ namespace HTH.Campaign
         {
             if (_orderConfig == null) Debug.LogError("[CampaignGameFlowController] OrderConfig 미연결.");
             if (_characterRegistry == null) Debug.LogError("[CampaignGameFlowController] CharacterRegistry 미연결.");
-            if (_stageRoleConfig == null) Debug.LogError("[CampaignGameFlowController] StageRoleConfig 미연결.");
             if (_characterSpawner == null) Debug.LogWarning("[CampaignGameFlowController] CharacterSpawner 미연결.");
+
+            // 캠페인 모드에서는 선택 사항 — 없으면 경고만 출력
+            if (_stageRoleConfig == null)
+                Debug.LogWarning("[CampaignGameFlowController] StageRoleConfig 미연결 — 역할 배정 없이 진행합니다.");
+            if (_setupConfig == null)
+                Debug.LogWarning("[CampaignGameFlowController] StageSetupConfig 미연결 — 기본 Zone 배치를 사용합니다.");
         }
     }
 }

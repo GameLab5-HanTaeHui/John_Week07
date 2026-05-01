@@ -77,6 +77,8 @@ public class TutorialManager : SingletonMonobehaviour<TutorialManager>
     [SerializeField] private RectTransform _forceLoopConditionRect;
     [Header("화살표")]
     [SerializeField] private Transform _TutoArrow;
+    [Header("대화 상자")]
+    [SerializeField] private GameObject _DialogueBox;
 
     // ── 정적 상태 (기존 코드에서 TutorialManager.IsActive 로 체크) ──────────
     /// <summary>TutorialManager 인스턴스가 존재하고 활성화된 경우 true.</summary>
@@ -85,6 +87,7 @@ public class TutorialManager : SingletonMonobehaviour<TutorialManager>
     // ── 내부 상태 ─────────────────────────────────────────────────────────────
 
     private TutorialPhase         _currentPhase    = TutorialPhase.Inactive;
+
     private TutorialInputPermission _allowedInputs = TutorialInputPermission.None;
 
     // 이벤트형 안내 — 최초 1회만 표시
@@ -227,13 +230,14 @@ public class TutorialManager : SingletonMonobehaviour<TutorialManager>
         if (_uiManager != null)
             _uiManager.OnGuideAdvanced -= HandleGuideAdvanced;
     }
-
     // ── 순서형 단계 전환 ──────────────────────────────────────────────────────
-
     private void EnterPhase(TutorialPhase phase)
     {
         _currentPhase = phase;
         _uiManager?.ClearAll();
+
+        // 기본적으로 새로운 단계 진입 시 화살표는 끄고 시작 (필요한 Action 단계에서만 켬)
+        if (_TutoArrow != null) _TutoArrow.gameObject.SetActive(false);
 
         switch (phase)
         {
@@ -244,6 +248,7 @@ public class TutorialManager : SingletonMonobehaviour<TutorialManager>
                 SetInputPermission(TutorialInputPermission.None);
                 _uiManager?.SetClickAdvance(false);
                 _uiManager?.HideGuide();
+                if (_DialogueBox != null) _DialogueBox.SetActive(false);
                 break;
             // ── [클릭으로 대화만 넘기는 단계들 묶음] ──
             case TutorialPhase.Dialog_Intro1:               // 이곳에서 대량 사건이...
@@ -261,17 +266,21 @@ public class TutorialManager : SingletonMonobehaviour<TutorialManager>
             case TutorialPhase.Dialog_Hero5:                // 이건 상세 정보구나 힌트도...
             case TutorialPhase.Dialog_Hero6:                // 좋아 사건 추리가 끝나면...
                 // 오직 대화 텍스트 넘기기(화면 클릭) 권한만 부여
+                if (_DialogueBox != null && !_DialogueBox.activeSelf)
+                    _DialogueBox.SetActive(true);
+
                 SetInputPermission(TutorialInputPermission.DialogueAdvance);
                 _uiManager?.SetClickAdvance(true);
 
                 if (!_TutoArrow.gameObject.activeSelf)
                     _TutoArrow.gameObject.SetActive(false);
 
-                    ShowPhaseGuide(phase);
+                ShowPhaseGuide(phase);
                 break;
 
             // ── [플레이어의 실제 조작이 필요한 단계들] ──
             case TutorialPhase.Action_MoveCharacter:        // 캐릭터 이동
+                if (_DialogueBox != null) _DialogueBox.SetActive(false);
                 SetInputPermission(TutorialInputPermission.CharacterMove);
                 _uiManager?.SetClickAdvance(false); // 클릭 대화 넘기기 차단!
                 if (_heroCharacterTransform != null) _uiManager?.SetBounceOnly(_heroCharacterTransform, loop: true);
@@ -280,14 +289,16 @@ public class TutorialManager : SingletonMonobehaviour<TutorialManager>
                 break;
 
             case TutorialPhase.Action_TurnEnd:              // 턴 종료 (깃털펜)
+                if (_DialogueBox != null) _DialogueBox.SetActive(false);
                 SetInputPermission(TutorialInputPermission.AdvanceTurn);
                 _uiManager?.SetClickAdvance(false);
                 if (_quillPenTransform != null) _uiManager?.SetWorldHighlight(_quillPenTransform);
 
-                if (!_TutoArrow.gameObject.activeSelf)
+                // 화살표 활성화 및 위치 조정
+                if (_TutoArrow != null)
                 {
                     _TutoArrow.gameObject.SetActive(true);
-                    _TutoArrow.localPosition = new Vector3(415f, 200f, 0f);
+                    _TutoArrow.localPosition = new Vector3(380f, 220f, 0f);
                     _TutoArrow.localRotation = Quaternion.Euler(0f, 0f, 0f);
                     _uiManager?.SetSecondaryBounce(_TutoArrow);
                 }
@@ -296,71 +307,32 @@ public class TutorialManager : SingletonMonobehaviour<TutorialManager>
                 break;
 
             case TutorialPhase.Action_OpenRoleDoc:          // 역할 패널 열기
-            case TutorialPhase.Action_CloseRoleDoc:         // 역할 패널 닫기
+                if (_DialogueBox != null) _DialogueBox.SetActive(false);
                 SetInputPermission(TutorialInputPermission.RoleDocToggle);
                 _uiManager?.SetClickAdvance(false);
                 SetDrawerInteractable(_roleDocGroup, true);
 
-                if (!_TutoArrow.gameObject.activeSelf)
+                if (_TutoArrow != null)
                 {
                     _TutoArrow.gameObject.SetActive(true);
-                    _TutoArrow.localPosition = new Vector3(680f, 270f, 0f);
+                    _TutoArrow.localPosition = new Vector3(-650f, 300f, 0f);
                     _TutoArrow.localRotation = Quaternion.Euler(0f, 0f, -180f);
                     _uiManager?.SetSecondaryBounce(_TutoArrow);
                 }
 
                 ShowPhaseGuide(phase);
                 break;
-
-            case TutorialPhase.Action_OpenHistory:          // 사건 기록지 열기
-            case TutorialPhase.Action_CloseHistory:         // 사건 기록지 닫기
-                SetInputPermission(TutorialInputPermission.HistoryToggle);
+            case TutorialPhase.Action_CloseRoleDoc:         // 역할 패널 닫기
+                if (_DialogueBox != null) _DialogueBox.SetActive(false);
+                SetInputPermission(TutorialInputPermission.RoleDocToggle);
                 _uiManager?.SetClickAdvance(false);
+                SetDrawerInteractable(_roleDocGroup, true);
 
-                if (!_TutoArrow.gameObject.activeSelf)
+                if (_TutoArrow != null)
                 {
                     _TutoArrow.gameObject.SetActive(true);
-                    _TutoArrow.localPosition = new Vector3(-510f, -340f, 0f);
+                    _TutoArrow.localPosition = new Vector3(-200f, 300f, 0f);
                     _TutoArrow.localRotation = Quaternion.Euler(0f, 0f, -180f);
-                    _uiManager?.SetSecondaryBounce(_TutoArrow);
-                }
-
-                ShowPhaseGuide(phase);
-                break;
-
-            case TutorialPhase.Action_OpenMemo:             // 메모 수첩 열기
-            case TutorialPhase.Action_CloseMemo:            // 메모 수첩 닫기
-                SetInputPermission(TutorialInputPermission.MemoToggle);
-                SetDrawerInteractable(_memoBookGroup, true);
-                _uiManager?.SetClickAdvance(false);
-
-                if (!_TutoArrow.gameObject.activeSelf)
-                {
-                    _TutoArrow.gameObject.SetActive(true);
-                    _TutoArrow.localPosition = new Vector3(690f, -290f, 0f);
-                    _TutoArrow.localRotation = Quaternion.Euler(0f, 0f, -90f);
-                    _uiManager?.SetSecondaryBounce(_TutoArrow);
-                }
-
-                ShowPhaseGuide(phase);
-                break;
-
-            case TutorialPhase.Action_WriteMemo:            // 메모 격자칸 작성
-                // 메모 작성이 가능하도록 메모 토글+작성 권한 동시 부여
-                SetInputPermission(TutorialInputPermission.MemoToggle | TutorialInputPermission.MemoWrite);
-                _uiManager?.SetClickAdvance(false);
-                ShowPhaseGuide(phase);
-                break;
-
-            case TutorialPhase.Action_ClickSwapButton:      // 인물 카드 보기 버튼 클릭
-                SetInputPermission(TutorialInputPermission.HistorySwapButton);
-                _uiManager?.SetClickAdvance(false);
-
-                if (!_TutoArrow.gameObject.activeSelf)
-                {
-                    _TutoArrow.gameObject.SetActive(true);
-                    _TutoArrow.localPosition = new Vector3(270f, -350f, 0f);
-                    _TutoArrow.localRotation = Quaternion.Euler(0f, 0f, -90f);
                     _uiManager?.SetSecondaryBounce(_TutoArrow);
                 }
 
@@ -368,14 +340,29 @@ public class TutorialManager : SingletonMonobehaviour<TutorialManager>
                 break;
 
             case TutorialPhase.Action_OpenCharacterCard:    // 인물 카드 열기
-            case TutorialPhase.Action_CloseCharacterCard:   // 인물 카드 닫기
+                if (_DialogueBox != null) _DialogueBox.SetActive(false);
                 SetInputPermission(TutorialInputPermission.CharacterCardToggle);
                 _uiManager?.SetClickAdvance(false);
 
                 if (!_TutoArrow.gameObject.activeSelf)
                 {
                     _TutoArrow.gameObject.SetActive(true);
-                    _TutoArrow.localPosition = new Vector3(-60f, -390f, 0f);
+                    _TutoArrow.localPosition = new Vector3(-350f, -200f, 0f);
+                    _TutoArrow.localRotation = Quaternion.Euler(0f, 0f, -90f);
+                    _uiManager?.SetSecondaryBounce(_TutoArrow);
+                }
+
+                ShowPhaseGuide(phase);
+                break;
+            case TutorialPhase.Action_CloseCharacterCard:   // 인물 카드 닫기
+                if (_DialogueBox != null) _DialogueBox.SetActive(false);
+                SetInputPermission(TutorialInputPermission.CharacterCardToggle);
+                _uiManager?.SetClickAdvance(false);
+
+                if (!_TutoArrow.gameObject.activeSelf)
+                {
+                    _TutoArrow.gameObject.SetActive(true);
+                    _TutoArrow.localPosition = new Vector3(-120f, 430f, 0f);
                     _TutoArrow.localRotation = Quaternion.Euler(0f, 0f, -180f);
                     _uiManager?.SetSecondaryBounce(_TutoArrow);
                 }
@@ -384,22 +371,29 @@ public class TutorialManager : SingletonMonobehaviour<TutorialManager>
                 break;
 
             case TutorialPhase.Action_ClickHintPostIt:      // 힌트 포스트잇 열기
-            case TutorialPhase.Action_CloseHintPostIt:      // 힌트 포스트잇 닫기
+                if (_DialogueBox != null) _DialogueBox.SetActive(false);
                 SetInputPermission(TutorialInputPermission.HintPostItToggle);
                 _uiManager?.SetClickAdvance(false);
 
                 if (!_TutoArrow.gameObject.activeSelf)
                 {
                     _TutoArrow.gameObject.SetActive(true);
-                    _TutoArrow.localPosition = new Vector3(-80f, -245f, 0f);
+                    _TutoArrow.localPosition = new Vector3(100f, -240f, 0f);
                     _TutoArrow.localRotation = Quaternion.Euler(0f, 0f, -180f);
                     _uiManager?.SetSecondaryBounce(_TutoArrow);
                 }
 
                 ShowPhaseGuide(phase);
                 break;
+            case TutorialPhase.Action_CloseHintPostIt:      // 힌트 포스트잇 닫기
+                if (_DialogueBox != null) _DialogueBox.SetActive(false);
+                SetInputPermission(TutorialInputPermission.HintPostItToggle);
+                _uiManager?.SetClickAdvance(false);
+                ShowPhaseGuide(phase);
+                break;
 
             case TutorialPhase.Action_FinalDecision:        // 최종 집필 책 클릭
+                if (_DialogueBox != null) _DialogueBox.SetActive(false);
                 SetInputPermission(TutorialInputPermission.FinalDecision);
                 _uiManager?.SetClickAdvance(false);
                 if (_finalDecisionBookTransform != null) _uiManager?.SetWorldHighlight(_finalDecisionBookTransform);
@@ -416,6 +410,207 @@ public class TutorialManager : SingletonMonobehaviour<TutorialManager>
                 break;
         }
     }
+
+    // ── 예비 순서형 단계 전환 ──────────────────────────────────────────────────────
+
+    //private void EnterPhase(TutorialPhase phase)
+    //{
+    //    _currentPhase = phase;
+    //    _uiManager?.ClearAll();
+
+    //    // 기본적으로 새로운 단계 진입 시 화살표는 끄고 시작 (필요한 Action 단계에서만 켬)
+    //    if (_TutoArrow != null) _TutoArrow.gameObject.SetActive(false);
+
+    //    switch (phase)
+    //    {
+    //        // 검은 화면 대기 단계
+    //        case TutorialPhase.WaitIntro:
+    //            // IsActive는 true가 되지만, 권한이 None이므로 
+    //            // 최종 추리 책, 턴 넘기기, 캐릭터 이동 등 모든 입력이 완벽히 차단됩니다!
+    //            SetInputPermission(TutorialInputPermission.None);
+    //            _uiManager?.SetClickAdvance(false);
+    //            _uiManager?.HideGuide();
+    //            if (_DialogueBox != null) _DialogueBox.SetActive(false);
+    //            break;
+    //        // ── [클릭으로 대화만 넘기는 단계들 묶음] ──
+    //        case TutorialPhase.Dialog_Intro1:               // 이곳에서 대량 사건이...
+    //        case TutorialPhase.Dialog_Intro2:               // 저쪽 구역에 사람이 있네?...
+    //        case TutorialPhase.Dialog_PostMove:             // 좋아 대화 해봐야지...
+    //        case TutorialPhase.Dialog_Npc1:                 // 너는 누구야?
+    //        case TutorialPhase.Dialog_Hero1:                // 나는 (주인공)이고...
+    //        case TutorialPhase.Dialog_Npc2:                 // 사건을 추리하는 사람이야?
+    //        case TutorialPhase.Dialog_Npc3:                 // 우릴 도와줘!
+    //        case TutorialPhase.Dialog_Npc4:                 // 여태껏 정보들이 있는데...
+    //        case TutorialPhase.Dialog_SystemGuidePanels:    // 왼쪽 사건 기록지, 아래...
+    //        case TutorialPhase.Dialog_Hero2:                // 살인자..? 기록해봐야겠어.
+    //        case TutorialPhase.Dialog_Hero3:                // 사건 기록지..?
+    //        case TutorialPhase.Dialog_Hero4:                // 이건 역할을 기록하는 수첩이구나.
+    //        case TutorialPhase.Dialog_Hero5:                // 이건 상세 정보구나 힌트도...
+    //        case TutorialPhase.Dialog_Hero6:                // 좋아 사건 추리가 끝나면...
+    //            // 오직 대화 텍스트 넘기기(화면 클릭) 권한만 부여
+    //            if (_DialogueBox != null && !_DialogueBox.activeSelf)
+    //                _DialogueBox.SetActive(true);
+
+    //            SetInputPermission(TutorialInputPermission.DialogueAdvance);
+    //            _uiManager?.SetClickAdvance(true);
+
+    //            if (!_TutoArrow.gameObject.activeSelf)
+    //                _TutoArrow.gameObject.SetActive(false);
+
+    //                ShowPhaseGuide(phase);
+    //            break;
+
+    //        // ── [플레이어의 실제 조작이 필요한 단계들] ──
+    //        case TutorialPhase.Action_MoveCharacter:        // 캐릭터 이동
+    //            if (_DialogueBox != null) _DialogueBox.SetActive(false);
+    //            SetInputPermission(TutorialInputPermission.CharacterMove);
+    //            _uiManager?.SetClickAdvance(false); // 클릭 대화 넘기기 차단!
+    //            if (_heroCharacterTransform != null) _uiManager?.SetBounceOnly(_heroCharacterTransform, loop: true);
+    //            if (_restrictedZoneTransform != null) _uiManager?.SetSecondaryBounce(_restrictedZoneTransform);
+    //            ShowPhaseGuide(phase);
+    //            break;
+
+    //        case TutorialPhase.Action_TurnEnd:              // 턴 종료 (깃털펜)
+    //            if (_DialogueBox != null) _DialogueBox.SetActive(false);
+    //            SetInputPermission(TutorialInputPermission.AdvanceTurn);
+    //            _uiManager?.SetClickAdvance(false);
+    //            if (_quillPenTransform != null) _uiManager?.SetWorldHighlight(_quillPenTransform);
+
+    //            // 화살표 활성화 및 위치 조정
+    //            if (_TutoArrow != null)
+    //            {
+    //                _TutoArrow.gameObject.SetActive(true);
+    //                _TutoArrow.localPosition = new Vector3(415f, 200f, 0f);
+    //                _TutoArrow.localRotation = Quaternion.Euler(0f, 0f, 0f);
+    //                _uiManager?.SetSecondaryBounce(_TutoArrow);
+    //            }
+
+    //            ShowPhaseGuide(phase);
+    //            break;
+
+    //        case TutorialPhase.Action_OpenRoleDoc:          // 역할 패널 열기
+    //        case TutorialPhase.Action_CloseRoleDoc:         // 역할 패널 닫기
+    //            if (_DialogueBox != null) _DialogueBox.SetActive(false);
+    //            SetInputPermission(TutorialInputPermission.RoleDocToggle);
+    //            _uiManager?.SetClickAdvance(false);
+    //            SetDrawerInteractable(_roleDocGroup, true);
+
+    //            if (_TutoArrow != null)
+    //            {
+    //                _TutoArrow.gameObject.SetActive(true);
+    //                _TutoArrow.localPosition = new Vector3(-680f, 270f, 0f);
+    //                _TutoArrow.localRotation = Quaternion.Euler(0f, 0f, -180f);
+    //                _uiManager?.SetSecondaryBounce(_TutoArrow);
+    //            }
+
+    //            ShowPhaseGuide(phase);
+    //            break;
+
+    //        case TutorialPhase.Action_OpenHistory:          // 사건 기록지 열기
+    //        case TutorialPhase.Action_CloseHistory:         // 사건 기록지 닫기
+    //            if (_DialogueBox != null) _DialogueBox.SetActive(false);
+    //            SetInputPermission(TutorialInputPermission.HistoryToggle);
+    //            _uiManager?.SetClickAdvance(false);
+
+    //            if (_TutoArrow != null)
+    //            {
+    //                _TutoArrow.gameObject.SetActive(true);
+    //                _TutoArrow.localPosition = new Vector3(550f, 130f, 0f);
+    //                _TutoArrow.localRotation = Quaternion.Euler(0f, 0f, -15f);
+    //                _uiManager?.SetSecondaryBounce(_TutoArrow);
+    //            }
+
+    //            ShowPhaseGuide(phase);
+    //            break;
+
+    //        case TutorialPhase.Action_OpenMemo:             // 메모 수첩 열기
+    //        case TutorialPhase.Action_CloseMemo:            // 메모 수첩 닫기
+    //            SetInputPermission(TutorialInputPermission.MemoToggle);
+    //            SetDrawerInteractable(_memoBookGroup, true);
+    //            _uiManager?.SetClickAdvance(false);
+
+    //            if (!_TutoArrow.gameObject.activeSelf)
+    //            {
+    //                _TutoArrow.gameObject.SetActive(true);
+    //                _TutoArrow.localPosition = new Vector3(690f, -290f, 0f);
+    //                _TutoArrow.localRotation = Quaternion.Euler(0f, 0f, -90f);
+    //                _uiManager?.SetSecondaryBounce(_TutoArrow);
+    //            }
+
+    //            ShowPhaseGuide(phase);
+    //            break;
+
+    //        case TutorialPhase.Action_WriteMemo:            // 메모 격자칸 작성
+    //            // 메모 작성이 가능하도록 메모 토글+작성 권한 동시 부여
+    //            SetInputPermission(TutorialInputPermission.MemoToggle | TutorialInputPermission.MemoWrite);
+    //            _uiManager?.SetClickAdvance(false);
+    //            ShowPhaseGuide(phase);
+    //            break;
+
+    //        case TutorialPhase.Action_ClickSwapButton:      // 인물 카드 보기 버튼 클릭
+    //            SetInputPermission(TutorialInputPermission.HistorySwapButton);
+    //            _uiManager?.SetClickAdvance(false);
+
+    //            if (!_TutoArrow.gameObject.activeSelf)
+    //            {
+    //                _TutoArrow.gameObject.SetActive(true);
+    //                _TutoArrow.localPosition = new Vector3(270f, -350f, 0f);
+    //                _TutoArrow.localRotation = Quaternion.Euler(0f, 0f, -90f);
+    //                _uiManager?.SetSecondaryBounce(_TutoArrow);
+    //            }
+
+    //            ShowPhaseGuide(phase);
+    //            break;
+
+    //        case TutorialPhase.Action_OpenCharacterCard:    // 인물 카드 열기
+    //        case TutorialPhase.Action_CloseCharacterCard:   // 인물 카드 닫기
+    //            SetInputPermission(TutorialInputPermission.CharacterCardToggle);
+    //            _uiManager?.SetClickAdvance(false);
+
+    //            if (!_TutoArrow.gameObject.activeSelf)
+    //            {
+    //                _TutoArrow.gameObject.SetActive(true);
+    //                _TutoArrow.localPosition = new Vector3(-60f, -390f, 0f);
+    //                _TutoArrow.localRotation = Quaternion.Euler(0f, 0f, -180f);
+    //                _uiManager?.SetSecondaryBounce(_TutoArrow);
+    //            }
+
+    //            ShowPhaseGuide(phase);
+    //            break;
+
+    //        case TutorialPhase.Action_ClickHintPostIt:      // 힌트 포스트잇 열기
+    //        case TutorialPhase.Action_CloseHintPostIt:      // 힌트 포스트잇 닫기
+    //            SetInputPermission(TutorialInputPermission.HintPostItToggle);
+    //            _uiManager?.SetClickAdvance(false);
+
+    //            if (!_TutoArrow.gameObject.activeSelf)
+    //            {
+    //                _TutoArrow.gameObject.SetActive(true);
+    //                _TutoArrow.localPosition = new Vector3(-80f, -245f, 0f);
+    //                _TutoArrow.localRotation = Quaternion.Euler(0f, 0f, -180f);
+    //                _uiManager?.SetSecondaryBounce(_TutoArrow);
+    //            }
+
+    //            ShowPhaseGuide(phase);
+    //            break;
+
+    //        case TutorialPhase.Action_FinalDecision:        // 최종 집필 책 클릭
+    //            SetInputPermission(TutorialInputPermission.FinalDecision);
+    //            _uiManager?.SetClickAdvance(false);
+    //            if (_finalDecisionBookTransform != null) _uiManager?.SetWorldHighlight(_finalDecisionBookTransform);
+
+    //            if (!_TutoArrow.gameObject.activeSelf)
+    //            {
+    //                _TutoArrow.gameObject.SetActive(true);
+    //                _TutoArrow.localPosition = new Vector3(550f, 130f, 0f);
+    //                _TutoArrow.localRotation = Quaternion.Euler(0f, 0f, -15f);
+    //                _uiManager?.SetSecondaryBounce(_TutoArrow);
+    //            }
+
+    //            ShowPhaseGuide(phase);
+    //            break;
+    //    }
+    //}
 
     // ── 이벤트형 안내 ─────────────────────────────────────────────────────────
 

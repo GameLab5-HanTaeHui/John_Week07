@@ -118,11 +118,18 @@ namespace HTH.Campaign
             var gfc = CampaignGameFlowController.Instance;
             var turnSM = gfc?.GetTurnSM();
 
+            // ★ GFC의 AnchorCharacterId가 Inspector 기본값(1)과 다르면 GFC 값으로 동기화
+            if (gfc != null && gfc.AnchorCharacterId != _anchorCharacterId)
+            {
+                _anchorCharacterId = gfc.AnchorCharacterId;
+                Debug.Log($"[DTM] 앵커 캐릭터 GFC 동기화 — #{_anchorCharacterId}");
+            }
+
             if (turnSM != null)
             {
                 turnSM.OnTurnEndEntered += OnTurnEndEntered;
                 turnSM.OnTurnEndDialogueFinished += OnTurnEndDialogueFinished;
-                Debug.Log("[DTM] Start — TurnSM 이벤트 구독 완료");
+                Debug.Log($"[DTM] Start — TurnSM 이벤트 구독 완료, 앵커 캐릭터 #{_anchorCharacterId}");
             }
             else
                 Debug.LogWarning("[DTM] Start — CampaignGameFlowController 또는 TurnSM 없음");

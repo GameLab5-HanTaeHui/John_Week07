@@ -112,6 +112,9 @@ public class HistoryPagePanel : MonoBehaviour
 
     private void Awake()
     {
+        if (!gameObject.activeSelf)
+            return;
+
         _rect    = GetComponent<RectTransform>();
         _originY = _rect.anchoredPosition.y;
         if (_selectButton != null)
