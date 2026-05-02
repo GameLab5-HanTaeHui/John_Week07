@@ -88,7 +88,7 @@ public class PauseManager : MonoBehaviour
     /// <summary>게임을 포기합니다. 세이브가 삭제되고 로비로 이동합니다.</summary>
     public void Forfeit()
     {
-        // ★ [HTH추가] 포기 로그 (지표 #14)
+        // ★ [로그데이터] 포기 로그 (지표 #14)
         var gfc = GameFlowController.Instance;
         GameLogger.Instance?.LogEvent("forfeit", new Dictionary<string, object>
         {

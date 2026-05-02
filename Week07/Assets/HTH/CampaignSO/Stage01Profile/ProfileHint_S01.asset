@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2750608b252f9dd409bf0a650bf70a3f, type: 3}
   m_Name: ProfileHint_S01
   m_EditorClassIdentifier: Assembly-CSharp::HTH.Campaign.FragmentHintDataSO
-  _stageId: Stage_1_Phase2
+  _stageId: CampaignMode
   _characterHints:
   - CharacterId: 1
     Hints:

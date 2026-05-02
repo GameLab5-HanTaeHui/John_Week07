@@ -87,7 +87,7 @@ public class TurnStateMachine : StateMachine
         ChangeState(_playerAction);
         OnPlayerActionStarted?.Invoke();
 
-        // ★ [HTH추가] 턴 시작 타임스탬프 (지표 #10: 의사결정 시간 분석용)
+        // ★ [로그데이터] 턴 시작 타임스탬프 (지표 #10: 의사결정 시간 분석용)
         var gfc = GameFlowController.Instance;
         GameLogger.Instance?.LogEvent("turn_start", new Dictionary<string, object>
         {

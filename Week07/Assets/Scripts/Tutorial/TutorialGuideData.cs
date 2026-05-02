@@ -16,7 +16,7 @@ public class TutorialGuideData : ScriptableObject
         public TutorialPhase Phase;
         [Tooltip("대화 시 출력될 캐릭터 이미지 (없으면 비워두세요)")]
         public Sprite SpeakerSprite; // 캐릭터 이미지를 위한 변수 추가
-        [TextArea(2, 6)] public string GuideText;
+        [TextArea(4, 6)] public string GuideText;
     }
 
     [Serializable]

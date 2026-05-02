@@ -33,12 +33,13 @@ using HTH;
 public class HoldToEnterFinalDecision : MonoBehaviour
 {
     [SerializeField] private GameObject _fillObject;
+    [SerializeField] private GameObject _finalPanel;
     [SerializeField] private float _fillDuration = 0.5f;
 
     [Header("확인 패널 메시지")]
     [SerializeField] private string _confirmMessage = "최종 추리를 시작하시겠습니까?";
-    [SerializeField] private string _confirmEnterMessage = "최종 추리를 시작하시겠습니까?";
-    [SerializeField] private string _confirmUndoMessage = "최종 추리를 시작하시겠습니까?";
+    [SerializeField] private string _confirmEnterMessage = "추리 하기";
+    [SerializeField] private string _confirmUndoMessage = "더 생각하기";
 
     private Vector3 _fullScale;
     private bool _triggered;
@@ -66,7 +67,7 @@ public class HoldToEnterFinalDecision : MonoBehaviour
         if (!CanActivate()) return;
 
         // [수정됨] 최종 추리 집필 권한이 없다면 게이지가 오르지 않도록 차단
-        if (!TutorialManager.Instance.IsInputAllowed(TutorialInputPermission.FinalDecision))
+        if (!TutorialManager.Instance.IsInputAllowed(TutorialInputPermission.FinalDecisionEnter))
             return;
 
         PlayFillAnimation();
@@ -99,7 +100,12 @@ public class HoldToEnterFinalDecision : MonoBehaviour
                 _triggered = false;
                 HideFill();
 
-                GameFlowController.Instance?.EnterFinalDecision();
+                _finalPanel.SetActive(true);
+                // 튜토리얼 매니저에게 "최종 추리 방에 들어왔음"을 명시적으로 보고합니다!
+                if (TutorialManager.IsActive)
+                {
+                    TutorialManager.Instance.HandleFinalDecisionEntered();
+                }
             },
             onCancel: () =>
             {

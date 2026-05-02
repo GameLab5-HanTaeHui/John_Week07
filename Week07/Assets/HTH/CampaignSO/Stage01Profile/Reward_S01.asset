@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e31dbd5461b1df644ab9de2a0dd7d9df, type: 3}
   m_Name: Reward_S01
   m_EditorClassIdentifier: Assembly-CSharp::HTH.Campaign.RewardSaveData
-  _stageId: Stage_1_Phase2
+  _stageId: CampaignMode

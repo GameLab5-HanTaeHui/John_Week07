@@ -247,7 +247,7 @@ public class HistoryPageController : MonoBehaviour
             return;
         }
 
-        // ★ [HTH추가] 히스토리 열람 로그 (지표 #12)
+        // ★ [로그데이터] 히스토리 열람 로그 (지표 #12)
         _historyOpenCount++;
 
         // ★ 캠페인(_cycleOnOverflow=true)이면 CampaignGameFlowController, 아니면 GameFlowController

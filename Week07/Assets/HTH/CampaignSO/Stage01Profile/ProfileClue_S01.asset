@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe03aad3cacf1a348aaa1a7af78dcac4, type: 3}
   m_Name: ProfileClue_S01
   m_EditorClassIdentifier: Assembly-CSharp::HTH.Campaign.ProfileClueDataSO
-  _stageId: Stage_1_Phase2
+  _stageId: CampaignMode
   _clues:
   - ProfileClueId: P01_01
     CharacterId: 1

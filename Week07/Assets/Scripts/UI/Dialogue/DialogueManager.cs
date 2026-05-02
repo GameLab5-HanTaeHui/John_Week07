@@ -131,7 +131,6 @@ public class DialogueManager : MonoBehaviour
     private void TryStartTutorial()
     {
         Debug.Log("다이얼로그 완전히 종료됨! 이제 튜토리얼 가이드를 호출합니다.");
-        Debug.Log($"{TutorialManager.Instance != null} {TutorialManager.IsActive}");
         // TutorialManager가 존재하고 활성화되어 있다면, 1단계(Dialog_Intro1) 진입
         if (TutorialManager.Instance != null)
         {

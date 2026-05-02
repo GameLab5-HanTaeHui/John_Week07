@@ -32,25 +32,52 @@ public class MapObjectInputHandler : MonoBehaviour
             return;
         }
 
-        // [추가됨] 튜토리얼 방어선:
-        // 튜토리얼 중이고, '캐릭터 이동'이나 '턴 종료' 등의 월드 조작 권한이 아예 없는 상태
-        // (예: 대화만 읽어야 하는 상태)라면, 마우스 호버 및 클릭(바운스)을 완전히 무시합니다.
-        if (TutorialManager.IsActive &&
-            !TutorialManager.Instance.IsInputAllowed(TutorialInputPermission.CharacterMove) &&
-            !TutorialManager.Instance.IsInputAllowed(TutorialInputPermission.AdvanceTurn) &&
-            !TutorialManager.Instance.IsInputAllowed(TutorialInputPermission.FinalDecision))
+        // [튜토리얼 방어선] 튜토리얼 중일 때는 전용 방어 로직을 따르고, 
+        // 일반 게임 중일 때만 기존의 LoopStateType 방어 로직을 따릅니다.
+        if (TutorialManager.IsActive)
         {
-            // 이전에 호버된 오브젝트가 있다면 호버 해제
+            if (UpdateTutorialDefense()) return;
+        }
+        else
+        {
+            if (loopState == LoopStateType.FinalDecision) return;
+
+            if (loopState == LoopStateType.AwaitingFinalDecision)
+            {
+                HandleFinalDecisionOnlyInput();
+                return;
+            }
+        }
+
+        UpdateHover();
+        HandleInput();
+    }
+
+    /// <summary>
+    /// 튜토리얼 전용 입력 방어 로직입니다.
+    /// 월드 상호작용 권한이 하나라도 있는지 체크합니다.
+    /// </summary>
+    private bool UpdateTutorialDefense()
+    {
+        // 월드 조작과 관련된 권한이 하나라도 있는지 확인합니다.
+        bool isWorldInputAllowed =
+            TutorialManager.Instance.IsInputAllowed(TutorialInputPermission.CharacterMove) ||
+            TutorialManager.Instance.IsInputAllowed(TutorialInputPermission.AdvanceTurn) ||
+            TutorialManager.Instance.IsInputAllowed(TutorialInputPermission.FinalDecisionEnter) ||
+            TutorialManager.Instance.IsInputAllowed(TutorialInputPermission.FinalCharacterSelect);
+
+        // 권한이 아예 없는 상태(대화 중 등)라면 모든 월드 상호작용을 차단합니다.
+        if (!isWorldInputAllowed)
+        {
             if (_hoveredActivator != null)
             {
                 _hoveredActivator.OnHoverExit();
                 _hoveredActivator = null;
             }
-            return; // 아래의 UpdateHover와 HandleInput 실행을 원천 차단!
+            return true; // 입력을 차단함
         }
 
-        UpdateHover();
-        HandleInput();
+        return false; // 입력을 허용함
     }
 
     private void HandleFinalDecisionOnlyInput()

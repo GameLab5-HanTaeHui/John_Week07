@@ -4,83 +4,89 @@ using System;
 /// 튜토리얼 순서형 단계(Phase)를 정의합니다.
 /// TutorialManager가 이 순서대로 진행합니다.
 /// </summary>
-///<summary>
-///1. 이곳에서 대량 사건이 발생할거같아 (캐릭터 성 대화)
-///2.저쪽 구역에 사람이 있네? 가서 이야기 해볼까? (캐릭터 클릭 방법)
-///<color=green>마우스 왼클릭(유지)</color>해 표시된 구역 까지 캐릭터를 이동 시켜 보세요.
-///3. 좋아 이곳에 사람들과 대화 해봐야지 (구역 이동 및 턴 종료 안내)
-///오른쪽 깃털펜을 <color=green>마우스 왼클릭(클릭)</color>하여 대화하기를 <color=green>클릭</color>하여 다음 시간으로 넘어가 봅시다.
-///4. 너는 누구야? (NPC 대화)
-///5. 나는 (주인공 이름)이고 사건을 전담하기 위해 이곳에 왔어 (NPC와 대화)
-///6. 사건을 추리하는 사람이야? (NPC 대화)
-///7. 그럼 우리를 도와줘! 이곳에 살인자가 있대! (NPC 대화)
-///8. 여태껏 정보들이 있는데 너에게 줄게! (NPC 대화)
-///9. 왼쪽 사건 기록지, 아래 이동 경로 기록지, 캐릭터 인물 기록지, 역할 메모수첩 열람 안내 ( 안내성 메세지)
-///10. 살인자..? 용의자들을 기록 해봐야겠어 (왼쪽 패널 열람 및 닫기 방법) (주인공 대화)
-///왼쪽 역할 기능 패널을 <color=green>마우스 왼클릭(클릭)</color>하여 각 용의자들의 역할을 확인해 보세요.  ( 안내성 메세지)
-///11. 잘하셨습니다 역할 기능 패널을 <color=green>마우스 왼클릭(클릭)</color>하여 닫아보세요 (안내성 메세지)
-///12. 사건 기록지..? 이건 사람들이 어디로 이동하는지 보이는거구나! (주인공 대화)
-///왼쪽 아래 사건 기록 파일의  책갈피를 <color=green>마우스 왼클릭(클릭)</color>하여 지난 시간의 이동 경로를 다시 확인하세요.  ( 안내성 메세지)
-///13. 잘하셨습니다 책갈피를 <color=green>마우스 왼클릭(클릭)</color>하여 닫아보세요 (안내성 메세지)
-///14. 이건 사람들의 역할을 기록할 수 있는 수첩이구나 (주인공 대화)
-///오른쪽 하단의 메모 수첩을 <color=green>마우스 왼클릭(클릭)</color>하여 용의자의 의심 가는 역할 정리해 보세요.  ( 안내성 메세지)
-///15. 해당하는 격자 칸에 <color=green>마우스 왼클릭, 우클릭(클릭)</color>하여 X / <color=red>O</color> / <color=blue>△</color> 메모가 가능합니다.\n 격자칸을 눌러보세요! (안내성 메세지) 
-///16. 잘 하셨습니다!\n같은 곳을 <color=green>마우스 왼클릭(클릭)</color>하여 메모 수첩을 닫아 보세요! (안내성 메세지)
-///17. 캐릭터 인물 카드를 보기 위해 해당 버튼을 클릭해 주세요  (안내성 메세지)
-///18. 파일의 책갈피를 클릭하여 인물의 정보를 열어주세요  ( 안내성 메세지)
-///19. 이건.. 인물의 상세 정보를 알 수 있는 기록지이구나 인물에 대한 힌트도 있구나 이를 참고해야겠어
-///20. 포스트 잇을 눌러주세요.  ( 안내성 메세지)
-///21.  포스트 잇을 다시 눌러주세요. ( 안내성 메세지)
-///22. 캐릭터 인물 파일의 책갈피를 다시 눌러주세요.  ( 안내성 메세지)
-///23. 좋아..! 사건 추리가 끝나면 밝혀지겠지 (주인공 대화)
-///오른쪽 책을 <color=green>마우스 왼클릭(클릭)</color>하여 최종 집필을 마쳐주세요!\n만약 좀더 추리 할 경우 <color=green>더 생각하기</color>를 눌러 주세요.
-///<summary>
 
 public enum TutorialPhase
 {
     Inactive,
     WaitIntro,
 
-    // ── 1. 도입 및 캐릭터 이동 ──
-    Dialog_Intro1,              // 주인공: "이곳에서 대량 사건이 발생할거같아"
-    Dialog_Intro2,              // 주인공: "저쪽 구역에 사람이 있네? 가서 이야기 해볼까?"
-    Action_MoveCharacter,       // 시스템: 마우스 왼클릭(유지)해 표시된 구역 까지 이동
-    Dialog_PostMove,            // 주인공: "좋아 이곳에 사람들과 대화 해봐야지"
-    Action_TurnEnd,             // 시스템: 오른쪽 깃털펜 클릭하여 턴 종료
+    // ── 1. 도입: 엔비의 독백 ──
+    Dialog_EnvyIntro_1,         // [엔비] "안녕. 나는 엔비..."
+    Dialog_EnvyIntro_2,         // [엔비] "물론 진짜 목적은..."
+    Dialog_EnvyIntro_3,         // [엔비] "누군가 내게 의뢰..."
+    Dialog_EnvyIntro_4,         // [엔비] "겉으로 보기엔 멀쩡..."
+    Dialog_EnvyIntro_5,         // [엔비] "하지만 들리는 소문..."
+    Dialog_EnvyIntro_6,         // [엔비] "그렇다면 내가 할일..."
+    Dialog_EnvyIntro_7,         // [엔비] "그리고 그상처를..."
+    Dialog_EnvyIntro_8,         // [엔비] "그럼 시작해볼까..."
 
-    // ── 2. NPC 대화 및 정보 획득 ──
-    Dialog_Npc1,                // NPC: "너는 누구야?"
-    Dialog_Hero1,               // 주인공: "나는 (주인공 이름)이고..."
-    Dialog_Npc2,                // NPC: "사건을 추리하는 사람이야?"
-    Dialog_Npc3,                // NPC: "그럼 우리를 도와줘! ..."
-    Dialog_Npc4,                // NPC: "여태껏 정보들이 있는데 너에게 줄게!"
-    Dialog_SystemGuidePanels,   // 시스템: "왼쪽 사건 기록지, 아래 이동 경로..."
-    Dialog_Hero2,               // 주인공: "살인자..? 용의자들을 기록 해봐야겠어"
+    // ── 2. 첫 이동 및 시간 진행 ──
+    Dialog_MoveEnvy1,         // [엔비] "사람들이 흩어져..."
+    Dialog_MoveEnvy2,         // [엔비] "우선 혼자 있는 사람..."
 
-    // ── 3. 역할 패널 조작 실습 ──
-    Action_OpenRoleDoc,         // 시스템: "왼쪽 역할 기능 패널을 클릭하여 확인"
-    Action_CloseRoleDoc,        // 시스템: "잘하셨습니다 패널을 클릭하여 닫아보세요"
+    Action_MoveEnvy,            // [Action] 엔비를 구역으로 드래그
+    Action_TurnEnd_Quill,       // [Action] 깃털펜 클릭 (시간 진행)
 
-    // ── 4. 사건 기록지 조작 실습 ──
-    Dialog_Hero3,               // 주인공: "사건 기록지..? 어디로 이동하는지..."
-    Action_OpenHistory,         // 시스템: "왼쪽 아래 사건 기록 파일 책갈피 클릭"
-    Action_CloseHistory,        // 시스템: "잘하셨습니다 책갈피를 클릭하여 닫아보세요"
+    // ── 3. 첫 대화: 메이 ──
+    Dialog_EnvyTalk1,           // [엔비] "메이님 안녕..."
+    Dialog_MayTalk_1,           // [메이] "신입? 무슨일..."
 
-    // ── 5. 메모 수첩 조작 실습 ──
-    Dialog_Hero4,               // 주인공: "이건 사람들의 역할을 기록할 수 있는 수첩이구나"
-    Action_OpenMemo,            // 시스템: "오른쪽 하단의 메모 수첩을 클릭하여..."
-    Action_WriteMemo,           // 시스템: "해당하는 격자 칸에 클릭하여 X/O/△ 메모..."
-    Action_CloseMemo,           // 시스템: "잘 하셨습니다! 같은 곳을 클릭하여 닫아보세요"
+    Dialog_EnvyTalk2,           // [엔비] "별견 아니..."
+    Dialog_MayTalk_2,           // [메이] "분위기?"
 
-    // ── 6. 캐릭터 인물 카드 조작 실습 ──
-    Action_ClickSwapButton,     // 시스템: "캐릭터 인물 카드를 보기 위해 버튼 클릭"
-    Action_OpenCharacterCard,   // 시스템: "책갈피를 클릭하여 인물의 정보 열기"
-    Dialog_Hero5,               // 주인공: "이건.. 상세 정보구나 힌트도 있구나"
-    Action_ClickHintPostIt,     // 시스템: "포스트 잇을 눌러주세요"
-    Action_CloseHintPostIt,     // 시스템: "포스트 잇을 다시 눌러주세요"
-    Action_CloseCharacterCard,  // 시스템: "캐릭터 인물 파일의 책갈피를 다시 눌러주세요"
+    Dialog_EnvyTalk3,           // [엔비] "다들 오래 함께한 것..."
+    Dialog_MayTalk_3,           // [메이] "원래는 아니였지..."
 
-    // ── 7. 최종 집필 ──
-    Dialog_Hero6,               // 주인공: "좋아..! 사건 추리가 끝나면 밝혀지겠지"
-    Action_FinalDecision        // 시스템: "오른쪽 책을 클릭하여 최종 집필을 마쳐주세요"
+    Dialog_EnvyTalk4,           // [엔비] "무슨일 있었..."
+    Dialog_MayTalk_4,           // [메이] "있었지 잡을 수..."
+
+    Dialog_EnvyTalk5,           // [엔비] "드래곤이요?..."
+    Dialog_MayTalk_5,           // [메이] "거의 끝났었어.."
+
+    Dialog_EnvyTalk6,           // [엔비] "그런데 어쩌다가..."
+    Dialog_MayTalk_6,           // [메이] "그건 아직 네가..."
+
+    Dialog_PieceTuto,           // [Narration] "조각을 획득 하였습니다. 메이는 드래곤을 놓친..."
+    Dialog_System_Clue,         // [Narration] "대화를 통해 사건과 인물에 대한 단서..."
+
+    // ── 4. 에드먼드의 메모장 (역할 패널) ──
+    Dialog_EnvyRules1,             // [엔비] "이상한 규칙이 있어..."
+    Action_OpenEdmundNote,         // [Action] "왼쪽 에드먼드의 메모장을 열어..."
+    Dialog_EdmundNarration1,        // [Narration] "각 역할 기능과 사건 서술 순서..."
+    Dialog_EdmundNarration2,        // [Narration] "역할 기능은 인물의 행동 패턴과..."
+    Dialog_EdmundNarration3,        // [Narration] "사건 서술 순서는 사건이 어떤 순서로 진행..."
+    Action_CloseEdmundNote,        // [Action] "패널을 다시 닫아주세요."
+
+    // ── 5. 캐릭터 파일 (엔비의 다이어리) ──
+    Dialog_EnvyStrategy1,          // [엔비] "이제 사람을 봐야해..."
+    Dialog_EnvyStrategy2,          // [엔비] "누가 무엇을 두려워 하는지..."
+    Dialog_EnvyStrategy3,          // [엔비] "그걸 알아야 이 용병단을 흔들 수 있어..."
+    Action_OpenEnvyDiary,          // [Action] "엔비의 다이어리에서 캐릭터 정보를 확인..."
+    Dialog_DiaryNarration1,         // [Narration] "정보 카드에서는 이름, 역할, 수집된 대화 조각을 확인..."
+    Dialog_DiaryNarration2,         // [Narration] "대화 조각은 캐릭터들과의 대화 후 엔비가 수집한 단서..."
+    Dialog_DiaryNarration3,         // [Narration] "가운데 메모지는 다른 대화 조각의 힌트..."
+    Action_OpenHintPostIt,         // [Action] "메모지를 눌러 보세요."
+    Dialog_DiaryNarration5,         // [Narration] "힌트는 대화조각을 얻는 조건을..."
+    Dialog_EnvyContext1,            // [엔비] "어떤 말은 혼자 있을때만..."
+    Dialog_EnvyContext2,            // [엔비] "사람은 항상 같은 말을 하지..."
+    Action_CloseEnvyDiary,         // [Action] "힌트 메모지와 캐릭터 정보카드를 닫아주세요."
+
+    // ── 6. 최종 대화 (최종 집필) ──
+    Dialog_FinalIntro1,             // [엔비] "내 최종 목표는 수집한 정보를 이용해..."
+    Action_EnterFinalDecision1,     // [Action] "우측 책을 눌러 최종 추리를 시작해주세요."
+    Action_EnterFinalDecision2,     // [Action] "엔비를 선택해주세요."
+    Dialog_EnterFinalDecision1,     // [Narration] "최종 대화 대화에서는 수집한 대화조각..."
+    Dialog_EnterFinalDecision2,     // [Narration] "같은 진실이라도 어떤부분을 어디까지..."
+    Dialog_FinalIntro2,             // [엔비] "용병단 사람들이 나에게 말을 거는..."
+    Dialog_EnterFinalDecision3,     // [Narration] "해당 인물의 성격과 사건을 고려하여, 상대방을 가장..."
+    Action_SelectFinalOption,       // [Action] "질문 내용을 선택해주세요."
+    Dialog_FinalResult,             // [엔비] ".. 내가 스파이라는걸 들킨다면 실패야..."
+
+    // ── 7. 종료 및 실전 진입 ──
+    Dialog_EnvyOutro1,           // "이제 기본적인 건 알겠어. 본격적으로 시작해보자."
+    Dialog_EnvyOutro2,           // "사건을 모으고, 사람을 이해하고, 말을 어떻게 전달할지..."
+    Dialog_EnvyOutro3,           // "이 용병단은 아직 서로를 동료라고 믿고 있어. 함께 해온 시간..."
+    Dialog_EnvyOutro4,           // "필요한 건 완전한 거짓말이 아니야..."
+    Dialog_EnvyOutro5,           // "그럼 이제 본격적으로 시작해보자..."
+    Tutorial_End                // 튜토리얼 종료 처리
 }

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36f49a3c9b8ae7e4aa1e0c8b42ff4383, type: 3}
   m_Name: StageRoleConfig_Tuto
   m_EditorClassIdentifier: Assembly-CSharp::StageRoleConfig
-  _stageId: 0
+  _stageId: Tutorial
   roles:
   - {fileID: 11400000, guid: 1ee73209c45f7104a810e56cc9c464c6, type: 2}
   - {fileID: 11400000, guid: f038699cb723aab4f8979673e711c5b2, type: 2}

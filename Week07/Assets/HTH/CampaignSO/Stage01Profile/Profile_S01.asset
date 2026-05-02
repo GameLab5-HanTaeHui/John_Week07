@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8f4647ea1b933648be2f1d3b8c74771, type: 3}
   m_Name: Profile_S01
   m_EditorClassIdentifier: Assembly-CSharp::HTH.Campaign.ProfileDataSO
-  _stageId: Stage_1_Phase2
+  _stageId: CampaignMode
   _characterProfiles:
   - CharacterId: 1
     RequiredFragmentCount: 10

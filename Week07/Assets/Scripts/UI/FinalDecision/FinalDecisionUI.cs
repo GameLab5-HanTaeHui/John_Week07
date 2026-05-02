@@ -174,7 +174,7 @@ public class FinalDecisionUI : MonoBehaviour
         foreach (var slot in _roleSlots)
             if (slot != null && slot.AssignedCard == null) return;
 
-        // ★ [HTH추가] 각 슬롯의 정답 여부 로그 (지표 #4)
+        // ★ [로그데이터] 각 슬롯의 정답 여부 로그 (지표 #4)
         var wrongSlots = new List<RoleSlot>();
         int correctCount = 0;
         foreach (var slot in _roleSlots)

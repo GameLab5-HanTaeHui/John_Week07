@@ -96,7 +96,7 @@ public class PlayerActionState : IState
         _selectedId = -1;
         OnCharacterSelected?.Invoke(-1);
 
-        // ★ [HTH추가] 턴 종료 시 이동/대기 요약 (지표 #8)
+        // ★ [로그데이터] 턴 종료 시 이동/대기 요약 (지표 #8)
         var gsForSummary = _getGameState();
         int moveCount = 0, waitCount = 0;
         if (gsForSummary != null)

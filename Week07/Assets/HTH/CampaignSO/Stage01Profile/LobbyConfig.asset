@@ -17,6 +17,6 @@ MonoBehaviour:
   TutorialRetrySceneName: TutorialScene
   DefaultGameSceneName: GameScene
   CampaignStageId: CampaignMode
-  DefaultStageId: CampaginMode
+  DefaultStageId: CampaignMode
   TutorialFixedSeed: 0
   DefaultGameSeed: 0

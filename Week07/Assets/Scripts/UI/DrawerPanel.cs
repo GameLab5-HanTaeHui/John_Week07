@@ -192,7 +192,7 @@ public class DrawerPanel : MonoBehaviour
         if (isShowing)
         {
             OnShown?.Invoke();
-            // ★ 패널 열람 로그 (지표 #13)
+            // ★ [로그데이터] 패널 열람 로그 (지표 #13)
             _openCount++;
             var gfc = GameFlowController.Instance;
             GameLogger.Instance?.LogEvent("panel_open", new Dictionary<string, object>

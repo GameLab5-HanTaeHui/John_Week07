@@ -1,3 +1,4 @@
+using HTH.Campaign;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -110,8 +111,7 @@ public class GameHUD : MonoBehaviour
         if (_loopTurnText == null) return;
         var gfc = GameFlowController.Instance;
         if (gfc == null) return;
-        int daysLeft = LoopStateMachine.MaxLoops - gfc.LoopCount + 1;
-        _loopTurnText.text = $"마감일까지 {daysLeft}일";
+        _loopTurnText.text = $"{gfc.LoopCount}일차";
     }
 
     private void RefreshPhaseText()
