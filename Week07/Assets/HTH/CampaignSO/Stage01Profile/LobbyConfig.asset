@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: LobbyConfig
   m_EditorClassIdentifier: Assembly-CSharp::HTH.Campaign.LobbyConfig
   CampaignSceneName: Stage_Campaign1
-  TutorialSceneName: TutorialScene
-  TutorialRetrySceneName: TutorialScene
+  TutorialSceneName: Tutorial
+  TutorialRetrySceneName: Tutorial
   DefaultGameSceneName: GameScene
   CampaignStageId: CampaignMode
-  DefaultStageId: CampaignMode
-  TutorialFixedSeed: 0
-  DefaultGameSeed: 0
+  DefaultStageId: 5857
+  TutorialFixedSeed: 79960
+  DefaultGameSeed: 5857

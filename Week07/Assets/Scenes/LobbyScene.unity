@@ -6281,6 +6281,8 @@ MonoBehaviour:
   _messageText: {fileID: 950154578}
   _closeButton: {fileID: 279926288}
   _canvasGroup: {fileID: 1381438332}
+  _campaignButton: {fileID: 1073418580}
+  _collectionButton: {fileID: 423510023}
   _rewardSaveData: {fileID: 11400000, guid: a9a937f157d7ba24abcb1607e860d056, type: 2}
   _fadeDuration: 0.5
   _autoCloseDelay: 3
@@ -6435,7 +6437,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LobbyPresetSeedButton
   _mode: 1
-  _seed: 7777
+  _seed: 5857
   _stageId: CampaignMode
   _gameSceneName: Stage_Campaign1
   _isEnabled: 1
@@ -8343,7 +8345,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LobbyPresetSeedButton
   _mode: 2
-  _seed: 7520
+  _seed: 79960
   _stageId: Tutorial
   _gameSceneName: Tutorial
   _isEnabled: 1

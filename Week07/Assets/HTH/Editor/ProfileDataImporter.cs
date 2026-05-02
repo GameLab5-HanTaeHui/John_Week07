@@ -10,9 +10,12 @@ namespace HTH.Campaign
     /// StreamingAssets/Campaign 폴더의 JSON 파일에서
     /// ProfileDataSO 데이터를 임포트하는 에디터 도구입니다.
     ///
+    /// ─── ProfileDataSO 구조 변경 반영 ────────────────────────────────────
+    ///   ProfileItems / ConceptCard / EpilogueLines / Question 제거.
+    ///   FinalTalkData(도입 대사 + 선택지 4개 + 결과 대화) 기반으로 재작성.
+    ///
     /// ─── 파일 경로 ───────────────────────────────────────────────────────
     ///   StreamingAssets/Campaign/profile_{stageId}.json
-    ///   예: StreamingAssets/Campaign/profile_Stage_1_Phase2.json
     ///
     /// ─── 사용 방법 ───────────────────────────────────────────────────────
     ///   1. StreamingAssets/Campaign/ 폴더에 JSON 파일 배치
@@ -21,34 +24,34 @@ namespace HTH.Campaign
     ///   4. "Import From StreamingAssets" 버튼 클릭
     ///
     /// ─── 주의사항 ─────────────────────────────────────────────────────────
-    ///   CharacterIcon, CardIllustration (Sprite) 은 JSON으로 설정 불가합니다.
+    ///   CharacterIcon (Sprite) 은 JSON으로 설정 불가합니다.
     ///   임포트 후 Inspector에서 직접 연결하세요.
     ///
     /// ─── JSON 형식 ───────────────────────────────────────────────────────
     ///   {
-    ///     "stageId": "Stage_1_Phase2",
+    ///     "stageId": "CampaignMode",
     ///     "characters": [
     ///       {
-    ///         "characterId": 1,
-    ///         "requiredFragmentCount": 5,
-    ///         "characterFullName": "엔비",
-    ///         "characterRole": "(주인공)",
-    ///         "profileItems": [
-    ///           {
-    ///             "question": "가장 두려워하는 것",
-    ///             "choices": ["선택지1", "선택지2", "선택지3"],
-    ///             "correctChoiceIndex": 0,
-    ///             "requiredFragmentId": ""
-    ///           }
-    ///         ],
-    ///         "conceptCard": {
-    ///           "catchphrase": "캐치프레이즈",
-    ///           "appearance": "외형 설명",
-    ///           "narrativeBackground": "서사적 배경",
-    ///           "personality": "성격",
-    ///           "gimmickRelevance": "기믹 연관성"
-    ///         },
-    ///         "epilogueLines": ["문단1", "문단2", "..."]
+    ///         "characterId": 2,
+    ///         "characterFullName": "메이",
+    ///         "characterRole": "(전위 돌격형)",
+    ///         "finalTalk": {
+    ///           "introLines": [
+    ///             { "speakerId": 2, "text": "무슨 일이지, 엔비?" },
+    ///             { "speakerId": 1, "text": "그날 일 때문에요." }
+    ///           ],
+    ///           "choices": ["선택지1", "선택지2", "선택지3", "선택지4"],
+    ///           "correctIndex": 2,
+    ///           "resultDialogues": [
+    ///             {
+    ///               "choiceIndex": 2,
+    ///               "isSuccess": true,
+    ///               "lines": [
+    ///                 { "speakerId": 2, "text": "...그때도 결국 루이스였다는 거네." }
+    ///               ]
+    ///             }
+    ///           ]
+    ///         }
     ///       }
     ///     ]
     ///   }
@@ -56,10 +59,8 @@ namespace HTH.Campaign
     [CustomEditor(typeof(ProfileDataSO))]
     public class ProfileDataImporter : UnityEditor.Editor
     {
-        /// <summary>임포트할 JSON 파일명 (확장자 제외)입니다.</summary>
         private string _fileNameInput = "";
 
-        /// <summary>StreamingAssets/Campaign 폴더 경로입니다.</summary>
         private static string CampaignFolderPath
             => Path.Combine(Application.streamingAssetsPath, "Campaign");
 
@@ -91,15 +92,17 @@ namespace HTH.Campaign
 
             EditorGUILayout.Space(6);
             EditorGUILayout.HelpBox(
-                "⚠ CharacterIcon, CardIllustration (Sprite)은\n" +
-                "JSON으로 설정 불가합니다.\n" +
+                "⚠ CharacterIcon (Sprite) 은 JSON으로 설정 불가합니다.\n" +
                 "임포트 후 Inspector에서 직접 연결하세요.",
                 MessageType.Warning);
 
             EditorGUILayout.HelpBox(
-                "epilogueLines: 문단 단위 배열\n" +
-                "예: [\"나는 늘...\", \"그래서...\"]\n\n" +
-                "epilogueText: 단일 문자열 (하위 호환, 자동 분리)",
+                "FinalTalk 구조:\n" +
+                "  introLines  : [{speakerId, text}, ...]\n" +
+                "  choices     : [\"선택지0\", \"선택지1\", \"선택지2\", \"선택지3\"]\n" +
+                "  correctIndex: 0~3\n" +
+                "  resultDialogues: [{choiceIndex, isSuccess, lines:[...]}]\n\n" +
+                "미구현 캐릭터는 finalTalk 항목 자체를 생략하세요.",
                 MessageType.Info);
         }
 
@@ -108,7 +111,6 @@ namespace HTH.Campaign
             EnsureCampaignFolderExists();
 
             string path = Path.Combine(CampaignFolderPath, $"{fileName}.json");
-
             if (!File.Exists(path))
             {
                 Debug.LogError($"[ProfileDataImporter] 파일 없음 — {path}");
@@ -133,7 +135,7 @@ namespace HTH.Campaign
                 // stageId
                 serialized.FindProperty("_stageId").stringValue = data.stageId ?? "";
 
-                // characterProfiles 초기화
+                // _characterProfiles 초기화
                 var profilesProp = serialized.FindProperty("_characterProfiles");
                 profilesProp.ClearArray();
 
@@ -148,91 +150,59 @@ namespace HTH.Campaign
                         // ── 기본 필드 ─────────────────────────────────────
                         charProp.FindPropertyRelative("CharacterId").intValue
                             = charData.characterId;
-                        charProp.FindPropertyRelative("RequiredFragmentCount").intValue
-                            = charData.requiredFragmentCount;
                         charProp.FindPropertyRelative("CharacterFullName").stringValue
                             = charData.characterFullName ?? "";
                         charProp.FindPropertyRelative("CharacterRole").stringValue
                             = charData.characterRole ?? "";
 
-                        // ── EpilogueLines ─────────────────────────────────
-                        var epilogueProp = charProp.FindPropertyRelative("EpilogueLines");
-                        epilogueProp.ClearArray();
+                        // ── FinalTalkData ─────────────────────────────────
+                        var ftProp = charProp.FindPropertyRelative("FinalTalk");
 
-                        if (charData.epilogueLines != null && charData.epilogueLines.Length > 0)
+                        if (charData.finalTalk != null)
                         {
-                            // 신규: epilogueLines 배열 사용
-                            for (int j = 0; j < charData.epilogueLines.Length; j++)
+                            var ft = charData.finalTalk;
+
+                            // IntroLines
+                            WriteLines(ftProp.FindPropertyRelative("IntroLines"), ft.introLines);
+
+                            // Question — 사용하지 않으므로 공란으로 설정
+                            ftProp.FindPropertyRelative("Question").stringValue = "";
+
+                            // Choices (4개 고정)
+                            var choicesProp = ftProp.FindPropertyRelative("Choices");
+                            choicesProp.ClearArray();
+                            if (ft.choices != null)
                             {
-                                epilogueProp.InsertArrayElementAtIndex(j);
-                                epilogueProp.GetArrayElementAtIndex(j).stringValue
-                                    = charData.epilogueLines[j] ?? "";
-                            }
-                        }
-                        else if (!string.IsNullOrEmpty(charData.epilogueText))
-                        {
-                            // 하위 호환: epilogueText를 줄바꿈 기준으로 분리
-                            var lines = charData.epilogueText.Split(
-                                new[] { "\n\n", "\r\n\r\n" },
-                                StringSplitOptions.RemoveEmptyEntries);
-
-                            for (int j = 0; j < lines.Length; j++)
-                            {
-                                epilogueProp.InsertArrayElementAtIndex(j);
-                                epilogueProp.GetArrayElementAtIndex(j).stringValue
-                                    = lines[j].Trim();
-                            }
-                        }
-
-                        // ── ProfileItems ──────────────────────────────────
-                        var itemsProp = charProp.FindPropertyRelative("ProfileItems");
-                        itemsProp.ClearArray();
-
-                        if (charData.profileItems != null)
-                        {
-                            for (int j = 0; j < charData.profileItems.Length; j++)
-                            {
-                                var itemData = charData.profileItems[j];
-                                itemsProp.InsertArrayElementAtIndex(j);
-                                var itemProp = itemsProp.GetArrayElementAtIndex(j);
-
-                                itemProp.FindPropertyRelative("Question").stringValue
-                                    = itemData.question ?? "";
-                                itemProp.FindPropertyRelative("CorrectChoiceIndex").intValue
-                                    = itemData.correctChoiceIndex;
-                                itemProp.FindPropertyRelative("RequiredFragmentId").stringValue
-                                    = itemData.requiredFragmentId ?? "";
-
-                                // Choices
-                                var choicesProp = itemProp.FindPropertyRelative("Choices");
-                                choicesProp.ClearArray();
-
-                                if (itemData.choices != null)
+                                for (int k = 0; k < ft.choices.Length; k++)
                                 {
-                                    for (int k = 0; k < itemData.choices.Length; k++)
-                                    {
-                                        choicesProp.InsertArrayElementAtIndex(k);
-                                        choicesProp.GetArrayElementAtIndex(k).stringValue
-                                            = itemData.choices[k] ?? "";
-                                    }
+                                    choicesProp.InsertArrayElementAtIndex(k);
+                                    choicesProp.GetArrayElementAtIndex(k).stringValue
+                                        = ft.choices[k] ?? "";
                                 }
                             }
-                        }
 
-                        // ── ConceptCard ───────────────────────────────────
-                        if (charData.conceptCard != null)
-                        {
-                            var cardProp = charProp.FindPropertyRelative("ConceptCard");
-                            cardProp.FindPropertyRelative("Catchphrase").stringValue
-                                = charData.conceptCard.catchphrase ?? "";
-                            cardProp.FindPropertyRelative("Appearance").stringValue
-                                = charData.conceptCard.appearance ?? "";
-                            cardProp.FindPropertyRelative("NarrativeBackground").stringValue
-                                = charData.conceptCard.narrativeBackground ?? "";
-                            cardProp.FindPropertyRelative("Personality").stringValue
-                                = charData.conceptCard.personality ?? "";
-                            cardProp.FindPropertyRelative("GimmickRelevance").stringValue
-                                = charData.conceptCard.gimmickRelevance ?? "";
+                            // CorrectIndex
+                            ftProp.FindPropertyRelative("CorrectIndex").intValue
+                                = ft.correctIndex;
+
+                            // ResultDialogues
+                            var resultsProp = ftProp.FindPropertyRelative("ResultDialogues");
+                            resultsProp.ClearArray();
+                            if (ft.resultDialogues != null)
+                            {
+                                for (int r = 0; r < ft.resultDialogues.Length; r++)
+                                {
+                                    var rd = ft.resultDialogues[r];
+                                    resultsProp.InsertArrayElementAtIndex(r);
+                                    var rdProp = resultsProp.GetArrayElementAtIndex(r);
+
+                                    rdProp.FindPropertyRelative("ChoiceIndex").intValue
+                                        = rd.choiceIndex;
+                                    rdProp.FindPropertyRelative("IsSuccess").boolValue
+                                        = rd.isSuccess;
+                                    WriteLines(rdProp.FindPropertyRelative("Lines"), rd.lines);
+                                }
+                            }
                         }
                     }
                 }
@@ -248,13 +218,29 @@ namespace HTH.Campaign
                 EditorUtility.DisplayDialog(
                     "임포트 완료",
                     $"StageId: {data.stageId}\n캐릭터 수: {charCount}\n\n" +
-                    "⚠ CharacterIcon, CardIllustration은\nInspector에서 직접 연결하세요.",
+                    "⚠ CharacterIcon은 Inspector에서 직접 연결하세요.",
                     "확인");
             }
             catch (Exception e)
             {
                 Debug.LogError($"[ProfileDataImporter] 임포트 실패 — {e.Message}");
                 EditorUtility.DisplayDialog("임포트 실패", e.Message, "확인");
+            }
+        }
+
+        /// <summary>FinalTalkLine 배열을 SerializedProperty 리스트에 씁니다.</summary>
+        private static void WriteLines(SerializedProperty listProp,
+                                       ProfileJsonLine[] lines)
+        {
+            listProp.ClearArray();
+            if (lines == null) return;
+
+            for (int i = 0; i < lines.Length; i++)
+            {
+                listProp.InsertArrayElementAtIndex(i);
+                var lineProp = listProp.GetArrayElementAtIndex(i);
+                lineProp.FindPropertyRelative("SpeakerId").intValue = lines[i].speakerId;
+                lineProp.FindPropertyRelative("Text").stringValue = lines[i].text ?? "";
             }
         }
 
@@ -288,36 +274,33 @@ namespace HTH.Campaign
     internal class ProfileJsonCharacter
     {
         public int characterId;
-        public int requiredFragmentCount;
         public string characterFullName;
         public string characterRole;
-        public ProfileJsonItem[] profileItems;
-        public ProfileJsonConceptCard conceptCard;
-
-        /// <summary>시점 완결문 문단 배열입니다. (신규)</summary>
-        public string[] epilogueLines;
-
-        /// <summary>시점 완결문 단일 문자열입니다. (하위 호환)</summary>
-        public string epilogueText;
+        public ProfileJsonFinalTalk finalTalk;
     }
 
     [Serializable]
-    internal class ProfileJsonItem
+    internal class ProfileJsonFinalTalk
     {
-        public string question;
+        public ProfileJsonLine[] introLines;
         public string[] choices;
-        public int correctChoiceIndex;
-        public string requiredFragmentId;
+        public int correctIndex;
+        public ProfileJsonResultDialogue[] resultDialogues;
     }
 
     [Serializable]
-    internal class ProfileJsonConceptCard
+    internal class ProfileJsonResultDialogue
     {
-        public string catchphrase;
-        public string appearance;
-        public string narrativeBackground;
-        public string personality;
-        public string gimmickRelevance;
+        public int choiceIndex;
+        public bool isSuccess;
+        public ProfileJsonLine[] lines;
+    }
+
+    [Serializable]
+    internal class ProfileJsonLine
+    {
+        public int speakerId;
+        public string text;
     }
 }
 #endif

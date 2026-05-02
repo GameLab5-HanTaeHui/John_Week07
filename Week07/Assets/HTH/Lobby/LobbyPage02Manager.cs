@@ -525,7 +525,7 @@ namespace HTH.Campaign
                 if (unlocked)
                 {
                     var profile = _profileData?.FindProfile(capturedId);
-                    card.Setup(profile?.EpilogueText ?? string.Empty);
+                    //card.Setup(profile?.EpilogueText ?? string.Empty);
                 }
                 // 미해금은 Setup 호출 안 함 → CollapsedText / ExpandedText 빈 상태 유지
 
@@ -555,11 +555,11 @@ namespace HTH.Campaign
                 if (unlocked)
                 {
                     var profile = _profileData?.FindProfile(capturedId);
-                    string text = profile?.EpilogueText ?? string.Empty;
+                   //string text = profile?.EpilogueText ?? string.Empty;
 
-                    // 텍스트가 비어있지 않을 때만 갱신
-                    if (!string.IsNullOrEmpty(text))
-                        card.Setup(text);
+                    //// 텍스트가 비어있지 않을 때만 갱신
+                    //if (!string.IsNullOrEmpty(text))
+                    //    card.Setup(text);
                 }
             }
         }

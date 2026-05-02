@@ -1,4 +1,5 @@
 using DG.Tweening;
+using HTH.Campaign;
 using System.Collections;
 using TMPro;
 using UnityEditor.Tilemaps;
@@ -35,6 +36,7 @@ public class TutorialManager : SingletonMonobehaviour<TutorialManager>
 
     [Header("데이터")]
     [SerializeField] private TutorialGuideData _guideData;
+    [SerializeField] private RewardSaveData _rewardSaveData;
 
     [Header("UI 매니저 참조")]
     [SerializeField] private TutorialUIManager _uiManager;
@@ -801,6 +803,15 @@ public class TutorialManager : SingletonMonobehaviour<TutorialManager>
                     _campaignModeText.text = "캠패인 모드가 열렸습니다";
                     _campaignModeText.gameObject.SetActive(true);
                 }
+
+                // 4. 세이브 데이터에 클리어 기록 쾅!
+                if (TutorialProgressRepository.Instance != null)
+                {
+                    TutorialProgressRepository.Instance.MarkCleared();
+                    Debug.Log("[Tutorial] 튜토리얼 클리어 데이터를 저장했습니다.");
+                }
+                if (_rewardSaveData != null)
+                    _rewardSaveData.SaveTutorialClear();
 
                 // 4. 로비로 나갈 수 있는 상태로 전환
                 _canExitToLobby = true;

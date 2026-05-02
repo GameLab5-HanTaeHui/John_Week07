@@ -32,6 +32,8 @@ namespace HTH.Campaign
         private readonly HashSet<int> _unlockedEpilogues = new();
         private readonly Dictionary<int, string> _characterNames = new();
 
+        private bool _isTutorialCleared;
+
         private bool _isLoaded;
 
         // ── 공개 API — 해금 기록 ─────────────────────────────────────────
@@ -75,6 +77,15 @@ namespace HTH.Campaign
             Flush();
         }
 
+        // 튜토리얼 클리어를 저장합니다.
+        public void SaveTutorialClear()
+        {
+            EnsureLoaded();
+            _isTutorialCleared = true;
+            Flush();
+            Debug.Log($"[RewardSaveData] 튜토리얼 클리어 저장");
+        }
+
         // ── 공개 API — 조회 ──────────────────────────────────────────────
 
         /// <summary>컨셉 카드 해금 여부를 반환합니다.</summary>
@@ -106,6 +117,13 @@ namespace HTH.Campaign
             return name;
         }
 
+        // 튜토리얼 클리어 여부를 반환합니다.
+        public bool IsTutorialCleared()
+        {
+            EnsureLoaded();
+            return _isTutorialCleared;
+        }
+
         // ── 저장/로드 ─────────────────────────────────────────────────────
 
         /// <summary>
@@ -117,6 +135,7 @@ namespace HTH.Campaign
             _unlockedConceptCards.Clear();
             _unlockedEpilogues.Clear();
             _characterNames.Clear();
+            _isTutorialCleared = false;
 
             var saveData = CampaignSaveManager.Instance?.CurrentSave;
             if (saveData == null)
@@ -136,6 +155,8 @@ namespace HTH.Campaign
                 foreach (var entry in saveData.collectedNames)
                     if (!string.IsNullOrEmpty(entry.name))
                         _characterNames[entry.characterId] = entry.name;
+
+                _isTutorialCleared = saveData.isTutorialCleared;
             }
 
             _isLoaded = true;
@@ -188,6 +209,8 @@ namespace HTH.Campaign
             // 시점 완결문 동기화
             saveData.unlockedEpilogues.Clear();
             saveData.unlockedEpilogues.AddRange(_unlockedEpilogues);
+
+            saveData.isTutorialCleared = _isTutorialCleared;
 
             CampaignSaveManager.Instance.Save(saveData);
         }

@@ -69,6 +69,18 @@ namespace HTH.Campaign
         /// </summary>
         public List<int> unlockedEpilogues = new();
 
+        /// <summary>
+        /// 튜토리얼 플레이 조건입니다
+        /// </summary>
+        public bool isTutorialCleared = false;
+
+        // ── 최종 대화 ─────────────────────────────────────────────────────
+
+        /// <summary>
+        /// 캐릭터별 최종 대화 결과 목록입니다.
+        /// </summary>
+        public List<FinalTalkRecord> finalTalkRecords = new();
+
         // ── 유틸 ──────────────────────────────────────────────────────────
 
         /// <summary>진행 데이터가 존재하는지 여부입니다.</summary>
@@ -77,7 +89,8 @@ namespace HTH.Campaign
             playedDialogueIds.Count > 0 ||
             collectedNames.Count > 0 ||
             unlockedConceptCards.Count > 0 ||
-            unlockedEpilogues.Count > 0;
+            unlockedEpilogues.Count > 0 ||
+            finalTalkRecords.Count > 0;
     }
 
     /// <summary>수집된 캐릭터 이름 1개 항목입니다.</summary>
@@ -86,5 +99,27 @@ namespace HTH.Campaign
     {
         public int characterId;
         public string name;
+    }
+
+    /// <summary>
+    /// 캐릭터 1명의 최종 대화 결과입니다.
+    /// </summary>
+    [Serializable]
+    public class FinalTalkRecord
+    {
+        /// <summary>캐릭터 ID (2~7, 엔비 제외)</summary>
+        public int characterId;
+
+        /// <summary>최종 대화 완료 여부입니다.</summary>
+        public bool completed;
+
+        /// <summary>정답 선택 여부입니다.</summary>
+        public bool success;
+
+        /// <summary>선택한 선택지 인덱스 (0-based)입니다.</summary>
+        public int selectedChoiceIndex;
+
+        /// <summary>결과 대화 확인 여부입니다.</summary>
+        public bool resultSeen;
     }
 }

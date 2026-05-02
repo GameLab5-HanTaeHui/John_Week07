@@ -2320,7 +2320,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uB098\uB294 \uC774\uACF3\uC5D0 \uB3C8\uC744 \uBC8C\uB824\uACE0 \uC654\uC5B4"
+  m_text: "\uC5D4\uBE44\uB294 \uC774\uACF3\uC5D0 \uC640\uC11C \uBB34\uC5BC \uD558\uACE0
+    \uC2F6\uC5C8\uB358\uAC70\uC57C?"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 45461fa7f3c562f458fc696e4c6c4008, type: 2}
   m_sharedMaterial: {fileID: 5040206823531127963, guid: 45461fa7f3c562f458fc696e4c6c4008, type: 2}
@@ -18126,7 +18127,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uB098\uB294 \uCE5C\uAD6C\uAC00 \uC5C6\uC5B4\uC11C \uC654\uC5B4"
+  m_text: "\uC5D4\uBE44\uAC00 \uC774 \uC6A9\uBCD1\uB2E8\uC5D0\uC11C \uD65C\uAE30\uB97C
+    \uB418\uCC3E\uC544 \uC904 \uAC70 \uAC19\uC544!"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 45461fa7f3c562f458fc696e4c6c4008, type: 2}
   m_sharedMaterial: {fileID: 5040206823531127963, guid: 45461fa7f3c562f458fc696e4c6c4008, type: 2}
@@ -43290,8 +43292,9 @@ GameObject:
   - component: {fileID: 1785839325}
   - component: {fileID: 1785839324}
   - component: {fileID: 1785839323}
+  - component: {fileID: 1785839327}
   m_Layer: 5
-  m_Name: AnswerButton (4)
+  m_Name: submitButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -43399,6 +43402,21 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -250}
   m_SizeDelta: {x: 600, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1785839327
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1785839322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c739c77caf5a8ef4b928596a56eff427, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HTH.ButtonColor
+  _buttonText: {fileID: 181262964}
+  _originColor: {r: 0, g: 0, b: 0, a: 1}
+  _ChangeColor: {r: 0, g: 1, b: 0, a: 1}
 --- !u!1 &1795128934
 GameObject:
   m_ObjectHideFlags: 0
@@ -46903,7 +46921,7 @@ GameObject:
   - component: {fileID: 1979994652}
   - component: {fileID: 1979994653}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: TutoFinalDecisionPanelManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
