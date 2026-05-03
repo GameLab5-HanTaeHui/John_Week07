@@ -15711,7 +15711,7 @@ MonoBehaviour:
   _confirmMessage: "\uCD5C\uC885 \uCD94\uB9AC\uB97C \uC2DC\uC791\uD558\uC2DC\uACA0\uC2B5\uB2C8\uAE4C?"
   _confirmEnterMessage: "\uCD94\uB9AC\uD558\uAE30"
   _confirmUndoMessage: "\uB354 \uC0DD\uAC01\uD558\uAE30"
-  _profileInquirySelectPanel: {fileID: 974303485}
+  _profileInquirySelectPanel: {fileID: 1481394282}
 --- !u!4 &545330541 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4661819217327722248, guid: 122c2a29e08478b4a8778b03fea6a9e0, type: 3}
@@ -17442,10 +17442,11 @@ Transform:
   - {fileID: 533400558}
   - {fileID: 1383895553}
   - {fileID: 650009328}
-  - {fileID: 1565995717}
   - {fileID: 2077496616}
   - {fileID: 81887181}
   - {fileID: 974090815}
+  - {fileID: 1481394281}
+  - {fileID: 620678093}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &599471874
@@ -17955,7 +17956,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &610868180
 RectTransform:
   m_ObjectHideFlags: 0
@@ -18388,6 +18389,84 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 614286407}
   m_CullTransparentMesh: 1
+--- !u!1 &620678092
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 620678093}
+  - component: {fileID: 620678094}
+  m_Layer: 0
+  m_Name: ProfileInquiryUI
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &620678093
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 620678092}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 587401261}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &620678094
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 620678092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 379716a3ad69208409b479dd31b8d809, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HTH.Campaign.ProfileInquiryUI
+  _profileData: {fileID: 11400000, guid: 70849e93ff6cd624fa6b74f08b617d1c, type: 2}
+  _panel: {fileID: 1323383469}
+  _characterNameText: {fileID: 1847323210}
+  _questionText: {fileID: 801493567}
+  _choiceButtons:
+  - {fileID: 178086203}
+  - {fileID: 1148092791}
+  - {fileID: 574337614}
+  - {fileID: 582185308}
+  _choiceTexts:
+  - {fileID: 351806391}
+  - {fileID: 2104364603}
+  - {fileID: 1874581916}
+  - {fileID: 190487065}
+  _confirmPanel: {fileID: 0}
+  _confirmText: {fileID: 0}
+  _confirmButton: {fileID: 0}
+  _cancelButton: {fileID: 0}
+  _confirmMessage: "\uC774 \uB300\uD654\uB294 \uB418\uB3CC\uB9B4 \uC218 \uC5C6\uC2B5\uB2C8\uB2E4.\n\uC815\uB9D0
+    \uC774 \uB9D0\uC744 \uC804\uD558\uC2DC\uACA0\uC2B5\uB2C8\uAE4C?"
+  _resultPanel: {fileID: 0}
+  _resultText: {fileID: 0}
+  _fadeDuration: 0.5
+  _resultHoldTime: 2
+  _dialoguePlayer: {fileID: 0}
+  _successEndingText: "\uC6A9\uBCD1\uB2E8\uC740 \uBB34\uB108\uC84C\uB2E4.\n\uC5D4\uBE44\uB294
+    \uADF8 \uC790\uB9AC\uC5D0 \uC11C\uC11C, \uC790\uC2E0\uC774 \uC2EC\uC740 \uADE0\uC5F4\uC744
+    \uBC14\uB77C\uBCF4\uC558\uB2E4."
+  _failureEndingText: "\uC5B4\uB518\uAC00\uC5D0\uC11C \uC2E4\uC218\uAC00 \uC788\uC5C8\uB2E4.\n\uADF8
+    \uC0AC\uB78C\uC740 \uB05D\uB0B4 \uBB34\uB108\uC9C0\uC9C0 \uC54A\uC558\uB2E4."
+  _selectPanel: {fileID: 0}
+  _lobbySceneName: LobbyScene
+  _noticeLockDuration: 2
+  _totalCharacters: 6
 --- !u!114 &623822695 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2078732290592646873, guid: 93517c00edcb142479233bfe5274b838, type: 3}
@@ -29208,7 +29287,6 @@ GameObject:
   - component: {fileID: 974303482}
   - component: {fileID: 974303484}
   - component: {fileID: 974303483}
-  - component: {fileID: 974303485}
   m_Layer: 5
   m_Name: FinalProfilePanel
   m_TagString: Untagged
@@ -29276,26 +29354,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 974303481}
   m_CullTransparentMesh: 1
---- !u!114 &974303485
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 974303481}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 06ce227d8e40b334b90a44f45911a1f6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::HTH.Campaign.ProfileInquirySelectPanel
-  _panel: {fileID: 974303481}
-  _iconButtonPrefab: {fileID: 3472748707146459272, guid: 98b429aa201d0864d84e7746b523609e, type: 3}
-  _iconGrid: {fileID: 1092284505}
-  _closeButton: {fileID: 605788470}
-  _profileInquiryUI: {fileID: 1323383471}
-  _fragmentCollector: {fileID: 81887182}
-  _profileData: {fileID: 11400000, guid: 70849e93ff6cd624fa6b74f08b617d1c, type: 2}
-  _buttons: []
 --- !u!1001 &975259118
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -39286,7 +39344,6 @@ GameObject:
   - component: {fileID: 1323383470}
   - component: {fileID: 1323383473}
   - component: {fileID: 1323383472}
-  - component: {fileID: 1323383471}
   m_Layer: 5
   m_Name: ProfileInquiy
   m_TagString: Untagged
@@ -39325,52 +39382,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1820, y: 980}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1323383471
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1323383469}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 379716a3ad69208409b479dd31b8d809, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::HTH.Campaign.ProfileInquiryUI
-  _profileData: {fileID: 11400000, guid: 70849e93ff6cd624fa6b74f08b617d1c, type: 2}
-  _panel: {fileID: 1323383469}
-  _characterNameText: {fileID: 1847323210}
-  _questionText: {fileID: 801493567}
-  _choiceButtons:
-  - {fileID: 178086203}
-  - {fileID: 1148092791}
-  - {fileID: 574337614}
-  - {fileID: 582185308}
-  _choiceTexts:
-  - {fileID: 351806391}
-  - {fileID: 2104364603}
-  - {fileID: 1874581916}
-  - {fileID: 190487065}
-  _confirmPanel: {fileID: 0}
-  _confirmText: {fileID: 0}
-  _confirmButton: {fileID: 0}
-  _cancelButton: {fileID: 0}
-  _confirmMessage: "\uC774 \uB300\uD654\uB294 \uB418\uB3CC\uB9B4 \uC218 \uC5C6\uC2B5\uB2C8\uB2E4.\n\uC815\uB9D0
-    \uC774 \uB9D0\uC744 \uC804\uD558\uC2DC\uACA0\uC2B5\uB2C8\uAE4C?"
-  _resultPanel: {fileID: 0}
-  _resultText: {fileID: 0}
-  _fadeDuration: 0.5
-  _resultHoldTime: 2
-  _dialoguePlayer: {fileID: 0}
-  _successEndingText: "\uC6A9\uBCD1\uB2E8\uC740 \uBB34\uB108\uC84C\uB2E4.\n\uC5D4\uBE44\uB294
-    \uADF8 \uC790\uB9AC\uC5D0 \uC11C\uC11C, \uC790\uC2E0\uC774 \uC2EC\uC740 \uADE0\uC5F4\uC744
-    \uBC14\uB77C\uBCF4\uC558\uB2E4."
-  _failureEndingText: "\uC5B4\uB518\uAC00\uC5D0\uC11C \uC2E4\uC218\uAC00 \uC788\uC5C8\uB2E4.\n\uADF8
-    \uC0AC\uB78C\uC740 \uB05D\uB0B4 \uBB34\uB108\uC9C0\uC9C0 \uC54A\uC558\uB2E4."
-  _selectPanel: {fileID: 974303485}
-  _lobbySceneName: LobbyScene
-  _noticeLockDuration: 2
-  _totalCharacters: 6
 --- !u!114 &1323383472
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -40804,6 +40815,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HTH.Campaign.DialogueTriggerManager
   _fragmentData: {fileID: 11400000, guid: a906ad4e8ba4f01469306c585efc0274, type: 2}
+  _profileData: {fileID: 11400000, guid: 70849e93ff6cd624fa6b74f08b617d1c, type: 2}
   _dialoguePlayer: {fileID: 2077496617}
   _fragmentCollector: {fileID: 81887182}
   _anchorCharacterId: 1
@@ -43564,6 +43576,58 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1479577405}
   m_CullTransparentMesh: 1
+--- !u!1 &1481394280
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1481394281}
+  - component: {fileID: 1481394282}
+  m_Layer: 0
+  m_Name: ProfielSelectPanel
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1481394281
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1481394280}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 587401261}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1481394282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1481394280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06ce227d8e40b334b90a44f45911a1f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HTH.Campaign.ProfileInquirySelectPanel
+  _panel: {fileID: 974303481}
+  _iconButtonPrefab: {fileID: 3472748707146459272, guid: 98b429aa201d0864d84e7746b523609e, type: 3}
+  _iconGrid: {fileID: 1092284505}
+  _closeButton: {fileID: 605788470}
+  _profileInquiryUI: {fileID: 620678094}
+  _fragmentCollector: {fileID: 81887182}
+  _profileData: {fileID: 11400000, guid: 70849e93ff6cd624fa6b74f08b617d1c, type: 2}
+  _buttons: []
 --- !u!1 &1482818091
 GameObject:
   m_ObjectHideFlags: 0
@@ -45745,73 +45809,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a091974841d03a49922d7b11351c136, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HTH.Campaign.CampaignPanelManager
---- !u!1 &1565995716
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1565995717}
-  - component: {fileID: 1565995718}
-  m_Layer: 0
-  m_Name: EnddingDialoguePlayer
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1565995717
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1565995716}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 587401261}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1565995718
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1565995716}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a8807f97de361b340af7a27d82943462, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::HTH.Campaign.EndingDialoguePlayer
-  _profileData: {fileID: 11400000, guid: 70849e93ff6cd624fa6b74f08b617d1c, type: 2}
-  _panel: {fileID: 321175536}
-  _backgroundImage: {fileID: 1224340404}
-  _nameText: {fileID: 350172234}
-  _dialogueText: {fileID: 1634299471}
-  _clickIndicator: {fileID: 0}
-  _backgroundSprites:
-  - {fileID: 0}
-  - {fileID: 21300000, guid: b68ce7ee735957f46aac983d4fca0803, type: 3}
-  - {fileID: 21300000, guid: ac9088d1bf1998a44a8eeec403dd264d, type: 3}
-  - {fileID: 21300000, guid: 484145e7050ecd2428f736cb1261a825, type: 3}
-  - {fileID: 21300000, guid: 99bb6781bae90764faec8614b21f7e33, type: 3}
-  - {fileID: 21300000, guid: b084f8f70a654704f8aac460b6217ca0, type: 3}
-  - {fileID: 21300000, guid: 80338f499f9f79640aa74de2ef72030c, type: 3}
-  - {fileID: 21300000, guid: 8808ade9a103ff54891d0fb0c80bdd0e, type: 3}
-  _clickToAdvance: 1
-  _autoAdvanceDelay: 3
-  _typingSpeed: 0.03
-  _skipTypingOnClick: 1
-  _fadeDuration: 0.4
-  _fadePerLine: 0
-  _clickBlockDuration: 0.8
-  _hideNameForSpeakerZero: 1
 --- !u!1 &1573995370
 GameObject:
   m_ObjectHideFlags: 0
@@ -58592,6 +58589,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f020a46257c78a499417c32d01f8733, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HTH.Campaign.DialoguePlayer
+  _profileData: {fileID: 11400000, guid: 70849e93ff6cd624fa6b74f08b617d1c, type: 2}
   _dialoguePanel: {fileID: 321175536}
   _characterImage: {fileID: 1224340404}
   _nameText: {fileID: 350172234}
@@ -58608,6 +58606,18 @@ MonoBehaviour:
   _clickToAdvance: 1
   _autoAdvanceDelay: 2
   _clickBlockDuration: 1.5
+  _endingPanel: {fileID: 0}
+  _backgroundImage: {fileID: 0}
+  _clickIndicator: {fileID: 0}
+  _backgroundSprites: []
+  _endingClickToAdvance: 1
+  _endingAutoAdvanceDelay: 3
+  _typingSpeed: 0.03
+  _skipTypingOnClick: 1
+  _fadeDuration: 0.4
+  _fadePerLine: 0
+  _endingClickBlockDuration: 0.8
+  _hideNameForSpeakerZero: 1
 --- !u!1 &2083819459
 GameObject:
   m_ObjectHideFlags: 0

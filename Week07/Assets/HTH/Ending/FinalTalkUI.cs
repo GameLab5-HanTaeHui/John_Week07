@@ -89,7 +89,7 @@ namespace HTH.Campaign
         [Header("대화 출력")]
         [Tooltip("도입 대사 및 결과 대화를 출력할 EndingDialoguePlayer입니다.\n" +
                  "FinalTalkLine 기반 대사를 출력합니다.")]
-        [SerializeField] private EndingDialoguePlayer _endingDialoguePlayer;
+        [SerializeField] private DialoguePlayer _dialoguePlayer;
 
         [Header("연결")]
         [SerializeField] private MonoBehaviour _selectPanel;
@@ -217,10 +217,10 @@ namespace HTH.Campaign
 
         private IEnumerator PlayIntroAndShowChoices(FinalTalkData data)
         {
-            if (data != null && data.IntroLines.Count > 0 && _endingDialoguePlayer != null)
+            if (data != null && data.IntroLines.Count > 0 && _dialoguePlayer != null)
             {
                 bool done = false;
-                _endingDialoguePlayer.Play(data.IntroLines, onComplete: () => done = true);
+                _dialoguePlayer.Play(data.IntroLines, onComplete: () => done = true);
                 yield return new WaitUntil(() => done);
             }
 
@@ -288,10 +288,10 @@ namespace HTH.Campaign
 
             // 결과 대화 출력 — 미구현이면 공란 처리
             if (resultDialogue != null && resultDialogue.Lines.Count > 0
-                && _endingDialoguePlayer != null)
+                && _dialoguePlayer != null)
             {
                 bool done = false;
-                _endingDialoguePlayer.Play(resultDialogue.Lines, onComplete: () => done = true);
+                _dialoguePlayer.Play(resultDialogue.Lines, onComplete: () => done = true);
                 yield return new WaitUntil(() => done);
             }
             else

@@ -164,7 +164,12 @@ namespace HTH.Campaign
 
             // 삭제 전 보존할 필드 캡처
             bool savedTutorialCleared = false;
-            bool savedP02_01 = false;
+            var savedFragments = new System.Collections.Generic.List<string>();
+
+            // 튜토리얼 보상 조각 목록 (TutorialSaveHelper.RewardFragmentIds와 동일)
+            var tutorialFragmentIds = new[] {
+                "P01_01", "P01_02", "P01_03", "P01_04", "P01_05", "P02_01"
+            };
 
             try
             {
@@ -173,7 +178,9 @@ namespace HTH.Campaign
                 if (oldData != null)
                 {
                     savedTutorialCleared = oldData.isTutorialCleared;
-                    savedP02_01 = oldData.collectedFragmentIds?.Contains("P02_01") ?? false;
+                    foreach (var id in tutorialFragmentIds)
+                        if (oldData.collectedFragmentIds?.Contains(id) ?? false)
+                            savedFragments.Add(id);
                 }
             }
             catch (Exception e)
@@ -185,17 +192,17 @@ namespace HTH.Campaign
             Debug.Log($"[CampaignSaveManager] 저장 데이터 삭제 완료 — {stageId}");
 
             // 보존 데이터가 있으면 새 파일로 즉시 기록
-            if (savedTutorialCleared || savedP02_01)
+            if (savedTutorialCleared || savedFragments.Count > 0)
             {
                 var preserved = new CampaignSaveData { stageId = stageId };
                 preserved.isTutorialCleared = savedTutorialCleared;
-                if (savedP02_01)
-                    preserved.collectedFragmentIds.Add("P02_01");
+                foreach (var id in savedFragments)
+                    preserved.collectedFragmentIds.Add(id);
 
                 CurrentSave = preserved;
                 Save(preserved);
                 Debug.Log($"[CampaignSaveManager] 보존 데이터 유지 — " +
-                          $"튜토리얼:{savedTutorialCleared}, P02_01:{savedP02_01}");
+                          $"튜토리얼:{savedTutorialCleared}, 조각:{string.Join(",", savedFragments)}");
             }
             else
             {

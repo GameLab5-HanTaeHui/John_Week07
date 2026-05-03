@@ -7,40 +7,61 @@ using UnityEngine.UI;
 namespace HTH.Campaign.Lobby
 {
     /// <summary>
-    /// 로비 진입 시 튜토리얼/캠페인 클리어 상태를 JSON 데이터에서 확인하고,
-    /// 해금된 콘텐츠(캠페인 모드, 도감)에 대한 알림 팝업을 띄웁니다.
-    /// (앱 실행 기준 세션당 1회만 표시됩니다)
+    /// 로비 진입 시 캠페인 저장 데이터를 로드해
+    /// 메뉴 버튼 표시/숨김 및 알림 팝업을 처리합니다.
+    ///
+    /// ─── 버튼 표시 조건 (SetActive) ──────────────────────────────────────
+    ///   캠페인 버튼  : isTutorialCleared = true
+    ///   초기화 버튼  : isTutorialCleared = true
+    ///                  (튜토리얼 보상 P01_01~05 / P02_01 / isTutorialCleared 는 초기화 제외)
+    ///   다음장 버튼  : unlockedEpilogues 1개 이상
+    ///
+    /// ─── 첫 실행 (JSON 없음) ─────────────────────────────────────────────
+    ///   3개 버튼 모두 SetActive(false) 유지
+    ///
+    /// ─── 알림 팝업 ───────────────────────────────────────────────────────
+    ///   세션당 1회만 표시 (static 플래그)
     /// </summary>
     [DisallowMultipleComponent]
     public class LobbyUnlockNotification : MonoBehaviour
     {
+        private const string StageId = "CampaignMode";
+
         [Header("UI 요소 (알림창)")]
         [SerializeField] private GameObject _notificationPanel;
         [SerializeField] private TMP_Text _messageText;
         [SerializeField] private Button _closeButton;
         [SerializeField] private CanvasGroup _canvasGroup;
 
-        [Header("로비 메뉴 버튼 (해금 제어용)")]
-        [Tooltip("튜토리얼 클리어 시 활성화될 캠페인 모드 버튼")]
-        [SerializeField] private Button _campaignButton;
+        [Header("로비 메뉴 버튼")]
+        [Tooltip("isTutorialCleared = true 시 표시되는 캠페인 버튼")]
+        [SerializeField] private GameObject _campaignButton;
 
-        [Tooltip("캠페인 클리어 시 활성화될 도감(시점 완결문) 버튼")]
-        [SerializeField] private Button _collectionButton;
+        [Tooltip("isTutorialCleared = true 시 표시되는 초기화 버튼\n" +
+                 "★ 초기화 시 튜토리얼 보상(P01_01~05, P02_01, isTutorialCleared)은 보존됩니다.")]
+        [SerializeField] private GameObject _resetButton;
 
-        [Header("데이터 및 설정")]
-        [SerializeField] private RewardSaveData _rewardSaveData;
+        [Tooltip("unlockedEpilogues 1개 이상 시 표시되는 다음장 버튼")]
+        [SerializeField] private GameObject _nextChapterButton;
+
+        [Header("설정")]
         [SerializeField] private float _fadeDuration = 0.5f;
-        [SerializeField] private float _autoCloseDelay = 3.0f;
 
-        // 내부 상태
-        private Coroutine _autoCloseCoroutine;
-
-        // PlayerPrefs 대신 작성자님의 원본 코드 방식(static 메모리 유지) 적용
+        // 세션당 1회 표시 플래그
         private static bool _shownTutorialPopupThisSession = false;
         private static bool _shownCollectionPopupThisSession = false;
 
+        private Coroutine _autoCloseCoroutine;
+
+        // ── Unity ────────────────────────────────────────────────────────
+
         private void Awake()
         {
+            // ★ 기본값 = 숨김 — JSON 로드 전까지 전부 비표시
+            _campaignButton?.SetActive(false);
+            _resetButton?.SetActive(false);
+            _nextChapterButton?.SetActive(false);
+
             if (_canvasGroup == null && _notificationPanel != null)
             {
                 _canvasGroup = _notificationPanel.GetComponent<CanvasGroup>();
@@ -48,102 +69,80 @@ namespace HTH.Campaign.Lobby
                     _canvasGroup = _notificationPanel.AddComponent<CanvasGroup>();
             }
 
-            if (_notificationPanel != null)
-                _notificationPanel.SetActive(false);
+            if (_notificationPanel != null) _notificationPanel.SetActive(false);
 
             _closeButton?.onClick.AddListener(HideNotification);
-
-            // 시작할 때 JSON 데이터 기반으로 메뉴 버튼 활성화/비활성화 처리
-            InitializeMenuButtons();
         }
 
         private void Start()
         {
-            StartCoroutine(CheckAndShowUnlockNotificationRoutine());
+            StartCoroutine(LoadAndInitialize());
         }
 
         private void OnDestroy()
         {
             _closeButton?.onClick.RemoveListener(HideNotification);
-
-            if (_canvasGroup != null)
-            {
-                _canvasGroup.DOKill();
-            }
+            _canvasGroup?.DOKill();
         }
 
-        /// <summary>
-        /// JSON 데이터 기반으로 로비 메뉴 버튼들의 잠금을 해제합니다.
-        /// </summary>
-        private void InitializeMenuButtons()
-        {
-            // 1. 캠페인 버튼 활성화 (튜토리얼 클리어 여부 확인)
-            bool isTutorialCleared = _rewardSaveData != null && _rewardSaveData.IsTutorialCleared();
-            if (_campaignButton != null) _campaignButton.interactable = isTutorialCleared;
+        // ── 초기화 ───────────────────────────────────────────────────────
 
-            // 2. 도감 버튼 활성화 (도감 1개 이상 해금 여부 확인)
-            bool isCampaignCleared = GetUnlockedEpilogueCount() > 0;
-            if (_collectionButton != null) _collectionButton.interactable = isCampaignCleared;
+        private IEnumerator LoadAndInitialize()
+        {
+            // 1프레임 대기 — CampaignSaveManager Start() 완료 보장
+            yield return null;
+
+            var mgr = CampaignSaveManager.GetOrCreate();
+            var saveData = mgr.CurrentSave ?? mgr.Load(StageId);
+
+            bool isTutorialCleared = saveData?.isTutorialCleared ?? false;
+            int epilogueCount = saveData?.unlockedEpilogues?.Count ?? 0;
+
+            // 버튼 표시/숨김
+            _campaignButton?.SetActive(isTutorialCleared);
+            _resetButton?.SetActive(isTutorialCleared);
+            _nextChapterButton?.SetActive(epilogueCount > 0);
+
+            Debug.Log($"[LobbyUnlockNotification] 로드 완료 — " +
+                      $"튜토리얼:{isTutorialCleared}, 에필로그:{epilogueCount}개");
+
+            // 알림 팝업 (세션당 1회)
+            yield return ShowUnlockNotification(isTutorialCleared, epilogueCount);
         }
 
-        private IEnumerator CheckAndShowUnlockNotificationRoutine()
+        // ── 알림 팝업 ────────────────────────────────────────────────────
+
+        private IEnumerator ShowUnlockNotification(bool isTutorialCleared, int epilogueCount)
         {
-            yield return null; // 데이터 로드 대기
-
-            bool isTutorialCleared = _rewardSaveData != null && _rewardSaveData.IsTutorialCleared();
-            int unlockedCount = GetUnlockedEpilogueCount();
-
-            // ── 1. 튜토리얼 클리어 -> 캠페인 해금 알림 ──
             if (isTutorialCleared && !_shownTutorialPopupThisSession)
             {
                 _shownTutorialPopupThisSession = true;
                 ShowNotification("튜토리얼 클리어!\n<color=#FFD700>[캠페인 모드]</color>가 해금되었습니다.");
-                yield break; // 알림창이 겹치지 않도록 여기서 중단
+                yield break;
             }
 
-            // ── 2. 캠페인 클리어 -> 도감 해금 알림 ──
-            if (unlockedCount > 0 && !_shownCollectionPopupThisSession)
+            if (epilogueCount > 0 && !_shownCollectionPopupThisSession)
             {
                 _shownCollectionPopupThisSession = true;
-                string message = unlockedCount == 1
-                    ? "캠페인 클리어!\n<color=#FFD700>도감</color>에 시점 완결문이 해금되었습니다."
-                    : $"새로운 시점 완결문 해금!\n현재 총 <color=#FFD700>{unlockedCount}</color>개의 도감이 열렸습니다.";
-
-                ShowNotification(message);
+                string msg = epilogueCount == 1
+                    ? "캠페인 클리어!\n<color=#FFD700>다음장</color>이 해금되었습니다."
+                    : $"새로운 시점 완결문 해금!\n현재 총 <color=#FFD700>{epilogueCount}</color>개가 열렸습니다.";
+                ShowNotification(msg);
             }
         }
 
-        private int GetUnlockedEpilogueCount()
-        {
-            if (_rewardSaveData == null) return 0;
-
-            int count = 0;
-            for (int i = 1; i <= 7; i++)
-            {
-                // JSON에 기록된 시점 완결문(Epilogue) 해금 개수 산출
-                if (_rewardSaveData.IsEpilogueUnlocked(i)) count++;
-            }
-            return count;
-        }
+        // ── 팝업 표시/숨김 ───────────────────────────────────────────────
 
         private void ShowNotification(string message)
         {
-            if (_messageText != null)
-                _messageText.text = message;
-
-            if (_notificationPanel != null)
-                _notificationPanel.SetActive(true);
+            if (_messageText != null) _messageText.text = message;
+            if (_notificationPanel != null) _notificationPanel.SetActive(true);
 
             if (_canvasGroup != null)
             {
                 _canvasGroup.DOKill();
                 _canvasGroup.alpha = 0f;
                 _canvasGroup.DOFade(1f, _fadeDuration);
-            }
-
-            if (_autoCloseDelay > 0f)
-            {
-                if (_autoCloseCoroutine != null) StopCoroutine(_autoCloseCoroutine);
             }
         }
 
@@ -162,9 +161,7 @@ namespace HTH.Campaign.Lobby
                     .OnComplete(() => _notificationPanel?.SetActive(false));
             }
             else
-            {
                 _notificationPanel?.SetActive(false);
-            }
         }
     }
 }

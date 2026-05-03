@@ -72,6 +72,9 @@ namespace HTH.Campaign
         /// <summary>강제퇴고 후 OnLoopReset에서 지급할 조각 목록</summary>
         private List<FragmentEntry> _pendingForcedClues;
 
+        /// <summary>강제퇴고 LoopReset 후 재생할 다이얼로그 조각 목록</summary>
+        private List<FragmentEntry> _pendingForcedDialogue;
+
         public bool IsWaitingForDialogue { get; private set; }
 
         // ── Unity ────────────────────────────────────────────────────────
@@ -193,21 +196,22 @@ namespace HTH.Campaign
 
         private IEnumerator PlayForcedExitCoroutine(List<FragmentEntry> clues)
         {
-            IsWaitingForDialogue = true;
+            // ★ 순서:
+            //   1. FinishTurnEnd() → 검은화면 + 캐릭터 위치 초기화(LoopReset)
+            //   2. OnLoopReset 수신 대기
+            //   3. 검은화면 끝난 후 다이얼로그 출력
+            //   4. 조각 지급
 
-            foreach (var clue in clues)
-            {
-                if (clue.Lines == null || clue.Lines.Count == 0) continue;
-                bool done = false;
-                _dialoguePlayer.Play(clue.Lines, onComplete: () => done = true);
-                yield return new WaitUntil(() => done);
-            }
-
-            IsWaitingForDialogue = false;
-
-            // 조각 지급은 퇴고(루프 리셋) 후로 예약
+            // 조각 목록 예약 (OnLoopReset에서 지급)
             _pendingForcedClues = clues;
+
+            // 다이얼로그는 LoopReset 후 재생하도록 플래그 설정
+            _pendingForcedDialogue = clues;
+
+            // FinishTurnEnd → 검은화면 + LoopReset 발생
             CampaignGameFlowController.Instance?.FinishTurnEnd();
+
+            yield break; // 이후 처리는 OnLoopReset에서 담당
         }
 
         // ── 일반 턴 종료 처리 (아침/점심/저녁 공통) ──────────────────────
@@ -277,23 +281,7 @@ namespace HTH.Campaign
                     foreach (var simId in entry.SimultaneousIds)
                         if (!string.IsNullOrEmpty(simId)) notifyIds.Add(simId);
 
-                // 조각별 알림을 1개씩 순서대로 표시
-                foreach (var fragmentId in notifyIds)
-                {
-                    int charId = ParseCharId(fragmentId);
-                    string name = GetCharacterName(charId);
-                    Color color = GetPersonalColor(charId);
-
-                    // 알림 메시지 (이름에 퍼스널컬러 적용)
-                    string colorHex = ColorUtility.ToHtmlStringRGB(color);
-                    string msg = $"<color=#{colorHex}>{name}</color>의 대화 조각을 획득했습니다.\n인물 기록장에서 확인할 수 있습니다.";
-
-                    bool notifyDone = false;
-                    _dialoguePlayer.PlayNotification(
-                        new List<string> { msg },
-                        onComplete: () => notifyDone = true);
-                    yield return new WaitUntil(() => notifyDone);
-                }
+                yield return StartCoroutine(PlayFragmentNotifications(notifyIds));
             }
 
             Debug.Log($"[DTM] 대사 완료 — {entry.ProfileClueId}, FinishTurnEnd");
@@ -304,18 +292,90 @@ namespace HTH.Campaign
 
         private void OnLoopReset()
         {
+            // ★ 강제퇴고 흐름:
+            //   LoopReset = 캐릭터 위치 초기화 완료 시점
+            //   → 여기서 다이얼로그 출력 (검은화면 끝난 후)
+            //   → 다이얼로그 완료 후 조각 지급
+            if (_pendingForcedDialogue != null && _pendingForcedDialogue.Count > 0)
+            {
+                var dialogueClues = _pendingForcedDialogue;
+                _pendingForcedDialogue = null;
+                StartCoroutine(PlayForcedExitDialogueAfterReset(dialogueClues));
+                return;
+            }
+
+            // 다이얼로그 없이 조각만 지급
+            GrantPendingForcedClues();
+        }
+
+        private IEnumerator PlayForcedExitDialogueAfterReset(List<FragmentEntry> clues)
+        {
+            IsWaitingForDialogue = true;
+
+            foreach (var clue in clues)
+            {
+                if (clue.Lines == null || clue.Lines.Count == 0) continue;
+                bool done = false;
+                _dialoguePlayer.Play(clue.Lines, onComplete: () => done = true);
+                yield return new WaitUntil(() => done);
+            }
+
+            IsWaitingForDialogue = false;
+
+            // 다이얼로그 완료 후 조각 지급
+            GrantPendingForcedClues();
+        }
+
+        private void GrantPendingForcedClues()
+        {
             if (_pendingForcedClues == null || _pendingForcedClues.Count == 0)
             {
                 _pendingForcedClues = null;
                 return;
             }
 
-            foreach (var clue in _pendingForcedClues)
+            var clues = _pendingForcedClues;
+            _pendingForcedClues = null;
+            StartCoroutine(GrantForcedCluesWithNotification(clues));
+        }
+
+        private IEnumerator GrantForcedCluesWithNotification(List<FragmentEntry> clues)
+        {
+            foreach (var clue in clues)
             {
                 Debug.Log($"[DTM] 강제퇴고 후 조각 지급 — {clue.ProfileClueId}");
                 _fragmentCollector?.TryCollectFragment(clue.ProfileClueId);
+
+                // 주 조각 + 동시획득 조각 알림 목록 구성
+                var notifyIds = new List<string> { clue.ProfileClueId };
+                if (clue.SimultaneousIds != null)
+                    foreach (var simId in clue.SimultaneousIds)
+                        if (!string.IsNullOrEmpty(simId)) notifyIds.Add(simId);
+
+                yield return StartCoroutine(PlayFragmentNotifications(notifyIds));
             }
-            _pendingForcedClues = null;
+        }
+
+        /// <summary>
+        /// 조각 ID 목록에 대해 퍼스널컬러 이름 알림을 1개씩 순서대로 표시합니다.
+        /// 일반 턴 종료와 강제퇴고 양쪽에서 공통으로 사용합니다.
+        /// </summary>
+        private IEnumerator PlayFragmentNotifications(List<string> fragmentIds)
+        {
+            foreach (var fragmentId in fragmentIds)
+            {
+                int charId = ParseCharId(fragmentId);
+                string name = GetCharacterName(charId);
+                Color color = GetPersonalColor(charId);
+                string colorHex = ColorUtility.ToHtmlStringRGB(color);
+                string msg = $"<color=#{colorHex}>{name}</color>의 대화 조각을 획득했습니다.\n인물 기록장에서 확인할 수 있습니다.";
+
+                bool notifyDone = false;
+                _dialoguePlayer.PlayNotification(
+                    new List<string> { msg },
+                    onComplete: () => notifyDone = true);
+                yield return new WaitUntil(() => notifyDone);
+            }
         }
 
         // ── 게임 상태 스냅샷 ──────────────────────────────────────────────
@@ -326,28 +386,37 @@ namespace HTH.Campaign
             var gameState = CampaignGameFlowController.Instance?.GameState;
             if (gameState == null) return snap;
 
-            // 앵커(엔비) Zone 기준
             var anchor = gameState.GetCharacter(_anchorCharacterId);
-            if (anchor == null || !anchor.IsAlive)
+            if (anchor == null)
             {
-                Debug.Log($"[DTM] 앵커 #{_anchorCharacterId} 사망 — 스냅샷 비어있음");
+                Debug.Log($"[DTM] 앵커 #{_anchorCharacterId} 없음 — 스냅샷 비어있음");
                 return snap;
             }
 
+            // ★ 엔비 사망 시에도 GetZone()으로 마지막 위치 읽음
             snap.AnchorZoneId = gameState.GetZone(_anchorCharacterId);
 
+            // 해당 Zone의 생존 캐릭터 수집
             foreach (var ch in gameState.GetCharactersInZone(snap.AnchorZoneId))
                 if (ch.IsAlive)
                     snap.LivingInAnchorZone.Add(ch.CharacterId);
 
-            // 이번 턴 사망 마크 기준
+            // ★ 강제퇴고 시 엔비(사망)도 combo 판별용으로 포함
+            // P05_01/P05_04의 combo:[1,5] 조건을 통과하기 위함
+            if (!anchor.IsAlive && !snap.LivingInAnchorZone.Contains(_anchorCharacterId))
+                snap.LivingInAnchorZone.Add(_anchorCharacterId);
+
+            // ★ 사망 판별: IsAlive=false 기준 (ConfirmDeaths 이후 마크는 클리어됨)
             foreach (int id in gameState.GetAllCharacterIds())
-                if (gameState.IsMarkedForDeath(id))
+            {
+                var ch = gameState.GetCharacter(id);
+                if (ch != null && !ch.IsAlive)
                     snap.DeadCharacters.Add(id);
+            }
 
             Debug.Log($"[DTM] 스냅샷 — Zone{snap.AnchorZoneId} " +
-                      $"생존:[{string.Join(",", snap.LivingInAnchorZone)}] " +
-                      $"사망마크:[{string.Join(",", snap.DeadCharacters)}]");
+                      $"Combo판별:[{string.Join(",", snap.LivingInAnchorZone)}] " +
+                      $"사망:[{string.Join(",", snap.DeadCharacters)}]");
 
             return snap;
         }

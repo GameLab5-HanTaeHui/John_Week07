@@ -138,16 +138,22 @@ namespace HTH.Campaign
 
         // ── 클리어 상태 갱신 ──────────────────────────────────
         /// <summary>
-        /// 클리어(에필로그 해금) 여부에 따라 전용 텍스트/마크를 켜거나 끕니다.
-        /// ProfileInquirySelectPanel.RefreshButtonStates()에서 호출합니다.
+        /// 최종 추리 완료 여부와 성공/실패에 따라 ProfileText를 표시합니다.
+        /// isCompleted=true 시 ProfileText 활성화,
+        /// isSuccess에 따라 "성공" / "실패" 텍스트 표시.
         /// </summary>
-        public void SetClearedState(bool isCleared)
+        public void SetClearedState(bool isCompleted, bool isSuccess = false)
         {
-            if (isCleared) _completeText.SetActive(isCleared);
-            else _completeText.SetActive(isCleared);
+            if (_completeText == null) return;
 
-            // 로그를 통해 실제로 활성화 됐는지, 그리고 이 오브젝트가 '복제본'이 맞는지 확인
-            Debug.Log($"[#{_characterId}] {gameObject.name}의 텍스트 상태: {_completeText.activeSelf} / 오브젝트 경로: {(_completeText)}");
+            _completeText.SetActive(isCompleted);
+
+            if (isCompleted)
+            {
+                var tmp = _completeText.GetComponent<TMPro.TMP_Text>();
+                if (tmp != null)
+                    tmp.text = isSuccess ? "성공" : "실패";
+            }
         }
 
         // ── Private ──────────────────────────────────────────────────────

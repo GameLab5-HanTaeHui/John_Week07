@@ -3025,6 +3025,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TutorialManager
   _guideData: {fileID: 11400000, guid: 13d0f83cf021b6a40b9b66b3821614c1, type: 2}
+  _rewardSaveData: {fileID: 0}
   _uiManager: {fileID: 737311859}
   _restrictedCharacterId: 1
   _restrictedTargetZoneId: 2
@@ -4006,7 +4007,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d95bf3590624a8a45aa723627bf86580, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HTH.Campaign.HintPanel
-  _hintData: {fileID: 11400000, guid: 48e63051c8c6e794384277339bd94fd3, type: 2}
+  _fragmentData: {fileID: 0}
   _fragmentCollector: {fileID: 0}
   _hintTexts:
   - {fileID: 2034453224}
@@ -12141,7 +12142,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4bdbae446cbc8949bb7455dddfa9e57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HTH.Campaign.CharacterRecordPanel
-  _profileClueData: {fileID: 11400000, guid: 017bef57275218345a0bf5c823283a36, type: 2}
+  _fragmentData: {fileID: 11400000, guid: a906ad4e8ba4f01469306c585efc0274, type: 2}
   _profileData: {fileID: 11400000, guid: 70849e93ff6cd624fa6b74f08b617d1c, type: 2}
   _fragmentCollector: {fileID: 989183191}
   _flipRoot: {fileID: 503814679}
@@ -12258,7 +12259,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4bdbae446cbc8949bb7455dddfa9e57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HTH.Campaign.CharacterRecordPanel
-  _profileClueData: {fileID: 11400000, guid: 017bef57275218345a0bf5c823283a36, type: 2}
+  _fragmentData: {fileID: 0}
   _profileData: {fileID: 11400000, guid: 70849e93ff6cd624fa6b74f08b617d1c, type: 2}
   _fragmentCollector: {fileID: 0}
   _flipRoot: {fileID: 509742165}
@@ -25951,8 +25952,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1cc4c210b5e9bf43ac7d52f1b002b00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HTH.Campaign.FragmentCollector
-  _conceptCardMinFragments: 10
-  _rewardSaveData: {fileID: 11400000, guid: a9a937f157d7ba24abcb1607e860d056, type: 2}
+  _fragmentData: {fileID: 0}
 --- !u!1 &997250379
 GameObject:
   m_ObjectHideFlags: 0
@@ -26731,7 +26731,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d95bf3590624a8a45aa723627bf86580, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HTH.Campaign.HintPanel
-  _hintData: {fileID: 11400000, guid: 48e63051c8c6e794384277339bd94fd3, type: 2}
+  _fragmentData: {fileID: 0}
   _fragmentCollector: {fileID: 0}
   _hintTexts:
   - {fileID: 1515716256}
@@ -28194,7 +28194,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4bdbae446cbc8949bb7455dddfa9e57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HTH.Campaign.CharacterRecordPanel
-  _profileClueData: {fileID: 11400000, guid: 017bef57275218345a0bf5c823283a36, type: 2}
+  _fragmentData: {fileID: 0}
   _profileData: {fileID: 11400000, guid: 70849e93ff6cd624fa6b74f08b617d1c, type: 2}
   _fragmentCollector: {fileID: 0}
   _flipRoot: {fileID: 1091292561}
@@ -32923,7 +32923,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4bdbae446cbc8949bb7455dddfa9e57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HTH.Campaign.CharacterRecordPanel
-  _profileClueData: {fileID: 11400000, guid: 017bef57275218345a0bf5c823283a36, type: 2}
+  _fragmentData: {fileID: 0}
   _profileData: {fileID: 11400000, guid: 70849e93ff6cd624fa6b74f08b617d1c, type: 2}
   _fragmentCollector: {fileID: 0}
   _flipRoot: {fileID: 1317826036}
@@ -33040,7 +33040,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4bdbae446cbc8949bb7455dddfa9e57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HTH.Campaign.CharacterRecordPanel
-  _profileClueData: {fileID: 11400000, guid: 017bef57275218345a0bf5c823283a36, type: 2}
+  _fragmentData: {fileID: 0}
   _profileData: {fileID: 11400000, guid: 70849e93ff6cd624fa6b74f08b617d1c, type: 2}
   _fragmentCollector: {fileID: 0}
   _flipRoot: {fileID: 1319854436}
@@ -33783,7 +33783,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4bdbae446cbc8949bb7455dddfa9e57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HTH.Campaign.CharacterRecordPanel
-  _profileClueData: {fileID: 11400000, guid: 017bef57275218345a0bf5c823283a36, type: 2}
+  _fragmentData: {fileID: 0}
   _profileData: {fileID: 11400000, guid: 70849e93ff6cd624fa6b74f08b617d1c, type: 2}
   _fragmentCollector: {fileID: 0}
   _flipRoot: {fileID: 1375707693}
@@ -35116,7 +35116,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d95bf3590624a8a45aa723627bf86580, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HTH.Campaign.HintPanel
-  _hintData: {fileID: 11400000, guid: 48e63051c8c6e794384277339bd94fd3, type: 2}
+  _fragmentData: {fileID: 0}
   _fragmentCollector: {fileID: 0}
   _hintTexts:
   - {fileID: 1639132052}
@@ -37231,7 +37231,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d95bf3590624a8a45aa723627bf86580, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HTH.Campaign.HintPanel
-  _hintData: {fileID: 11400000, guid: 48e63051c8c6e794384277339bd94fd3, type: 2}
+  _fragmentData: {fileID: 0}
   _fragmentCollector: {fileID: 0}
   _hintTexts:
   - {fileID: 1481319308}
@@ -44241,7 +44241,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d95bf3590624a8a45aa723627bf86580, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HTH.Campaign.HintPanel
-  _hintData: {fileID: 11400000, guid: 48e63051c8c6e794384277339bd94fd3, type: 2}
+  _fragmentData: {fileID: 0}
   _fragmentCollector: {fileID: 0}
   _hintTexts:
   - {fileID: 1784663280}
@@ -49272,7 +49272,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d95bf3590624a8a45aa723627bf86580, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HTH.Campaign.HintPanel
-  _hintData: {fileID: 11400000, guid: 48e63051c8c6e794384277339bd94fd3, type: 2}
+  _fragmentData: {fileID: 0}
   _fragmentCollector: {fileID: 0}
   _hintTexts:
   - {fileID: 378351773}
@@ -50433,7 +50433,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4bdbae446cbc8949bb7455dddfa9e57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HTH.Campaign.CharacterRecordPanel
-  _profileClueData: {fileID: 11400000, guid: 017bef57275218345a0bf5c823283a36, type: 2}
+  _fragmentData: {fileID: 0}
   _profileData: {fileID: 11400000, guid: 70849e93ff6cd624fa6b74f08b617d1c, type: 2}
   _fragmentCollector: {fileID: 0}
   _flipRoot: {fileID: 2128336413}
