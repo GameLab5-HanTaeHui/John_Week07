@@ -60,11 +60,12 @@ namespace HTH.Campaign
         // ── Inspector ────────────────────────────────────────────────────
 
         [Header("데이터")]
-        [Tooltip("프로파일 단서 데이터입니다.\n" +
-                "characterId로 CLUE(진실)/HINT(거짓) 텍스트를 자동 매핑합니다.")]
-        [SerializeField] private ProfileClueDataSO _profileClueData;
+        [Tooltip("대화 조각 전체 데이터입니다.\n" +
+                 "ClueText/HintText/HintDescription/조건/대사 모두 포함됩니다.")]
+        [SerializeField] private FragmentDataSO _fragmentData;
 
-        [Tooltip("캐릭터 프로파일 데이터입니다. (이름/컨셉카드용)")]
+        [Tooltip("캐릭터 이름/역할 표시용 ProfileDataSO 에셋입니다.\n" +
+                 "엔딩 전용 데이터(FinalTalk)는 사용하지 않습니다.")]
         [SerializeField] private ProfileDataSO _profileData;
 
         [Header("컴포넌트 참조")]
@@ -191,11 +192,8 @@ namespace HTH.Campaign
         /// <summary>현재 표시 중인 캐릭터 프로파일 데이터입니다.</summary>
         private CharacterProfileData _currentProfile;
 
-        /// <summary>
-        /// 현재 캐릭터의 ProfileClue 5개입니다.
-        /// Open() 시 ProfileClueDataSO에서 자동 조회됩니다.
-        /// </summary>
-        private List<ProfileClueEntry> _currentClues;
+        /// <summary>현재 캐릭터의 FragmentEntry 5개입니다.</summary>
+        private List<FragmentEntry> _currentClues;
 
         /// <summary>
         /// 혼합 모드 슬롯 배치입니다.
@@ -285,9 +283,9 @@ namespace HTH.Campaign
                 return;
             }
 
-            // ProfileDataSO에서 이름/컨셉카드 조회
-            _currentProfile = _profileData?.FindProfile(characterId);
+            // 캐릭터 ID 저장, ProfileDataSO에서 이름/역할 조회
             _currentCharacterId = characterId;
+            _currentProfile = _profileData?.FindProfile(characterId);
 
             ShowFrontFaceInstant();
             RefreshAll();
@@ -306,26 +304,21 @@ namespace HTH.Campaign
         public void InitializeSlots(int characterId)
         {
             if (_slotsInitialized) return;
-            if (_profileClueData == null)
+            if (_fragmentData == null)
             {
-                Debug.LogWarning("[CharacterRecordPanel] ProfileClueDataSO 미연결");
+                Debug.LogWarning("[CharacterRecordPanel] FragmentDataSO 미연결");
                 return;
             }
 
-            // ProfileClue 로드
-            _currentClues = _profileClueData.GetCluesByCharacter(characterId);
+            _currentClues = _fragmentData.GetByCharacter(characterId);
             if (_currentClues == null || _currentClues.Count == 0)
             {
-                Debug.LogWarning($"[CharacterRecordPanel] CharacterId={characterId} ProfileClue 없음\n" +
-                                 $"ProfileClueDataSO 에셋에 데이터가 있는지 확인하세요.\n" +
-                                 $"SO 에셋명: {_profileClueData.name}");
+                Debug.LogWarning($"[CharacterRecordPanel] CharacterId={characterId} FragmentEntry 없음");
                 return;
             }
 
             Debug.Log($"[CharacterRecordPanel] CharacterId={characterId} " +
-                      $"ProfileClue {_currentClues.Count}개 로드\n" +
-                      $"[0]: {_currentClues[0].ProfileClueId} / " +
-                      $"ClueText: {_currentClues[0].ClueText?.Substring(0, Mathf.Min(10, _currentClues[0].ClueText?.Length ?? 0))}...");
+                      $"FragmentEntry {_currentClues.Count}개 로드");
 
             // 캐릭터 ID 저장 (Open() 전에도 RefreshIfCurrent 동작 보장)
             _currentCharacterId = characterId;
@@ -411,14 +404,8 @@ namespace HTH.Campaign
 
             if (_characterNameText == null) return;
 
-            // 수집된 이름이 있으면 우선 사용, 없으면 ProfileDataSO 이름
-            string collectedName = CharacterRecordPanelManager.Instance?
-                .GetCollectedName(_currentCharacterId) ?? "";
-
-            string name = string.IsNullOrEmpty(collectedName)
-                ? (_currentProfile?.CharacterFullName ?? "???")
-                : collectedName;
-
+            // 이름/역할은 ProfileDataSO에서 고정 표시 — 수집 개념 없음
+            string name = _currentProfile?.CharacterFullName ?? $"#{_currentCharacterId}";
             string role = _currentProfile?.CharacterRole ?? "";
 
             _characterNameText.text = string.IsNullOrEmpty(role)

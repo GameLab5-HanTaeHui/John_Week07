@@ -95,6 +95,7 @@ namespace HTH.Campaign
                     CurrentSave.collectedNames ??= new();
                     CurrentSave.unlockedConceptCards ??= new();
                     CurrentSave.unlockedEpilogues ??= new();
+                    CurrentSave.finalTalkRecords ??= new();
 
                     Debug.Log($"[CampaignSaveManager] 로드 완료 — {stageId}\n" +
                               $"  조각 {CurrentSave.collectedFragmentIds.Count}개\n" +
@@ -148,21 +149,57 @@ namespace HTH.Campaign
 
         /// <summary>
         /// 저장 파일을 삭제합니다.
-        /// 로비에서 이야기 초기화 버튼 클릭 → WarningDialog 확인 시 호출합니다.
+        /// ★ 튜토리얼 클리어 기록(isTutorialCleared)과
+        ///   튜토리얼 보상 조각(P02_01)은 초기화 후에도 보존합니다.
         /// </summary>
         public void Delete(string stageId)
         {
             string path = GetFilePath(stageId);
 
-            if (File.Exists(path))
+            if (!File.Exists(path))
             {
-                File.Delete(path);
-                CurrentSave = null;
-                Debug.Log($"[CampaignSaveManager] 저장 데이터 삭제 완료 — {stageId}");
+                Debug.LogWarning($"[CampaignSaveManager] 삭제할 파일 없음 — {stageId}");
+                return;
+            }
+
+            // 삭제 전 보존할 필드 캡처
+            bool savedTutorialCleared = false;
+            bool savedP02_01 = false;
+
+            try
+            {
+                string json = File.ReadAllText(path);
+                var oldData = JsonUtility.FromJson<CampaignSaveData>(json);
+                if (oldData != null)
+                {
+                    savedTutorialCleared = oldData.isTutorialCleared;
+                    savedP02_01 = oldData.collectedFragmentIds?.Contains("P02_01") ?? false;
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.LogWarning($"[CampaignSaveManager] 기존 데이터 캡처 실패 — {e.Message}");
+            }
+
+            File.Delete(path);
+            Debug.Log($"[CampaignSaveManager] 저장 데이터 삭제 완료 — {stageId}");
+
+            // 보존 데이터가 있으면 새 파일로 즉시 기록
+            if (savedTutorialCleared || savedP02_01)
+            {
+                var preserved = new CampaignSaveData { stageId = stageId };
+                preserved.isTutorialCleared = savedTutorialCleared;
+                if (savedP02_01)
+                    preserved.collectedFragmentIds.Add("P02_01");
+
+                CurrentSave = preserved;
+                Save(preserved);
+                Debug.Log($"[CampaignSaveManager] 보존 데이터 유지 — " +
+                          $"튜토리얼:{savedTutorialCleared}, P02_01:{savedP02_01}");
             }
             else
             {
-                Debug.LogWarning($"[CampaignSaveManager] 삭제할 파일 없음 — {stageId}");
+                CurrentSave = null;
             }
         }
 

@@ -1,0 +1,2043 @@
+{
+  "stageId": "CampaignMode",
+  "fragments": [
+    {
+      "profileClueId": "P01_01",
+      "characterId": 1,
+      "clueIndex": 1,
+      "clueText": "엔비의 진짜 조각",
+      "hintText": "엔비의 가짜 조각",
+      "hintDescription": "엔비의 공개 힌트",
+      "combo": [],
+      "placeName": "",
+      "deadRequired": [],
+      "prerequisites": [],
+      "simultaneousIds": [],
+      "isForcedExitFragment": false,
+      "lines": [],
+      "designerNote": ""
+    },
+    {
+      "profileClueId": "P01_02",
+      "characterId": 1,
+      "clueIndex": 2,
+      "clueText": "엔비의 진짜 조각",
+      "hintText": "엔비의 가짜 조각",
+      "hintDescription": "엔비의 공개 힌트",
+      "combo": [],
+      "placeName": "",
+      "deadRequired": [],
+      "prerequisites": [],
+      "simultaneousIds": [],
+      "isForcedExitFragment": false,
+      "lines": [],
+      "designerNote": ""
+    },
+    {
+      "profileClueId": "P01_03",
+      "characterId": 1,
+      "clueIndex": 3,
+      "clueText": "엔비의 진짜 조각",
+      "hintText": "엔비의 가짜 조각",
+      "hintDescription": "엔비의 공개 힌트",
+      "combo": [],
+      "placeName": "",
+      "deadRequired": [],
+      "prerequisites": [],
+      "simultaneousIds": [],
+      "isForcedExitFragment": false,
+      "lines": [],
+      "designerNote": ""
+    },
+    {
+      "profileClueId": "P01_04",
+      "characterId": 1,
+      "clueIndex": 4,
+      "clueText": "엔비의 진짜 조각",
+      "hintText": "엔비의 가짜 조각",
+      "hintDescription": "엔비의 공개 힌트",
+      "combo": [],
+      "placeName": "",
+      "deadRequired": [],
+      "prerequisites": [],
+      "simultaneousIds": [],
+      "isForcedExitFragment": false,
+      "lines": [],
+      "designerNote": ""
+    },
+    {
+      "profileClueId": "P01_05",
+      "characterId": 1,
+      "clueIndex": 5,
+      "clueText": "엔비의 진짜 조각",
+      "hintText": "엔비의 가짜 조각",
+      "hintDescription": "엔비의 공개 힌트",
+      "combo": [],
+      "placeName": "",
+      "deadRequired": [],
+      "prerequisites": [],
+      "simultaneousIds": [],
+      "isForcedExitFragment": false,
+      "lines": [],
+      "designerNote": ""
+    },
+    {
+      "profileClueId": "P02_01",
+      "characterId": 2,
+      "clueIndex": 1,
+      "clueText": "메이는 용병단의 침묵이 드래곤을 놓친 사건에서 비롯되었다고 생각하고 있다.",
+      "hintText": "메이는 용병단이 원래부터 조용한 분위기였다고 생각하고 있다.",
+      "hintDescription": "훈련장에서 용병단 신입과의 첫 인사",
+      "combo": [
+        1,
+        2
+      ],
+      "placeName": "훈련장",
+      "deadRequired": [],
+      "prerequisites": [],
+      "simultaneousIds": [],
+      "isForcedExitFragment": false,
+      "lines": [
+        {
+          "textId": "1",
+          "text": "메이님 안녕하세요! 잠깐 괜찮으신가요?"
+        },
+        {
+          "textId": "2",
+          "text": "신입? 무슨 일이야."
+        },
+        {
+          "textId": "1",
+          "text": "별건 아니에요.\n아직 용병단 분위기를 잘 몰라서요."
+        },
+        {
+          "textId": "2",
+          "text": "분위기?"
+        },
+        {
+          "textId": "1",
+          "text": "다들 오래 함께한 것 같은데... 이상하게 조용한 것 같아요. 다들 내향적인 분들인가요?"
+        },
+        {
+          "textId": "2",
+          "text": "원래는 아니였지."
+        },
+        {
+          "textId": "1",
+          "text": "무슨 일이 있었나요?"
+        },
+        {
+          "textId": "2",
+          "text": "있었지.\n잡을 수 있었던 드래곤을 놓친 일이."
+        },
+        {
+          "textId": "1",
+          "text": "드래곤이요?\n인생에서 한 번 볼까 말까 한 희귀한 몬스터인데...!"
+        },
+        {
+          "textId": "2",
+          "text": "거의 끝났었어.\n정말 거의."
+        },
+        {
+          "textId": "1",
+          "text": "그런데 어쩌다가 놓친건가요...?"
+        },
+        {
+          "textId": "2",
+          "text": "...그건 아직 네가 알 일이 아니야."
+        }
+      ],
+      "designerNote": "튜토리얼에서 얻을 수 있는 대화 조각"
+    },
+    {
+      "profileClueId": "P02_02",
+      "characterId": 2,
+      "clueIndex": 2,
+      "clueText": "메이는 데우스가 루이스를 우선하는 태도 때문에 용병단의 기회를 놓쳤다고 느끼고 있다.",
+      "hintText": "메이는 데우스가 루이스를 우선한 판단을 용병단을 위한 희생이라고 받아들이고 있다.",
+      "hintDescription": "예배실에서 되짚어 보는 메이와 루이스의 기억",
+      "combo": [
+        1,
+        2,
+        3
+      ],
+      "placeName": "훈련장",
+      "deadRequired": [],
+      "prerequisites": [
+        "P02_01"
+      ],
+      "simultaneousIds": [],
+      "isForcedExitFragment": false,
+      "lines": [
+        {
+          "textId": "2",
+          "text": "루이스.\n그날 데우스가 널 보자마자 어떤 표정을 지었는지 알아?"
+        },
+        {
+          "textId": "3",
+          "text": "……나도 정확히는 기억나지 않아.\n정신이 없었으니까."
+        },
+        {
+          "textId": "2",
+          "text": "나는 기억해.\n드래곤도, 전황도, 내 검도 안중에 없었어.\n그 애 눈에는 너밖에 없었지."
+        },
+        {
+          "textId": "3",
+          "text": "그건 내 탓이야.\n내가 그 자리에 멈춰 있지 않았다면—"
+        },
+        {
+          "textId": "2",
+          "text": "또 네 탓이라고 하려고?\n루이스, 네가 쓰러진 건 시작이었어.\n끝낸 건 데우스의 주문이었고."
+        },
+        {
+          "textId": "3",
+          "text": "메이!"
+        },
+        {
+          "textId": "2",
+          "text": "나는 아직도 모르겠어.\n그 순간 데우스가 본 게 정말 용병단이었는지,\n아니면 너 하나였는지."
+        },
+        {
+          "textId": "1",
+          "text": "(메이는 데우스가 루이스만 보고 있었다고 생각하네.)"
+        },
+        {
+          "textId": "1",
+          "text": "(아직 직접 말하진 않지만, 원망은 이미 그쪽으로 향하고 있어.)"
+        }
+      ],
+      "designerNote": ""
+    },
+    {
+      "profileClueId": "P02_03",
+      "characterId": 2,
+      "clueIndex": 3,
+      "clueText": "메이는 데우스의 귀환 주문을 구조가 아닌 기회를 끊어낸 선택으로 받아들이고 있다.",
+      "hintText": "메이는 데우스가 루이스를 살리기 위해 귀환 주문을 쓴 일을 이해하고 받아들이고 있다.",
+      "hintDescription": "예배실에서 발생한 메이와 연인들의 충돌",
+      "combo": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "placeName": "예배실",
+      "deadRequired": [],
+      "prerequisites": [
+        "P02_02"
+      ],
+      "simultaneousIds": [],
+      "isForcedExitFragment": false,
+      "lines": [
+        {
+          "textId": "2",
+          "text": "그날 네가 조금만 늦게 주문을 썼다면,\n우리는 드래곤을 잡았어."
+        },
+        {
+          "textId": "4",
+          "text": "나는 널 방해하려던 게 아니야.\n루이스가 쓰러진 걸 봤고, 그 순간엔 귀환시킬 수밖에 없었어."
+        },
+        {
+          "textId": "2",
+          "text": "그래.\n너한테는 드래곤보다 루이스가 먼저였겠지."
+        },
+        {
+          "textId": "3",
+          "text": "메이, 그만해.\n데우스는 날 살리려고 했어."
+        },
+        {
+          "textId": "2",
+          "text": "그리고 우리는 미래를 잃었지."
+        },
+        {
+          "textId": "4",
+          "text": "……그렇게 말하지 마."
+        },
+        {
+          "textId": "2",
+          "text": "틀린 말이야?\n내 검이 닿기 직전이었어.\n정말로 끝낼 수 있었다고."
+        },
+        {
+          "textId": "3",
+          "text": "그건 내 탓이야.\n내가 그 자리에 멈춰 있지 않았다면—"
+        },
+        {
+          "textId": "2",
+          "text": "그만해, 루이스.\n네가 멈춘 건 시작이었을 뿐이야."
+        },
+        {
+          "textId": "2",
+          "text": "정말 끝난 건,\n그 주문이 우리를 전장에서 떼어냈을 때였어."
+        },
+        {
+          "textId": "4",
+          "text": "나는 루이스를 잃을 수 없었어."
+        },
+        {
+          "textId": "2",
+          "text": "그래서 드래곤을 잃었지.\n우리가 더 큰 무대로 갈 기회까지."
+        },
+        {
+          "textId": "1",
+          "text": "(데우스에겐 구원이었고,\n메이에겐 마지막 일격을 빼앗은 주문이었네.)"
+        },
+        {
+          "textId": "1",
+          "text": "(같은 선택도 이렇게 갈라질 수 있구나.)"
+        }
+      ],
+      "designerNote": ""
+    },
+    {
+      "profileClueId": "P02_04",
+      "characterId": 2,
+      "clueIndex": 4,
+      "clueText": "메이는 토니가 단순히 도망친 것이 아니라, 자기 방식으로 용병단을 지키려 했을 가능성을 의식하고 있다.",
+      "hintText": "메이는 토니가 물품을 챙긴 행동을 처음부터 용병단을 버리기 위한 배신으로 확신하고 있다.",
+      "hintDescription": "창고에서 메이와 프리드가 되짚은 토니의 도망친 이유",
+      "combo": [
+        1,
+        2,
+        6
+      ],
+      "placeName": "창고",
+      "deadRequired": [],
+      "prerequisites": [
+        "P02_03"
+      ],
+      "simultaneousIds": [
+        "P05_03"
+      ],
+      "isForcedExitFragment": false,
+      "lines": [
+        {
+          "textId": "2",
+          "text": "여긴 여전히 물품이 많네.\n토니가 늘 신경 쓰던 것들."
+        },
+        {
+          "textId": "6",
+          "text": "토니는 그런 걸 가볍게 여기지 않았어.\n의뢰 물품도, 보급품도, 계약도."
+        },
+        {
+          "textId": "2",
+          "text": "그날도 물품을 먼저 본 거야?\n드래곤이 눈앞에 있었는데?"
+        },
+        {
+          "textId": "6",
+          "text": "토니는 싸울 수 없었어.\n그러니까 자신이 할 수 있는 일을 하려 했겠지."
+        },
+        {
+          "textId": "2",
+          "text": "그게 물품을 지키는 거였고?"
+        },
+        {
+          "textId": "6",
+          "text": "아마도.\n토니에게는 그게 용병단을 지키는 방식이었을 거야."
+        },
+        {
+          "textId": "2",
+          "text": "……"
+        },
+        {
+          "textId": "6",
+          "text": "그 순간 토니와 물품이 보이지 않았던 것도 사실이야.\n나는 메이 너와, 토니와, 물품까지 모두 보려 했어."
+        },
+        {
+          "textId": "2",
+          "text": "나는 드래곤만 보고 있었고,\n토니는 물품을 보고 있었고,\n너는 흩어진 전장을 보고 있었다?"
+        },
+        {
+          "textId": "6",
+          "text": "……그날 우리는 전부 다른 걸 보고 있었어."
+        },
+        {
+          "textId": "1",
+          "text": "(메이는 토니를 단순한 도망자로만 보고 있었어.)"
+        },
+        {
+          "textId": "1",
+          "text": "(하지만 토니에게도 지키려던 게 있었다는 거네.)"
+        }
+      ],
+      "designerNote": "해당 조각 획득 시 자동으로 P05_03이 동시 획득됨"
+    },
+    {
+      "profileClueId": "P02_05",
+      "characterId": 2,
+      "clueIndex": 5,
+      "clueText": "메이는 뒤늦게 용병단의 붕괴가 서로의 오해와 침묵에서 비롯되었다고 깨닫고 있다.",
+      "hintText": "메이는 토니를 처단한 것으로 용병단의 균열이 완전히 해소되었다고 생각하고 있다.",
+      "hintDescription": "메이는 토니를 처단했지만, 남은 사람은 아무도 없었다.",
+      "combo": [
+        1,
+        2,
+        5
+      ],
+      "placeName": "",
+      "deadRequired": [
+        3,
+        4,
+        6,
+        7
+      ],
+      "prerequisites": [
+        "P02_04",
+        "P05_01"
+      ],
+      "simultaneousIds": [],
+      "isForcedExitFragment": false,
+      "lines": [
+        {
+          "textId": "2",
+          "text": "토니!!!! 어째서 그런 짓을 한 거야!!"
+        },
+        {
+          "textId": "1",
+          "text": "끔찍한 짓을 저질렀어요.. 도대체 용병단 안에는 무슨 일이 있던 건가요? 드래곤과 조우했던 그 사건, 단순 팀합의 문제가 아니었던 건가요?"
+        },
+        {
+          "textId": "2",
+          "text": "아무 것도 숨기지 않았어... 있는 그대로야. 정말 사소한, 아주 사소한 오해 하나가 눈덩이처럼 커졌을 뿐이야..."
+        },
+        {
+          "textId": "1",
+          "text": "정말 아무 일도 없었다면, 이런 식으로 용병단이 파국으로 치닫았을 리 없잖아요!"
+        },
+        {
+          "textId": "2",
+          "text": "토니는 두려워했을 거야. 자신이 도움이 되지 못했다는 사실 자체에 이미 짓눌리고 있는 상태였던 거야..."
+        },
+        {
+          "textId": "2",
+          "text": "다들 똑같았어.. 내가 놓치고 싶지 않은 기회도 동료들의 눈에는 그저 무모한 행동으로 보였던 거겠지. 데우스의 귀환 주문도 마찬가지야. 어쩌면, 그도 모두를 지키기 위한 최선의 선택을 한 걸지도..."
+        },
+        {
+          "textId": "1",
+          "text": "말하지 않으면 알 수 없는 거에요. 사람들은 각자 저마다의 방식으로 세상을 해석하니까요."
+        },
+        {
+          "textId": "2",
+          "text": "그래... 남들 눈에는, 내가 그저 매번 무리하는 미련한 사람으로 보였을 테지..."
+        },
+        {
+          "textId": "2",
+          "text": "이제 다 끝났어. 아무 소용이 없어. 놓쳐버린 드래곤도, 쌓여버린 오해도... 모두 무의미해졌어."
+        },
+        {
+          "textId": "1",
+          "text": "(용병단은 완전히 붕괴 됐어... 이걸로 이제 끝인가?)"
+        }
+      ],
+      "designerNote": ""
+    },
+    {
+      "profileClueId": "P03_01",
+      "characterId": 3,
+      "clueIndex": 1,
+      "clueText": "루이스는 잘못 판단해 모두에게 피해를 줄까 봐 쉽게 결정을 내리지 못한다.",
+      "hintText": "루이스는 위험한 상황일수록 빠르게 결정을 내리는 것이 가장 중요하다고 생각한다.",
+      "hintDescription": "여관에서 나눈 신입과 루이스의 첫 인사",
+      "combo": [
+        1,
+        3
+      ],
+      "placeName": "여관",
+      "deadRequired": [],
+      "prerequisites": [],
+      "simultaneousIds": [],
+      "isForcedExitFragment": false,
+      "lines": [
+        {
+          "textId": "1",
+          "text": "루이스님, 맞으시죠?\n오늘부터 합류하게 된 엔비예요. 잘 부탁드려요."
+        },
+        {
+          "textId": "3",
+          "text": "루이스야. 나도 잘 부탁해."
+        },
+        {
+          "textId": "1",
+          "text": "다들 오래 함께하신 것 같아서 조금 긴장했어요.\n제가 뭔가 조심해야 할 게 있을까요?"
+        },
+        {
+          "textId": "3",
+          "text": "조심해야 할 것……"
+        },
+        {
+          "textId": "1",
+          "text": "어렵게 생각하지 않으셔도 돼요.\n그냥 신입에게 해주고 싶은 말 같은 거요."
+        },
+        {
+          "textId": "3",
+          "text": "무언가를 정해야 할 때는, 너무 빨리 답을 내리지 않는 게 좋아."
+        },
+        {
+          "textId": "1",
+          "text": "신중하게 판단하라는 말씀이신가요?"
+        },
+        {
+          "textId": "3",
+          "text": "한 번 잘못 정하면, 그 선택을 되돌릴 수 없을 때가 있거든."
+        },
+        {
+          "textId": "1",
+          "text": "그럼 언제 움직여야 하는지는 어떻게 아나요?"
+        },
+        {
+          "textId": "3",
+          "text": "그걸 알 수 있다면 좋겠지."
+        },
+        {
+          "textId": "1",
+          "text": "(루이스는 쉽게 결정을 내리지 못하는 사람이네.)"
+        },
+        {
+          "textId": "1",
+          "text": "(잘못된 판단이 누군가를 다치게 할까 봐 두려워하고 있어.)"
+        }
+      ],
+      "designerNote": ""
+    },
+    {
+      "profileClueId": "P03_02",
+      "characterId": 3,
+      "clueIndex": 2,
+      "clueText": "루이스는 메이가 자신의 판단을 기다리지 않고 먼저 움직였다는 사실을 마음에 걸려 하고 있다.",
+      "hintText": "루이스는 메이가 자신의 판단을 충분히 기다린 뒤 함께 움직였다고 기억하고 있다.",
+      "hintDescription": "훈련장에서 마주한 메이와 루이스의 엇갈린 판단",
+      "combo": [
+        1,
+        2,
+        3
+      ],
+      "placeName": "훈련장",
+      "deadRequired": [],
+      "prerequisites": [
+        "P03_01"
+      ],
+      "simultaneousIds": [],
+      "isForcedExitFragment": false,
+      "lines": [
+        {
+          "textId": "2",
+          "text": "그날 네가 조금만 빨리 정했다면 달라졌을까?"
+        },
+        {
+          "textId": "3",
+          "text": "……모르겠어."
+        },
+        {
+          "textId": "2",
+          "text": "나는 기다릴 수 없었어.\n그때는 기회가 눈앞에 있었으니까."
+        },
+        {
+          "textId": "3",
+          "text": "네가 왜 움직였는지는 알아."
+        },
+        {
+          "textId": "2",
+          "text": "그럼 아직도 네 탓이라고 생각해?"
+        },
+        {
+          "textId": "3",
+          "text": "내가 먼저 말했어야 했어.\n싸울지, 물러날지."
+        },
+        {
+          "textId": "2",
+          "text": "그 말이 없으니까 내가 움직인 거야."
+        },
+        {
+          "textId": "3",
+          "text": "그래서 더 생각나."
+        },
+        {
+          "textId": "2",
+          "text": "뭐가?"
+        },
+        {
+          "textId": "3",
+          "text": "네가 틀렸다는 게 아니라…\n내 판단이 끝나기도 전에, 이미 전투가 시작됐다는 것."
+        },
+        {
+          "textId": "1",
+          "text": "(메이는 기다릴 수 없었고,\n루이스는 판단을 끝내지 못했어.)"
+        },
+        {
+          "textId": "1",
+          "text": "(루이스한테는 그게 아직도 걸려 있네.)"
+        }
+      ],
+      "designerNote": ""
+    },
+    {
+      "profileClueId": "P03_03",
+      "characterId": 3,
+      "clueIndex": 3,
+      "clueText": "루이스는 자신이 움직이면 진형이 더 흔들릴까 봐 위험한 위치에 멈춰 있었다.",
+      "hintText": "루이스는 자신의 안전만을 위해 일부러 전장 한가운데에 머물렀다.",
+      "hintDescription": "훈련장에서 새턴이 되짚은 그날 루이스의 위치",
+      "combo": [
+        1,
+        3,
+        7
+      ],
+      "placeName": "훈련장",
+      "deadRequired": [],
+      "prerequisites": [
+        "P03_02"
+      ],
+      "simultaneousIds": [],
+      "isForcedExitFragment": false,
+      "lines": [
+        {
+          "textId": "7",
+          "text": "그날 넌 왜 그 자리에 계속 서 있었어?"
+        },
+        {
+          "textId": "3",
+          "text": "움직이면 더 위험해질 것 같았어."
+        },
+        {
+          "textId": "7",
+          "text": "가만히 있는 게 더 위험했어.\n그 위치는 후방 공격이 깨졌을 때 가장 안 좋은 자리였어."
+        },
+        {
+          "textId": "3",
+          "text": "지금은 알아."
+        },
+        {
+          "textId": "7",
+          "text": "그때도 알았어야지."
+        },
+        {
+          "textId": "3",
+          "text": "그때는… 내가 어디로 움직여도 누군가의 길을 막을 것 같았어."
+        },
+        {
+          "textId": "7",
+          "text": "그래서 멈췄고?"
+        },
+        {
+          "textId": "3",
+          "text": "잘못 움직여서 진형을 망칠까 봐.."
+        },
+        {
+          "textId": "7",
+          "text": "그 망설임 때문에 진형은 더 불안해졌어."
+        },
+        {
+          "textId": "3",
+          "text": "……그렇겠지."
+        },
+        {
+          "textId": "1",
+          "text": "(루이스는 도망치려고 멈춘 게 아니야.)"
+        },
+        {
+          "textId": "1",
+          "text": "(잘못 움직일까 봐 멈췄고, 그게 더 큰 빈틈이 된 거네.)"
+        }
+      ],
+      "designerNote": ""
+    },
+    {
+      "profileClueId": "P03_04",
+      "characterId": 3,
+      "clueIndex": 4,
+      "clueText": "루이스는 자신이 그날 아무 결정도 내리지 못했다는 사실을 아직 자책하고 있다.",
+      "hintText": "루이스는 그날 자신이 충분히 명확한 지시를 내렸다고 생각하고 있다.",
+      "hintDescription": "예배실에서 마주한 루이스와 데우스의 멈춘 판단",
+      "combo": [
+        1,
+        3,
+        4
+      ],
+      "placeName": "예배실",
+      "deadRequired": [],
+      "prerequisites": [
+        "P03_03"
+      ],
+      "simultaneousIds": [],
+      "isForcedExitFragment": false,
+      "lines": [
+        {
+          "textId": "4",
+          "text": "그날 일, 아직도 네 탓이라고 생각해?"
+        },
+        {
+          "textId": "3",
+          "text": "……아니라고 말하고 싶어.\n그런데 잘 안 돼."
+        },
+        {
+          "textId": "4",
+          "text": "네가 다친 건 네 잘못이 아니야."
+        },
+        {
+          "textId": "3",
+          "text": "내가 다친 것보다,\n아무 말도 하지 못했다는 게 더 오래 남아."
+        },
+        {
+          "textId": "3",
+          "text": "싸우자고 말하지도 못했고,\n물러나자고 말하지도 못했어."
+        },
+        {
+          "textId": "3",
+          "text": "그냥 계속 생각만 했어.\n어느 쪽이 더 덜 위험한지."
+        },
+        {
+          "textId": "4",
+          "text": "그 상황에서 바로 정하는 건 누구에게도 쉬운 일이 아니었어."
+        },
+        {
+          "textId": "3",
+          "text": "하지만 누군가는 정했어야 했어.\n그게 내가 해야 할 일이었다면…"
+        },
+        {
+          "textId": "1",
+          "text": "(루이스는 다친 것보다,\n아무 결정도 내리지 못했다는 걸 더 괴로워하고 있네.)"
+        },
+        {
+          "textId": "1",
+          "text": "(저 침묵은 아직 루이스 안에 남아 있어.)"
+        }
+      ],
+      "designerNote": ""
+    },
+    {
+      "profileClueId": "P03_05",
+      "characterId": 3,
+      "clueIndex": 5,
+      "clueText": "루이스는 메이가 자신의 판단을 기다리지 않고 먼저 돌격한 일이 아직 마음에 남아 있다.",
+      "hintText": "루이스는 메이가 자신의 판단을 충분히 기다린 뒤 움직였다고 받아들이고 있다.",
+      "hintDescription": "여관에 모인 메이, 루이스, 데우스, 새턴의 엇갈린 판단",
+      "combo": [
+        1,
+        2,
+        3,
+        4,
+        7
+      ],
+      "placeName": "여관",
+      "deadRequired": [],
+      "prerequisites": [
+        "P03_04"
+      ],
+      "simultaneousIds": [],
+      "isForcedExitFragment": false,
+      "lines": [
+        {
+          "textId": "2",
+          "text": "루이스, 그날 네가 조금만 빨리 말했어도 달라졌을까?\n기회가 눈앞에 있었으니까 기다릴 수 없었어."
+        },
+        {
+          "textId": "4",
+          "text": "메이, 지금 그 말을 꼭 해야 해?"
+        },
+        {
+          "textId": "2",
+          "text": "해야 해.\n우린 아직도 그날에 묶여 있잖아."
+        },
+        {
+          "textId": "7",
+          "text": "그날 전장은 이미 움직이고 있었어.\n멈춘 사람을 기다려주진 않아."
+        },
+        {
+          "textId": "3",
+          "text": "내가 늦었다는 건 알아."
+        },
+        {
+          "textId": "2",
+          "text": "나는 네가 틀렸다고 생각해서 움직인 게 아니야.\n그냥… 더 기다리면 기회가 사라질 것 같았어."
+        },
+        {
+          "textId": "3",
+          "text": "그럼 나는 뭘 했어야 했을까?"
+        },
+        {
+          "textId": "2",
+          "text": "뭐라도 말했어야지.\n싸우자고 하든, 물러나자고 하든."
+        },
+        {
+          "textId": "3",
+          "text": "한 번쯤은, 내 판단을 기다려줬으면 했어."
+        },
+        {
+          "textId": "2",
+          "text": "그때는 그럴 시간이 없었어."
+        },
+        {
+          "textId": "3",
+          "text": "알아.\n그래서 네가 먼저 움직이던 순간이 계속 기억에 남아."
+        },
+        {
+          "textId": "3",
+          "text": "내가 늦었던 건지,\n네가 너무 빨랐던 건지 아직도 모르겠어."
+        },
+        {
+          "textId": "1",
+          "text": "(루이스는 자기가 늦었다고 생각하고 있어.)"
+        },
+        {
+          "textId": "1",
+          "text": "(하지만 진짜 상처는, 메이가 그의 판단을 기다려주지 않았다는 거네.)"
+        }
+      ],
+      "designerNote": ""
+    },
+    {
+      "profileClueId": "P04_01",
+      "characterId": 4,
+      "clueIndex": 1,
+      "clueText": "데우스는 용병단 전체를 걱정하는 듯 보이지만, 특히 루이스의 안전을 가장 먼저 신경 쓰고 있다.",
+      "hintText": "데우스는 루이스보다 메이의 전투 성과를 가장 중요하게 생각하고 있다.",
+      "hintDescription": "예배실에서 마주한 신입과 데우스의 첫 인사",
+      "combo": [
+        1,
+        4
+      ],
+      "placeName": "예배실",
+      "deadRequired": [],
+      "prerequisites": [],
+      "simultaneousIds": [],
+      "isForcedExitFragment": false,
+      "lines": [
+        {
+          "textId": "1",
+          "text": "데우스님, 맞으시죠?\n새로 합류한 엔비예요. 잘 부탁드려요."
+        },
+        {
+          "textId": "4",
+          "text": "신입이시군요. 반갑습니다.\n혹시 다친 곳이 있다면 바로 말씀해주세요."
+        },
+        {
+          "textId": "1",
+          "text": "처음 보는 사람한테도 먼저 상태부터 살피시네요?"
+        },
+        {
+          "textId": "4",
+          "text": "습관입니다.\n누가 다치지는 않았는지 먼저 보게 되거든요."
+        },
+        {
+          "textId": "1",
+          "text": "그중에서도 특히 신경 쓰는 분이 있나요?"
+        },
+        {
+          "textId": "4",
+          "text": "……루이스님입니다."
+        },
+        {
+          "textId": "1",
+          "text": "루이스님이요?"
+        },
+        {
+          "textId": "4",
+          "text": "루이스님은 괜찮다고 말씀하셔도,\n괜찮지 않을 때가 많으니까요."
+        },
+        {
+          "textId": "1",
+          "text": "(데우스의 시선은 결국 루이스에게 향하네.)"
+        },
+        {
+          "textId": "1",
+          "text": "(좋아. 약한 부분이 보였어.)"
+        }
+      ],
+      "designerNote": ""
+    },
+    {
+      "profileClueId": "P04_02",
+      "characterId": 4,
+      "clueIndex": 2,
+      "clueText": "데우스는 기도에 들어가면 전장 상황을 직접 볼 수 없다는 한계를 가지고 있다.",
+      "hintText": "데우스는 기도 중에도 전장의 모든 상황을 정확히 확인할 수 있다고 생각하고 있다.",
+      "hintDescription": "예배실에서 메이가 지적한 데우스의 기도",
+      "combo": [
+        1,
+        2,
+        4
+      ],
+      "placeName": "예배실",
+      "deadRequired": [],
+      "prerequisites": [
+        "P04_01"
+      ],
+      "simultaneousIds": [],
+      "isForcedExitFragment": false,
+      "lines": [
+        {
+          "textId": "2",
+          "text": "데우스.\n네 버프는 여전히 느리네."
+        },
+        {
+          "textId": "4",
+          "text": "기도에는 시간이 필요합니다.\n급하게 외운다고 되는 일이 아닙니다."
+        },
+        {
+          "textId": "2",
+          "text": "전투 중에는 그 시간이 제일 아까워.\n눈앞에서 기회가 사라질 수도 있잖아."
+        },
+        {
+          "textId": "4",
+          "text": "알고 있습니다.\n하지만 제대로 기도하지 않으면, 아무도 지킬 수 없습니다."
+        },
+        {
+          "textId": "2",
+          "text": "그럼 기도하는 동안엔?\n주변 상황은 어떻게 봐?"
+        },
+        {
+          "textId": "4",
+          "text": "……볼 수 없습니다.\n눈을 감고 집중해야 하니까요."
+        },
+        {
+          "textId": "2",
+          "text": "그래서 그날도 못 봤구나."
+        },
+        {
+          "textId": "4",
+          "text": "메이님…"
+        },
+        {
+          "textId": "2",
+          "text": "아니, 그냥 확인한 거야.\n네가 눈을 감고 있는 동안에도 전장은 계속 움직였으니까."
+        },
+        {
+          "textId": "1",
+          "text": "(데우스는 기도 중엔 전장을 볼 수 없구나.)"
+        },
+        {
+          "textId": "1",
+          "text": "(그 빈틈에 무슨 일이 있었는지가 중요하겠어.)"
+        }
+      ],
+      "designerNote": ""
+    },
+    {
+      "profileClueId": "P04_03",
+      "characterId": 4,
+      "clueIndex": 3,
+      "clueText": "데우스는 기도에 들어가기 전, 루이스 곁을 지켜달라고 새턴에게 부탁했다..",
+      "hintText": "데우스는 루이스가 혼자 있어도 괜찮다고 생각해 아무에게도 부탁하지 않았다.",
+      "hintDescription": "훈련장에서 드러난 데우스와 새턴의 엇갈린 판단",
+      "combo": [
+        1,
+        4,
+        7
+      ],
+      "placeName": "훈련장",
+      "deadRequired": [],
+      "prerequisites": [
+        "P04_02"
+      ],
+      "simultaneousIds": [],
+      "isForcedExitFragment": false,
+      "lines": [
+        {
+          "textId": "4",
+          "text": "새턴님.\n그날 제가 뭐라고 부탁드렸는지 기억하시나요?"
+        },
+        {
+          "textId": "7",
+          "text": "루이스 곁에 있어달라고 했지."
+        },
+        {
+          "textId": "4",
+          "text": "네.\n제가 기도하는 동안만이라도요."
+        },
+        {
+          "textId": "7",
+          "text": "기억해.\n그래서 처음엔 루이스 옆에 있었어."
+        },
+        {
+          "textId": "4",
+          "text": "그런데 새턴님은 움직이셨죠."
+        },
+        {
+          "textId": "7",
+          "text": "후방 공격이 들어오고 있었어.\n그걸 막지 않으면 전장이 무너졌을 거야."
+        },
+        {
+          "textId": "4",
+          "text": "그래도 저는 새턴님께 루이스님을 부탁드렸습니다."
+        },
+        {
+          "textId": "7",
+          "text": "그 순간엔 루이스 한 사람만 볼 수 없었어."
+        },
+        {
+          "textId": "7",
+          "text": "내가 움직이지 않았다면,\n루이스만이 아니라 모두가 위험했을 거야."
+        },
+        {
+          "textId": "1",
+          "text": "(데우스는 새턴에게 루이스를 맡겼다고 생각하고 있네.)"
+        },
+        {
+          "textId": "1",
+          "text": "(하지만 새턴은 루이스보다 후방 공격을 먼저 봤어.)"
+        }
+      ],
+      "designerNote": ""
+    },
+    {
+      "profileClueId": "P04_04",
+      "characterId": 4,
+      "clueIndex": 4,
+      "clueText": "데우스는 새턴이 후방을 막아냈다는 사실보다, 루이스가 쓰러졌다는 결과에 더 집착하고 있다.",
+      "hintText": "데우스는 새턴이 후방을 막아냈기 때문에 루이스의 부상 역시 어쩔 수 없는 결과였다고 받아들이고 있다.",
+      "hintDescription": "예배실에서 루이스, 데우스, 새턴이 마주한 파편의 진상",
+      "combo": [
+        1,
+        3,
+        4,
+        7
+      ],
+      "placeName": "예배실",
+      "deadRequired": [],
+      "prerequisites": [
+        "P04_03"
+      ],
+      "simultaneousIds": [],
+      "isForcedExitFragment": false,
+      "lines": [
+        {
+          "textId": "4",
+          "text": "새턴님.\n후방 공격을 막았다고 하셨죠."
+        },
+        {
+          "textId": "4",
+          "text": "그런데 루이스님에게 날아간 파편은 뭐였나요?"
+        },
+        {
+          "textId": "7",
+          "text": "후방 전체가 무너지는 건 막았어.\n하지만 카운터가 완벽하진 않았어."
+        },
+        {
+          "textId": "3",
+          "text": "데우스, 그만해.\n그건 새턴만의 잘못이 아니야."
+        },
+        {
+          "textId": "4",
+          "text": "저는 눈을 감고 있었습니다.\n그래서 새턴님이 막아주셨다고 믿을 수밖에 없었어요."
+        },
+        {
+          "textId": "7",
+          "text": "내가 놓친 건 파편이었어.\n공격 전체는 아니었어."
+        },
+        {
+          "textId": "4",
+          "text": "저에게는 그 차이가 중요하지 않습니다."
+        },
+        {
+          "textId": "4",
+          "text": "루이스님이 쓰러졌다는 결과만 남았으니까요."
+        },
+        {
+          "textId": "1",
+          "text": "(새턴은 막아낸 쪽을 기억하고,\n데우스는 닿아버린 파편만 보고 있네.)"
+        },
+        {
+          "textId": "1",
+          "text": "(같은 사건인데, 남은 장면이 달라.)"
+        }
+      ],
+      "designerNote": ""
+    },
+    {
+      "profileClueId": "P04_05",
+      "characterId": 4,
+      "clueIndex": 5,
+      "clueText": "데우스는 모두를 잃은 뒤에도, 새턴이 후방을 막으려 했다는 사실보다 루이스를 고려하지 못했다는 점에 무너지고 있다.",
+      "hintText": "데우스는 모두가 죽은 뒤, 새턴이 루이스보다 후방 공격을 우선한 판단을 완전히 이해하고 받아들이고 있다.",
+      "hintDescription": "연인을 잃은 슬픔, 동료들의 죽음… 데우스는 아무 것도 받아들일 수 없었다.",
+      "combo": [
+        1,
+        4,
+        7
+      ],
+      "placeName": "",
+      "deadRequired": [
+        2,
+        3,
+        5,
+        6
+      ],
+      "prerequisites": [
+        "P04_04",
+        "P07_03"
+      ],
+      "simultaneousIds": [],
+      "isForcedExitFragment": false,
+      "lines": [
+        {
+          "textId": "4",
+          "text": "새턴님.\n후방을 막으려고 움직였다고 하셨죠."
+        },
+        {
+          "textId": "7",
+          "text": "그래.\n그때는 그게 모두를 살리는 길이라고 생각했어."
+        },
+        {
+          "textId": "4",
+          "text": "모두라니요.\n지금 여기에는 누가 남아 있나요?"
+        },
+        {
+          "textId": "4",
+          "text": "메이님도 죽었습니다.\n토니님도, 프리드님도…\n루이스님도 없습니다."
+        },
+        {
+          "textId": "7",
+          "text": "데우스…"
+        },
+        {
+          "textId": "4",
+          "text": "저는 루이스님을 부탁드렸습니다."
+        },
+        {
+          "textId": "7",
+          "text": "후방 공격을 막지 않았다면,\n더 많은 사람이 죽었을 거야."
+        },
+        {
+          "textId": "4",
+          "text": "그 말은 이제 아무 의미가 없습니다.\n결국 아무도 남지 않았으니까요."
+        },
+        {
+          "textId": "4",
+          "text": "새턴님이 막아낸 건 후방이었죠.\n루이스님은 아니었습니다."
+        },
+        {
+          "textId": "7",
+          "text": "나는 모두를 살리려고 했어."
+        },
+        {
+          "textId": "4",
+          "text": "그 모두 안에,\n루이스님은 없었나 보네요."
+        },
+        {
+          "textId": "1",
+          "text": "(데우스는 새턴이 무엇을 막았는지보다,\n무엇을 놓쳤는지만 보고 있네.)"
+        },
+        {
+          "textId": "1",
+          "text": "(하지만 이 상태로는 부족해.\n데우스는 이미 너무 무너졌고, 새턴은 아직 버티고 있어.)"
+        },
+        {
+          "textId": "1",
+          "text": "(아마 또 처음으로 되돌아가겠지.\n다음에는 이 말을 더 일찍 찔러 넣어야겠어.)"
+        },
+        {
+          "textId": "1",
+          "text": "(새턴은 후방을 봤고, 루이스는 보지 못했다.\n이 문장이 데우스를 무너뜨릴 열쇠야.)"
+        }
+      ],
+      "designerNote": "P07_04 획득 시 자동으로 동시 획득됨"
+    },
+    {
+      "profileClueId": "P05_01",
+      "characterId": 5,
+      "clueIndex": 1,
+      "clueText": "토니는 드래곤과의 조우 중, 비전투원으로서 의뢰 물품을 지키기 위해 도망을 선택했다.",
+      "hintText": "토니는 의뢰 물품을 지킨 자신의 판단이 팀에게 충분한 도움이 되었다고 생각하고 있다.",
+      "hintDescription": "토니는 창고에 혼자 남아 자신의 쓸모를 생각하는 정신 착란 증세를 보인다.",
+      "combo": [
+        1,
+        5
+      ],
+      "placeName": "창고",
+      "deadRequired": [],
+      "prerequisites": [],
+      "simultaneousIds": [],
+      "isForcedExitFragment": true,
+      "lines": [
+        {
+          "textId": "5",
+          "text": "나는 분명 팀에 도움이 됐어. 나는 분명 팀에 도움이 됐어. 나는 분명 팀에 도움이 됐어. 나는 분명 팀에 도움이 됐어. 나는 분명 팀에 도움이 됐어. 나는 분명 팀에 도움이 됐어."
+        },
+        {
+          "textId": "1",
+          "text": "토니님? 괜찮으신가요??"
+        },
+        {
+          "textId": "5",
+          "text": "나는 분명 도움이 됐어...."
+        }
+      ],
+      "designerNote": "이 상황 한정으로, 강제퇴고 직전(엔비가 죽기 전)에 #1 엔비와 #5 토니의 다이얼로그를 출력할 수 있는지? 그리고 강제 퇴고 후 #5 토니의 조각을 획득할 수 있게 해줄 수 있는지?"
+    },
+    {
+      "profileClueId": "P05_02",
+      "characterId": 5,
+      "clueIndex": 2,
+      "clueText": "토니는 겁에 질렸지만, 자신이 할 수 있는 일은 의뢰 물품을 지키는 것뿐이라고 믿지 않았을까.",
+      "hintText": "토니는 의뢰 물품을 핑계로 삼아 처음부터 동료들을 버리고 도망치려 했다.",
+      "hintDescription": "프리드는 창고에 혼자 남아 토니에 관한 그때의 기억을 되짚는다.",
+      "combo": [
+        1,
+        6
+      ],
+      "placeName": "창고",
+      "deadRequired": [],
+      "prerequisites": [
+        "P06_02"
+      ],
+      "simultaneousIds": [
+        "P06_03"
+      ],
+      "isForcedExitFragment": false,
+      "lines": [
+        {
+          "textId": "1",
+          "text": "프리드님은 창고도 자주 살피시네요."
+        },
+        {
+          "textId": "6",
+          "text": "의뢰 물품이나 보급품은 가볍게 보면 안 돼.\n작은 실수가 큰 문제로 이어질 때가 많거든."
+        },
+        {
+          "textId": "1",
+          "text": "그날 의뢰 물품도 그랬나요?"
+        },
+        {
+          "textId": "1",
+          "text": "아, 대답하기 곤란하시면 안 하셔도 돼요."
+        },
+        {
+          "textId": "6",
+          "text": "아니야.\n그날도 물품은 중요했어."
+        },
+        {
+          "textId": "6",
+          "text": "토니는 의뢰 물품을 지키기 위해 최선을 다했지."
+        },
+        {
+          "textId": "1",
+          "text": "하지만 그 탓에 방어벽 위치를 정하기 어려우셨군요."
+        },
+        {
+          "textId": "6",
+          "text": "그 짧은 순간에, 나는 너무 많은 걸 보려고 했어.\n나는 모두를 지키고 싶었는데,"
+        },
+        {
+          "textId": "1",
+          "text": "(프리드의 방어 판단이 흔들렸다는 거네.)"
+        },
+        {
+          "textId": "1",
+          "text": "(이건 프리드에게 아직 남아 있는 상처야.)"
+        }
+      ],
+      "designerNote": "P06_03 획득 시 자동으로 동시 획득됨"
+    },
+    {
+      "profileClueId": "P05_03",
+      "characterId": 5,
+      "clueIndex": 3,
+      "clueText": "토니는 자신이 물품을 지키려 한 행동이 프리드의 방어 판단을 흔들었을지도 모른다고 불안해하지 않았을까",
+      "hintText": "토니는 자신의 행동이 프리드의 방어 판단에 아무런 영향을 주지 않았다고 확신했을 것이다",
+      "hintDescription": "창고에서 메이와 프리드가 되짚은 토니의 도망친 이유",
+      "combo": [
+        1,
+        2,
+        6
+      ],
+      "placeName": "창고",
+      "deadRequired": [],
+      "prerequisites": [
+        "P02_03"
+      ],
+      "simultaneousIds": [
+        "P02_04"
+      ],
+      "isForcedExitFragment": false,
+      "lines": [
+        {
+          "textId": "2",
+          "text": "여긴 여전히 물품이 많네.\n토니가 늘 신경 쓰던 것들."
+        },
+        {
+          "textId": "6",
+          "text": "토니는 그런 걸 가볍게 여기지 않았어.\n의뢰 물품도, 보급품도, 계약도."
+        },
+        {
+          "textId": "2",
+          "text": "그날도 물품을 먼저 본 거야?\n드래곤이 눈앞에 있었는데?"
+        },
+        {
+          "textId": "6",
+          "text": "토니는 싸울 수 없었어.\n그러니까 자신이 할 수 있는 일을 하려 했겠지."
+        },
+        {
+          "textId": "2",
+          "text": "그게 물품을 지키는 거였고?"
+        },
+        {
+          "textId": "6",
+          "text": "아마도.\n토니에게는 그게 용병단을 지키는 방식이었을 거야."
+        },
+        {
+          "textId": "2",
+          "text": "……"
+        },
+        {
+          "textId": "6",
+          "text": "그 순간 토니와 물품이 보이지 않았던 것도 사실이야.\n나는 메이 너와, 토니와, 물품까지 모두 보려 했어."
+        },
+        {
+          "textId": "2",
+          "text": "나는 드래곤만 보고 있었고,\n토니는 물품을 보고 있었고,\n너는 흩어진 전장을 보고 있었다?"
+        },
+        {
+          "textId": "6",
+          "text": "……그날 우리는 전부 다른 걸 보고 있었어."
+        },
+        {
+          "textId": "1",
+          "text": "(메이는 토니를 단순한 도망자로만 보고 있었어.)"
+        },
+        {
+          "textId": "1",
+          "text": "(하지만 토니에게도 지키려던 게 있었다는 거네.)"
+        }
+      ],
+      "designerNote": "P02_04 획득 시 자동으로 동시 획득됨"
+    },
+    {
+      "profileClueId": "P05_04",
+      "characterId": 5,
+      "clueIndex": 4,
+      "clueText": "엔비의 정신 상태는 오로지 자신에",
+      "hintText": "엔비의 정신 상태는 오로지 자신에 대한 불신 때문에 일어났다.",
+      "hintDescription": "늦은 저녁, 마지막으로 엔비가 당했다. 토니는 단원들을 모두 살해했다.",
+      "combo": [
+        1,
+        5
+      ],
+      "placeName": "",
+      "deadRequired": [
+        2,
+        3,
+        4,
+        6,
+        7
+      ],
+      "prerequisites": [
+        "P05_03"
+      ],
+      "simultaneousIds": [],
+      "isForcedExitFragment": true,
+      "lines": [
+        {
+          "textId": "5",
+          "text": "나는..... 분명..... 팀에.... 도움이.... 됐어....."
+        },
+        {
+          "textId": "1",
+          "text": "(젠장! 단원들이 전부 죽었어. 또 다시 돌아가야만 해. 토니 쪽은 현재 정신상태가 불안정해. 다음 루프 때는 최대한 피해보자.)"
+        }
+      ],
+      "designerNote": "이 상황 한정으로, 강제퇴고 직전(엔비가 죽기 전)에 #1 엔비와 #5 토니의 다이얼로그를 출력할 수 있는지? 그리고 강제 퇴고 후 #5 토니의 조각을 획득할 수 있게 해줄 수 있는지?"
+    },
+    {
+      "profileClueId": "P05_05",
+      "characterId": 5,
+      "clueIndex": 5,
+      "clueText": "토니는 물품을 지킨 자신의 행동이 오히려 프리드에게 해가 되었다고 생각하여, 심각한 자기혐오에 빠졌다.",
+      "hintText": "토니는 프리드가 자신의 판단을 이해해 주었다고 생각했지만, 다른 단원들의 눈초리를 버티지 못하고 폭발하였다.",
+      "hintDescription": "엔비와 토니의 독대. 프리드는 희생했고 나머지 동료들 역시 모두 죽었다.",
+      "combo": [
+        1,
+        5,
+        6
+      ],
+      "placeName": "",
+      "deadRequired": [
+        2,
+        3,
+        4,
+        7
+      ],
+      "prerequisites": [
+        "P05_04"
+      ],
+      "simultaneousIds": [],
+      "isForcedExitFragment": false,
+      "lines": [
+        {
+          "textId": "1",
+          "text": "토니님! 진정하세요."
+        },
+        {
+          "textId": "2",
+          "text": "진정? 너 같으면 그게 될 것 같아?"
+        },
+        {
+          "textId": "1",
+          "text": "(드디어 다시 이야기를 나눌 수 있게 됐어. 아마 마지막 기회일지도 몰라) 저라면 토니님의 마음을 이해할 수 있어요."
+        },
+        {
+          "textId": "2",
+          "text": "이미 모든 게 끝났어. 모두 죽었어... 프리드까지..."
+        },
+        {
+          "textId": "1",
+          "text": "왜 단원들 모두가 토니님을 싫어한다고 생각하신 거에요?"
+        },
+        {
+          "textId": "2",
+          "text": "그놈들은 물품 지키려고 한 나에게 도망자의 낙인을 찍으려 한 놈들이야!!! 프리드는 나 때문에 루이스를 보호하지 못했던 걸 알고, 나를 벌레보듯이 쳐다봤어!! 분명해!!!!"
+        },
+        {
+          "textId": "1",
+          "text": "단원들은 서로 그 사건에 대해 말을 아꼈던 게 아니에요? 프리드님은 그런 말을 직접 하지 않으셨어요!"
+        },
+        {
+          "textId": "2",
+          "text": "시끄러어어어!!!!!!!! 이제 다 의미 없어!!!!!!!!!!!!!!!!!!!!"
+        }
+      ],
+      "designerNote": "프리드가 희생양 효과를 발동해서 엔비 대신 사망하는 역할 기능을 하는데, 이 로직이 제대로 작동되는지 확인할 필요가 있음"
+    },
+    {
+      "profileClueId": "P06_01",
+      "characterId": 6,
+      "clueIndex": 1,
+      "clueText": "프리드는 지켜야 할 사람이 보이지 않으면 지킬 수 없다고 생각하고 있다.",
+      "hintText": "프리드는 전투에서 가장 중요한 것은 각자 알아서 살아남는 것이라고 생각하고 있다.",
+      "hintDescription": "훈련장에서 나눈 신입과 프리드의 첫 인사",
+      "combo": [
+        1,
+        6
+      ],
+      "placeName": "훈련장",
+      "deadRequired": [],
+      "prerequisites": [],
+      "simultaneousIds": [],
+      "isForcedExitFragment": false,
+      "lines": [
+        {
+          "textId": "1",
+          "text": "프리드님, 맞으시죠?\n용병단에 새로 합류한 엔비예요. 잘 부탁드려요."
+        },
+        {
+          "textId": "6",
+          "text": "신입이구나.\n프리드야. 모르는 게 있으면 언제든 물어봐."
+        },
+        {
+          "textId": "1",
+          "text": "제가 먼저 조심해야 할 게 있을까요?"
+        },
+        {
+          "textId": "6",
+          "text": "혼자 앞서가지 않는 것.\n그리고 누가 어디에 있는지 계속 보는 것."
+        },
+        {
+          "textId": "1",
+          "text": "위치가 중요한가요?"
+        },
+        {
+          "textId": "6",
+          "text": "지켜야 할 사람이 보이지 않으면, 지킬 수 없으니까..."
+        },
+        {
+          "textId": "1",
+          "text": "그렇군요. 명심할게요."
+        },
+        {
+          "textId": "1",
+          "text": "(지켜야 할 사람이 보이지 않으면 지킬 수 없다라.\n프리드한테는 꽤 아픈 말 같네.)"
+        }
+      ],
+      "designerNote": ""
+    },
+    {
+      "profileClueId": "P06_02",
+      "characterId": 6,
+      "clueIndex": 2,
+      "clueText": "프리드는 그날 드래곤보다 흩어진 전장과 지켜야 할 사람들을 더 신경 쓰고 있었다.",
+      "hintText": "프리드는 메이가 드래곤을 공격하는 동안 전장 상황을 거의 신경 쓰지 않았다.",
+      "hintDescription": "훈련장에서 부딪힌 메이와 프리드",
+      "combo": [
+        1,
+        2,
+        6
+      ],
+      "placeName": "훈련장",
+      "deadRequired": [],
+      "prerequisites": [
+        "P06_01"
+      ],
+      "simultaneousIds": [],
+      "isForcedExitFragment": false,
+      "lines": [
+        {
+          "textId": "2",
+          "text": "네가 보호막만 제대로 펼쳤다면,\n루이스가 쓰러지는 일은 없었어."
+        },
+        {
+          "textId": "6",
+          "text": "그렇게 간단한 일이 아니었어.\n그날 전장은 이미 흩어져 있었어."
+        },
+        {
+          "textId": "2",
+          "text": "그래서?\n모두를 지키겠다는 말은 쉬웠고?"
+        },
+        {
+          "textId": "6",
+          "text": "쉬운 말이 아니야.\n그래서 아직도 잊지 못하는 거야."
+        },
+        {
+          "textId": "2",
+          "text": "나는 드래곤을 보고 있었어.\n정말 끝낼 수 있었다고."
+        },
+        {
+          "textId": "6",
+          "text": "하지만 나는 드래곤만 볼 수 없었어."
+        },
+        {
+          "textId": "6",
+          "text": "메이 너도, 루이스도, 데우스도, 새턴도,\n그리고 보이지 않던 토니와 물품까지 봐야 했어."
+        },
+        {
+          "textId": "1",
+          "text": "(메이는 드래곤을 봤고,\n프리드는 흩어진 전장을 보고 있었네.)"
+        },
+        {
+          "textId": "1",
+          "text": "(같은 순간을 보고도, 기억하는 장면이 달라.)"
+        }
+      ],
+      "designerNote": ""
+    },
+    {
+      "profileClueId": "P06_03",
+      "characterId": 6,
+      "clueIndex": 3,
+      "clueText": "프리드는 토니와 물품이 보이지 않아 방어벽 위치를 정하는 데 흔들렸다고 기억하고 있다.",
+      "hintText": "프리드는 토니와 물품의 위치를 정확히 알고 있었지만 일부러 방어하지 않았다.",
+      "hintDescription": "프리드는 창고에 혼자 남아 토니에 관한 그때의 기억을 되짚는다.",
+      "combo": [
+        1,
+        6
+      ],
+      "placeName": "창고",
+      "deadRequired": [],
+      "prerequisites": [
+        "P06_02"
+      ],
+      "simultaneousIds": [
+        "P05_02"
+      ],
+      "isForcedExitFragment": false,
+      "lines": [
+        {
+          "textId": "1",
+          "text": "프리드님은 창고도 자주 살피시네요."
+        },
+        {
+          "textId": "6",
+          "text": "의뢰 물품이나 보급품은 가볍게 보면 안 돼.\n작은 실수가 큰 문제로 이어질 때가 많거든."
+        },
+        {
+          "textId": "1",
+          "text": "그날 의뢰 물품도 그랬나요?"
+        },
+        {
+          "textId": "1",
+          "text": "아, 대답하기 곤란하시면 안 하셔도 돼요."
+        },
+        {
+          "textId": "6",
+          "text": "아니야.\n그날도 물품은 중요했어."
+        },
+        {
+          "textId": "6",
+          "text": "문제는 보이지 않았다는 거야.\n토니도, 물품도."
+        },
+        {
+          "textId": "1",
+          "text": "그래서 방어벽 위치를 정하기 어려우셨군요."
+        },
+        {
+          "textId": "6",
+          "text": "그 짧은 순간에, 나는 너무 많은 걸 보려고 했어.\n나는 모두를 지키고 싶었는데,\n그 순간 모두가 어디 있는지 알 수 없었어."
+        },
+        {
+          "textId": "1",
+          "text": "(토니와 물품이 보이지 않았기 때문에,\n프리드의 방어 판단이 흔들렸다는 거네.)"
+        },
+        {
+          "textId": "1",
+          "text": "(이건 프리드에게 아직 남아 있는 상처야.)"
+        }
+      ],
+      "designerNote": "해당 조각 획득 시 자동으로 P05_02가 동시 획득됨"
+    },
+    {
+      "profileClueId": "P06_04",
+      "characterId": 6,
+      "clueIndex": 4,
+      "clueText": "프리드는 새턴이 막지 못한 파편까지 자신이 막았어야 했다고 생각하고 있다.",
+      "hintText": "프리드는 루이스가 다친 일을 새턴의 카운터 실패 때문이라고만 여기고 있다.",
+      "hintDescription": "훈련장에서 되짚어 보는 프리드와 새턴의 기억",
+      "combo": [
+        1,
+        6,
+        7
+      ],
+      "placeName": "훈련장",
+      "deadRequired": [],
+      "prerequisites": [
+        "P06_03"
+      ],
+      "simultaneousIds": [],
+      "isForcedExitFragment": false,
+      "lines": [
+        {
+          "textId": "7",
+          "text": "그날 후방 공격은 막았어.\n완전히는 아니었지만."
+        },
+        {
+          "textId": "6",
+          "text": "파편이 튀었지.\n전장 중간으로."
+        },
+        {
+          "textId": "7",
+          "text": "내가 조금만 더 정확했으면,\n루이스까지 가지 않았을 거야."
+        },
+        {
+          "textId": "6",
+          "text": "그 파편을 막았어야 하는 건 나였어."
+        },
+        {
+          "textId": "7",
+          "text": "프리드, 그때 네가 봐야 할 건 너무 많았어."
+        },
+        {
+          "textId": "6",
+          "text": "그래도 봤어야 했어.\n메이도, 루이스도, 데우스도,\n보이지 않던 토니와 물품도."
+        },
+        {
+          "textId": "7",
+          "text": "전장을 전부 보려 하면 늦어.\n후방 공격은 한순간이었고, 파편은 더 빨랐어."
+        },
+        {
+          "textId": "6",
+          "text": "그래서 아직도 그 순간이 계속 떠올라."
+        },
+        {
+          "textId": "1",
+          "text": "(새턴은 파편을 완전히 막지 못했고,\n프리드는 그 파편을 막지 못한 걸 자기 책임으로 보고 있네.)"
+        },
+        {
+          "textId": "1",
+          "text": "(막으려던 사람들끼리도, 남은 상처는 다르구나.)"
+        }
+      ],
+      "designerNote": ""
+    },
+    {
+      "profileClueId": "P06_05",
+      "characterId": 6,
+      "clueIndex": 5,
+      "clueText": "프리드는 모두를 지키지 못한 책임을 아직도 혼자 끌어안으려 하고 있다.",
+      "hintText": "프리드는 루이스가 다친 책임을 새턴과 토니에게만 돌리려 하고 있다.",
+      "hintDescription": "예배실에 모인 메이와 데우스, 그리고 프리드",
+      "combo": [
+        1,
+        2,
+        4,
+        6
+      ],
+      "placeName": "예배실",
+      "deadRequired": [],
+      "prerequisites": [
+        "P06_04"
+      ],
+      "simultaneousIds": [],
+      "isForcedExitFragment": false,
+      "lines": [
+        {
+          "textId": "2",
+          "text": "프리드.\n아직도 그날 보호막을 생각해?"
+        },
+        {
+          "textId": "6",
+          "text": "생각하지 않으려고 해도 떠올라."
+        },
+        {
+          "textId": "4",
+          "text": "프리드만의 잘못은 아니야.\n그때는 모두가 급했어."
+        },
+        {
+          "textId": "2",
+          "text": "그래도 보호막이 닿았다면,\n루이스는 쓰러지지 않았겠지."
+        },
+        {
+          "textId": "6",
+          "text": "맞아.\n내 보호막은 닿지 않았어."
+        },
+        {
+          "textId": "4",
+          "text": "그건 네가 전부 책임질 일이 아니야."
+        },
+        {
+          "textId": "6",
+          "text": "하지만 나는 모두를 지키겠다고 했어."
+        },
+        {
+          "textId": "6",
+          "text": "새턴이 막지 못한 파편도,\n토니와 물품이 사라져 생긴 빈틈도,\n전부 내가 막았어야 했어."
+        },
+        {
+          "textId": "2",
+          "text": "그렇게까지 끌어안으면 뭐가 남는데?"
+        },
+        {
+          "textId": "6",
+          "text": "적어도 누군가를 미워하지는 않아도 되잖아."
+        },
+        {
+          "textId": "4",
+          "text": "프리드……"
+        },
+        {
+          "textId": "6",
+          "text": "내가 못해서 끝난 거라면,\n미워해야 할 사람은 나 하나면 되니까."
+        },
+        {
+          "textId": "1",
+          "text": "(프리드는 아직도 모든 책임을 자기 안에 묶어두려 하고 있어.)"
+        },
+        {
+          "textId": "1",
+          "text": "(그 매듭을 토니 쪽으로 조금만 돌리면 되겠네.)"
+        }
+      ],
+      "designerNote": ""
+    },
+    {
+      "profileClueId": "P07_01",
+      "characterId": 7,
+      "clueIndex": 1,
+      "clueText": "새턴은 전투에서 제자리에 머무는 것보다 상황에 맞는 위치를 잡는 것이 중요하다고 생각한다.",
+      "hintText": "새턴은 전투 중 한번 정한 위치를 끝까지 지키는 것이 가장 안전하다고 생각한다.",
+      "hintDescription": "훈련장에서 마주한 엔비와 새턴의 첫 인사",
+      "combo": [
+        1,
+        7
+      ],
+      "placeName": "훈련장",
+      "deadRequired": [],
+      "prerequisites": [],
+      "simultaneousIds": [],
+      "isForcedExitFragment": false,
+      "lines": [
+        {
+          "textId": "1",
+          "text": "새턴님, 맞으시죠?\n새로 합류한 엔비예요. 잘 부탁드려요."
+        },
+        {
+          "textId": "7",
+          "text": "새턴.\n원거리 지원을 맡고 있어."
+        },
+        {
+          "textId": "1",
+          "text": "원거리 지원이면 뒤쪽에서 싸우시는 건가요?"
+        },
+        {
+          "textId": "7",
+          "text": "상황에 따라 달라.\n중요한 건 뒤에 있는 게 아니라, 있어야 할 위치에 있는 거야."
+        },
+        {
+          "textId": "7",
+          "text": "전투에서는 한 발 늦게 움직이는 것보다,\n잘못된 자리에 멈춰 있는 게 더 위험해."
+        },
+        {
+          "textId": "1",
+          "text": "그럼 계속 위치를 살피셔야겠네요."
+        },
+        {
+          "textId": "7",
+          "text": "당연하지. 위치가 무너지면 진형도 무너져."
+        },
+        {
+          "textId": "1",
+          "text": "(새턴은 전투를 위치와 흐름으로 보는 사람이네.)"
+        },
+        {
+          "textId": "1",
+          "text": "(그날 누가 어디에 있었는지가, 중요한 단서가 되겠어.)"
+        }
+      ],
+      "designerNote": ""
+    },
+    {
+      "profileClueId": "P07_02",
+      "characterId": 7,
+      "clueIndex": 2,
+      "clueText": "새턴은 루이스가 위험한 위치에서 망설인 것이 전장을 더 불안정하게 만들었다고 생각하고 있다.",
+      "hintText": "새턴은 루이스가 그 자리에 멈춰 있었기 때문에 전장이 더 안정적으로 유지되었다고 생각하고 있다.",
+      "hintDescription": "훈련장에서 새턴이 지적한 그날 루이스의 위치",
+      "combo": [
+        1,
+        3,
+        7
+      ],
+      "placeName": "훈련장",
+      "deadRequired": [],
+      "prerequisites": [
+        "P07_01"
+      ],
+      "simultaneousIds": [],
+      "isForcedExitFragment": false,
+      "lines": [
+        {
+          "textId": "7",
+          "text": "루이스. 그날 네가 서 있던 위치, 기억해?"
+        },
+        {
+          "textId": "3",
+          "text": "……기억해. 전장 중간이었지."
+        },
+        {
+          "textId": "7",
+          "text": "가장 애매한 자리였어.\n앞으로 나아간 것도 아니고, 뒤로 물러난 것도 아니었지."
+        },
+        {
+          "textId": "3",
+          "text": "움직이면 더 위험해질 것 같았어."
+        },
+        {
+          "textId": "7",
+          "text": "그렇게 멈춰 있는 게 더 위험했어.\n후방 공격이 깨졌을 때, 파편이 향할 수 있는 자리였으니까."
+        },
+        {
+          "textId": "3",
+          "text": "지금은 알고 있어."
+        },
+        {
+          "textId": "7",
+          "text": "그 자리는 비어 있어야 했어.\n후방 공격이 깨지면, 파편이 흘러들 위치였으니까."
+        },
+        {
+          "textId": "3",
+          "text": "……움직이면 더 흔들릴 거라고 생각했어."
+        },
+        {
+          "textId": "7",
+          "text": "하지만 넌 거기에 남았고,\n결국 파편은 그쪽으로 튀었어."
+        },
+        {
+          "textId": "1",
+          "text": "(새턴은 루이스가 멈춘 이유보다,\n그가 서 있던 위치를 더 문제로 보고 있네.)"
+        },
+        {
+          "textId": "1",
+          "text": "(루이스의 망설임은 새턴에게 전장의 빈틈으로 남아 있어.)"
+        }
+      ],
+      "designerNote": ""
+    },
+    {
+      "profileClueId": "P07_03",
+      "characterId": 7,
+      "clueIndex": 3,
+      "clueText": "새턴은 루이스 곁을 떠난 것이 도망이 아니라, 후방 공격을 막기 위한 판단이었다고 생각하고 있다.",
+      "hintText": "새턴은 그날 루이스 곁을 떠난 이유가 자신의 안전을 먼저 확보하기 위해서였다고 인정하고 있다.",
+      "hintDescription": "훈련장에서 마주한 데우스와 새턴의 엇갈린 기억",
+      "combo": [
+        1,
+        4,
+        7
+      ],
+      "placeName": "훈련장",
+      "deadRequired": [],
+      "prerequisites": [
+        "P07_02"
+      ],
+      "simultaneousIds": [],
+      "isForcedExitFragment": false,
+      "lines": [
+        {
+          "textId": "4",
+          "text": "새턴. 그날 너는 루이스 곁을 떠났어."
+        },
+        {
+          "textId": "7",
+          "text": "알아."
+        },
+        {
+          "textId": "4",
+          "text": "나는 너한테 부탁했어.\n내가 기도하는 동안만이라도 루이스 곁에 있어달라고."
+        },
+        {
+          "textId": "7",
+          "text": "후방 공격이 들어오고 있었어.\n그걸 막지 않으면 전장이 무너졌을 거야."
+        },
+        {
+          "textId": "4",
+          "text": "그래도 루이스는 네 옆에 있었잖아."
+        },
+        {
+          "textId": "7",
+          "text": "그래서 더 빨리 움직여야 했어.\n내가 늦으면, 루이스만이 아니라 모두가 위험했으니까."
+        },
+        {
+          "textId": "4",
+          "text": "너는 항상 그런 식이야.\n떠나야 할 이유부터 찾지."
+        },
+        {
+          "textId": "7",
+          "text": "도망친 게 아니야.\n내가 있어야 할 위치가 바뀐 거야."
+        },
+        {
+          "textId": "1",
+          "text": "(데우스는 새턴이 루이스를 버렸다고 보고 있고,\n새턴은 후방을 막기 위해 움직였다고 믿고 있네.)"
+        },
+        {
+          "textId": "1",
+          "text": "(새턴은 자신이 도망친 게 아니라, 팀을 위한 위치로 옮겼다고 생각하고 있어.)"
+        }
+      ],
+      "designerNote": ""
+    },
+    {
+      "profileClueId": "P07_04",
+      "characterId": 7,
+      "clueIndex": 4,
+      "clueText": "새턴은 모두를 살리기 위한 판단이었다고 믿고 있지만, 그 결과 아무도 남지 않았다는 사실 앞에서 흔들리고 있다.",
+      "hintText": "새턴은 동료들이 모두 죽은 뒤에도 자신의 판단에 아무런 의심이나 동요를 느끼지 않고 있다.",
+      "hintDescription": "연인의 파국, 동료들의 죽음… 새턴은 끝내 자신의 판단이 남긴 결과를 마주했다.",
+      "combo": [
+        1,
+        4,
+        7
+      ],
+      "placeName": "",
+      "deadRequired": [
+        2,
+        3,
+        5,
+        6
+      ],
+      "prerequisites": [
+        "P04_04",
+        "P07_03"
+      ],
+      "simultaneousIds": [
+        "P04_05"
+      ],
+      "isForcedExitFragment": false,
+      "lines": [
+        {
+          "textId": "4",
+          "text": "새턴. 너는 후방을 막으려고 움직였다고 했지."
+        },
+        {
+          "textId": "7",
+          "text": "그래. 그때는 그게 모두를 살리는 길이라고 생각했어."
+        },
+        {
+          "textId": "4",
+          "text": "모두라니. 지금 여기엔 누가 남아 있는데?"
+        },
+        {
+          "textId": "4",
+          "text": "메이도 죽었어!\n토니도, 프리드도, 루이스도 모두 없다고!"
+        },
+        {
+          "textId": "7",
+          "text": "데우스."
+        },
+        {
+          "textId": "4",
+          "text": "나는 루이스를 맡겼었지."
+        },
+        {
+          "textId": "7",
+          "text": "후방 공격을 막지 않았다면,\n더 많은 사람이 죽었을 거야."
+        },
+        {
+          "textId": "4",
+          "text": "그 말, 이제 아무 의미 없어.\n결국 아무도 남지 않았잖아."
+        },
+        {
+          "textId": "4",
+          "text": "네가 막아낸 건 후방이었지.\n루이스는 아니었어."
+        },
+        {
+          "textId": "7",
+          "text": "나는 모두를 살리려고 했어."
+        },
+        {
+          "textId": "4",
+          "text": "그 모두 안에,\n루이스는 없었나 봐."
+        },
+        {
+          "textId": "1",
+          "text": "(데우스는 새턴이 무엇을 막았는지보다,\n무엇을 놓쳤는지만 보고 있네.)"
+        },
+        {
+          "textId": "1",
+          "text": "(하지만 새턴도 흔들리고 있어.\n팀을 위한 판단이었다는 말이, 이제는 스스로를 버티게 하는 변명처럼 들리겠네.)"
+        },
+        {
+          "textId": "1",
+          "text": "(아마 또 처음으로 되돌아가겠지.\n다음에는 새턴에게도 이 균열을 더 일찍 심어둬야겠어.)"
+        },
+        {
+          "textId": "1",
+          "text": "(새턴은 모두를 구하려 했고, 결국 아무도 구하지 못했다.\n이 모순이 새턴을 흔들 열쇠야.)"
+        }
+      ],
+      "designerNote": "해당 조각 획득 시 자동으로 P04_05가 동시 획득됨"
+    },
+    {
+      "profileClueId": "P07_05",
+      "characterId": 7,
+      "clueIndex": 5,
+      "clueText": "새턴은 뒤늦게 용병단의 붕괴가 서로의 오해와 침묵에서 비롯되었다고 깨닫고 있다.",
+      "hintText": "새턴은 동료들의 죽음에 무덤덤했다.",
+      "hintDescription": "새턴은 모두가 죽을 때까지 방관했다.",
+      "combo": [
+        1,
+        7
+      ],
+      "placeName": "",
+      "deadRequired": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "prerequisites": [
+        "P07_04"
+      ],
+      "simultaneousIds": [],
+      "isForcedExitFragment": false,
+      "lines": [
+        {
+          "textId": "1",
+          "text": "용병단의 동료들은 종종 말했죠. 새턴님은 항상 자신의 목숨을 우선시 한다고요."
+        },
+        {
+          "textId": "7",
+          "text": "그건 오해야.. 나는 팀을 위한 판단을 했어. 그때도 마찬가지야. 팀을 구하기 위해 후방으로 이동해야 한다는 선택을 한 것뿐이야."
+        },
+        {
+          "textId": "1",
+          "text": "지금도 팀을 위한 판단을 한 건가요? 의심의 씨앗이 결국 이 용병단을 파국으로 이끌었어요. 새턴님은 그걸 가만히 지켜보셨고요."
+        },
+        {
+          "textId": "7",
+          "text": "말하지 않으면 몰라... 우리들은 대화가 필요했어..."
+        },
+        {
+          "textId": "1",
+          "text": "(생각보다 냉철한 성격이야. 오해의 씨앗을 심기 위해선 신중해야 될 필요가 있겠어. 아마 또 처음으로 되돌아갈거야. 대비를 하자.)"
+        }
+      ],
+      "designerNote": ""
+    }
+  ]
+}

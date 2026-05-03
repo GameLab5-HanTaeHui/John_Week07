@@ -2111,8 +2111,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1cc4c210b5e9bf43ac7d52f1b002b00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HTH.Campaign.FragmentCollector
-  _conceptCardMinFragments: 3
-  _rewardSaveData: {fileID: 11400000, guid: a9a937f157d7ba24abcb1607e860d056, type: 2}
+  _fragmentData: {fileID: 11400000, guid: a906ad4e8ba4f01469306c585efc0274, type: 2}
 --- !u!1 &85826200
 GameObject:
   m_ObjectHideFlags: 0
@@ -4005,7 +4004,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4bdbae446cbc8949bb7455dddfa9e57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HTH.Campaign.CharacterRecordPanel
-  _profileClueData: {fileID: 11400000, guid: 017bef57275218345a0bf5c823283a36, type: 2}
+  _fragmentData: {fileID: 11400000, guid: a906ad4e8ba4f01469306c585efc0274, type: 2}
   _profileData: {fileID: 11400000, guid: 70849e93ff6cd624fa6b74f08b617d1c, type: 2}
   _fragmentCollector: {fileID: 81887182}
   _flipRoot: {fileID: 141346003}
@@ -5850,7 +5849,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d95bf3590624a8a45aa723627bf86580, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HTH.Campaign.HintPanel
-  _hintData: {fileID: 11400000, guid: 48e63051c8c6e794384277339bd94fd3, type: 2}
+  _fragmentData: {fileID: 11400000, guid: a906ad4e8ba4f01469306c585efc0274, type: 2}
   _fragmentCollector: {fileID: 81887182}
   _hintTexts:
   - {fileID: 219624167}
@@ -8548,7 +8547,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &321175537
 RectTransform:
   m_ObjectHideFlags: 0
@@ -14368,7 +14367,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4bdbae446cbc8949bb7455dddfa9e57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HTH.Campaign.CharacterRecordPanel
-  _profileClueData: {fileID: 11400000, guid: 017bef57275218345a0bf5c823283a36, type: 2}
+  _fragmentData: {fileID: 11400000, guid: a906ad4e8ba4f01469306c585efc0274, type: 2}
   _profileData: {fileID: 11400000, guid: 70849e93ff6cd624fa6b74f08b617d1c, type: 2}
   _fragmentCollector: {fileID: 81887182}
   _flipRoot: {fileID: 486929869}
@@ -15291,7 +15290,7 @@ GameObject:
   - component: {fileID: 533400558}
   - component: {fileID: 533400559}
   m_Layer: 0
-  m_Name: GameFlowController
+  m_Name: CampaignGameFlowController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -17428,7 +17427,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1589347839}
-  - {fileID: 533400558}
   - {fileID: 920195234}
   - {fileID: 1763139385}
   - {fileID: 2015320552}
@@ -17438,10 +17436,13 @@ Transform:
   - {fileID: 294729775}
   - {fileID: 561045136}
   - {fileID: 2024032618}
+  - {fileID: 724853293}
   - {fileID: 1562843430}
   - {fileID: 815732210}
+  - {fileID: 533400558}
   - {fileID: 1383895553}
   - {fileID: 650009328}
+  - {fileID: 1565995717}
   - {fileID: 2077496616}
   - {fileID: 81887181}
   - {fileID: 974090815}
@@ -17603,7 +17604,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4bdbae446cbc8949bb7455dddfa9e57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HTH.Campaign.CharacterRecordPanel
-  _profileClueData: {fileID: 11400000, guid: 017bef57275218345a0bf5c823283a36, type: 2}
+  _fragmentData: {fileID: 11400000, guid: a906ad4e8ba4f01469306c585efc0274, type: 2}
   _profileData: {fileID: 11400000, guid: 70849e93ff6cd624fa6b74f08b617d1c, type: 2}
   _fragmentCollector: {fileID: 81887182}
   _flipRoot: {fileID: 601513486}
@@ -17717,7 +17718,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d95bf3590624a8a45aa723627bf86580, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HTH.Campaign.HintPanel
-  _hintData: {fileID: 11400000, guid: 48e63051c8c6e794384277339bd94fd3, type: 2}
+  _fragmentData: {fileID: 11400000, guid: a906ad4e8ba4f01469306c585efc0274, type: 2}
   _fragmentCollector: {fileID: 81887182}
   _hintTexts:
   - {fileID: 143842122}
@@ -21901,6 +21902,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 720593739}
   m_CullTransparentMesh: 1
+--- !u!1 &724853292
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 724853293}
+  m_Layer: 0
+  m_Name: ===== Campaign =====
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &724853293
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 724853292}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 587401261}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &725277286
 GameObject:
   m_ObjectHideFlags: 0
@@ -25354,7 +25386,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4bdbae446cbc8949bb7455dddfa9e57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HTH.Campaign.CharacterRecordPanel
-  _profileClueData: {fileID: 11400000, guid: 017bef57275218345a0bf5c823283a36, type: 2}
+  _fragmentData: {fileID: 11400000, guid: a906ad4e8ba4f01469306c585efc0274, type: 2}
   _profileData: {fileID: 11400000, guid: 70849e93ff6cd624fa6b74f08b617d1c, type: 2}
   _fragmentCollector: {fileID: 81887182}
   _flipRoot: {fileID: 859764750}
@@ -25719,7 +25751,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4bdbae446cbc8949bb7455dddfa9e57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HTH.Campaign.CharacterRecordPanel
-  _profileClueData: {fileID: 11400000, guid: 017bef57275218345a0bf5c823283a36, type: 2}
+  _fragmentData: {fileID: 11400000, guid: a906ad4e8ba4f01469306c585efc0274, type: 2}
   _profileData: {fileID: 11400000, guid: 70849e93ff6cd624fa6b74f08b617d1c, type: 2}
   _fragmentCollector: {fileID: 81887182}
   _flipRoot: {fileID: 864816639}
@@ -29183,7 +29215,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &974303482
 RectTransform:
   m_ObjectHideFlags: 0
@@ -29560,7 +29592,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d95bf3590624a8a45aa723627bf86580, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HTH.Campaign.HintPanel
-  _hintData: {fileID: 11400000, guid: 48e63051c8c6e794384277339bd94fd3, type: 2}
+  _fragmentData: {fileID: 11400000, guid: a906ad4e8ba4f01469306c585efc0274, type: 2}
   _fragmentCollector: {fileID: 81887182}
   _hintTexts:
   - {fileID: 1659514331}
@@ -39261,7 +39293,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1323383470
 RectTransform:
   m_ObjectHideFlags: 0
@@ -39306,13 +39338,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HTH.Campaign.ProfileInquiryUI
   _profileData: {fileID: 11400000, guid: 70849e93ff6cd624fa6b74f08b617d1c, type: 2}
-  _profileClueData: {fileID: 11400000, guid: 017bef57275218345a0bf5c823283a36, type: 2}
-  _fragmentCollector: {fileID: 81887182}
-  _rewardSaveData: {fileID: 11400000, guid: a9a937f157d7ba24abcb1607e860d056, type: 2}
   _panel: {fileID: 1323383469}
   _characterNameText: {fileID: 1847323210}
   _questionText: {fileID: 801493567}
-  _stepIndicatorText: {fileID: 1583862846}
   _choiceButtons:
   - {fileID: 178086203}
   - {fileID: 1148092791}
@@ -39323,28 +39351,22 @@ MonoBehaviour:
   - {fileID: 2104364603}
   - {fileID: 1874581916}
   - {fileID: 190487065}
-  _submitButton: {fileID: 969539770}
-  _closeButton: {fileID: 415948138}
-  _wrongAnswerPanel: {fileID: 1208185383}
-  _wrongAnswerText: {fileID: 1352572331}
-  _wrongAnswerLines:
-  - "\uC774\uAC74\u2026 \uB0B4\uAC00 \uC6D0\uD558\uB358 \uBAA8\uC2B5\uC774 \uC544\uB2C8\uC57C."
-  - "\uC544\uC9C1 \uBCF4\uC774\uC9C0 \uC54A\uB294 \uAC83\uB4E4\uC774 \uC788\uC5B4.
-    \uB354 \uB4E4\uC5B4\uC57C \uD574."
-  - "\uD2C0\uB838\uC5B4. \uC774 \uC0AC\uB78C\uC744 \uB098\uB294 \uC544\uC9C1 \uBAA8\uB974\uB294
-    \uAC70\uC57C."
-  - "\uBB54\uAC00 \uC5B4\uAE0B\uB098 \uC788\uC5B4. \uB2E4\uC2DC \uCC98\uC74C\uBD80\uD130
-    \uC0DD\uAC01\uD574\uC57C \uD574."
-  - "\uB098\uB294 \uADF8\uB4E4\uC758 \uB9D0\uC744 \uB4E3\uACE0 \uC788\uC5C8\uC9C0\uB9CC,
-    \uC9C4\uC2EC\uC740 \uB2E4\uB978 \uACF3\uC5D0 \uC788\uC5C8\uC5B4."
-  _correctAnswerLine: "\uC774\uC81C\uC57C \uBCF4\uC778\uB2E4.\n\uC774\uAC83\uC774
-    \uADF8 \uC0AC\uB78C\uC758 \uC9C4\uC9DC \uBAA8\uC2B5\uC774\uC5C8\uB2E4."
-  _endingLine: "\uBAA8\uB4E0 \uAC83\uC774 \uBC1D\uD600\uC84C\uB2E4.\n\uC774\uC57C\uAE30\uB294
-    \uC774\uC81C \uB05D\uC744 \uD5A5\uD574 \uB098\uC544\uAC04\uB2E4."
-  _wrongAnswerFadeDuration: 0.5
-  _wrongAnswerDisplayTime: 3
-  _correctAnswerDisplayTime: 2.5
-  _epilogueDialoguePlayer: {fileID: 2077496617}
+  _confirmPanel: {fileID: 0}
+  _confirmText: {fileID: 0}
+  _confirmButton: {fileID: 0}
+  _cancelButton: {fileID: 0}
+  _confirmMessage: "\uC774 \uB300\uD654\uB294 \uB418\uB3CC\uB9B4 \uC218 \uC5C6\uC2B5\uB2C8\uB2E4.\n\uC815\uB9D0
+    \uC774 \uB9D0\uC744 \uC804\uD558\uC2DC\uACA0\uC2B5\uB2C8\uAE4C?"
+  _resultPanel: {fileID: 0}
+  _resultText: {fileID: 0}
+  _fadeDuration: 0.5
+  _resultHoldTime: 2
+  _dialoguePlayer: {fileID: 0}
+  _successEndingText: "\uC6A9\uBCD1\uB2E8\uC740 \uBB34\uB108\uC84C\uB2E4.\n\uC5D4\uBE44\uB294
+    \uADF8 \uC790\uB9AC\uC5D0 \uC11C\uC11C, \uC790\uC2E0\uC774 \uC2EC\uC740 \uADE0\uC5F4\uC744
+    \uBC14\uB77C\uBCF4\uC558\uB2E4."
+  _failureEndingText: "\uC5B4\uB518\uAC00\uC5D0\uC11C \uC2E4\uC218\uAC00 \uC788\uC5C8\uB2E4.\n\uADF8
+    \uC0AC\uB78C\uC740 \uB05D\uB0B4 \uBB34\uB108\uC9C0\uC9C0 \uC54A\uC558\uB2E4."
   _selectPanel: {fileID: 974303485}
   _lobbySceneName: LobbyScene
   _noticeLockDuration: 2
@@ -40781,13 +40803,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06d8541e3f6e92f449c0fa85422c3700, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HTH.Campaign.DialogueTriggerManager
-  _dialogueData: {fileID: 11400000, guid: 71758b0369409d743afa035ecbeacf5a, type: 2}
+  _fragmentData: {fileID: 11400000, guid: a906ad4e8ba4f01469306c585efc0274, type: 2}
   _dialoguePlayer: {fileID: 2077496617}
   _fragmentCollector: {fileID: 81887182}
-  _useCharacterBasedZone: 1
   _anchorCharacterId: 1
-  _activeZones: 00000000
-  _triggerDelay: 1
 --- !u!1 &1386920848
 GameObject:
   m_ObjectHideFlags: 0
@@ -43060,7 +43079,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d95bf3590624a8a45aa723627bf86580, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HTH.Campaign.HintPanel
-  _hintData: {fileID: 11400000, guid: 48e63051c8c6e794384277339bd94fd3, type: 2}
+  _fragmentData: {fileID: 11400000, guid: a906ad4e8ba4f01469306c585efc0274, type: 2}
   _fragmentCollector: {fileID: 81887182}
   _hintTexts:
   - {fileID: 725277288}
@@ -44260,7 +44279,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d95bf3590624a8a45aa723627bf86580, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HTH.Campaign.HintPanel
-  _hintData: {fileID: 11400000, guid: 48e63051c8c6e794384277339bd94fd3, type: 2}
+  _fragmentData: {fileID: 11400000, guid: a906ad4e8ba4f01469306c585efc0274, type: 2}
   _fragmentCollector: {fileID: 81887182}
   _hintTexts:
   - {fileID: 1255797778}
@@ -44711,7 +44730,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d95bf3590624a8a45aa723627bf86580, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HTH.Campaign.HintPanel
-  _hintData: {fileID: 11400000, guid: 48e63051c8c6e794384277339bd94fd3, type: 2}
+  _fragmentData: {fileID: 11400000, guid: a906ad4e8ba4f01469306c585efc0274, type: 2}
   _fragmentCollector: {fileID: 81887182}
   _hintTexts:
   - {fileID: 1573995372}
@@ -45726,6 +45745,73 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a091974841d03a49922d7b11351c136, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HTH.Campaign.CampaignPanelManager
+--- !u!1 &1565995716
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1565995717}
+  - component: {fileID: 1565995718}
+  m_Layer: 0
+  m_Name: EnddingDialoguePlayer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1565995717
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1565995716}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 587401261}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1565995718
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1565995716}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8807f97de361b340af7a27d82943462, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HTH.Campaign.EndingDialoguePlayer
+  _profileData: {fileID: 11400000, guid: 70849e93ff6cd624fa6b74f08b617d1c, type: 2}
+  _panel: {fileID: 321175536}
+  _backgroundImage: {fileID: 1224340404}
+  _nameText: {fileID: 350172234}
+  _dialogueText: {fileID: 1634299471}
+  _clickIndicator: {fileID: 0}
+  _backgroundSprites:
+  - {fileID: 0}
+  - {fileID: 21300000, guid: b68ce7ee735957f46aac983d4fca0803, type: 3}
+  - {fileID: 21300000, guid: ac9088d1bf1998a44a8eeec403dd264d, type: 3}
+  - {fileID: 21300000, guid: 484145e7050ecd2428f736cb1261a825, type: 3}
+  - {fileID: 21300000, guid: 99bb6781bae90764faec8614b21f7e33, type: 3}
+  - {fileID: 21300000, guid: b084f8f70a654704f8aac460b6217ca0, type: 3}
+  - {fileID: 21300000, guid: 80338f499f9f79640aa74de2ef72030c, type: 3}
+  - {fileID: 21300000, guid: 8808ade9a103ff54891d0fb0c80bdd0e, type: 3}
+  _clickToAdvance: 1
+  _autoAdvanceDelay: 3
+  _typingSpeed: 0.03
+  _skipTypingOnClick: 1
+  _fadeDuration: 0.4
+  _fadePerLine: 0
+  _clickBlockDuration: 0.8
+  _hideNameForSpeakerZero: 1
 --- !u!1 &1573995370
 GameObject:
   m_ObjectHideFlags: 0
@@ -52852,7 +52938,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4bdbae446cbc8949bb7455dddfa9e57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HTH.Campaign.CharacterRecordPanel
-  _profileClueData: {fileID: 11400000, guid: 017bef57275218345a0bf5c823283a36, type: 2}
+  _fragmentData: {fileID: 11400000, guid: a906ad4e8ba4f01469306c585efc0274, type: 2}
   _profileData: {fileID: 11400000, guid: 70849e93ff6cd624fa6b74f08b617d1c, type: 2}
   _fragmentCollector: {fileID: 81887182}
   _flipRoot: {fileID: 1834754028}
@@ -56321,7 +56407,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d95bf3590624a8a45aa723627bf86580, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HTH.Campaign.HintPanel
-  _hintData: {fileID: 11400000, guid: 48e63051c8c6e794384277339bd94fd3, type: 2}
+  _fragmentData: {fileID: 11400000, guid: a906ad4e8ba4f01469306c585efc0274, type: 2}
   _fragmentCollector: {fileID: 81887182}
   _hintTexts:
   - {fileID: 1100258657}
@@ -57182,7 +57268,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4bdbae446cbc8949bb7455dddfa9e57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HTH.Campaign.CharacterRecordPanel
-  _profileClueData: {fileID: 11400000, guid: 017bef57275218345a0bf5c823283a36, type: 2}
+  _fragmentData: {fileID: 11400000, guid: a906ad4e8ba4f01469306c585efc0274, type: 2}
   _profileData: {fileID: 11400000, guid: 70849e93ff6cd624fa6b74f08b617d1c, type: 2}
   _fragmentCollector: {fileID: 81887182}
   _flipRoot: {fileID: 2019155787}
@@ -58506,10 +58592,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f020a46257c78a499417c32d01f8733, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HTH.Campaign.DialoguePlayer
-  _profileData: {fileID: 11400000, guid: 70849e93ff6cd624fa6b74f08b617d1c, type: 2}
   _dialoguePanel: {fileID: 321175536}
   _characterImage: {fileID: 1224340404}
-  _codeText: {fileID: 610868181}
   _nameText: {fileID: 350172234}
   _dialogueText: {fileID: 1634299471}
   _characterSprites:

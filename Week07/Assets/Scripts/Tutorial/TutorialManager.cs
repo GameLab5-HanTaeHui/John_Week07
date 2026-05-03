@@ -813,6 +813,8 @@ public class TutorialManager : SingletonMonobehaviour<TutorialManager>
                 if (_rewardSaveData != null)
                     _rewardSaveData.SaveTutorialClear();
 
+                TutorialSaveHelper.GrantTutorialReward();
+
                 // 4. 로비로 나갈 수 있는 상태로 전환
                 _canExitToLobby = true;
                 break;
