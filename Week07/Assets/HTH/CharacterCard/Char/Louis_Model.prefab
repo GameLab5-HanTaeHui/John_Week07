@@ -634,7 +634,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "<size=5>#4</size>\n\uB8E8\uC774\uC2A4"
+  m_text: "<size=5>#3</size>\n\uB8E8\uC774\uC2A4"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 18881673235070747af8383e5c68099b, type: 2}
   m_sharedMaterial: {fileID: -9072781599192229811, guid: 18881673235070747af8383e5c68099b, type: 2}

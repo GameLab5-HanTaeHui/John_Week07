@@ -66,41 +66,22 @@ namespace HTH.Campaign
 
             var gameState = new GameState(characterStates, roleTable);
             // ★ 캠페인 — 주인공 무적 비활성화
-            // 기본모드 ConfirmDeaths()의 주인공 면역 로직을 건너뜁니다.
-            // 주인공 사망 시 CampaignLoopConditionConfig.ShouldLoop()에서 강제퇴고를 처리합니다.
             gameState.ProtagonistImmuneEnabled = false;
-            _loopSM.GameState = gameState;
 
             // ── 4. 구역 배치 적용 ─────────────────────────────────────────
-            // ★ 캠페인 Zone 배치 규칙:
-            //   첫 루프 (LoopCount == 0)     → 전원 시드 기준 초기 Zone 배치
-            //   일반 퇴고 (LoopCount > 0, 강제퇴고 아님)
-            //                               → 전원 현재 Zone 유지 (위치 변경 없음)
-            //   강제 퇴고 (엔비 사망)        → 전원 시드 기준 초기 Zone으로 리셋
+            // ★ 강제퇴고/일반퇴고 모두 시드 기준 초기 Zone으로 리셋
             bool isForcedExit = CampaignGameFlowController.Instance?.IsForcedExit ?? false;
-            bool isFirstLoop = _loopSM.LoopCount == 0;
 
-            if (isFirstLoop || isForcedExit)
-            {
-                // 첫 루프 또는 강제퇴고 → 시드 기준 전원 초기 배치
-                for (int i = 0; i < characterStates.Count; i++)
-                    gameState.SetCharacterInitialZone(characterStates[i].CharacterId, zones[i]);
+            _loopSM.GameState = gameState;
+            for (int i = 0; i < characterStates.Count; i++)
+                gameState.SetCharacterInitialZone(characterStates[i].CharacterId, zones[i]);
 
-                if (isForcedExit)
-                    Debug.Log("[GameSetupState] 강제퇴고 — 전원 초기 Zone 리셋");
-            }
+            if (_loopSM.LoopCount == 0)
+                Debug.Log("[GameSetupState] 첫 루프 — 전원 초기 Zone 배치");
+            else if (isForcedExit)
+                Debug.Log("[GameSetupState] 강제퇴고 — 전원 초기 Zone 리셋");
             else
-            {
-                // 일반 퇴고 → 이전 루프 마지막 Zone 유지
-                var gfc = CampaignGameFlowController.Instance;
-                for (int i = 0; i < characterStates.Count; i++)
-                {
-                    int charId = characterStates[i].CharacterId;
-                    int prevZone = gfc?.GetPreviousZone(charId) ?? zones[i];
-                    gameState.SetCharacterInitialZone(charId, prevZone);
-                }
-                Debug.Log("[GameSetupState] 일반 퇴고 — 전원 현재 Zone 유지");
-            }
+                Debug.Log("[GameSetupState] 일반 퇴고 — 전원 초기 Zone 리셋");
 
             // ── 5. 뷰 동기화 (2루프 이상) + 다음 단계로 전환 ────────────
             Debug.Log($"[GameSetupState] Enter — LoopCount={_loopSM.LoopCount}");

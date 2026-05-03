@@ -266,10 +266,10 @@ namespace HTH.Campaign
         }
 
         /// <summary>
-        /// 퇴고/강제퇴고 시 호출됩니다.
-        /// ★ 강제퇴고: 전원 초기 위치로 리셋 (ResetSlots + SyncViewsToGameState)
-        /// ★ 일반퇴고: 위치 변경 없음 — RefreshView(생사 상태 갱신)만 수행
-        /// ★ 사망자 부활 위치: 현재 위치 유지 (겹침 방지)
+        /// 퇴고(강제퇴고/일반퇴고 공통) 시 호출됩니다.
+        /// ★ 강제퇴고/일반퇴고 모두 동일하게 처리합니다.
+        ///   - 슬롯 맵 재초기화 (새 GameState Zone 기준)
+        ///   - 전원 초기 위치 스냅 (부활 포함)
         /// </summary>
         private void HandleLoopReset()
         {
@@ -279,24 +279,12 @@ namespace HTH.Campaign
 
             _characterSpawner.ApplyZoneRulesToGameState(gameState);
 
-            if (IsForcedExit)
-            {
-                // 강제퇴고 — 슬롯 재초기화 + 전원 초기 위치 스냅
-                _characterSpawner.ResetSlots(gameState, _characterViews);
-                _characterSpawner.SyncViewsToGameState(gameState, _characterViews);
-                Debug.Log("[GFC] 강제퇴고 — 전원 초기 위치 리셋");
-            }
-            else
-            {
-                // 일반 퇴고 — 위치 변경 없이 생사 상태만 갱신
-                foreach (var view in _characterViews.Values)
-                    view.RefreshView();
-                Debug.Log("[GFC] 일반 퇴고 — 위치 유지, 생사 상태 갱신");
-            }
+            // ★ 강제/일반 퇴고 모두 동일 — 슬롯 재초기화 + 전원 위치 스냅
+            _characterSpawner.ResetSlots(gameState, _characterViews);
+            _characterSpawner.SyncViewsToGameState(gameState, _characterViews);
 
-            // IsForcedExit는 다음 루프 GameSetupState.Enter() 이후 초기화
-            // EnterLoopStart()에서 초기화됨 (아래 참조)
             _deadCharactersAtTurnEnd = null;
+            Debug.Log($"[GFC] 루프 리셋 — 전원 위치 초기화 (강제퇴고:{IsForcedExit})");
         }
 
         /// <summary>

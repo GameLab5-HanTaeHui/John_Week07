@@ -112,7 +112,18 @@ namespace HTH.Campaign
         // ── 상태 갱신 ─────────────────────────────────────────────────────
 
         /// <summary>
-        /// 선택 상태를 설정합니다.
+        /// 이름과 조각 수를 갱신합니다.
+        /// 조각 획득 시 ProfileInquirySelectPanel에서 호출합니다.
+        /// </summary>
+        public void RefreshDisplay(string name, int fragmentCount, int maxFragments)
+        {
+            string countLabel = $"({fragmentCount * 2}/{maxFragments})";
+            string displayName = $"{name}\n<size=80%>조각 {countLabel}</size>";
+
+            _collectedName = displayName;
+            if (_nameText != null)
+                _nameText.text = displayName;
+        }
         /// CharacterRecordBook에서 버튼 그룹 관리 시 호출합니다.
         /// true  → 배경 선택 색상으로 변경, 재클릭 차단
         /// false → 배경 기본 색상으로 변경, 재클릭 허용
@@ -138,9 +149,8 @@ namespace HTH.Campaign
 
         // ── 클리어 상태 갱신 ──────────────────────────────────
         /// <summary>
-        /// 최종 추리 완료 여부와 성공/실패에 따라 ProfileText를 표시합니다.
-        /// isCompleted=true 시 ProfileText 활성화,
-        /// isSuccess에 따라 "성공" / "실패" 텍스트 표시.
+        /// 최종 대화 완료 여부에 따라 ProfileText를 표시합니다.
+        /// isCompleted=true 시 "대화 완료" 텍스트를 표시합니다.
         /// </summary>
         public void SetClearedState(bool isCompleted, bool isSuccess = false)
         {

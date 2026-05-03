@@ -113,6 +113,12 @@ namespace HTH.Campaign
         private void Update()
         {
             if (!_dialoguePanel.activeSelf) return;
+
+            // ★ DTM이 대화 조각 출력 중이면 클릭 차단
+            // (DialogueTriggerManager의 대사/알림 재생 중 InGameDialogue 클릭 방지)
+            if (DialogueTriggerManager.Instance != null &&
+                DialogueTriggerManager.Instance.IsWaitingForDialogue) return;
+
             if (Input.GetMouseButtonDown(0))
                 OnClick();
         }
@@ -177,6 +183,15 @@ namespace HTH.Campaign
         {
             _onComplete = onComplete;
             _lineIndex = 0;
+
+            // ★ 출력할 라인이 없으면 패널 열지 않고 즉시 완료
+            if (_lines.Count == 0)
+            {
+                _onComplete?.Invoke();
+                _onComplete = null;
+                return;
+            }
+
             _dialoguePanel.SetActive(true);
             ShowLine();
         }

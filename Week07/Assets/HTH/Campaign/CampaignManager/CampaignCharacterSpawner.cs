@@ -5,22 +5,21 @@ namespace HTH.Campaign
 {
     /// <summary>
     /// 캠페인 씬 전용 CharacterSpawner입니다.
-    /// 기본모드 CharacterSpawner와 완전히 분리됩니다.
     ///
-    /// ─── 슬롯 초기화 규칙 ────────────────────────────────────────────────────
-    ///   InitSlots 호출은 반드시 아래 두 시점에만 수행합니다.
-    ///   1. SpawnAll        — 게임 최초 시작 시
-    ///   2. ResetSlots      — 퇴고/강제퇴고(루프 리셋) 시 HandleLoopReset에서 호출
-    ///   SyncViewsToGameState는 슬롯 맵을 건드리지 않고 위치만 반영합니다.
+    /// ─── 위치 이동 규칙 (절대 원칙) ──────────────────────────────────────────
+    ///   캐릭터 위치는 다음 두 경우에만 변경됩니다.
+    ///   1. SpawnAll        — 게임 최초 시작 시 초기 배치
+    ///   2. SyncViewsToGameState (강제퇴고 전용) — GFC.HandleLoopReset에서만 호출
     ///
-    /// ─── 캠페인 부활 규칙 ────────────────────────────────────────────────────
-    ///   ReviveDeadOnly — 사망자만 초기 Zone 위치로 스냅, 생존자 위치 유지
-    ///   HandleLoopReset에서 SyncViewsToGameState 대신 이 메서드를 호출합니다.
-    ///   사망자 목록(deadCharacterIds)은 GFC가 GameState 갱신 전에 캡처해서 전달합니다.
+    ///   그 외 모든 상황(일반 퇴고, 부활, 상태 갱신)에서는
+    ///   위치를 절대 변경하지 않습니다.
     ///
-    /// ─── Inspector 연결 ──────────────────────────────────────────────────────
-    ///   CharacterRegistry → 캐릭터 데이터 에셋
-    ///   ZoneLayout        → 씬의 CampaignZoneLayout 컴포넌트
+    /// ─── 메서드별 역할 ───────────────────────────────────────────────────────
+    ///   SpawnAll                — 최초 스폰 + InitSlots + 위치 스냅
+    ///   SyncViewsToGameState    — 강제퇴고 시 전원 초기 위치로 스냅 (위치 변경 O)
+    ///   ResetSlots              — 슬롯 맵만 재초기화 (위치 변경 X)
+    ///   RefreshAllViews         — Init(새 상태) + RefreshView만 수행 (위치 변경 X)
+    ///   ApplyZoneRulesToGameState — Zone 규칙 적용 (위치 변경 X)
     /// </summary>
     public class CampaignCharacterSpawner : MonoBehaviour
     {
@@ -30,9 +29,9 @@ namespace HTH.Campaign
         // ── 공개 API ─────────────────────────────────────────────────────────
 
         /// <summary>
-        /// 모든 CharacterView를 GameState의 Zone 슬롯 위치로 스냅합니다.
-        /// ★ 슬롯 맵을 초기화하지 않습니다 — 기존 슬롯 배치를 유지합니다.
-        ///    루프 리셋 시에는 이 함수 전에 ResetSlots()를 먼저 호출하세요.
+        /// ★ 강제퇴고 전용 — 전원을 GameState Zone 기준 위치로 스냅합니다.
+        /// 일반 퇴고/부활에서는 절대 호출하지 마세요.
+        /// 반드시 ResetSlots() 이후에 호출하세요.
         /// </summary>
         public void SyncViewsToGameState(GameState gameState, Dictionary<int, CharacterView> views)
         {
@@ -43,21 +42,18 @@ namespace HTH.Campaign
             foreach (var kv in views)
             {
                 var state = gameState.GetCharacterState(kv.Key);
-                if (state != null)
-                    kv.Value.Init(state);
+                if (state != null) kv.Value.Init(state);
 
-                if (positions.TryGetValue(kv.Key, out var pos))
-                    kv.Value.SnapToPosition(pos);
-                if (rotations.TryGetValue(kv.Key, out var rot))
-                    kv.Value.SnapToRotation(rot);
+                if (positions.TryGetValue(kv.Key, out var pos)) kv.Value.SnapToPosition(pos);
+                if (rotations.TryGetValue(kv.Key, out var rot)) kv.Value.SnapToRotation(rot);
 
                 kv.Value.RefreshView();
             }
         }
 
         /// <summary>
-        /// 퇴고/강제퇴고(루프 리셋) 시 슬롯 맵을 GameState 기준으로 재초기화합니다.
-        /// HandleLoopReset → ResetSlots → ReviveDeadOnly 순서로 호출하세요.
+        /// 슬롯 맵만 재초기화합니다. 위치는 변경하지 않습니다.
+        /// 강제퇴고 시 SyncViewsToGameState() 직전에 호출합니다.
         /// </summary>
         public void ResetSlots(GameState gameState, Dictionary<int, CharacterView> views)
         {
@@ -66,62 +62,16 @@ namespace HTH.Campaign
         }
 
         /// <summary>
-        /// 캠페인 루프 리셋 시 사망자만 초기 Zone 위치로 스냅합니다.
-        /// ★ 생존 캐릭터는 위치를 이동하지 않습니다.
-        ///
-        /// deadCharacterIds: GFC가 OnLoopReset 이벤트 발행 직전(GameState 갱신 전)에
-        ///   캡처한 사망자 ID 집합입니다. GameState는 이미 부활 완료 상태로 전달됩니다.
-        ///
-        /// 처리:
-        ///   사망자 → Init(부활 상태로 갱신) + 슬롯 위치 스냅 + RefreshView
-        ///   생존자 → Init(상태 갱신) + RefreshView, 위치 이동 없음
+        /// 일반 퇴고/부활 시 호출합니다.
+        /// 모든 View를 새 GameState 기준으로 Init() + RefreshView()합니다.
+        /// ★ 위치는 절대 변경하지 않습니다.
         /// </summary>
-        public void ReviveDeadOnly(
-            GameState gameState,
-            Dictionary<int, CharacterView> views,
-            HashSet<int> deadCharacterIds)
+        public void RefreshAllViews(GameState gameState, Dictionary<int, CharacterView> views)
         {
-            // 사망자 슬롯 위치 계산 (GameState 기준 — 이미 부활 완료 상태)
-            var revivedZoneMap = new Dictionary<int, int>();
-            if (deadCharacterIds != null)
-            {
-                foreach (int id in deadCharacterIds)
-                {
-                    if (!views.ContainsKey(id)) continue;
-                    var s = gameState.GetCharacterState(id);
-                    if (s != null)
-                        revivedZoneMap[id] = s.CurrentZone;
-                }
-            }
-
-            var revivedPositions = revivedZoneMap.Count > 0
-                ? _zoneLayout.ComputeSlotPositions(revivedZoneMap)
-                : null;
-            var revivedRotations = revivedZoneMap.Count > 0
-                ? _zoneLayout.ComputeSlotRotations(revivedZoneMap)
-                : null;
-
             foreach (var kv in views)
             {
                 var state = gameState.GetCharacterState(kv.Key);
-                if (state == null) continue;
-
-                // 상태 갱신 — 생사 여부 최신화
-                kv.Value.Init(state);
-
-                bool isDead = deadCharacterIds != null && deadCharacterIds.Contains(kv.Key);
-                if (isDead)
-                {
-                    // ★ 사망자 — 부활 위치로 스냅
-                    if (revivedPositions != null && revivedPositions.TryGetValue(kv.Key, out var pos))
-                        kv.Value.SnapToPosition(pos);
-                    if (revivedRotations != null && revivedRotations.TryGetValue(kv.Key, out var rot))
-                        kv.Value.SnapToRotation(rot);
-
-                    Debug.Log($"[CampaignCharacterSpawner] 부활 스냅 — #{kv.Key} Zone={state.CurrentZone}");
-                }
-                // ★ 생존자 — 위치 이동 없음
-
+                if (state != null) kv.Value.Init(state);
                 kv.Value.RefreshView();
             }
         }
@@ -161,7 +111,7 @@ namespace HTH.Campaign
                 views[data.CharacterId] = view;
             }
 
-            // ★ SpawnAll에서만 InitSlots 호출 — 이후 SyncViews는 슬롯 맵 유지
+            // ★ SpawnAll에서만 InitSlots + 위치 스냅
             var charZoneMap = BuildCharZoneMap(gameState, views.Keys);
             _zoneLayout.InitSlots(charZoneMap);
             var positions = _zoneLayout.ComputeSlotPositions(charZoneMap);
@@ -169,10 +119,8 @@ namespace HTH.Campaign
 
             foreach (var kv in views)
             {
-                if (positions.TryGetValue(kv.Key, out var pos))
-                    kv.Value.SnapToPosition(pos);
-                if (rotations.TryGetValue(kv.Key, out var rot))
-                    kv.Value.SnapToRotation(rot);
+                if (positions.TryGetValue(kv.Key, out var pos)) kv.Value.SnapToPosition(pos);
+                if (rotations.TryGetValue(kv.Key, out var rot)) kv.Value.SnapToRotation(rot);
                 kv.Value.RefreshView();
             }
 
@@ -181,7 +129,6 @@ namespace HTH.Campaign
 
         /// <summary>
         /// 능력 무효화 구역을 항상 비활성(false)으로 강제 적용합니다.
-        /// ZonePoint.DisableAbilities 설정을 무시합니다.
         /// </summary>
         public void ApplyZoneRulesToGameState(GameState gameState)
         {
@@ -216,14 +163,14 @@ namespace HTH.Campaign
 
         // ── Private ──────────────────────────────────────────────────────────
 
-        private static Dictionary<int, int> BuildCharZoneMap(GameState gameState, IEnumerable<int> charIds)
+        private static Dictionary<int, int> BuildCharZoneMap(
+            GameState gameState, IEnumerable<int> charIds)
         {
             var map = new Dictionary<int, int>();
             foreach (var charId in charIds)
             {
                 var state = gameState.GetCharacterState(charId);
-                if (state != null)
-                    map[charId] = state.CurrentZone;
+                if (state != null) map[charId] = state.CurrentZone;
             }
             return map;
         }

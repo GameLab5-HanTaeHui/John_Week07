@@ -291,18 +291,18 @@ namespace HTH.Campaign
         // ── 이벤트 핸들러 ────────────────────────────────────────────────────
 
         /// <summary>
-        /// 퇴고/강제퇴고 시 호출됩니다.
-        /// 슬롯 맵을 GameState 기준으로 재초기화하고 캐릭터를 원래 위치로 되돌립니다.
-        /// 위치 재배치가 허용되는 두 경우 중 하나입니다.
+        /// 루프 리셋 시 호출됩니다.
+        /// ★ _assignedZones 값만 동기화합니다.
+        ///    InitSlots를 호출하지 않습니다.
+        ///    슬롯 맵은 HandleActionConfirmed에서 MoveToZone을 통해서만 갱신됩니다.
         /// </summary>
         private void HandleLoopReset()
         {
             var gs = CampaignGameFlowController.Instance?.GameState;
-            foreach (var charId in _characterViews.Keys)
-                _assignedZones[charId] = gs != null ? gs.GetZone(charId) : 0;
+            if (gs == null) return;
 
-            if (_zoneLayout != null)
-                _zoneLayout.InitSlots(_assignedZones);
+            foreach (var charId in _characterViews.Keys)
+                _assignedZones[charId] = gs.GetZone(charId);
 
             _lastClickTimePerCharacter.Clear();
         }
@@ -330,13 +330,13 @@ namespace HTH.Campaign
 
         /// <summary>
         /// 플레이어가 드래그로 캐릭터를 Zone에 드롭 확정 시 호출됩니다.
-        /// 위치 재배치가 허용되는 두 경우 중 하나입니다.
+        /// ★ 이동한 캐릭터 1명의 위치만 슬롯에 착지시킵니다.
+        ///    다른 캐릭터는 절대 이동시키지 않습니다.
         /// </summary>
         private void HandleActionConfirmed(int characterId, int targetZoneId)
         {
             if (!_characterViews.TryGetValue(characterId, out var view)) return;
 
-            // 앵커 캐릭터 이동 확정 시 Zone 색상 갱신
             if (_anchorCharacterActive && characterId == _anchorCharacterId && targetZoneId >= 0)
                 RefreshAnchorZoneColor(targetZoneId);
 
@@ -347,8 +347,26 @@ namespace HTH.Campaign
 
                 if (_zoneLayout != null)
                 {
+                    // ★ 슬롯 맵 갱신 (위치 계산용)
                     _zoneLayout.MoveToZone(characterId, prevZone, targetZoneId, _dropWorldPos);
-                    ResyncZones(prevZone, targetZoneId);
+
+                    // ★ 이동한 캐릭터 1명의 슬롯 위치만 계산해서 착지
+                    var single = new Dictionary<int, int> { { characterId, targetZoneId } };
+                    var positions = _zoneLayout.ComputeSlotPositions(single);
+                    var rotations = _zoneLayout.ComputeSlotRotations(single);
+
+                    if (positions.TryGetValue(characterId, out var pos))
+                    {
+                        var rot = rotations.TryGetValue(characterId, out var r) ? r : Quaternion.identity;
+                        var anim = view.GetComponent<CharacterPickupAnimator>();
+                        if (anim != null)
+                            anim.LandAt(pos, rot);
+                        else
+                        {
+                            view.SnapToPosition(pos);
+                            view.SnapToRotation(rot);
+                        }
+                    }
                 }
             }
 
@@ -368,37 +386,6 @@ namespace HTH.Campaign
                     : _defaultZoneColor;
             }
             Debug.Log($"[CampaignPlayerInputHandler] Zone 색상 갱신 — 앵커 Zone{anchorZone} 활성");
-        }
-
-        private void ResyncZones(params int[] zoneIds)
-        {
-            if (_zoneLayout == null) return;
-
-            var affected = new HashSet<int>(zoneIds);
-            var subset = new Dictionary<int, int>();
-            foreach (var kv in _assignedZones)
-                if (affected.Contains(kv.Value))
-                    subset[kv.Key] = kv.Value;
-
-            var positions = _zoneLayout.ComputeSlotPositions(subset);
-            var rotations = _zoneLayout.ComputeSlotRotations(subset);
-
-            foreach (var kv in positions)
-            {
-                if (!_characterViews.TryGetValue(kv.Key, out var v)) continue;
-                var rot = rotations.TryGetValue(kv.Key, out var r) ? r : Quaternion.identity;
-                var anim = v.GetComponent<CharacterPickupAnimator>();
-
-                if (kv.Key == _draggingId && anim != null)
-                    anim.LandAt(kv.Value, rot);
-                else if (anim != null)
-                    anim.ReplaceTo(kv.Value, rot);
-                else
-                {
-                    v.SnapToPosition(kv.Value);
-                    v.SnapToRotation(rot);
-                }
-            }
         }
 
         // ── 유틸 ─────────────────────────────────────────────────────────────

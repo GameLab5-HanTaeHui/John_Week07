@@ -647,7 +647,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &29766811
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6739,7 +6739,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &208717536
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8846,7 +8846,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &321175537
 RectTransform:
   m_ObjectHideFlags: 0
@@ -14491,7 +14491,7 @@ GameObject:
   - component: {fileID: 486929871}
   - component: {fileID: 486929870}
   m_Layer: 5
-  m_Name: Character03
+  m_Name: Character04
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14515,7 +14515,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -30}
+  m_AnchoredPosition: {x: 0, y: -25}
   m_SizeDelta: {x: 1025, y: 600}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &486929870
@@ -17834,7 +17834,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: cf3dface1fd46624bb5ffed3ffe0ac33, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b796c2254d1793f4c8c36d41176d4708, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -18909,7 +18909,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uB370\uC6B0\uC2A4"
+  m_text: "\uB8E8\uC774\uC2A4"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 45461fa7f3c562f458fc696e4c6c4008, type: 2}
   m_sharedMaterial: {fileID: 5040206823531127963, guid: 45461fa7f3c562f458fc696e4c6c4008, type: 2}
@@ -19916,8 +19916,8 @@ MonoBehaviour:
   _panels:
   - {fileID: 601513489}
   - {fileID: 864816640}
-  - {fileID: 486929870}
   - {fileID: 1834754029}
+  - {fileID: 486929870}
   - {fileID: 2019155788}
   - {fileID: 859764751}
   - {fileID: 141346004}
@@ -20096,7 +20096,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 260}
+  m_AnchoredPosition: {x: -120, y: 260}
   m_SizeDelta: {x: 63, y: 198}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &657680994
@@ -20111,7 +20111,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 037624ca9d9a9894496d88f80f2d2f6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HTH.Campaign.CharacterRecordToggleButton
-  _characterId: 4
+  _characterId: 3
   _clickCooldown: 0.5
 --- !u!114 &657680995
 MonoBehaviour:
@@ -24897,7 +24897,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &813146626
 RectTransform:
   m_ObjectHideFlags: 0
@@ -37346,7 +37346,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -120, y: 260}
+  m_AnchoredPosition: {x: 0, y: 260}
   m_SizeDelta: {x: 63, y: 198}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1251869087
@@ -37361,7 +37361,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 037624ca9d9a9894496d88f80f2d2f6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HTH.Campaign.CharacterRecordToggleButton
-  _characterId: 3
+  _characterId: 4
   _clickCooldown: 0.5
 --- !u!114 &1251869088
 MonoBehaviour:
@@ -39643,7 +39643,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uB8E8\uC774\uC2A4"
+  m_text: "\uB370\uC6B0\uC2A4"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 45461fa7f3c562f458fc696e4c6c4008, type: 2}
   m_sharedMaterial: {fileID: 5040206823531127963, guid: 45461fa7f3c562f458fc696e4c6c4008, type: 2}
@@ -43994,12 +43994,8 @@ MonoBehaviour:
   _iconButtonPrefab: {fileID: 3472748707146459272, guid: 98b429aa201d0864d84e7746b523609e, type: 3}
   _iconGrid: {fileID: 1092284505}
   _closeButton: {fileID: 605788470}
-  _confirmPanel: {fileID: 813146625}
-  _confirmText: {fileID: 613747615}
-  _confirmButton: {fileID: 610299208}
-  _cancelButton: {fileID: 245001533}
-  _confirmMessage: "\uC774 \uB300\uD654\uB294 \uB418\uB3CC\uB9B4 \uC218 \uC5C6\uC2B5\uB2C8\uB2E4.\n\uC815\uB9D0
-    \uB300\uD654\uB97C \uC2DC\uC791\uD558\uC2DC\uACA0\uC2B5\uB2C8\uAE4C?"
+  _progressText: {fileID: 0}
+  _warningText: {fileID: 0}
   _finalTalkUI: {fileID: 1933594329}
   _fragmentCollector: {fileID: 81887182}
   _profileData: {fileID: 11400000, guid: 70849e93ff6cd624fa6b74f08b617d1c, type: 2}
@@ -49186,8 +49182,8 @@ RectTransform:
   - {fileID: 859764750}
   - {fileID: 2019155787}
   - {fileID: 888887214}
-  - {fileID: 1834754028}
   - {fileID: 486929869}
+  - {fileID: 1834754028}
   - {fileID: 1973464104}
   - {fileID: 864816639}
   - {fileID: 601513486}
@@ -53382,7 +53378,7 @@ GameObject:
   - component: {fileID: 1834754030}
   - component: {fileID: 1834754029}
   m_Layer: 5
-  m_Name: Character04
+  m_Name: Character03
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -53406,7 +53402,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -25}
+  m_AnchoredPosition: {x: 0, y: -30}
   m_SizeDelta: {x: 1025, y: 600}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1834754029
@@ -59233,8 +59229,8 @@ MonoBehaviour:
   - {fileID: 21300000, guid: da951ff8cc869324ca09cf422bfaee91, type: 3}
   - {fileID: 21300000, guid: b68ce7ee735957f46aac983d4fca0803, type: 3}
   - {fileID: 21300000, guid: ac9088d1bf1998a44a8eeec403dd264d, type: 3}
-  - {fileID: 21300000, guid: 484145e7050ecd2428f736cb1261a825, type: 3}
   - {fileID: 21300000, guid: 99bb6781bae90764faec8614b21f7e33, type: 3}
+  - {fileID: 21300000, guid: 484145e7050ecd2428f736cb1261a825, type: 3}
   - {fileID: 21300000, guid: b084f8f70a654704f8aac460b6217ca0, type: 3}
   - {fileID: 21300000, guid: 80338f499f9f79640aa74de2ef72030c, type: 3}
   - {fileID: 21300000, guid: 8808ade9a103ff54891d0fb0c80bdd0e, type: 3}
