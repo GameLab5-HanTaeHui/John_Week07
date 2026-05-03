@@ -3025,7 +3025,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TutorialManager
   _guideData: {fileID: 11400000, guid: 13d0f83cf021b6a40b9b66b3821614c1, type: 2}
-  _rewardSaveData: {fileID: 0}
+  _rewardSaveData: {fileID: 11400000, guid: a9a937f157d7ba24abcb1607e860d056, type: 2}
   _uiManager: {fileID: 737311859}
   _restrictedCharacterId: 1
   _restrictedTargetZoneId: 2
@@ -25952,7 +25952,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1cc4c210b5e9bf43ac7d52f1b002b00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HTH.Campaign.FragmentCollector
-  _fragmentData: {fileID: 0}
+  _fragmentData: {fileID: 11400000, guid: a906ad4e8ba4f01469306c585efc0274, type: 2}
 --- !u!1 &997250379
 GameObject:
   m_ObjectHideFlags: 0

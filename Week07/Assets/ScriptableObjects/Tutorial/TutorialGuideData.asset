@@ -256,7 +256,7 @@ MonoBehaviour:
       \uD574\uC8FC\uC138\uC694."
   - Phase: 54
     SpeakerSprite: {fileID: 0}
-    GuideText: "\uB9DE\uC544..\n\uB098\uB294.. \uC774\uB7AC\uC5C8\uC9C0..."
+    GuideText: "\uC5D4\uBE44\uC758 \uBAA9\uD45C\uB294 \uC6A9\uBCD1\uB2E8\uC758 \uD574\uCCB4\uC785\uB2C8\uB2E4."
   - Phase: 55
     SpeakerSprite: {fileID: 21300000, guid: b68ce7ee735957f46aac983d4fca0803, type: 3}
     GuideText: "...\n\uB0B4\uAC00 \uC2A4\uD30C\uC774\uB77C\uB294 \uAC78 \uB4E4\uD0A8\uB2E4\uBA74

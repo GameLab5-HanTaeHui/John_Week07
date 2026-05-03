@@ -152,7 +152,7 @@ namespace HTH.Campaign
             {
                 var tmp = _completeText.GetComponent<TMPro.TMP_Text>();
                 if (tmp != null)
-                    tmp.text = isSuccess ? "성공" : "실패";
+                    tmp.text = "대화 완료";
             }
         }
 

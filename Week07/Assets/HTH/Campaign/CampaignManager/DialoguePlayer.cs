@@ -85,16 +85,8 @@ namespace HTH.Campaign
         [Tooltip("엔딩 전용 패널입니다. CanvasGroup 컴포넌트가 필요합니다.")]
         [SerializeField] private GameObject _endingPanel;
 
-        [Tooltip("배경 이미지입니다. SpeakerId에 따라 교체됩니다.")]
-        [SerializeField] private Image _backgroundImage;
-
         [Tooltip("클릭 대기 중 표시되는 아이콘 GameObject입니다. (선택)")]
         [SerializeField] private GameObject _clickIndicator;
-
-        [Header("배경 스프라이트 (인덱스 = SpeakerId)")]
-        [Tooltip("[0] = 공통 / [1]=#1 / ... / [7]=#7\n" +
-                 "해당 SpeakerId 스프라이트가 없으면 [0]을 사용합니다.")]
-        [SerializeField] private List<Sprite> _backgroundSprites = new();
 
         [Header("엔딩 진행 설정")]
         [Tooltip("엔딩: true = 클릭 진행 / false = 자동 진행")]
@@ -370,29 +362,8 @@ namespace HTH.Campaign
 
         private void UpdateEndingDisplay(FinalTalkLine line)
         {
-            int speakerId = line.SpeakerId;
-            UpdateEndingBackground(speakerId);
-            UpdateEndingNameText(speakerId);
+            UpdateEndingNameText(line.SpeakerId);
             if (_dialogueText != null) _dialogueText.text = "";
-        }
-
-        private void UpdateEndingBackground(int speakerId)
-        {
-            if (_backgroundImage == null || _backgroundSprites == null) return;
-
-            Sprite sprite = null;
-            if (speakerId >= 0 && speakerId < _backgroundSprites.Count)
-                sprite = _backgroundSprites[speakerId];
-            if (sprite == null && _backgroundSprites.Count > 0)
-                sprite = _backgroundSprites[0];
-
-            if (sprite != null)
-            {
-                _backgroundImage.sprite = sprite;
-                _backgroundImage.enabled = true;
-            }
-            else
-                _backgroundImage.enabled = false;
         }
 
         private void UpdateEndingNameText(int speakerId)
