@@ -166,6 +166,21 @@ namespace HTH.Campaign
             }
         }
 
+        /// <summary>
+        /// 완료된 버튼의 배경을 퍼스널컬러로 직접 설정합니다.
+        /// Button.transition = None이므로 disabledColor는 동작하지 않아요.
+        /// _background Image.color를 직접 변경해야 색상이 반영됩니다.
+        /// </summary>
+        public void SetCompletedColor(Color personalColor)
+        {
+            if (_background != null)
+                _background.color = personalColor;
+
+            if (_button != null)
+                _button.interactable = false;
+        }
+
+
         // ── Private ──────────────────────────────────────────────────────
 
 

@@ -59,8 +59,8 @@ namespace HTH.Campaign
             Color.white,
             new Color(0xC8/255f, 0xA8/255f, 0x88/255f), // #1 엔비
             new Color(0x48/255f, 0x78/255f, 0x48/255f), // #2 메이
-            new Color(0x58/255f, 0x58/255f, 0x88/255f), // #3 데우스
-            new Color(0xD8/255f, 0xD8/255f, 0xE8/255f), // #4 루이스
+            new Color(0xD8/255f, 0xD8/255f, 0xE8/255f), // #3 루이스
+            new Color(0x58/255f, 0x58/255f, 0x88/255f), // #4 데우스
             new Color(0xE8/255f, 0xD8/255f, 0x98/255f), // #5 토니
             new Color(0xE8/255f, 0x88/255f, 0x68/255f), // #6 프리드
             new Color(0x98/255f, 0x88/255f, 0x68/255f), // #7 새턴
@@ -129,32 +129,19 @@ namespace HTH.Campaign
         }
         public void FinalTalkAndButtonUpdate()
         {
-            for(int charId = 2; charId <= 7; charId++)
+            var saveData = CampaignSaveManager.Instance?.CurrentSave;
+
+            for (int charId = 2; charId <= 7; charId++)
             {
-                if (!_buttonMap.TryGetValue(charId, out var btn) || btn == null) return;
+                if (!_buttonMap.TryGetValue(charId, out var btn) || btn == null) continue; // ★ return 아닌 continue
 
-                var profile = _profileData?.FindProfile(charId);
-                string name = profile?.CharacterFullName ?? $"#{charId}";
-                int fragmentCount = _fragmentCollector?.GetFragmentCount(charId) ?? 0;
-                bool canInquire = fragmentCount >= 5; // 5개 수집 = 10슬롯 해금
-
-                var saveData = CampaignSaveManager.Instance?.CurrentSave;
                 var record = saveData?.finalTalkRecords?.Find(r => r.characterId == charId);
                 bool isCompleted = record?.completed ?? false;
                 bool isSuccess = record?.success ?? false;
 
-                var button = btn.GetComponent<UnityEngine.UI.Button>();
-                if (button != null)
-                {
-                    var cb = button.colors;
-                    cb.disabledColor = charId < PersonalColors.Length
-                            ? PersonalColors[charId]
-                            : Color.white;
-                    button.colors = cb;
+                if (!isCompleted) continue; // 완료되지 않은 캐릭터는 건드리지 않음
 
-                    button.interactable = false;
-                }
-
+                btn.SetCompletedColor(PersonalColors[charId]);
                 btn.SetClearedState(isCompleted, isSuccess);
             }
         }

@@ -486,10 +486,10 @@ namespace HTH.Campaign
             }
             else
             {
-                _selectPanel.FinalTalkAndButtonUpdate();
                 // 미완료 → 검은 화면으로 복귀 후 선택 패널 다시 열기
                 yield return FadeTransition(0f, 1f);
                 Hide();
+                _selectPanel?.FinalTalkAndButtonUpdate();
                 _selectPanel?.Show();
                 yield return FadeTransition(1f, 0f);
             }
