@@ -799,7 +799,7 @@ public class TutorialManager : SingletonMonobehaviour<TutorialManager>
                 }
                 if (_campaignModeText != null)
                 {
-                    _campaignModeText.text = "캠패인 모드가 열렸습니다";
+                    _campaignModeText.text = "캠페인 모드가 열렸습니다";
                     _campaignModeText.gameObject.SetActive(true);
                 }
 

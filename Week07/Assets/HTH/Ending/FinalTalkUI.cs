@@ -445,6 +445,15 @@ namespace HTH.Campaign
             Debug.Log($"[FinalTalkUI] 제출 확정 — #{_currentCharacterId} " +
                       $"선택지={choiceIndex} 성공={isSuccess}");
 
+            // C13 — final_talk_result
+            GameLogger.Instance?.LogEvent("final_talk_result", new Dictionary<string, object>
+            {
+                { "character_id",  _currentCharacterId                  },
+                { "choice_index",  choiceIndex                          },
+                { "is_correct",    isSuccess                            },
+                { "elapsed_sec",   GameLogger.Instance?.SessionElapsedSec ?? 0 },
+            });
+
             _choicePanel?.SetActive(false);
             StartCoroutine(PlayResultAndSave(data, choiceIndex, isSuccess));
         }
@@ -477,6 +486,7 @@ namespace HTH.Campaign
             }
             else
             {
+                _selectPanel.FinalTalkAndButtonUpdate();
                 // 미완료 → 검은 화면으로 복귀 후 선택 패널 다시 열기
                 yield return FadeTransition(0f, 1f);
                 Hide();
@@ -509,9 +519,27 @@ namespace HTH.Campaign
 
         private IEnumerator PlayEndingSequence(CampaignSaveData saveData)
         {
-            bool allSuccess = saveData != null
-                && saveData.finalTalkRecords
-                   .FindAll(r => r.completed && r.success).Count >= _totalCharacters;
+            int completedCount = saveData?.finalTalkRecords?.FindAll(r => r.completed && r.success).Count ?? 0;
+            bool allSuccess = completedCount >= _totalCharacters;
+
+            // C18 — final_talk_accuracy
+            GameLogger.Instance?.LogEvent("final_talk_accuracy", new Dictionary<string, object>
+            {
+                { "correct_count", completedCount                                             },
+                { "total",         _totalCharacters                                           },
+                { "success_rate",  (_totalCharacters > 0
+                    ? (float)completedCount / _totalCharacters : 0f).ToString("F2")           },
+                { "all_success",   allSuccess                                                  },
+            });
+
+            // C19 — ending_reached
+            var gfc19 = CampaignGameFlowController.Instance;
+            GameLogger.Instance?.LogEvent("ending_reached", new Dictionary<string, object>
+            {
+                { "result",          allSuccess ? "success" : "failure"          },
+                { "total_play_sec",  GameLogger.Instance?.SessionElapsedSec ?? 0 },
+                { "loop_count",      gfc19?.LoopCount ?? 0                       },
+            });
 
             // TitleText 초기화
             if (_titleText != null)

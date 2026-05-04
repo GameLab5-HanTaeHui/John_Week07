@@ -68,6 +68,7 @@ namespace HTH.Campaign
 
         // 드래그 상태
         private bool _isPressing;
+        private float _pickupTime; // C2/C3 — 캐릭터 집어든 시간 측정용
         private Vector2 _pressStartScreenPos;
         private bool _isDragging;
         private int _draggingId = -1;
@@ -179,6 +180,7 @@ namespace HTH.Campaign
             _draggingId = view.CharacterId;
             _draggingView = view;
             _dragOriginalPos = view.transform.position;
+            _pickupTime = Time.time; // C3 hold_sec 측정 시작
 
             var anim = view.GetComponent<CharacterPickupAnimator>();
             if (anim != null)
@@ -190,6 +192,18 @@ namespace HTH.Campaign
 
             if (_draggingAnimator != null)
                 _draggingAnimator.PickUp(view.transform.rotation);
+
+            // C2 — character_pickup
+            var gfc2 = CampaignGameFlowController.Instance;
+            int zone = gfc2?.GameState?.GetZone(_draggingId) ?? -1;
+            GameLogger.Instance?.LogEvent("character_pickup", new Dictionary<string, object>
+            {
+                { "character_id",   _draggingId            },
+                { "is_protagonist", _draggingId == 1       },
+                { "zone",           zone                   },
+                { "loop",           gfc2?.LoopCount ?? 0   },
+                { "turn",           gfc2?.TurnCount ?? 0   },
+            });
 
             Debug.Log($"[CampaignPlayerInputHandler] 프레스 — {(view.Data != null ? view.Data.CharacterName : "?")} (ID:{_draggingId})");
         }
@@ -281,6 +295,17 @@ namespace HTH.Campaign
                     _draggingAnimator.LandAt(_dragOriginalPos, _dragOriginalRot);
             }
 
+            // C3 — character_hold_end
+            if (_draggingId >= 0)
+            {
+                float holdSec = Time.time - _pickupTime;
+                GameLogger.Instance?.LogEvent("character_hold_end", new Dictionary<string, object>
+                {
+                    { "character_id", _draggingId               },
+                    { "hold_sec",     holdSec.ToString("F1")    },
+                });
+            }
+
             _isPressing = false;
             _isDragging = false;
             _draggingId = -1;
@@ -345,12 +370,24 @@ namespace HTH.Campaign
                 int prevZone = _assignedZones.TryGetValue(characterId, out var z) ? z : targetZoneId;
                 _assignedZones[characterId] = targetZoneId;
 
+                // C1 — character_move
+                var gfc1 = CampaignGameFlowController.Instance;
+                float holdSec = Time.time - _pickupTime;
+                GameLogger.Instance?.LogEvent("character_move", new Dictionary<string, object>
+                {
+                    { "character_id",   characterId             },
+                    { "is_protagonist", characterId == 1        },
+                    { "from_zone",      prevZone                },
+                    { "to_zone",        targetZoneId            },
+                    { "loop",           gfc1?.LoopCount ?? 0    },
+                    { "turn",           gfc1?.TurnCount ?? 0    },
+                    { "hold_sec",       holdSec.ToString("F1")  },
+                });
+
                 if (_zoneLayout != null)
                 {
-                    // ★ 슬롯 맵 갱신 (위치 계산용)
                     _zoneLayout.MoveToZone(characterId, prevZone, targetZoneId, _dropWorldPos);
 
-                    // ★ 이동한 캐릭터 1명의 슬롯 위치만 계산해서 착지
                     var single = new Dictionary<int, int> { { characterId, targetZoneId } };
                     var positions = _zoneLayout.ComputeSlotPositions(single);
                     var rotations = _zoneLayout.ComputeSlotRotations(single);

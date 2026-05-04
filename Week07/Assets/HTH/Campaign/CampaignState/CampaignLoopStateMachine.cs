@@ -179,11 +179,19 @@ namespace HTH.Campaign
         /// </summary>
         public void AdvanceLoop()
         {
+            // C16 — 일반 퇴고 (강제퇴고는 RoleActivationState에서 C15로 별도 기록)
+            bool isForcedExit = CampaignGameFlowController.Instance?.IsForcedExit ?? false;
+            if (!isForcedExit)
+            {
+                GameLogger.Instance?.LogEvent("normal_loop_reset", new Dictionary<string, object>
+                {
+                    { "loop",            LoopCount     },
+                    { "completed_turns", TurnCount + 1 },
+                });
+            }
+
             LoopCount++;
-
-            // ★ 캠페인은 MaxLoops 없음 — 무한 반복
             Debug.Log($"[CampaignLoopSM] Loop {LoopCount} 시작 — GameSetup 진입");
-
             CurrentState = LoopStateType.GameSetup;
             ChangeState(_gameSetup);
         }
@@ -206,17 +214,15 @@ namespace HTH.Campaign
 
             if (!fromPlayerAction && !fromAwaiting) return;
 
-            // ★ CampaignGameFlowController 참조
+            // C11 — 최종 대화 첫 진입
             var gfc = CampaignGameFlowController.Instance;
-            GameLogger.Instance?.LogEvent("final_decision_enter", new Dictionary<string, object>
+            GameLogger.Instance?.LogEvent("final_talk_enter", new Dictionary<string, object>
             {
-                { "from",                fromPlayerAction ? "early" : "awaiting" },
-                { "loop",                LoopCount + 1 },
-                { "turn",                TurnCount + 1 },
-                { "day",                 gfc?.CurrentDay ?? 0 },
-                { "time_of_day",         gfc?.CurrentTimeOfDay ?? "" },
-                { "seed",                CurrentSeed },
-                { "session_elapsed_sec", GameLogger.Instance?.SessionElapsedSec ?? 0 },
+                { "from",              fromPlayerAction ? "early" : "awaiting"  },
+                { "loop",              LoopCount + 1                            },
+                { "turn",              TurnCount + 1                            },
+                { "time_of_day",       gfc?.CurrentTimeOfDay ?? ""              },
+                { "total_elapsed_sec", GameLogger.Instance?.SessionElapsedSec ?? 0 },
             });
 
             CurrentState = LoopStateType.FinalDecision;

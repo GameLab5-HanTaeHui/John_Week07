@@ -125,6 +125,16 @@ public class GameState : IGameState
 
         bool deputySubstituted = false;
 
+        // ★ FriendA/B ID 캐시 — 상호 대리용 (같은 Zone에 있을 때 서로 대신 사망)
+        int friendAId = -1;
+        int friendBId = -1;
+        var friendAStatusCache = GetCharacterByRole(RoleType.FriendA);
+        var friendBStatusCache = GetCharacterByRole(RoleType.FriendB);
+        if (friendAStatusCache != null && !IsMarkedForDeath(friendAStatusCache.CharacterId))
+            friendAId = friendAStatusCache.CharacterId;
+        if (friendBStatusCache != null && !IsMarkedForDeath(friendBStatusCache.CharacterId))
+            friendBId = friendBStatusCache.CharacterId;
+
         // 응징자 패시브: 자신을 타겟팅한 캐릭터 전원 반격 마킹 후 자신의 사망 마크 제거 (응징자 생존)
         var punisherStatus = GetCharacterByRole(RoleType.Punisher);
         if (punisherStatus != null && IsMarkedForDeath(punisherStatus.CharacterId))
@@ -178,6 +188,30 @@ public class GameState : IGameState
                 }
             }
 
+            // ★ FriendA/B 상호 대리 패시브 (같은 Zone 조건)
+            //   FriendA 직접 타겟 → FriendB가 같은 Zone → FriendB 대신 사망, FriendA 생존
+            //   FriendB 직접 타겟 → FriendA가 같은 Zone → FriendA 대신 사망, FriendB 생존
+            if (record.TargetCharacterId == friendAId && friendBId != -1)
+            {
+                var friendB = GetCharacterInternal(friendBId);
+                if (friendB != null && friendB.IsAlive && friendB.CurrentZone == character.CurrentZone)
+                {
+                    chainDeaths.Add((friendB, record.CauseRole, record.SourceCharacterId));
+                    friendAId = -1; // 1회만 발동
+                    continue;       // FriendA 생존
+                }
+            }
+            if (record.TargetCharacterId == friendBId && friendAId != -1)
+            {
+                var friendA = GetCharacterInternal(friendAId);
+                if (friendA != null && friendA.IsAlive && friendA.CurrentZone == character.CurrentZone)
+                {
+                    chainDeaths.Add((friendA, record.CauseRole, record.SourceCharacterId));
+                    friendBId = -1; // 1회만 발동
+                    continue;       // FriendB 생존
+                }
+            }
+
             character.Die();
             TotalDeathsThisLoop++;
             DeathsThisTurn++;
@@ -219,6 +253,24 @@ public class GameState : IGameState
         foreach (var (character, causeRole, sourceId) in chainDeaths)
         {
             if (!character.IsAlive) continue;
+
+            // ★ 연쇄 사망 대상(FriendB 등)에 대해서도 Deputy 대리 적용
+            //   Deputy가 연쇄 대상(FriendB)과 같은 Zone에 있을 때만 대리 가능
+            //   예: FriendA 사망 → FriendB 연쇄 타겟 → Deputy가 FriendB와 같은 Zone → Deputy 대신 사망
+            if (!deputySubstituted && deputyId != -1 && character.CharacterId != deputyId)
+            {
+                var deputy = GetCharacterInternal(deputyId);
+                if (deputy != null && deputy.IsAlive && deputy.CurrentZone == character.CurrentZone)
+                {
+                    deputySubstituted = true;
+                    deputy.Die();
+                    TotalDeathsThisLoop++;
+                    DeathsThisTurn++;
+                    AddLog($"{deputy.CharacterName} 사망");
+                    _deathMarks.Add(new DeathRecord(deputy.CharacterId, causeRole, sourceId));
+                    continue; // 원래 연쇄 대상(FriendB 등) 생존
+                }
+            }
 
             // 순교자 패시브: 이번 턴 아직 희생을 쓰지 않았고, 같은 구역이면 체인 대상 구조
             if (!martyrDeathDeferred && TryMartyrSubstituteChain(character, out int chainMartyrId))

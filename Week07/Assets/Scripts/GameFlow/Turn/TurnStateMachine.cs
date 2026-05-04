@@ -17,10 +17,12 @@ using System.Collections.Generic;
 /// </summary>
 public class TurnStateMachine : StateMachine
 {
-    public event Action                                    OnTurnCompleted;
-    public event Action                                    OnDeductionDeclared;
-    public event Action                                    OnPlayerActionStarted;
-    public event Action<IReadOnlyList<string>, bool>       OnTurnEndEntered;
+    public event Action OnTurnCompleted;
+    public event Action OnDeductionDeclared;
+    public event Action OnPlayerActionStarted;
+    /// <summary>PlayerAction 종료 직후, RoleActivation(능력 발동) 전 발생합니다.</summary>
+    public event Action OnPlayerActionEnded;
+    public event Action<IReadOnlyList<string>, bool> OnTurnEndEntered;
 
     /// <summary>
     /// 루프 종료 조건이 달성됐을 때 발생합니다.
@@ -39,9 +41,9 @@ public class TurnStateMachine : StateMachine
     /// <summary>현재 PlayerActionState 인스턴스입니다. PlayerTurnInputHandler에서 이벤트 구독에 사용합니다.</summary>
     public PlayerActionState PlayerAction => _playerAction;
 
-    private readonly PlayerActionState   _playerAction;
+    private readonly PlayerActionState _playerAction;
     private readonly RoleActivationState _roleActivation;
-    private readonly TurnEndState        _turnEnd;
+    private readonly TurnEndState _turnEnd;
 
     /// <param name="orderConfig">직업 능력 발동 순서 설정 (GameFlowController에서 주입)</param>
     /// <param name="getGameState">런타임 GameState를 반환하는 델리게이트 (LoopStateMachine에서 주입)</param>
@@ -52,31 +54,31 @@ public class TurnStateMachine : StateMachine
     /// <param name="getLoopCondition">현재 스테이지의 루프 종료 조건을 반환하는 델리게이트</param>
     public TurnStateMachine(
         RoleActivationOrderConfig orderConfig,
-        Func<GameState>           getGameState,
-        TurnHistoryRepository     historyRepo,
-        Func<int>                 getSeed,
-        Func<int>                 getLoopIndex,
-        Func<int>                 getTurnIndex,
+        Func<GameState> getGameState,
+        TurnHistoryRepository historyRepo,
+        Func<int> getSeed,
+        Func<int> getLoopIndex,
+        Func<int> getTurnIndex,
         Func<LoopConditionConfig> getLoopCondition = null)
     {
-        _playerAction   = new PlayerActionState(this, getGameState);
+        _playerAction = new PlayerActionState(this, getGameState);
         _roleActivation = new RoleActivationState(
             this, orderConfig, getGameState,
             historyRepo, getSeed, getLoopIndex, getTurnIndex, getLoopCondition);
-        _turnEnd        = new TurnEndState(this);
+        _turnEnd = new TurnEndState(this);
     }
 
     // ── 입력 전달 (PlayerTurnInputHandler → GameFlowController → LoopSM → 여기) ──
 
     public void NotifyCharacterClicked(int characterId) => _playerAction.NotifyCharacterClicked(characterId);
-    public void NotifyZoneClicked(int zoneId)           => _playerAction.NotifyZoneClicked(zoneId);
-    public void ForceEndPlayerAction()                  => _playerAction.ForceEnd();
+    public void NotifyZoneClicked(int zoneId) => _playerAction.NotifyZoneClicked(zoneId);
+    public void ForceEndPlayerAction() => _playerAction.ForceEnd();
 
     /// <summary>
     /// 드래그 시작 시 캐릭터를 강제 선택합니다. NotifyCharacterClicked와 달리 재클릭=대기 로직을 타지 않습니다.
     /// characterId=-1이면 선택 해제.
     /// </summary>
-    public void BeginDragSelect(int characterId)        => _playerAction.BeginDragSelect(characterId);
+    public void BeginDragSelect(int characterId) => _playerAction.BeginDragSelect(characterId);
 
     // ── 상태 전환 메서드 (Turn State 클래스에서 호출) ───────────
 
@@ -87,7 +89,7 @@ public class TurnStateMachine : StateMachine
         ChangeState(_playerAction);
         OnPlayerActionStarted?.Invoke();
 
-        // ★ [로그데이터] 턴 시작 타임스탬프 (지표 #10: 의사결정 시간 분석용)
+        // ★ [HTH추가] 턴 시작 타임스탬프 (지표 #10: 의사결정 시간 분석용)
         var gfc = GameFlowController.Instance;
         GameLogger.Instance?.LogEvent("turn_start", new Dictionary<string, object>
         {
@@ -101,6 +103,9 @@ public class TurnStateMachine : StateMachine
     /// <summary>PlayerActionState 완료 후 호출합니다.</summary>
     public void EnterRoleActivation()
     {
+        // ★ 능력 발동(ConfirmDeaths) 전 시점 — DTM 스냅샷 캡처용
+        OnPlayerActionEnded?.Invoke();
+
         CurrentState = TurnStateType.RoleActivation;
         ChangeState(_roleActivation);
     }

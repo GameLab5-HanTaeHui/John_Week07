@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -70,6 +71,7 @@ namespace HTH.Campaign
         // 캐릭터 ID 2~7 → 인덱스 0~5
         private readonly Dictionary<int, CharacterIconButton> _buttonMap = new();
         private bool _isBuilt;
+        private int _selectAttemptCount; // C12 — 최종 대화 선택 순서 카운터
 
         // ── Unity ────────────────────────────────────────────────────────
 
@@ -124,6 +126,37 @@ namespace HTH.Campaign
                 btn?.SetSelected(false);
 
             if (_panel != null) _panel.SetActive(false);
+        }
+        public void FinalTalkAndButtonUpdate()
+        {
+            for(int charId = 2; charId <= 7; charId++)
+            {
+                if (!_buttonMap.TryGetValue(charId, out var btn) || btn == null) return;
+
+                var profile = _profileData?.FindProfile(charId);
+                string name = profile?.CharacterFullName ?? $"#{charId}";
+                int fragmentCount = _fragmentCollector?.GetFragmentCount(charId) ?? 0;
+                bool canInquire = fragmentCount >= 5; // 5개 수집 = 10슬롯 해금
+
+                var saveData = CampaignSaveManager.Instance?.CurrentSave;
+                var record = saveData?.finalTalkRecords?.Find(r => r.characterId == charId);
+                bool isCompleted = record?.completed ?? false;
+                bool isSuccess = record?.success ?? false;
+
+                var button = btn.GetComponent<UnityEngine.UI.Button>();
+                if (button != null)
+                {
+                    var cb = button.colors;
+                    cb.disabledColor = charId < PersonalColors.Length
+                            ? PersonalColors[charId]
+                            : Color.white;
+                    button.colors = cb;
+
+                    button.interactable = false;
+                }
+
+                btn.SetClearedState(isCompleted, isSuccess);
+            }
         }
 
         // ── Private — 그리드 생성 ─────────────────────────────────────────
@@ -224,6 +257,14 @@ namespace HTH.Campaign
         {
             foreach (var kv in _buttonMap)
                 kv.Value?.SetSelected(kv.Key == characterId);
+
+            // C12 — final_talk_character_select
+            GameLogger.Instance?.LogEvent("final_talk_character_select", new Dictionary<string, object>
+            {
+                { "character_id",  characterId         },
+                { "attempt_index", _selectAttemptCount },
+            });
+            _selectAttemptCount++;
 
             Hide();
             _finalTalkUI?.Show(characterId);

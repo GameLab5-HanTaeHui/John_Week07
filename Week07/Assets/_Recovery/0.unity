@@ -2982,6 +2982,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 111326687}
+  - component: {fileID: 111326690}
   - component: {fileID: 111326689}
   - component: {fileID: 111326688}
   m_Layer: 5
@@ -3154,6 +3155,14 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!222 &111326690
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 111326686}
+  m_CullTransparentMesh: 1
 --- !u!1 &112005834
 GameObject:
   m_ObjectHideFlags: 0
@@ -12482,7 +12491,6 @@ RectTransform:
   - {fileID: 321175537}
   - {fileID: 1273171412}
   - {fileID: 1606167512}
-  - {fileID: 612096867}
   - {fileID: 1291162271}
   - {fileID: 1063531963}
   - {fileID: 649414365}
@@ -18559,12 +18567,12 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 410987633}
+  m_Father: {fileID: 1606167512}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1820, y: 980}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &612942708
 GameObject:
@@ -19392,6 +19400,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 640671028}
+  - component: {fileID: 640671031}
   - component: {fileID: 640671030}
   - component: {fileID: 640671029}
   m_Layer: 5
@@ -19564,6 +19573,14 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!222 &640671031
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 640671027}
+  m_CullTransparentMesh: 1
 --- !u!1 &644267502
 GameObject:
   m_ObjectHideFlags: 0
@@ -36850,6 +36867,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1240318494}
+  - component: {fileID: 1240318497}
   - component: {fileID: 1240318496}
   - component: {fileID: 1240318495}
   m_Layer: 5
@@ -37022,6 +37040,14 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!222 &1240318497
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1240318493}
+  m_CullTransparentMesh: 1
 --- !u!1 &1243305181
 GameObject:
   m_ObjectHideFlags: 0
@@ -43602,6 +43628,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1478762723}
+  - component: {fileID: 1478762726}
   - component: {fileID: 1478762725}
   - component: {fileID: 1478762724}
   m_Layer: 5
@@ -43774,6 +43801,14 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!222 &1478762726
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1478762722}
+  m_CullTransparentMesh: 1
 --- !u!1 &1479577405
 GameObject:
   m_ObjectHideFlags: 0
@@ -47341,7 +47376,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 612096867}
   m_Father: {fileID: 410987633}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace HTH.Campaign
@@ -47,9 +48,18 @@ namespace HTH.Campaign
 
         private void OnClicked()
         {
-            // 애니메이션 진행 중 재클릭 방지
             if (_isCoolingDown) return;
             StartCoroutine(ClickCooldownCoroutine());
+
+            // C5 — character_record_open
+            var gfc = CampaignGameFlowController.Instance;
+            GameLogger.Instance?.LogEvent("character_record_open", new Dictionary<string, object>
+            {
+                { "character_id", _characterId       },
+                { "loop",         gfc?.LoopCount ?? 0 },
+                { "turn",         gfc?.TurnCount ?? 0 },
+            });
+
             CharacterRecordPanelManager.Instance?.OpenPanel(_characterId);
         }
         /// <summary>

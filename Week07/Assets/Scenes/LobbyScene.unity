@@ -12022,7 +12022,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a091c781fc913f94b8a7035afbe53d6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HTH.Campaign.SaveDataVersionManager
-  _currentVersion: 0.1.8
+  _currentVersion: 0.2.1
   _rewardSaveData: {fileID: 11400000, guid: a9a937f157d7ba24abcb1607e860d056, type: 2}
 --- !u!114 &2012912115
 MonoBehaviour:

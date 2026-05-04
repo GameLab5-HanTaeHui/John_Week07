@@ -66,8 +66,8 @@ namespace HTH.Campaign
         /// <summary>true = 엔비 사망으로 인한 강제퇴고</summary>
         private bool _isForcedExit;
 
-        /// <summary>TurnEnd 진입 시점 게임 상태 스냅샷</summary>
-        private GameStateSnapshot _snapshot;
+        /// <summary>PlayerAction 종료 시 캡처한 게임 상태 스냅샷 (능력 발동 전 기준)</summary>
+        private GameStateSnapshot _snapshot = new GameStateSnapshot();
 
         /// <summary>강제퇴고 후 OnLoopReset에서 지급할 조각 목록</summary>
         private List<FragmentEntry> _pendingForcedClues;
@@ -102,6 +102,9 @@ namespace HTH.Campaign
 
             if (turnSM != null)
             {
+                // ★ PlayerAction 시작 시점에 스냅샷 캡처
+                // ConfirmDeaths() 이전 Zone 배치를 기록해야 사망 전 조합 조건을 올바르게 판별
+                turnSM.OnPlayerActionEnded += OnPlayerActionEnded;
                 turnSM.OnTurnEndEntered += OnTurnEndEntered;
                 turnSM.OnTurnEndDialogueFinished += OnTurnEndDialogueFinished;
                 Debug.Log($"[DTM] Start — TurnSM 구독 완료, 앵커 #{_anchorCharacterId}");
@@ -128,6 +131,7 @@ namespace HTH.Campaign
 
             if (turnSM != null)
             {
+                turnSM.OnPlayerActionEnded -= OnPlayerActionEnded;
                 turnSM.OnTurnEndEntered -= OnTurnEndEntered;
                 turnSM.OnTurnEndDialogueFinished -= OnTurnEndDialogueFinished;
             }
@@ -151,11 +155,28 @@ namespace HTH.Campaign
 
         // ── 이벤트 핸들러 ─────────────────────────────────────────────────
 
+        /// <summary>
+        /// PlayerAction 종료 직후, 능력 발동(ConfirmDeaths) 전 스냅샷을 캡처합니다.
+        /// ★ 이 시점에서 캡처해야 사망 전 실제 Zone 배치와 생존자 조합을 올바르게 기록합니다.
+        ///    OnTurnEndEntered에서 캡처하면 이미 ConfirmDeaths() 이후라 사망자가 제외됩니다.
+        /// </summary>
+        private void OnPlayerActionEnded()
+        {
+            if (!_isInitialized) return;
+            _snapshot = CaptureGameState();
+            Debug.Log($"[DTM] PlayerAction 종료 — 스냅샷 캡처 Zone{_snapshot.AnchorZoneId} " +
+                      $"캐릭터:[{string.Join(",", _snapshot.LivingInAnchorZone)}]");
+        }
+
         private void OnTurnEndEntered(IReadOnlyList<string> roleLog, bool isLoopCondition)
         {
             if (!_isInitialized) return;
-            _isForcedExit = isLoopCondition; // true = 엔비 사망(강제퇴고)
-            _snapshot = CaptureGameState();
+            _isForcedExit = isLoopCondition;
+
+            // ★ 일반 턴: 스냅샷은 OnPlayerActionEnded에서 이미 캡처됨 (능력 발동 전 기준)
+            // ★ 강제퇴고: 엔비 사망 처리 후 재캡처 (엔비 combo 포함 로직 적용)
+            if (_isForcedExit)
+                _snapshot = CaptureGameState();
 
             Debug.Log($"[DTM] TurnEnd 진입 — 강제퇴고:{_isForcedExit}");
         }
@@ -247,10 +268,30 @@ namespace HTH.Campaign
 
             if (target == null)
             {
+                // C17 — turn_end_normal (조각 없음)
+                var gfc17 = CampaignGameFlowController.Instance;
+                GameLogger.Instance?.LogEvent("turn_end_normal", new Dictionary<string, object>
+                {
+                    { "loop",           gfc17?.LoopCount ?? 0      },
+                    { "turn",           gfc17?.TurnCount ?? 0      },
+                    { "time_of_day",    gfc17?.CurrentTimeOfDay ?? "" },
+                    { "fragment_shown", false                       },
+                });
+
                 Debug.Log("[DTM] 출력할 조각 없음 — FinishTurnEnd");
                 CampaignGameFlowController.Instance?.FinishTurnEnd();
                 return;
             }
+
+            // C17 — turn_end_normal (조각 있음)
+            var gfc17b = CampaignGameFlowController.Instance;
+            GameLogger.Instance?.LogEvent("turn_end_normal", new Dictionary<string, object>
+            {
+                { "loop",           gfc17b?.LoopCount ?? 0       },
+                { "turn",           gfc17b?.TurnCount ?? 0       },
+                { "time_of_day",    gfc17b?.CurrentTimeOfDay ?? "" },
+                { "fragment_shown", true                          },
+            });
 
             Debug.Log($"[DTM] 조각 대사 출력 — {target.ProfileClueId}");
             StartCoroutine(PlayNormalTurnDialogue(target));

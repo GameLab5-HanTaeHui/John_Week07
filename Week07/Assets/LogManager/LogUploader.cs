@@ -58,16 +58,16 @@ public class LogUploader : MonoBehaviour
     private bool _uploadInProgress;
     private Action _onUploadComplete;
 
-/// <summary>현재 업로드 진행 중 여부. GameFlowController에서 씬 전환 대기에 사용합니다.</summary>
+    /// <summary>현재 업로드 진행 중 여부. GameFlowController에서 씬 전환 대기에 사용합니다.</summary>
     public bool IsUploadInProgress => _uploadInProgress;
 
-/// <summary>업로드 완료 시 한 번 호출될 콜백을 등록합니다.</summary>
+    /// <summary>업로드 완료 시 한 번 호출될 콜백을 등록합니다.</summary>
     public void SetOnUploadComplete(Action callback)
     {
         _onUploadComplete = callback;
     }
 
-private void Awake()
+    private void Awake()
     {
         if (Instance != null)
         {
@@ -213,45 +213,35 @@ private void Awake()
         var logger = GameLogger.Instance;
         var sb = new StringBuilder();
 
-        // ── 제목 ──────────────────────────────────────────────────────────────
-        bool isValid = GameLogger.Instance?.IsValidSession ?? true;
+        bool isValid = logger?.IsValidSession ?? true;
         string validMark = isValid ? "" : "  ⚠️ 비정상 플레이";
+        string version = logger?.BuildVersion ?? "unknown";
 
-        string version = GameLogger.Instance?.BuildVersion ?? "unknown";
-        sb.AppendLine($"**[Week07] v{version} · {stageId} · {(isWin ? "✅ 승리" : "❌ 패배")}{validMark}**");
+        // 스테이지 레이블
+        string stageLabel = stageId switch
+        {
+            "Tutorial" => "튜토리얼",
+            "CampaignMode" => isWin ? "캠페인 ✅ 성공 엔딩" : "캠페인 ❌ 실패 엔딩",
+            _ => stageId
+        };
+
+        sb.AppendLine($"** v{version} · {stageLabel}{validMark}**");
         sb.AppendLine("──────────────────────────");
 
-        // ── 플레이어 정보 ──────────────────────────────────────────────────────
         if (logger != null)
         {
             sb.AppendLine($"👤  플레이어  `{logger.PlayerUuid}`");
             sb.AppendLine($"🔑  세션      `{logger.SessionId}`");
         }
 
-        // ── 날짜 ──────────────────────────────────────────────────────────────
-        sb.AppendLine($"📅  날짜      `{System.DateTime.Now:yyyy-MM-dd  HH:mm:ss}`");
+        sb.AppendLine($"📅  날짜      `{DateTime.Now:yyyy-MM-dd HH:mm:ss}`");
 
-        // ── 클리어된 스테이지 ─────────────────────────────────────────────────
-        var cleared = new System.Text.StringBuilder();
-        var repo = StageClearRepository.Instance;
-        // StageRoleConfig의 stageId 목록을 직접 나열 (현재 프로젝트 기준)
-        string[] allStageIds = { "Stage_1", "Stage_2", "Epilogue_1", "Epilogue_2" };
-        foreach (var id in allStageIds)
-        {
-            if (repo != null && repo.HasCleared(id))
-                cleared.Append($"`{id}` ");
-        }
-        string clearedText = cleared.Length > 0 ? cleared.ToString().Trim() : "없음";
-        sb.AppendLine($"🏆  클리어    {clearedText}");
-
-        // ── 플레이 시간 ────────────────────────────────────────────────────────
         if (logger != null)
         {
-            var duration = System.DateTime.UtcNow - logger.SessionStart;
+            var duration = DateTime.UtcNow - logger.SessionStart;
             sb.AppendLine($"⏱  플레이    {(int)duration.TotalMinutes}분 {duration.Seconds}초");
         }
 
-        // ── 파일 크기 ──────────────────────────────────────────────────────────
         sb.AppendLine("──────────────────────────");
         sb.Append($"📁  전체 누적 로그 {byteSize / 1024f:F1} KB");
 

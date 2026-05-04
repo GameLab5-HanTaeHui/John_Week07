@@ -81,6 +81,9 @@ namespace HTH.Campaign
                 if (f == null) continue;
                 if (_collectedIds.Contains(f.ProfileClueId)) continue;
                 if (f.IsForcedExitFragment) continue;
+                // ★ CharacterId == 1 (엔비/플레이어블) 조각은 인게임 대사 출력 대상 아님
+                // P01_01~05는 튜토리얼 보상으로 지급되며 Lines가 없음
+                if (f.CharacterId == 1) continue;
                 if (CheckConditions(f, anchorZoneId, charactersInZone, deadCharacters))
                     result.Add(f);
             }
@@ -100,6 +103,7 @@ namespace HTH.Campaign
             {
                 if (f == null || !f.IsForcedExitFragment) continue;
                 if (_collectedIds.Contains(f.ProfileClueId)) continue;
+                if (f.CharacterId == 1) continue; // ★ 엔비 조각 제외
                 if (CheckConditions(f, anchorZoneId, charactersInZone, deadCharacters))
                     result.Add(f);
             }
