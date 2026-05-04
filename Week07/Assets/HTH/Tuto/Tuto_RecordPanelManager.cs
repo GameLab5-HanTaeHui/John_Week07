@@ -38,22 +38,22 @@ namespace HTH.Tutorial
         /// </summary>
         public void OpenPanel(int characterId)
         {
-            // 튜토리얼은 지정된 캐릭터(엔비) 패널만 조작할 수 있습니다.
             if (characterId != _envyCharacterId || _envyPanel == null) return;
 
             if (_envyPanel.IsOpen)
             {
-                // 열려있으면 닫기
                 _envyPanel.Close();
-                Debug.Log("[Tutorial] 다이어리 닫힘 -> 다음 페이즈 진행");
-                TutorialManager.Instance?.NotifyCharacterCardClosed(); // ➔ Action_CloseEnvyDiary 완료 보고!
+                Debug.Log("[Tutorial] 다이어리 닫힘 → 다음 페이즈 진행");
+                TutorialManager.Instance?.NotifyCharacterCardClosed();
             }
             else
             {
-                // 닫혀있으면 열기
+                // ★ IsClosing 중(닫히는 애니메이션)이면 무시
+                if (_envyPanel.IsClosing) return;
+
                 _envyPanel.Open(characterId);
-                Debug.Log("[Tutorial] 다이어리 열림 -> 다음 페이즈 진행");
-                TutorialManager.Instance?.NotifyCharacterCardOpened(); // ➔ Action_OpenEnvyDiary 완료 보고!
+                Debug.Log("[Tutorial] 다이어리 열림 → 다음 페이즈 진행");
+                TutorialManager.Instance?.NotifyCharacterCardOpened();
             }
         }
 

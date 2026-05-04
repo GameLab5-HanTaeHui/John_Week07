@@ -95,7 +95,6 @@ namespace HTH.Campaign
                     CurrentSave.collectedNames ??= new();
                     CurrentSave.unlockedConceptCards ??= new();
                     CurrentSave.unlockedEpilogues ??= new();
-                    CurrentSave.finalTalkRecords ??= new();
 
                     Debug.Log($"[CampaignSaveManager] 로드 완료 — {stageId}\n" +
                               $"  조각 {CurrentSave.collectedFragmentIds.Count}개\n" +
@@ -149,64 +148,21 @@ namespace HTH.Campaign
 
         /// <summary>
         /// 저장 파일을 삭제합니다.
-        /// ★ 튜토리얼 클리어 기록(isTutorialCleared)과
-        ///   튜토리얼 보상 조각(P02_01)은 초기화 후에도 보존합니다.
+        /// 로비에서 이야기 초기화 버튼 클릭 → WarningDialog 확인 시 호출합니다.
         /// </summary>
         public void Delete(string stageId)
         {
             string path = GetFilePath(stageId);
 
-            if (!File.Exists(path))
+            if (File.Exists(path))
             {
-                Debug.LogWarning($"[CampaignSaveManager] 삭제할 파일 없음 — {stageId}");
-                return;
-            }
-
-            // 삭제 전 보존할 필드 캡처
-            bool savedTutorialCleared = false;
-            var savedFragments = new System.Collections.Generic.List<string>();
-
-            // 튜토리얼 보상 조각 목록 (TutorialSaveHelper.RewardFragmentIds와 동일)
-            var tutorialFragmentIds = new[] {
-                "P01_01", "P01_02", "P01_03", "P01_04", "P01_05", "P02_01"
-            };
-
-            try
-            {
-                string json = File.ReadAllText(path);
-                var oldData = JsonUtility.FromJson<CampaignSaveData>(json);
-                if (oldData != null)
-                {
-                    savedTutorialCleared = oldData.isTutorialCleared;
-                    foreach (var id in tutorialFragmentIds)
-                        if (oldData.collectedFragmentIds?.Contains(id) ?? false)
-                            savedFragments.Add(id);
-                }
-            }
-            catch (Exception e)
-            {
-                Debug.LogWarning($"[CampaignSaveManager] 기존 데이터 캡처 실패 — {e.Message}");
-            }
-
-            File.Delete(path);
-            Debug.Log($"[CampaignSaveManager] 저장 데이터 삭제 완료 — {stageId}");
-
-            // 보존 데이터가 있으면 새 파일로 즉시 기록
-            if (savedTutorialCleared || savedFragments.Count > 0)
-            {
-                var preserved = new CampaignSaveData { stageId = stageId };
-                preserved.isTutorialCleared = savedTutorialCleared;
-                foreach (var id in savedFragments)
-                    preserved.collectedFragmentIds.Add(id);
-
-                CurrentSave = preserved;
-                Save(preserved);
-                Debug.Log($"[CampaignSaveManager] 보존 데이터 유지 — " +
-                          $"튜토리얼:{savedTutorialCleared}, 조각:{string.Join(",", savedFragments)}");
+                File.Delete(path);
+                CurrentSave = null;
+                Debug.Log($"[CampaignSaveManager] 저장 데이터 삭제 완료 — {stageId}");
             }
             else
             {
-                CurrentSave = null;
+                Debug.LogWarning($"[CampaignSaveManager] 삭제할 파일 없음 — {stageId}");
             }
         }
 
@@ -214,6 +170,107 @@ namespace HTH.Campaign
         public void ClearCurrentSave()
         {
             CurrentSave = null;
+        }
+
+        // ── 튜토리얼 보상 목록 (초기화 시 항상 유지) ─────────────────────
+        private static readonly System.Collections.Generic.HashSet<string> TutorialRewardIds =
+            new() { "P01_01", "P01_02", "P01_03", "P01_04", "P01_05", "P02_01" };
+
+        /// <summary>
+        /// 완전 초기화 — JSON 파일은 유지하고 내부 데이터를 수정합니다.
+        ///
+        /// ─── 유지 항목 ───────────────────────────────────────────────────
+        ///   isTutorialCleared, 튜토리얼 보상 조각(P01_01~05·P02_01),
+        ///   튜토리얼 보상 대화(P02_01)
+        ///
+        /// ─── 초기화 항목 ─────────────────────────────────────────────────
+        ///   그 외 collectedFragmentIds, 그 외 playedDialogueIds,
+        ///   collectedNames, unlockedConceptCards, unlockedEpilogues, finalTalkRecords
+        /// </summary>
+        public void ResetFull(string stageId)
+        {
+            var current = CurrentSave ?? Load(stageId);
+
+            var reset = new CampaignSaveData
+            {
+                stageId = stageId,
+                gameVersion = Application.version,
+                savedAt = System.DateTime.Now.ToString("o"),
+
+                // 튜토리얼 관련은 항상 유지
+                isTutorialCleared = current?.isTutorialCleared ?? false,
+
+                // 튜토리얼 보상 조각만 유지, 나머지 삭제
+                collectedFragmentIds = FilterTutorialIds(current?.collectedFragmentIds),
+
+                // 튜토리얼 보상 대화만 유지, 나머지 삭제
+                playedDialogueIds = FilterTutorialIds(current?.playedDialogueIds),
+
+                // 전부 초기화
+                collectedNames = new(),
+                unlockedConceptCards = new(),
+                unlockedEpilogues = new(),
+                finalTalkRecords = new(),
+            };
+
+            CurrentSave = reset;
+            Save(reset);
+            Debug.Log($"[CampaignSaveManager] 완전 초기화 완료 — {stageId} " +
+                      $"(튜토리얼 보상 조각 {reset.collectedFragmentIds.Count}개 · 대화 {reset.playedDialogueIds.Count}개 유지)");
+        }
+
+        /// <summary>
+        /// 일부 초기화 — JSON 파일은 유지하고 finalTalkRecords만 초기화합니다.
+        ///
+        /// ─── 유지 항목 ───────────────────────────────────────────────────
+        ///   isTutorialCleared, collectedFragmentIds, playedDialogueIds
+        ///   (튜토리얼 보상 포함 모든 조각·대화 내역 전부 유지)
+        ///
+        /// ─── 초기화 항목 ─────────────────────────────────────────────────
+        ///   collectedNames, unlockedConceptCards, unlockedEpilogues, finalTalkRecords
+        /// </summary>
+        public void ResetPartial(string stageId)
+        {
+            var current = CurrentSave ?? Load(stageId);
+
+            var reset = new CampaignSaveData
+            {
+                stageId = stageId,
+                gameVersion = Application.version,
+                savedAt = System.DateTime.Now.ToString("o"),
+
+                // 조각·대화·튜토리얼 전부 유지
+                isTutorialCleared = current?.isTutorialCleared ?? false,
+                collectedFragmentIds = current?.collectedFragmentIds != null
+                    ? new System.Collections.Generic.List<string>(current.collectedFragmentIds)
+                    : new(),
+                playedDialogueIds = current?.playedDialogueIds != null
+                    ? new System.Collections.Generic.List<string>(current.playedDialogueIds)
+                    : new(),
+
+                // 캐릭터 정보·최종 대화만 초기화
+                collectedNames = new(),
+                unlockedConceptCards = new(),
+                unlockedEpilogues = new(),
+                finalTalkRecords = new(),
+            };
+
+            CurrentSave = reset;
+            Save(reset);
+            Debug.Log($"[CampaignSaveManager] 일부 초기화 완료 — {stageId} " +
+                      $"(조각 {reset.collectedFragmentIds.Count}개 · 대화 {reset.playedDialogueIds.Count}개 유지)");
+        }
+
+        /// <summary>주어진 ID 목록에서 튜토리얼 보상 ID만 추려 반환합니다.</summary>
+        private static System.Collections.Generic.List<string> FilterTutorialIds(
+            System.Collections.Generic.List<string> source)
+        {
+            var result = new System.Collections.Generic.List<string>();
+            if (source == null) return result;
+            foreach (var id in source)
+                if (TutorialRewardIds.Contains(id))
+                    result.Add(id);
+            return result;
         }
 
         /// <summary>

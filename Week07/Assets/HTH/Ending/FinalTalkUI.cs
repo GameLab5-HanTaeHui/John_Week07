@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using DG.Tweening;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem.Composites;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -334,6 +336,22 @@ namespace HTH.Campaign
             {
                 _submitButton.gameObject.SetActive(true);
                 _submitButton.interactable = false; // 선택지 미선택 상태
+
+                for (int i = 0; i < _choiceButtons.Length; i++)
+                {
+                    if (_choiceButtons[i] == null) continue;
+
+                    _choiceButtons[i].enabled = true;
+                    _choiceButtons[i].interactable = true;
+
+                    if (_choiceTexts[i] != null)
+                        _choiceTexts[i].color = Color.black;
+
+                    // ★ 추가된 부분: 이전에 0.5f로 줄어들었던 투명도를 다시 1f로 초기화
+                    var cg = _choiceButtons[i].GetComponent<CanvasGroup>();
+                    if (cg != null) cg.alpha = 1f;
+                }
+
             }
         }
 
@@ -481,18 +499,36 @@ namespace HTH.Campaign
 
             if (completedCount >= _totalCharacters)
             {
-                // 6명 완료 → 엔딩 시퀀스
+                // 6명 완료 → 엔딩 시퀀스 (엔딩 시퀀스 내에서 최종 업로드)
                 yield return StartCoroutine(PlayEndingSequence(saveData));
             }
             else
             {
+                // ★ 캐릭터 1명 완료 — 중간 업로드 (세션 유지, StopStageLogging 없음)
+                UploadCurrentProgress(isWin: false);
+
                 // 미완료 → 검은 화면으로 복귀 후 선택 패널 다시 열기
+                _selectPanel.FinalTalkAndButtonUpdate();
                 yield return FadeTransition(0f, 1f);
                 Hide();
-                _selectPanel?.FinalTalkAndButtonUpdate();
                 _selectPanel?.Show();
                 yield return FadeTransition(1f, 0f);
             }
+        }
+
+        /// <summary>
+        /// 세션을 끊지 않고 현재까지 기록된 데이터를 Discord로 업로드합니다.
+        /// isWin: 엔딩 도달 여부 (중간 업로드 시 false)
+        /// </summary>
+        private void UploadCurrentProgress(bool isWin)
+        {
+            var logger = GameLogger.Instance;
+            if (logger == null || LogUploader.Instance == null) return;
+
+            string fileName = logger.BuildUploadFileName();
+            string stageId = logger.CurrentStageId;
+            byte[] bytes = logger.ExtractCurrentSessionBytes();
+            LogUploader.Instance.UploadSessionBytes(bytes, fileName, isWin, stageId);
         }
 
         private void SaveFinalTalkResult(int choiceIndex, bool isSuccess)

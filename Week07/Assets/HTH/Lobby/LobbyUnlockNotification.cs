@@ -40,6 +40,7 @@ namespace HTH.Campaign.Lobby
         [Tooltip("isTutorialCleared = true 시 표시되는 초기화 버튼\n" +
                  "★ 초기화 시 튜토리얼 보상(P01_01~05, P02_01, isTutorialCleared)은 보존됩니다.")]
         [SerializeField] private GameObject _resetButton;
+        [SerializeField] private GameObject _resetButton2;
 
         [Tooltip("unlockedEpilogues 1개 이상 시 표시되는 다음장 버튼")]
         [SerializeField] private GameObject _nextChapterButton;
@@ -60,6 +61,7 @@ namespace HTH.Campaign.Lobby
             // ★ 기본값 = 숨김 — JSON 로드 전까지 전부 비표시
             _campaignButton?.SetActive(false);
             _resetButton?.SetActive(false);
+            _resetButton2?.SetActive(false);
             _nextChapterButton?.SetActive(false);
 
             if (_canvasGroup == null && _notificationPanel != null)
@@ -101,6 +103,7 @@ namespace HTH.Campaign.Lobby
             // 버튼 표시/숨김
             _campaignButton?.SetActive(isTutorialCleared);
             _resetButton?.SetActive(isTutorialCleared);
+            _resetButton2?.SetActive(isTutorialCleared);
             _nextChapterButton?.SetActive(epilogueCount > 0);
 
             Debug.Log($"[LobbyUnlockNotification] 로드 완료 — " +

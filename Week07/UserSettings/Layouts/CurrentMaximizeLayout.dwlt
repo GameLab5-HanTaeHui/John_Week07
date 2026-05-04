@@ -24,7 +24,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 112}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 20622
+  controlID: 8628
   draggingID: 0
 --- !u!114 &2
 MonoBehaviour:
@@ -101,7 +101,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 112}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 20720
+  controlID: 8629
   draggingID: 0
 --- !u!114 &4
 MonoBehaviour:
@@ -127,7 +127,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 56}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 20684
+  controlID: 8630
   draggingID: 0
 --- !u!114 &5
 MonoBehaviour:
@@ -148,8 +148,8 @@ MonoBehaviour:
     y: 0
     width: 312
     height: 715
-  m_MinSize: {x: 200, y: 200}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 201, y: 226}
+  m_MaxSize: {x: 4001, y: 4026}
   m_ActualView: {fileID: 6}
   m_Panes:
   - {fileID: 6}
@@ -195,66 +195,16 @@ MonoBehaviour:
     m_DynamicPanelBehavior: 0
   m_SceneHierarchy:
     m_TreeViewState:
-      scrollPos: {x: 0, y: 308}
+      scrollPos: {x: 0, y: 228}
       m_SelectedIDs:
-      - m_Data: 61488
+      - m_Data: 60384
       m_LastClickedID:
         m_Data: 0
       m_ExpandedIDs:
-      - m_Data: -310542
-      - m_Data: -258068
-      - m_Data: -215402
-      - m_Data: -209778
-      - m_Data: -208652
-      - m_Data: -204674
-      - m_Data: -202396
-      - m_Data: -202248
-      - m_Data: -200832
-      - m_Data: -183750
-      - m_Data: -173360
-      - m_Data: -172238
-      - m_Data: -168260
-      - m_Data: -165982
-      - m_Data: -165834
-      - m_Data: -164426
-      - m_Data: -143250
-      - m_Data: -142124
-      - m_Data: -138150
-      - m_Data: -135876
-      - m_Data: -135732
-      - m_Data: -131422
-      - m_Data: -129382
-      - m_Data: -120622
-      - m_Data: -84882
-      - m_Data: -75188
-      - m_Data: -1734
-      - m_Data: 80758
-      - m_Data: 81432
-      - m_Data: 81798
-      - m_Data: 82408
-      - m_Data: 83342
-      - m_Data: 83968
-      - m_Data: 84030
-      - m_Data: 84348
-      - m_Data: 202182
-      - m_Data: 204300
-      - m_Data: 257884
-      - m_Data: 260452
-      - m_Data: 268116
-      - m_Data: 268534
-      - m_Data: 268660
-      - m_Data: 268712
-      - m_Data: 268882
-      - m_Data: 322040
-      - m_Data: 343652
-      - m_Data: 344018
-      - m_Data: 346562
-      - m_Data: 348724
-      - m_Data: 483036
-      - m_Data: 483402
-      - m_Data: 484536
-      - m_Data: 485914
-      - m_Data: 485946
+      - m_Data: -1326
+      - m_Data: 65716
+      - m_Data: 67834
+      - m_Data: 68020
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -889,9 +839,9 @@ MonoBehaviour:
   m_AudioPlay: 0
   m_DebugDrawModesUseInteractiveLightBakingData: 0
   m_Position:
-    m_Target: {x: 0.69356024, y: 4.7522435, z: -15.953074}
+    m_Target: {x: -0.9832288, y: 3.2942636, z: -15.94782}
     speed: 2
-    m_Value: {x: 0.69356024, y: 4.7522435, z: -15.953074}
+    m_Value: {x: -0.9832288, y: 3.2942636, z: -15.94782}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -937,13 +887,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: 0.03446549, y: 0.8922332, z: -0.44875264, w: 0.05013312}
+    m_Target: {x: 0.0025349925, y: 0.883902, z: -0.46873063, w: -0.012916041}
     speed: 2
-    m_Value: {x: 0.034445517, y: 0.89171606, z: -0.44849253, w: 0.050104063}
+    m_Value: {x: 0.0025349925, y: 0.883902, z: -0.46873066, w: -0.012916041}
   m_Size:
-    m_Target: 11.388554
+    m_Target: 14.192209
     speed: 2
-    m_Value: 11.388554
+    m_Value: 14.192209
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -1215,7 +1165,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: ProjectBrowser
+  m_Name: ConsoleWindow
   m_EditorClassIdentifier: UnityEditor.dll::UnityEditor.DockArea
   m_Children: []
   m_Position:
@@ -1224,15 +1174,15 @@ MonoBehaviour:
     y: 715
     width: 1561
     height: 338
-  m_MinSize: {x: 231, y: 276}
-  m_MaxSize: {x: 10001, y: 10026}
-  m_ActualView: {fileID: 13}
+  m_MinSize: {x: 101, y: 126}
+  m_MaxSize: {x: 4001, y: 4026}
+  m_ActualView: {fileID: 12}
   m_Panes:
   - {fileID: 12}
   - {fileID: 13}
   - {fileID: 14}
-  m_Selected: 1
-  m_LastSelected: 0
+  m_Selected: 0
+  m_LastSelected: 1
 --- !u!114 &12
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -1320,7 +1270,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 0
     m_Folders:
-    - Assets/HTH/Campaign/CampaignSO/Stage01Profile
+    - Assets/Scripts/Tutorial
     m_Globs: []
     m_ProductIds: 
     m_AnyWithAssetOrigin: 0
@@ -1330,29 +1280,26 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 72
   m_LastFolders:
-  - Assets/HTH/Campaign/CampaignSO/Stage01Profile
+  - Assets/Scripts/Tutorial
   m_LastFoldersGridSize: 72
   m_LastProjectPath: C:\Users\jungle\Desktop\Git\John_Week07\Week07
   m_LockTracker:
     m_IsLocked: 0
   m_LastLocalAssetsSearchArea: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 188}
+    scrollPos: {x: 0, y: 540}
     m_SelectedIDs:
-    - m_Data: 161632
+    - m_Data: 70734
     m_LastClickedID:
-      m_Data: 161632
+      m_Data: 70734
     m_ExpandedIDs:
     - m_Data: 0
-    - m_Data: 85156
-    - m_Data: 85158
-    - m_Data: 85160
-    - m_Data: 85162
-    - m_Data: 85164
-    - m_Data: 85166
-    - m_Data: 85340
-    - m_Data: 85358
-    - m_Data: 85508
+    - m_Data: 70466
+    - m_Data: 70468
+    - m_Data: 70470
+    - m_Data: 70472
+    - m_Data: 70474
+    - m_Data: 70476
     - m_Data: 1000000000
     - m_Data: 2147483647
     m_RenameOverlay:
@@ -1387,12 +1334,12 @@ MonoBehaviour:
       m_Data: 0
     m_ExpandedIDs:
     - m_Data: 0
-    - m_Data: 85156
-    - m_Data: 85158
-    - m_Data: 85160
-    - m_Data: 85162
-    - m_Data: 85164
-    - m_Data: 85166
+    - m_Data: 70466
+    - m_Data: 70468
+    - m_Data: 70470
+    - m_Data: 70472
+    - m_Data: 70474
+    - m_Data: 70476
     - m_Data: 1000000000
     - m_Data: 2147483647
     m_RenameOverlay:
@@ -1422,9 +1369,9 @@ MonoBehaviour:
       m_ResourceFile: 
   m_ListAreaState:
     m_SelectedInstanceIDs:
-    - m_Data: 61488
-    m_LastClickedInstanceID: 61488
-    m_HadKeyboardFocusLastEvent: 1
+    - m_Data: 60384
+    m_LastClickedInstanceID: 60384
+    m_HadKeyboardFocusLastEvent: 0
     m_ExpandedInstanceIDs:
     - m_Data: 48954
     - m_Data: 64280
@@ -1614,7 +1561,7 @@ MonoBehaviour:
     m_DynamicPanelBehavior: 0
   m_LockTracker:
     m_IsLocked: 0
-  m_LastSelectedObjectID: 482152
+  m_LastSelectedObjectID: 60384
 --- !u!114 &15
 MonoBehaviour:
   m_ObjectHideFlags: 52

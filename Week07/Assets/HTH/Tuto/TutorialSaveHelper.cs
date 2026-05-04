@@ -32,6 +32,11 @@ namespace HTH.Campaign
             "P01_05", // 엔비 조각 5
             "P02_01", // 메이 첫 대화 (튜토리얼 보상)
         };
+        private static readonly string[] RewardDialogueIds =
+        {
+            "P02_01",
+        };
+
 
         /// <summary>
         /// 튜토리얼 완료 보상을 CampaignSaveData에 기록하고 저장합니다.
@@ -60,6 +65,11 @@ namespace HTH.Campaign
                     saveData.collectedFragmentIds.Add(fragmentId);
                     Debug.Log($"[TutorialSaveHelper] 조각 지급 — {fragmentId}");
                 }
+            }
+            foreach (var id in RewardDialogueIds)
+            {
+                if (!saveData.playedDialogueIds.Contains(id))
+                    saveData.playedDialogueIds.Add(id);
             }
 
             mgr.Save(saveData);

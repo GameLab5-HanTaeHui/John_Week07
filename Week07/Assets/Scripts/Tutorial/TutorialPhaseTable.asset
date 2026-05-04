@@ -1,0 +1,583 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7d4651d27d65ce4d909caa1a9a908f3, type: 3}
+  m_Name: TutorialPhaseTable
+  m_EditorClassIdentifier: Assembly-CSharp::TutorialPhaseTableSO
+  SpeakerSprites:
+  - {fileID: 21300000, guid: da951ff8cc869324ca09cf422bfaee91, type: 3}
+  - {fileID: 21300000, guid: b68ce7ee735957f46aac983d4fca0803, type: 3}
+  - {fileID: 21300000, guid: ac9088d1bf1998a44a8eeec403dd264d, type: 3}
+  SpeakerNames:
+  - "\uD29C\uD1A0\uB9AC\uC5BC \uAC00\uC774\uB4DC"
+  - "\uC5D4\uBE44"
+  - "\uBA54\uC774"
+  PhaseConfigs:
+  - Phase: 1
+    PhaseType: 2
+    Dialogues: []
+    NextPhase: 0
+    ActionPermission: 1
+    NextPhaseOnAction: 0
+    ShowArrow: 0
+    ArrowPosition: {x: 0, y: 0}
+    ArrowRotationZ: 0
+    PreDelay: 0.5
+    EnableRoleDocGroup: 0
+    EnableMemoBookGroup: 0
+  - Phase: 2
+    PhaseType: 0
+    Dialogues:
+    - Speaker: 1
+      Text: "\uC548\uB155?\n\uB098\uB294 \uC5D4\uBE44. \uC624\uB298\uBD80\uD130 \uC774
+        \uC6A9\uBCD1\uB2E8\uC758 \uC2E0\uC785 \uB2E8\uC6D0\uC774\uC57C."
+    - Speaker: 1
+      Text: "\uBB3C\uB860, \uC9C4\uC9DC \uBAA9\uC801\uC740 \uB530\uB85C \uC788\uC9C0\uB9CC."
+    - Speaker: 1
+      Text: "\uB204\uAD70\uAC00 \uB0B4\uAC8C \uC758\uB8B0\uD588\uC5B4. \n\uC774 \uC6A9\uBCD1\uB2E8\uC744
+        \uC548\uC5D0\uC11C\uBD80\uD130 \uC870\uC6A9\uD788, \uC544\uBB34\uB3C4 \uBAA8\uB974\uAC8C
+        \uBB34\uB108\uB728\uB824 \uB2EC\uB77C\uACE0."
+    - Speaker: 1
+      Text: "\uAC89\uC73C\uB85C \uBCF4\uAE30\uC5D4 \uBA40\uCA61\uD574 \uBCF4\uC5EC.\n\uAC19\uC774
+        \uBC25\uC744 \uBA39\uACE0, \uAC19\uC774 \uC6C0\uC9C1\uC774\uACE0, \uC11C\uB85C\uB97C
+        \uB3D9\uB8CC\uB77C\uACE0 \uBD80\uB974\uC9C0."
+    - Speaker: 1
+      Text: "\uD558\uC9C0\uB9CC \uB4E4\uB9AC\uB294 \uC18C\uBB38\uC5D0 \uC758\uD558\uBA74....
+        \n\uC774 \uC6A9\uBCD1\uB2E8\uC740 \uC774\uBBF8 \uD55C \uBC88 \uD06C\uAC8C
+        \uC5B4\uAE0B\uB0AC\uACE0, \uADF8 \uB4A4\uB85C \uC608\uC804 \uAC19\uC9C0 \uC54A\uB2E4\uACE0
+        \uD558\uB354\uB77C."
+    - Speaker: 1
+      Text: "\uADF8\uB807\uB2E4\uBA74 \uB0B4\uAC00 \uD560 \uC77C\uC740 \uAC04\uB2E8\uD574.
+        \n\uBB34\uC2A8 \uC77C\uC774 \uC788\uC5C8\uB294\uC9C0 \uC54C\uC544\uB0B4\uACE0,
+        \uADF8 \uC0C1\uCC98\uAC00 \uC544\uC9C1 \uC544\uBB3C\uC9C0 \uC54A\uC558\uB2E4\uB294
+        \uAC78 \uD655\uC778\uD558\uB294 \uAC83."
+    - Speaker: 1
+      Text: "\uADF8\uB9AC\uACE0 \uADF8 \uC0C1\uCC98\uB97C \uD6C4\uBCBC \uD30C\uB294
+        \uAC83."
+    - Speaker: 1
+      Text: "\uADF8\uB7FC \uC2DC\uC791\uD574\uBCFC\uAE4C? \uC6B0\uC120, \uC6A9\uBCD1\uB2E8
+        \uC0AC\uB78C\uB4E4\uACFC \uB300\uD654\uB97C \uD574\uBCF4\uC790."
+    NextPhase: 3
+    ActionPermission: 1
+    NextPhaseOnAction: 0
+    ShowArrow: 0
+    ArrowPosition: {x: 0, y: 0}
+    ArrowRotationZ: 0
+    PreDelay: 0.3
+    EnableRoleDocGroup: 0
+    EnableMemoBookGroup: 0
+  - Phase: 3
+    PhaseType: 1
+    Dialogues:
+    - Speaker: 1
+      Text: "\uC0AC\uB78C\uB4E4\uC774 \uD769\uC5B4\uC838 \uC788\uB124. \n\uCC98\uC74C\uBD80\uD130
+        \uB108\uBB34 \uB9CE\uC740 \uAC78 \uBB3C\uC5B4\uBCF4\uBA74 \uC758\uC2EC \uBC1B\uACA0\uC9C0."
+    - Speaker: 1
+      Text: "\uC6B0\uC120 \uD63C\uC790 \uC788\uB294 \uC0AC\uB78C\uC5D0\uAC8C \uB9D0\uC744
+        \uAC78\uC5B4\uBCF4\uC790."
+    - Speaker: 0
+      Text: "\uC5D4\uBE44\uB97C <color=green>\uB9C8\uC6B0\uC2A4 \uC67C\uD074\uB9AD(\uC720\uC9C0)</color>\uD558\uC5EC
+        \uD45C\uC2DC\uB41C \uAD6C\uC5ED\uC73C\uB85C \uC774\uB3D9 \uC2DC\uD0A4\uC138\uC694."
+    NextPhase: 4
+    ActionPermission: 3
+    NextPhaseOnAction: 4
+    ShowArrow: 0
+    ArrowPosition: {x: 420, y: 210}
+    ArrowRotationZ: 0
+    PreDelay: 0.3
+    EnableRoleDocGroup: 0
+    EnableMemoBookGroup: 0
+  - Phase: 4
+    PhaseType: 1
+    Dialogues:
+    - Speaker: 0
+      Text: "\uB300\uD654 \uAE30\uB2A5\uC740 \uC544\uCE68 \uC810\uC2EC \uC800\uB141
+        \uC2DC\uAC04\uC774 \uD758\uB7EC\uAC11\uB2C8\uB2E4. \n\uC624\uB978\uCABD\uC758
+        \uAE43\uD138\uD39C\uC744 <color=green>\uB9C8\uC6B0\uC2A4 \uC67C\uD074\uB9AD</color>\uD558\uC5EC
+        <color=green>\uB300\uD654\uD558\uAE30</color>\uB97C \uD074\uB9AD \uD574\uC8FC\uC138\uC694."
+    NextPhase: 5
+    ActionPermission: 5
+    NextPhaseOnAction: 5
+    ShowArrow: 1
+    ArrowPosition: {x: 410, y: 220}
+    ArrowRotationZ: 0
+    PreDelay: 0.3
+    EnableRoleDocGroup: 0
+    EnableMemoBookGroup: 0
+  - Phase: 5
+    PhaseType: 0
+    Dialogues:
+    - Speaker: 1
+      Text: "\uBA54\uC774\uB2D8 \uC548\uB155\uD558\uC138\uC694! \uC7A0\uAE50 \uAD1C\uCC2E\uC73C\uC2E4\uAE4C\uC694?"
+    - Speaker: 2
+      Text: "\uC2E0\uC785? \uBB34\uC2A8\uC77C\uC774\uC57C."
+    - Speaker: 1
+      Text: "\uBCC4\uAC74 \uC544\uB2C8\uC5D0\uC694. \uC544\uC9C1 \uC6A9\uBCD1\uB2E8\uC758
+        \uBD84\uC704\uAE30\uB97C \uC798 \uBAB0\uB77C\uC11C\uC694."
+    - Speaker: 2
+      Text: "\uBD84\uC704\uAE30?"
+    - Speaker: 1
+      Text: "\uB2E4\uB4E4 \uC624\uB798 \uD568\uAED8\uD55C \uAC83 \uAC19\uC740\uB370...
+        \n\uC774\uC0C1\uD558\uAC8C \uC870\uC6A9\uD55C \uAC83 \uAC19\uC544\uC11C\uC694..
+        \uB2E4\uB4E4 \uB0B4\uD5A5\uC801\uC774\uC2E0 \uBD84\uB4E4\uBC16\uC5D0 \uC5C6\uB098
+        \uD574\uC11C\uC694."
+    - Speaker: 2
+      Text: "\uC6D0\uB798\uB294 \uADF8\uB7EC\uC9C0 \uC54A\uC558\uC9C0."
+    - Speaker: 1
+      Text: "\uBB34\uC2A8 \uC77C\uC774 \uC788\uC5C8\uB098\uC694?"
+    - Speaker: 2
+      Text: "\uC788\uC5C8\uC9C0. \n\uC7A1\uC744 \uC218 \uC788\uC5C8\uB358 \uB4DC\uB798\uACE4\uC744
+        \uB193\uCE58\uB358 \uC77C\uC774."
+    - Speaker: 1
+      Text: "\uB4DC\uB798\uACE4\uC774\uC694? \n\uC778\uC0DD\uC5D0\uC11C \uD55C \uBC88
+        \uBCFC\uAE4C \uB9D0\uAE4C \uD55C \uD76C\uADC0\uD55C \uBAAC\uC2A4\uD130\uC77C\uD150\uB370..!"
+    - Speaker: 2
+      Text: "\uAC70\uC758 \uB05D\uB0AC\uC5C8\uC5B4. \n\uC815\uB9D0 \uAC70\uC758."
+    - Speaker: 1
+      Text: "\uADF8\uB7F0\uB370 \uC5B4\uCA4C\uB2E4\uAC00 \uB193\uCE5C\uAC74\uAC00\uC694...?"
+    - Speaker: 2
+      Text: "... \n\uADF8\uAC74 \uC544\uC9C1 \uB124\uAC00 \uC54C \uC77C\uC774 \uC544\uB2C8\uC57C."
+    - Speaker: 0
+      Text: "\uB300\uD654 \uC870\uAC01 \uD68D\uB4DD: \uBA54\uC774\uB294 \uB4DC\uB798\uACE4\uC744
+        \uB193\uCE5C \uC77C\uC744 \uC544\uC9C1 \uAC15\uD558\uAC8C \uC758\uC2DD \uD558\uACE0
+        \uC788\uC2B5\uB2C8\uB2E4."
+    - Speaker: 0
+      Text: "\uB300\uD654\uB97C \uD1B5\uD574 \uC0AC\uAC74\uACFC \uC778\uBB3C\uC5D0
+        \uB300\uD55C \uB2E8\uC11C\uB97C \uC5BB\uC744 \uC218 \uC788\uC2B5\uB2C8\uB2E4.
+        \n<color=green>\uBAA8\uB4E0 \uB300\uD654\uAC00 \uC815\uB2F5\uC744 \uC54C\uB824\uC8FC\uC9C0\uB294
+        \uC54A\uC2B5\uB2C8\uB2E4.</color> \uAC19\uC740 \uC0AC\uAC74\uB3C4 \uC778\uBB3C\uB9C8\uB2E4
+        \uB2E4\uB974\uAC8C \uAE30\uC5B5\uD558\uACE0 \uC788\uC2B5\uB2C8\uB2E4."
+    NextPhase: 6
+    ActionPermission: 1
+    NextPhaseOnAction: 6
+    ShowArrow: 0
+    ArrowPosition: {x: 0, y: 0}
+    ArrowRotationZ: 0
+    PreDelay: 0.3
+    EnableRoleDocGroup: 0
+    EnableMemoBookGroup: 0
+  - Phase: 6
+    PhaseType: 0
+    Dialogues:
+    - Speaker: 1
+      Text: "\uD750\uC74C... \uC774 \uC6A9\uBCD1\uB2E8\uC5D0\uB294 \uC774\uC0C1\uD55C
+        \uADDC\uCE59\uC774 \uC788\uB294\uAC70\uAC19\uC544. \n\uC0AC\uB78C\uB9C8\uB2E4
+        \uD589\uB3D9\uD558\uB294 \uBC29\uC2DD\uC774 \uC815\uD574\uC838 \uC788\uB294
+        \uAC83\uCC98\uB7FC \uBCF4\uC778\uB2E4\uB294 \uC810\uC774\uC9C0."
+    NextPhase: 7
+    ActionPermission: 1
+    NextPhaseOnAction: 7
+    ShowArrow: 0
+    ArrowPosition: {x: 0, y: 0}
+    ArrowRotationZ: 0
+    PreDelay: 0.3
+    EnableRoleDocGroup: 0
+    EnableMemoBookGroup: 0
+  - Phase: 7
+    PhaseType: 1
+    Dialogues:
+    - Speaker: 1
+      Text: "\uC67C\uCABD \uC5D0\uB4DC\uBA3C\uB4DC\uC758 \uBA54\uBAA8\uC7A5\uC744
+        <color=green>\uB9C8\uC6B0\uC2A4 \uC67C\uD074\uB9AD</color>\uD558\uC5EC \uAD6C\uC131\uC6D0\uC758
+        \uC5ED\uD560\uC744 \uD655\uC778\uD574\uBCF4\uC138\uC694."
+    NextPhase: 8
+    ActionPermission: 9
+    NextPhaseOnAction: 8
+    ShowArrow: 1
+    ArrowPosition: {x: -680, y: 270}
+    ArrowRotationZ: -180
+    PreDelay: 0.3
+    EnableRoleDocGroup: 1
+    EnableMemoBookGroup: 0
+  - Phase: 8
+    PhaseType: 0
+    Dialogues:
+    - Speaker: 0
+      Text: "\uAC01 \uC778\uBB3C\uC758 \uC5ED\uD560 \uAE30\uB2A5\uACFC \uC0AC\uAC74
+        \uC11C\uC220 \uC21C\uC11C\uB97C \uD655\uC778\uD560 \uC218 \uC788\uC2B5\uB2C8\uB2E4."
+    - Speaker: 0
+      Text: "\uC5ED\uD560 \uAE30\uB2A5\uC740 \uC778\uBB3C\uC758 \uD589\uB3D9 \uD328\uD134\uACFC
+        \uC5F0\uACB0 \uB429\uB2C8\uB2E4. \n\uC608\uB97C \uB4E4\uC5B4 \uC5B4\uB5A4
+        \uC778\uBB3C\uC740 \uD0C0\uC778\uC744 \uC704\uD574 \uD76C\uC0DD\uD558\uB824
+        \uD558\uBA70, \uC5B4\uB5A4 \uC778\uBB3C\uC740 \uD2B9\uC815 \uB300\uC0C1\uC744
+        \uC6B0\uC120\uD569\uB2C8\uB2E4."
+    - Speaker: 0
+      Text: "\uC0AC\uAC74 \uC11C\uC220 \uC21C\uC11C\uB294 \uC0AC\uAC74\uC774 \uC5B4\uB5A4
+        \uC21C\uC11C\uB85C \uC9C4\uD589\uB418\uC5C8\uB294\uC9C0 \uCD94\uB9AC\uD558\uB294\uB370
+        \uC0AC\uC6A9\uB429\uB2C8\uB2E4."
+    NextPhase: 9
+    ActionPermission: 1
+    NextPhaseOnAction: 9
+    ShowArrow: 0
+    ArrowPosition: {x: 0, y: 0}
+    ArrowRotationZ: 0
+    PreDelay: 0.3
+    EnableRoleDocGroup: 0
+    EnableMemoBookGroup: 0
+  - Phase: 9
+    PhaseType: 1
+    Dialogues:
+    - Speaker: 0
+      Text: "\uC5D0\uB4DC\uBA3C\uB4DC\uC758 \uBA54\uBAA8\uC7A5\uC744 <color=green>\uB9C8\uC6B0\uC2A4
+        \uC67C\uD074\uB9AD</color>\uD558\uC5EC \uB2EB\uC544\uBCF4\uC138\uC694."
+    NextPhase: 10
+    ActionPermission: 9
+    NextPhaseOnAction: 10
+    ShowArrow: 1
+    ArrowPosition: {x: -220, y: 270}
+    ArrowRotationZ: -180
+    PreDelay: 0.3
+    EnableRoleDocGroup: 0
+    EnableMemoBookGroup: 1
+  - Phase: 10
+    PhaseType: 0
+    Dialogues:
+    - Speaker: 1
+      Text: "\uC774\uC81C \uC0AC\uB78C\uC744 \uBD10\uC57C\uD574. \uC0AC\uAC74\uC744
+        \uC548\uB2E4\uACE0 \uB05D\uC774 \uC544\uB2C8\uC57C."
+    - Speaker: 1
+      Text: "\uB204\uAC00 \uBB34\uC5C7\uC744 \uB450\uB824\uC6CC\uD558\uB294\uC9C0.
+        \uB204\uAC00 \uC5B4\uB5A4\uB9D0\uC744 \uACAC\uB514\uC9C0 \uBABB\uD558\uB294\uC9C0."
+    - Speaker: 1
+      Text: "\uADF8\uAC78 \uC54C\uC544\uC57C \uC774 \uC6A9\uBCD1\uB2E8\uC744 \uD754\uB4E4
+        \uC218 \uC788\uC5B4.\n \uADF8\uB0E5 \uBAA8\uB450 \uC8FD\uC5EC\uBC84\uB9AC\uBA74
+        \uAC04\uB2E8\uD558\uACA0\uC9C0\uB9CC... \uC774\uBC88 \uC758\uB8B0\uC778\uC740
+        \uC870\uC6A9\uD788 \uC548\uCABD\uBD80\uD130 \uBD95\uAD34\uB418\uAE38 \uC6D0\uD558\uACE0
+        \uC788\uC5B4."
+    NextPhase: 11
+    ActionPermission: 1
+    NextPhaseOnAction: 11
+    ShowArrow: 0
+    ArrowPosition: {x: 0, y: 0}
+    ArrowRotationZ: 0
+    PreDelay: 0.3
+    EnableRoleDocGroup: 0
+    EnableMemoBookGroup: 0
+  - Phase: 11
+    PhaseType: 1
+    Dialogues:
+    - Speaker: 0
+      Text: "\uC911\uC559 \uC544\uB798\uC758 \uC5D4\uBE44\uC758 \uB2E4\uC774\uC5B4\uB9AC\uC5D0\uC11C
+        \uCE90\uB9AD\uD130 \uC815\uBCF4\uB97C \uD655\uC778 \uD560 \uC218 \uC788\uC2B5\uB2C8\uB2E4.
+        \n\uC5D4\uBE44\uC758 \uCC45\uAC08\uD53C\uB97C <color=green>\uB9C8\uC6B0\uC2A4
+        \uC67C\uD074\uB9AD</color>\uD558\uC5EC \uC5D4\uBE44\uC758 \uC815\uBCF4 \uCE74\uB4DC\uB97C
+        \uC5F4\uC5B4\uC8FC\uC138\uC694."
+    NextPhase: 12
+    ActionPermission: 17
+    NextPhaseOnAction: 12
+    ShowArrow: 1
+    ArrowPosition: {x: -465, y: -225}
+    ArrowRotationZ: -90
+    PreDelay: 0.3
+    EnableRoleDocGroup: 0
+    EnableMemoBookGroup: 0
+  - Phase: 12
+    PhaseType: 0
+    Dialogues:
+    - Speaker: 0
+      Text: "\uC815\uBCF4 \uD328\uB110\uC5D0\uC11C\uB294 \uCE90\uB9AD\uD130 \uC774\uB984,
+        \uC5ED\uD560, \uC218\uC9D1\uD55C \uB300\uD654 \uC870\uAC01\uC744 \uD655\uC778
+        \uD560 \uC218 \uC788\uC2B5\uB2C8\uB2E4."
+    - Speaker: 0
+      Text: "\uB300\uD654 \uC870\uAC01\uC740 \uCE90\uB9AD\uD130\uB4E4\uACFC\uC758
+        \uB300\uD654 \uD6C4 \uC5D4\uBE44\uAC00 \uC218\uC9D1\uD55C \uB2E8\uC11C, \uC0DD\uAC01\uC744
+        \uC815\uB9AC\uD574 \uB193\uC740 \uBB38\uC7A5\uC785\uB2C8\uB2E4."
+    - Speaker: 0
+      Text: "\uAC00\uC6B4\uB370 \uD78C\uD2B8 \uBA54\uBAA8\uC9C0\uC5D0\uB294 \uB2E4\uB978
+        \uB300\uD654 \uC870\uAC01\uC758 \uD78C\uD2B8\uAC00 \uD45C\uC2DC\uB429\uB2C8\uB2E4."
+    NextPhase: 13
+    ActionPermission: 1
+    NextPhaseOnAction: 13
+    ShowArrow: 0
+    ArrowPosition: {x: 0, y: 0}
+    ArrowRotationZ: 0
+    PreDelay: 0.3
+    EnableRoleDocGroup: 0
+    EnableMemoBookGroup: 1
+  - Phase: 13
+    PhaseType: 0
+    Dialogues:
+    - Speaker: 0
+      Text: "\uB300\uD654 \uC870\uAC01 \uD14D\uC2A4\uD2B8\uB97C <color=green>\uB9C8\uC6B0\uC2A4
+        \uC67C\uD074\uB9AD</color>\uD558\uBA74 \uC0C9\uC0C1\uC774 \uBC14\uB01D\uB2C8\uB2E4.
+        \uAC80\uC815\u2192\uCD08\uB85D(\uC9C4\uC2E4\uB85C \uC758\uC2EC)\u2192\uBE68\uAC15
+        \uCDE8\uC18C\uC120(\uAC70\uC9D3\uC73C\uB85C \uC758\uC2EC) \uC21C\uC11C\uB85C
+        \uD45C\uC2DC\uD560 \uC218 \uC788\uC2B5\uB2C8\uB2E4."
+    NextPhase: 14
+    ActionPermission: 1
+    NextPhaseOnAction: 14
+    ShowArrow: 0
+    ArrowPosition: {x: 0, y: 0}
+    ArrowRotationZ: 0
+    PreDelay: 0.3
+    EnableRoleDocGroup: 0
+    EnableMemoBookGroup: 1
+  - Phase: 14
+    PhaseType: 1
+    Dialogues:
+    - Speaker: 0
+      Text: "\uD78C\uD2B8 \uBA54\uBAA8\uC9C0\uB97C <color=green>\uB9C8\uC6B0\uC2A4
+        \uC67C\uD074\uB9AD</color>\uD558\uC5EC \uD78C\uD2B8 \uBA54\uBAA8\uC9C0\uB97C
+        \uC5F4\uC5B4\uBCF4\uC138\uC694."
+    NextPhase: 15
+    ActionPermission: 33
+    NextPhaseOnAction: 15
+    ShowArrow: 1
+    ArrowPosition: {x: 95, y: 180}
+    ArrowRotationZ: -180
+    PreDelay: 0.3
+    EnableRoleDocGroup: 0
+    EnableMemoBookGroup: 1
+  - Phase: 15
+    PhaseType: 0
+    Dialogues:
+    - Speaker: 0
+      Text: "\uD78C\uD2B8\uB294 \uB300\uD654 \uC870\uAC01\uC744 \uC5BB\uB294 \uC870\uAC74\uC744
+        \uCD94\uB9AC\uD558\uB294 \uB370 \uB3C4\uC6C0\uC744 \uC90D\uB2C8\uB2E4. \uD2B9\uC815
+        \uC7A5\uC18C, \uD2B9\uC815 \uC778\uBB3C \uC870\uD569, \uD68D\uB4DD\uD55C
+        \uB300\uD654 \uC870\uAC01\uC5D0 \uB530\uB77C \uC0C8\uB85C\uC6B4 \uB300\uD654\uAC00
+        \uBC1C\uC0DD\uD569\uB2C8\uB2E4."
+    - Speaker: 1
+      Text: "\uC5B4\uB5A4 \uB9D0\uC740 \uD63C\uC790 \uC788\uC744 \uB54C\uB9CC \uD558\uACE0..
+        \uC5B4\uB5A4 \uB9D0\uC740 \uD2B9\uC815 \uC0AC\uB78C\uACFC \uD568\uAED8 \uC788\uC744
+        \uB54C\uB9CC \uD758\uB7EC\uB098\uC624\uACA0\uC9C0..."
+    - Speaker: 1
+      Text: "\uC0AC\uB78C\uC740 \uD56D\uC0C1 \uAC19\uC740 \uB9D0\uC744 \uD558\uC9C0
+        \uC54A\uC544. \uB204\uAD6C \uC55E\uC5D0\uC11C \uB9D0\uD558\uB294\uC9C0, \uC5B4\uB5A4
+        \uC7A5\uC18C\uC5D0 \uC788\uB294\uC9C0\uC5D0 \uB530\uB77C \uB2EC\uB77C\uC9C0\uAC70\uB4E0."
+    - Speaker: 0
+      Text: "\uD78C\uD2B8 \uD14D\uC2A4\uD2B8\uB97C <color=green>\uB9C8\uC6B0\uC2A4
+        \uC67C\uD074\uB9AD</color>\uD558\uBA74 \uC678\uBD80 \uACE0\uC815\uD540 \uD328\uB110\uC5D0
+        \uB4F1\uB85D\uB429\uB2C8\uB2E4. \uCD5C\uB300 2\uAC1C\uAE4C\uC9C0 \uACE0\uC815\uD560
+        \uC218 \uC788\uC2B5\uB2C8\uB2E4. \uB2E4\uC2DC \uD074\uB9AD\uD558\uBA74 \uD574\uC81C\uB429\uB2C8\uB2E4."
+    NextPhase: 16
+    ActionPermission: 1
+    NextPhaseOnAction: 16
+    ShowArrow: 0
+    ArrowPosition: {x: 0, y: 0}
+    ArrowRotationZ: 0
+    PreDelay: 0.3
+    EnableRoleDocGroup: 0
+    EnableMemoBookGroup: 0
+  - Phase: 16
+    PhaseType: 1
+    Dialogues:
+    - Speaker: 0
+      Text: "\uD78C\uD2B8 \uD14D\uC2A4\uD2B8\uB97C<color=green>\uB9C8\uC6B0\uC2A4
+        \uC67C\uD074\uB9AD</color>\uD558\uC5EC \uACE0\uC815\uD558\uACE0, \uB2E4\uC2DC
+        \uD074\uB9AD\uD574 \uD574\uC81C\uD574\uBCF4\uC138\uC694."
+    NextPhase: 17
+    ActionPermission: 97
+    NextPhaseOnAction: 17
+    ShowArrow: 1
+    ArrowPosition: {x: 95, y: 180}
+    ArrowRotationZ: -180
+    PreDelay: 0.3
+    EnableRoleDocGroup: 0
+    EnableMemoBookGroup: 0
+  - Phase: 17
+    PhaseType: 1
+    Dialogues:
+    - Speaker: 0
+      Text: "\uD78C\uD2B8 \uBA54\uBAA8\uC9C0\uB97C <color=green>\uB9C8\uC6B0\uC2A4
+        \uC67C\uD074\uB9AD</color>\uD558\uC5EC \uB2EB\uC544\uC8FC\uC138\uC694."
+    NextPhase: 18
+    ActionPermission: 33
+    NextPhaseOnAction: 18
+    ShowArrow: 1
+    ArrowPosition: {x: 350, y: 150}
+    ArrowRotationZ: -150
+    PreDelay: 0.3
+    EnableRoleDocGroup: 0
+    EnableMemoBookGroup: 0
+  - Phase: 18
+    PhaseType: 1
+    Dialogues:
+    - Speaker: 0
+      Text: "\uCE90\uB9AD\uD130 \uC815\uBCF4 \uCE74\uB4DC\uB97C <color=green>\uB9C8\uC6B0\uC2A4
+        \uC67C\uD074\uB9AD</color>\uD558\uC5EC \uB2EB\uC544\uC8FC\uC138\uC694."
+    NextPhase: 19
+    ActionPermission: 17
+    NextPhaseOnAction: 19
+    ShowArrow: 1
+    ArrowPosition: {x: -310, y: 400}
+    ArrowRotationZ: -210
+    PreDelay: 0.3
+    EnableRoleDocGroup: 0
+    EnableMemoBookGroup: 0
+  - Phase: 19
+    PhaseType: 0
+    Dialogues:
+    - Speaker: 1
+      Text: "\uB0B4 \uCD5C\uC885 \uBAA9\uD45C\uB294 \uC218\uC9D1\uD55C \uC815\uBCF4\uB97C
+        \uC774\uC6A9\uD574 \uC774\uAC04\uC9C8\uB85C \uC6A9\uBCD1\uB2E8\uC744 \uBB34\uB108\uB728\uB9AC\uB294
+        \uAC70\uC57C. \uC6B0\uC120 \uC5F0\uC2B5\uD574 \uBCFC\uAE4C."
+    NextPhase: 20
+    ActionPermission: 1
+    NextPhaseOnAction: 20
+    ShowArrow: 1
+    ArrowPosition: {x: -310, y: 400}
+    ArrowRotationZ: -210
+    PreDelay: 0.3
+    EnableRoleDocGroup: 0
+    EnableMemoBookGroup: 0
+  - Phase: 20
+    PhaseType: 1
+    Dialogues:
+    - Speaker: 0
+      Text: "\uC624\uB978\uCABD \uCD5C\uC885 \uCD94\uB9AC \uCC45\uC744 <color=green>\uB9C8\uC6B0\uC2A4
+        \uD074\uB9AD</color>\uD558\uC5EC <color=green>\uCD5C\uC885 \uCD94\uB9AC</color>\uB97C
+        \uC120\uD0DD \uD574\uC8FC\uC138\uC694."
+    NextPhase: 21
+    ActionPermission: 129
+    NextPhaseOnAction: 21
+    ShowArrow: 1
+    ArrowPosition: {x: 550, y: 100}
+    ArrowRotationZ: -15
+    PreDelay: 0.3
+    EnableRoleDocGroup: 0
+    EnableMemoBookGroup: 0
+  - Phase: 21
+    PhaseType: 1
+    Dialogues:
+    - Speaker: 0
+      Text: "\uC5D4\uBE44\uB97C \uC120\uD0DD \uD574\uC8FC\uC138\uC694."
+    NextPhase: 22
+    ActionPermission: 257
+    NextPhaseOnAction: 22
+    ShowArrow: 1
+    ArrowPosition: {x: -300, y: 150}
+    ArrowRotationZ: 0
+    PreDelay: 0.3
+    EnableRoleDocGroup: 0
+    EnableMemoBookGroup: 0
+  - Phase: 22
+    PhaseType: 0
+    Dialogues:
+    - Speaker: 0
+      Text: "\uCD5C\uC885 \uCD94\uB9AC\uC5D0\uC11C\uB294 \uC218\uC9D1\uD55C \uB300\uD654\uC870\uAC01\uC744
+        \uBC14\uD0D5\uC73C\uB85C \uAC01\uAC01\uC758 \uC778\uBB3C\uB4E4\uC5D0\uAC8C
+        \uCD5C\uC885 \uCD94\uB9AC\uB97C \uD560 \uC218 \uC788\uC2B5\uB2C8\uB2E4."
+    - Speaker: 0
+      Text: "\uAC19\uC740 \uC9C4\uC2E4\uC774\uB77C\uB3C4 \uC5B4\uB5A4\uBD80\uBD84\uC744,
+        \uC5B4\uB514\uAE4C\uC9C0, \uB204\uAD6C\uC5D0\uAC8C \uC804\uB2EC\uD560\uC9C0\uC5D0
+        \uB530\uB77C \uACB0\uACFC\uAC00 \uB2EC\uB77C\uC9D1\uB2C8\uB2E4. \n\uCD5C\uC885
+        \uB300\uD654\uB294 \uB3CC\uC774\uD0AC \uC218 \uC5C6\uC73C\uB2C8, \uC2E0\uC911\uD558\uAC8C
+        \uC0DD\uAC01\uD574\uC8FC\uC138\uC694!"
+    - Speaker: 1
+      Text: "\uC6A9\uBCD1\uB2E8 \uC0AC\uB78C\uB4E4\uC774 \uB098\uC5D0\uAC8C \uB9D0\uC744
+        \uAC70\uB294 \uC0C1\uC0C1\uC744 \uD574 \uBCFC\uAE4C?"
+    - Speaker: 1
+      Text: "\uB0B4\uAC00 \uC5B4\uB5A4 \uC131\uACA9\uC774\uC600\uACE0, \uC5B4\uB5A4
+        \uC0AC\uAC74 \uB54C\uBB38\uC5D0 \uC774\uACF3\uC5D0 \uC654\uC5C8\uC9C0?\n\uC5B4\uB5A4\uB9D0\uC774
+        \uB0A0 \uAC00\uC7A5 \uB4A4\uD754\uB4E4 \uC218 \uC788\uB294 \uB9D0\uC77C\uAE4C?"
+    NextPhase: 23
+    ActionPermission: 257
+    NextPhaseOnAction: 23
+    ShowArrow: 0
+    ArrowPosition: {x: 0, y: 0}
+    ArrowRotationZ: 0
+    PreDelay: 0.3
+    EnableRoleDocGroup: 0
+    EnableMemoBookGroup: 0
+  - Phase: 23
+    PhaseType: 1
+    Dialogues:
+    - Speaker: 0
+      Text: "\uC9C8\uBB38\uC9C0\uB97C \uC798 \uBCF4\uACE0 \uC815\uB2F5\uC744 \uC120\uD0DD
+        \uD574\uC8FC\uC138\uC694."
+    NextPhase: 24
+    ActionPermission: 513
+    NextPhaseOnAction: 24
+    ShowArrow: 1
+    ArrowPosition: {x: 750, y: 200}
+    ArrowRotationZ: -180
+    PreDelay: 0.3
+    EnableRoleDocGroup: 0
+    EnableMemoBookGroup: 0
+  - Phase: 24
+    PhaseType: 0
+    Dialogues:
+    - Speaker: 0
+      Text: "\uC5D4\uBE44\uC758 \uBAA9\uD45C\uB294 \uC6A9\uBCD1\uB2E8\uC758 \uD574\uCCB4\uC785\uB2C8\uB2E4."
+    - Speaker: 1
+      Text: "... \n\uB0B4\uAC00 \uC2A4\uD30C\uC774\uB77C\uB294 \uAC78 \uB4E4\uD0A8\uB2E4\uBA74
+        \uC758\uB8B0\uB294 \uC989\uC2DC \uC2E4\uD328\uC57C... \uB208\uC5D0 \uB744\uC9C0
+        \uC54A\uAC8C \uC870\uC2EC\uD574\uC57C \uD574."
+    NextPhase: 25
+    ActionPermission: 513
+    NextPhaseOnAction: 25
+    ShowArrow: 0
+    ArrowPosition: {x: 0, y: 0}
+    ArrowRotationZ: 0
+    PreDelay: 0.3
+    EnableRoleDocGroup: 0
+    EnableMemoBookGroup: 0
+  - Phase: 25
+    PhaseType: 0
+    Dialogues:
+    - Speaker: 1
+      Text: "\uC88B\uC544.\n\uC774\uC81C \uAE30\uBCF8\uC801\uC778 \uAC74 \uC54C\uACA0\uC5B4."
+    - Speaker: 1
+      Text: "\uC0AC\uAC74\uC744 \uBAA8\uC73C\uACE0, \uC0AC\uB78C\uC744 \uC774\uD574\uD558\uACE0,
+        \uB9D0\uC744 \uC5B4\uB5BB\uAC8C \uC804\uB2EC\uD560\uC9C0 \uACE0\uB978\uB2E4."
+    - Speaker: 1
+      Text: "\uC774 \uC6A9\uBCD1\uB2E8\uC740 \uC544\uC9C1 \uC11C\uB85C\uB97C \uB3D9\uB8CC\uB77C\uACE0
+        \uBBFF\uACE0 \uC788\uC5B4. \n\uD568\uAED8 \uD574\uC628 \uC2DC\uAC04\uC774
+        \uC788\uC73C\uB2C8\uAE4C. \uD558\uC9C0\uB9CC \uBBFF\uC74C\uC740 \uC0DD\uAC01\uBCF4\uB2E4
+        \uC791\uC740 \uADE0\uC5F4\uB85C\uB3C4 \uBD80\uC11C\uC9C0\uAE30 \uB9C8\uB828\uC774\uC57C."
+    - Speaker: 1
+      Text: "\uD544\uC694\uD55C\uAC74 \uC644\uC804\uD55C \uAC70\uC9D3\uB9D0\uC774
+        \uC544\uB2C8\uC57C. \n\uC9C4\uC2E4\uC744 \uD55C \uC2A4\uD47C\uB9CC \uB2F4\uC544\uC11C,
+        \uAC00\uC7A5 \uAD34\uB85C\uC6CC \uD560 \uC0AC\uB78C\uC5D0\uAC8C \uB4E4\uB824\uC8FC\uACE0
+        \uBD95\uAD34\uB97C \uC9C0\uCF1C \uBCF4\uB294\uAC70\uC57C."
+    - Speaker: 1
+      Text: "\uADF8\uB7FC \uC774\uC81C \uBCF8\uACA9\uC801\uC73C\uB85C \uC2DC\uC791\uD574\uBCF4\uC790.\n\uC774
+        \uC6A9\uBCD1\uB2E8\uC774 \uC5B4\uB514\uC11C\uBD80\uD130 \uAC08\uB77C\uC84C\uB294\uC9C0."
+    NextPhase: 26
+    ActionPermission: 1
+    NextPhaseOnAction: 26
+    ShowArrow: 0
+    ArrowPosition: {x: 0, y: 0}
+    ArrowRotationZ: 0
+    PreDelay: 0.3
+    EnableRoleDocGroup: 0
+    EnableMemoBookGroup: 0
+  - Phase: 26
+    PhaseType: 2
+    Dialogues:
+    - Speaker: 1
+      Text: "\uC88B\uC544.\n\uC774\uC81C \uAE30\uBCF8\uC801\uC778 \uAC74 \uC54C\uACA0\uC5B4."
+    - Speaker: 1
+      Text: "\uC0AC\uAC74\uC744 \uBAA8\uC73C\uACE0, \uC0AC\uB78C\uC744 \uC774\uD574\uD558\uACE0,
+        \uB9D0\uC744 \uC5B4\uB5BB\uAC8C \uC804\uB2EC\uD560\uC9C0 \uACE0\uB978\uB2E4."
+    - Speaker: 1
+      Text: "\uC774 \uC6A9\uBCD1\uB2E8\uC740 \uC544\uC9C1 \uC11C\uB85C\uB97C \uB3D9\uB8CC\uB77C\uACE0
+        \uBBFF\uACE0 \uC788\uC5B4. \n\uD568\uAED8 \uD574\uC628 \uC2DC\uAC04\uC774
+        \uC788\uC73C\uB2C8\uAE4C. \uD558\uC9C0\uB9CC \uBBFF\uC74C\uC740 \uC0DD\uAC01\uBCF4\uB2E4
+        \uC791\uC740 \uADE0\uC5F4\uB85C\uB3C4 \uBD80\uC11C\uC9C0\uAE30 \uB9C8\uB828\uC774\uC57C."
+    - Speaker: 1
+      Text: "\uD544\uC694\uD55C\uAC74 \uC644\uC804\uD55C \uAC70\uC9D3\uB9D0\uC774
+        \uC544\uB2C8\uC57C. \n\uC9C4\uC2E4\uC744 \uD55C \uC2A4\uD47C\uB9CC \uB2F4\uC544\uC11C,
+        \uAC00\uC7A5 \uAD34\uB85C\uC6CC \uD560 \uC0AC\uB78C\uC5D0\uAC8C \uB4E4\uB824\uC8FC\uACE0
+        \uBD95\uAD34\uB97C \uC9C0\uCF1C \uBCF4\uB294\uAC70\uC57C."
+    - Speaker: 1
+      Text: "\uADF8\uB7FC \uC774\uC81C \uBCF8\uACA9\uC801\uC73C\uB85C \uC2DC\uC791\uD574\uBCF4\uC790.\n\uC774
+        \uC6A9\uBCD1\uB2E8\uC774 \uC5B4\uB514\uC11C\uBD80\uD130 \uAC08\uB77C\uC84C\uB294\uC9C0."
+    NextPhase: 26
+    ActionPermission: 1
+    NextPhaseOnAction: 26
+    ShowArrow: 0
+    ArrowPosition: {x: 0, y: 0}
+    ArrowRotationZ: 0
+    PreDelay: 0.3
+    EnableRoleDocGroup: 0
+    EnableMemoBookGroup: 0

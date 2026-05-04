@@ -1,92 +1,274 @@
-using System;
-
 /// <summary>
-/// 튜토리얼 순서형 단계(Phase)를 정의합니다.
-/// TutorialManager가 이 순서대로 진행합니다.
+/// 튜토리얼 Phase 전체 목록입니다.
+///
+/// ─── 병합 원칙 ────────────────────────────────────────────────────────────
+///   · 연속 대화(같은 흐름)   → 하나의 Phase에 Dialogues[] 배열로 묶음
+///   · 조작 전 안내 대화     → Action Phase의 Dialogues[]에 포함
+///   · 조작 완료 이벤트      → Notify* 메서드 → NextPhaseOnAction 진입
+///
+/// ─── 시나리오 20단계 → Phase 매핑 ─────────────────────────────────────────
+///   1.  엔비 인트로 자기소개               → Dialog_EnvyIntro
+///   2.  캐릭터 이동 설명 + 이동            → Action_MoveEnvy
+///   3.  턴 종료 설명 + 깃털펜 클릭         → Action_TurnEnd_Quill
+///   4.  메이와 대화 + 대화조각 알림         → Dialog_TalkWithMay
+///   5.  게임 패널 기능 도입부 (엔비 독백)   → Dialog_PanelIntro
+///   6.  에드먼드 메모장 열기 + 설명 + 닫기  → Action_OpenEdmundNote
+///                                           Dialog_EdmundNarration
+///                                           Action_CloseEdmundNote
+///   7.  엔비 상황 설명 (다이어리 도입)      → Dialog_EnvyStrategy
+///   8.  다이어리 열기                       → Action_OpenEnvyDiary
+///   9.  정보 카드 / 대화 조각 설명          → Dialog_DiaryNarration
+///   10. 진실/거짓 마우스 클릭 설명          → Dialog_SlotClickGuide
+///   11. 힌트 포스트잇 열기                  → Action_OpenHintPostIt
+///   12. 고정핀 설명 + 고정/해제             → Dialog_PinGuide
+///                                           Action_PinHint
+///   13. 힌트 포스트잇 닫기                  → Action_CloseHintPostIt
+///   14. 다이어리 카드 닫기                  → Action_CloseEnvyDiary
+///   15. 엔비 상황 설명 (최종 도입)          → Dialog_FinalIntro
+///   16. 최종 대화 책 클릭                   → Action_EnterFinalDecision1
+///   17. 엔비 아이콘 버튼 클릭               → Action_EnterFinalDecision2
+///   18. 최종 질문지 설명 + 선택             → Dialog_FinalSelectionGuide
+///                                           Action_SelectFinalOption
+///   19. 엔비 결과 독백                      → Dialog_FinalResult
+///   20. 마무리 독백 + 종료                  → Dialog_EnvyOutro
+///                                           Tutorial_End
 /// </summary>
-
 public enum TutorialPhase
 {
     Inactive,
     WaitIntro,
 
-    // ── 1. 도입: 엔비의 독백 ──
-    Dialog_EnvyIntro_1,         // [엔비] "안녕. 나는 엔비..."
-    Dialog_EnvyIntro_2,         // [엔비] "물론 진짜 목적은..."
-    Dialog_EnvyIntro_3,         // [엔비] "누군가 내게 의뢰..."
-    Dialog_EnvyIntro_4,         // [엔비] "겉으로 보기엔 멀쩡..."
-    Dialog_EnvyIntro_5,         // [엔비] "하지만 들리는 소문..."
-    Dialog_EnvyIntro_6,         // [엔비] "그렇다면 내가 할일..."
-    Dialog_EnvyIntro_7,         // [엔비] "그리고 그상처를..."
-    Dialog_EnvyIntro_8,         // [엔비] "그럼 시작해볼까..."
+    // ── 1. 엔비 인트로 자기소개 ─────────────────────────────────────────
+    /// <summary>
+    /// [엔비 8줄] 자기소개 독백.
+    /// Phase2~9 텍스트.
+    /// NextPhase → Action_MoveEnvy
+    /// </summary>
+    Dialog_EnvyIntro,
 
-    // ── 2. 첫 이동 및 시간 진행 ──
-    Dialog_MoveEnvy1,         // [엔비] "사람들이 흩어져..."
-    Dialog_MoveEnvy2,         // [엔비] "우선 혼자 있는 사람..."
+    // ── 2. 캐릭터 이동 ───────────────────────────────────────────────────
+    /// <summary>
+    /// [Action] 엔비 드래그 이동.
+    /// Dialogues[0~1]: 엔비 상황 설명 (Phase10~11)
+    /// Dialogues[2]:   가이드 (Phase12)
+    /// ActionPermission: CharacterMove
+    /// NextPhaseOnAction → Action_TurnEnd_Quill
+    /// </summary>
+    Action_MoveEnvy,
 
-    Action_MoveEnvy,            // [Action] 엔비를 구역으로 드래그
-    Action_TurnEnd_Quill,       // [Action] 깃털펜 클릭 (시간 진행)
+    // ── 3. 턴 종료 ───────────────────────────────────────────────────────
+    /// <summary>
+    /// [Action] 깃털펜 클릭.
+    /// Dialogues[0]: 가이드 (Phase13)
+    /// ActionPermission: AdvanceTurn
+    /// NextPhaseOnAction → Dialog_TalkWithMay
+    /// </summary>
+    Action_TurnEnd_Quill,
 
-    // ── 3. 첫 대화: 메이 ──
-    Dialog_EnvyTalk1,           // [엔비] "메이님 안녕..."
-    Dialog_MayTalk_1,           // [메이] "신입? 무슨일..."
+    // ── 4. 메이와 대화 + 대화 조각 알림 ─────────────────────────────────
+    /// <summary>
+    /// [엔비↔메이 12줄 + 나레이션 2줄] 대화 릴레이 + 조각 획득 알림.
+    /// Dialogues[0~11]: 엔비↔메이 대화 (Phase14~25)
+    /// Dialogues[12]:   나레이션 — 조각 획득 알림 (Phase26)
+    /// Dialogues[13]:   나레이션 — 단서 시스템 설명 (Phase27)
+    /// NextPhase → Dialog_PanelIntro
+    /// </summary>
+    Dialog_TalkWithMay,
 
-    Dialog_EnvyTalk2,           // [엔비] "별견 아니..."
-    Dialog_MayTalk_2,           // [메이] "분위기?"
+    // ── 5. 게임 패널 기능 도입부 ────────────────────────────────────────
+    /// <summary>
+    /// [엔비 1줄] 패널 기능 설명 도입 독백.
+    /// Dialogues[0]: 엔비 (Phase28)
+    /// NextPhase → Action_OpenEdmundNote
+    /// </summary>
+    Dialog_PanelIntro,
 
-    Dialog_EnvyTalk3,           // [엔비] "다들 오래 함께한 것..."
-    Dialog_MayTalk_3,           // [메이] "원래는 아니였지..."
+    // ── 6. 에드먼드 메모장 ───────────────────────────────────────────────
+    /// <summary>
+    /// [Action] 메모장 열기.
+    /// Dialogues[0]: 가이드 (Phase29)
+    /// ActionPermission: RoleDocToggle
+    /// EnableRoleDocGroup: true
+    /// NextPhaseOnAction → Dialog_EdmundNarration
+    /// ShowArrow: true, ArrowPosition: (-680, 270), ArrowRotationZ: -180
+    /// </summary>
+    Action_OpenEdmundNote,
 
-    Dialog_EnvyTalk4,           // [엔비] "무슨일 있었..."
-    Dialog_MayTalk_4,           // [메이] "있었지 잡을 수..."
+    /// <summary>
+    /// [나레이션 3줄] 메모장 내용 설명.
+    /// Dialogues[0]: Phase30
+    /// Dialogues[1]: Phase31
+    /// Dialogues[2]: Phase32
+    /// NextPhase → Action_CloseEdmundNote
+    /// </summary>
+    Dialog_EdmundNarration,
 
-    Dialog_EnvyTalk5,           // [엔비] "드래곤이요?..."
-    Dialog_MayTalk_5,           // [메이] "거의 끝났었어.."
+    /// <summary>
+    /// [Action] 메모장 닫기.
+    /// Dialogues[0]: 가이드 (Phase33)
+    /// ActionPermission: RoleDocToggle
+    /// NextPhaseOnAction → Dialog_EnvyStrategy
+    /// ShowArrow: true, ArrowPosition: (-220, 270), ArrowRotationZ: -180
+    /// </summary>
+    Action_CloseEdmundNote,
 
-    Dialog_EnvyTalk6,           // [엔비] "그런데 어쩌다가..."
-    Dialog_MayTalk_6,           // [메이] "그건 아직 네가..."
+    // ── 7. 엔비 상황 설명 (다이어리 도입) ──────────────────────────────
+    /// <summary>
+    /// [엔비 3줄] 다이어리 도입 전 상황 설명.
+    /// Dialogues[0]: Phase34
+    /// Dialogues[1]: Phase35
+    /// Dialogues[2]: Phase36
+    /// NextPhase → Action_OpenEnvyDiary
+    /// </summary>
+    Dialog_EnvyStrategy,
 
-    Dialog_PieceTuto,           // [Narration] "조각을 획득 하였습니다. 메이는 드래곤을 놓친..."
-    Dialog_System_Clue,         // [Narration] "대화를 통해 사건과 인물에 대한 단서..."
+    // ── 8. 다이어리 열기 ─────────────────────────────────────────────────
+    /// <summary>
+    /// [Action] 다이어리 열기.
+    /// Dialogues[0]: 가이드 (Phase37)
+    /// ActionPermission: CharacterCardToggle
+    /// EnableMemoBookGroup: true
+    /// NextPhaseOnAction → Dialog_DiaryNarration
+    /// ShowArrow: true, ArrowPosition: (-465, -225), ArrowRotationZ: -90
+    /// </summary>
+    Action_OpenEnvyDiary,
 
-    // ── 4. 에드먼드의 메모장 (역할 패널) ──
-    Dialog_EnvyRules1,             // [엔비] "이상한 규칙이 있어..."
-    Action_OpenEdmundNote,         // [Action] "왼쪽 에드먼드의 메모장을 열어..."
-    Dialog_EdmundNarration1,        // [Narration] "각 역할 기능과 사건 서술 순서..."
-    Dialog_EdmundNarration2,        // [Narration] "역할 기능은 인물의 행동 패턴과..."
-    Dialog_EdmundNarration3,        // [Narration] "사건 서술 순서는 사건이 어떤 순서로 진행..."
-    Action_CloseEdmundNote,        // [Action] "패널을 다시 닫아주세요."
+    // ── 9. 정보 카드 / 대화 조각 설명 ───────────────────────────────────
+    /// <summary>
+    /// [나레이션 3줄] 정보 카드 및 대화 조각 설명.
+    /// Dialogues[0]: Phase38
+    /// Dialogues[1]: Phase39
+    /// Dialogues[2]: Phase40 (가운데 힌트 메모지 언급)
+    /// NextPhase → Dialog_SlotClickGuide
+    /// </summary>
+    Dialog_DiaryNarration,
 
-    // ── 5. 캐릭터 파일 (엔비의 다이어리) ──
-    Dialog_EnvyStrategy1,          // [엔비] "이제 사람을 봐야해..."
-    Dialog_EnvyStrategy2,          // [엔비] "누가 무엇을 두려워 하는지..."
-    Dialog_EnvyStrategy3,          // [엔비] "그걸 알아야 이 용병단을 흔들 수 있어..."
-    Action_OpenEnvyDiary,          // [Action] "엔비의 다이어리에서 캐릭터 정보를 확인..."
-    Dialog_DiaryNarration1,         // [Narration] "정보 카드에서는 이름, 역할, 수집된 대화 조각을 확인..."
-    Dialog_DiaryNarration2,         // [Narration] "대화 조각은 캐릭터들과의 대화 후 엔비가 수집한 단서..."
-    Dialog_DiaryNarration3,         // [Narration] "가운데 메모지는 다른 대화 조각의 힌트..."
-    Action_OpenHintPostIt,         // [Action] "메모지를 눌러 보세요."
-    Dialog_DiaryNarration5,         // [Narration] "힌트는 대화조각을 얻는 조건을..."
-    Dialog_EnvyContext1,            // [엔비] "어떤 말은 혼자 있을때만..."
-    Dialog_EnvyContext2,            // [엔비] "사람은 항상 같은 말을 하지..."
-    Action_CloseEnvyDiary,         // [Action] "힌트 메모지와 캐릭터 정보카드를 닫아주세요."
+    // ── 10. 진실/거짓 슬롯 클릭 설명 ────────────────────────────────────
+    /// <summary>
+    /// [나레이션 1줄] CyclicColorText 클릭으로 진실/거짓 표시 설명.
+    /// Dialogues[0]: "대화 조각 텍스트를 클릭하면 색상이 바뀝니다..."
+    /// NextPhase → Action_OpenHintPostIt
+    /// </summary>
+    Dialog_SlotClickGuide,
 
-    // ── 6. 최종 대화 (최종 집필) ──
-    Dialog_FinalIntro1,             // [엔비] "내 최종 목표는 수집한 정보를 이용해..."
-    Action_EnterFinalDecision1,     // [Action] "우측 책을 눌러 최종 추리를 시작해주세요."
-    Action_EnterFinalDecision2,     // [Action] "엔비를 선택해주세요."
-    Dialog_EnterFinalDecision1,     // [Narration] "최종 대화 대화에서는 수집한 대화조각..."
-    Dialog_EnterFinalDecision2,     // [Narration] "같은 진실이라도 어떤부분을 어디까지..."
-    Dialog_FinalIntro2,             // [엔비] "용병단 사람들이 나에게 말을 거는..."
-    Dialog_EnterFinalDecision3,     // [Narration] "해당 인물의 성격과 사건을 고려하여, 상대방을 가장..."
-    Action_SelectFinalOption,       // [Action] "질문 내용을 선택해주세요."
-    Dialog_FinalResult,             // [엔비] ".. 내가 스파이라는걸 들킨다면 실패야..."
+    // ── 11. 힌트 포스트잇 열기 ───────────────────────────────────────────
+    /// <summary>
+    /// [Action] 힌트 포스트잇 열기.
+    /// Dialogues[0]: 가이드 (Phase40 두 번째 / Phase41)
+    /// ActionPermission: HintPostItToggle
+    /// NextPhaseOnAction → Dialog_PinGuide
+    /// ShowArrow: true, ArrowPosition: (95, 180), ArrowRotationZ: -180
+    /// </summary>
+    Action_OpenHintPostIt,
 
-    // ── 7. 종료 및 실전 진입 ──
-    Dialog_EnvyOutro1,           // "이제 기본적인 건 알겠어. 본격적으로 시작해보자."
-    Dialog_EnvyOutro2,           // "사건을 모으고, 사람을 이해하고, 말을 어떻게 전달할지..."
-    Dialog_EnvyOutro3,           // "이 용병단은 아직 서로를 동료라고 믿고 있어. 함께 해온 시간..."
-    Dialog_EnvyOutro4,           // "필요한 건 완전한 거짓말이 아니야..."
-    Dialog_EnvyOutro5,           // "그럼 이제 본격적으로 시작해보자..."
-    Tutorial_End                // 튜토리얼 종료 처리
+    // ── 12. 고정핀 설명 + 핀 고정/해제 ─────────────────────────────────
+    /// <summary>
+    /// [나레이션+엔비 3줄] 힌트 설명 + 고정핀 방법 안내.
+    /// Dialogues[0]: Phase42 — 힌트 조건 설명
+    /// Dialogues[1]: Phase43 — 엔비 독백
+    /// Dialogues[2]: Phase44 — 엔비 독백
+    /// Dialogues[3]: 가이드  — "힌트 텍스트를 클릭하면 고정핀에 등록됩니다..."
+    /// NextPhase → Action_PinHint
+    /// </summary>
+    Dialog_PinGuide,
+
+    /// <summary>
+    /// [Action] 힌트 고정핀 고정 후 해제.
+    /// Dialogues[0]: 가이드 — "힌트를 클릭해 고정하고, 다시 클릭해 해제해보세요."
+    /// ActionPermission: HintPin | HintPostItToggle
+    /// NextPhaseOnAction → Action_CloseHintPostIt
+    /// </summary>
+    Action_PinHint,
+
+    // ── 13. 힌트 포스트잇 닫기 ───────────────────────────────────────────
+    /// <summary>
+    /// [Action] 힌트 포스트잇 닫기.
+    /// Dialogues[0]: 가이드 (Phase45 전반부)
+    /// ActionPermission: HintPostItToggle
+    /// NextPhaseOnAction → Action_CloseEnvyDiary
+    /// ShowArrow: true, ArrowPosition: (350, 150), ArrowRotationZ: -150
+    /// </summary>
+    Action_CloseHintPostIt,
+
+    // ── 14. 다이어리 카드 닫기 ───────────────────────────────────────────
+    /// <summary>
+    /// [Action] 다이어리 캐릭터 카드 닫기.
+    /// Dialogues[0]: 가이드 (Phase45 후반부)
+    /// ActionPermission: CharacterCardToggle
+    /// NextPhaseOnAction → Dialog_FinalIntro
+    /// ShowArrow: true, ArrowPosition: (-310, 400), ArrowRotationZ: -210
+    /// </summary>
+    Action_CloseEnvyDiary,
+
+    // ── 15. 엔비 상황 설명 (최종 도입) ──────────────────────────────────
+    /// <summary>
+    /// [엔비 1줄] 최종 대화 도입 상황 설명.
+    /// Dialogues[0]: Phase46
+    /// NextPhase → Action_EnterFinalDecision1
+    /// </summary>
+    Dialog_FinalIntro,
+
+    // ── 16. 최종 대화 책 클릭 ────────────────────────────────────────────
+    /// <summary>
+    /// [Action] 최종 추리 책 클릭.
+    /// Dialogues[0]: 가이드 (Phase47)
+    /// ActionPermission: FinalDecisionEnter
+    /// NextPhaseOnAction → Action_EnterFinalDecision2
+    /// ShowArrow: true, ArrowPosition: (550, 130), ArrowRotationZ: -15
+    /// </summary>
+    Action_EnterFinalDecision1,
+
+    // ── 17. 엔비 아이콘 버튼 클릭 ────────────────────────────────────────
+    /// <summary>
+    /// [Action] 엔비 아이콘 선택.
+    /// Dialogues[0]: 가이드 (Phase48)
+    /// ActionPermission: FinalCharacterSelect
+    /// NextPhaseOnAction → Dialog_FinalSelectionGuide
+    /// ShowArrow: true, ArrowPosition: (-300, 150), ArrowRotationZ: 0
+    /// </summary>
+    Action_EnterFinalDecision2,
+
+    // ── 18. 최종 질문지 설명 + 선택 ──────────────────────────────────────
+    /// <summary>
+    /// [나레이션+엔비 4줄] 최종 대화 선택 방법 설명.
+    /// Dialogues[0]: Phase49
+    /// Dialogues[1]: Phase50
+    /// Dialogues[2]: Phase51 — 엔비
+    /// Dialogues[3]: Phase52 — 나레이션
+    /// NextPhase → Action_SelectFinalOption
+    /// </summary>
+    Dialog_FinalSelectionGuide,
+
+    /// <summary>
+    /// [Action] 질문지 선택 + 제출.
+    /// Dialogues[0]: 가이드 (Phase53)
+    /// ActionPermission: FinalDecisionSelect
+    /// NextPhaseOnAction → (FinalTransitionCoroutine → Dialog_FinalResult)
+    /// ShowArrow: true, ArrowPosition: (750, 200), ArrowRotationZ: -180
+    /// </summary>
+    Action_SelectFinalOption,
+
+    // ── 19. 엔비 결과 독백 ───────────────────────────────────────────────
+    /// <summary>
+    /// [나레이션+엔비 2줄] 최종 결과 후 독백.
+    /// Dialogues[0]: Phase54 — 나레이션 (엔비의 목표)
+    /// Dialogues[1]: Phase55 — 엔비
+    /// NextPhase → Dialog_EnvyOutro
+    /// </summary>
+    Dialog_FinalResult,
+
+    // ── 20. 마무리 독백 + 종료 ───────────────────────────────────────────
+    /// <summary>
+    /// [엔비 5줄] 마무리 독백.
+    /// Dialogues[0]: Phase56
+    /// Dialogues[1]: Phase57
+    /// Dialogues[2]: Phase58
+    /// Dialogues[3]: Phase59
+    /// Dialogues[4]: Phase60
+    /// NextPhase → Tutorial_End
+    /// </summary>
+    Dialog_EnvyOutro,
+
+    /// <summary>튜토리얼 종료 처리 (HandleTutorialComplete 호출)</summary>
+    Tutorial_End
 }

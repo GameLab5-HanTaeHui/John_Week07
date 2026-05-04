@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -210,6 +211,12 @@ namespace HTH.Campaign
         /// <summary>현재 패널이 열려있는지 여부입니다.</summary>
         public bool IsOpen { get; private set; }
 
+        /// <summary>
+        /// 뒤집기+슬라이드다운 애니메이션이 진행 중인지 여부입니다.
+        /// Manager에서 다음 패널 Open 타이밍 대기에 사용합니다.
+        /// </summary>
+        public bool IsClosing { get; private set; }
+
         /// <summary>슬롯 배치가 초기화됐는지 여부입니다.</summary>
         public bool IsSlotsInitialized => _slotsInitialized;
 
@@ -276,14 +283,22 @@ namespace HTH.Campaign
         /// </summary>
         public void Open(int characterId)
         {
-            // 슬롯 미초기화 시 방어 처리 (정상이라면 Phase2 진입 시 이미 완료)
             if (!_slotsInitialized)
             {
                 Debug.LogWarning($"[CharacterRecordPanel] 슬롯 미초기화 — CharacterId={characterId}");
                 return;
             }
 
-            // 캐릭터 ID 저장, ProfileDataSO에서 이름/역할 조회
+            // ★ 뒤집힌 상태: Manager가 WaitUntil(!IsClosing)으로 대기 후 Open 호출하므로
+            //   여기서는 단순히 OpenInternal만 수행
+            OpenInternal(characterId);
+        }
+
+        /// <summary>
+        /// Open()의 실제 초기화 로직입니다.
+        /// </summary>
+        private void OpenInternal(int characterId)
+        {
             _currentCharacterId = characterId;
             _currentProfile = _profileData?.FindProfile(characterId);
 
@@ -294,6 +309,7 @@ namespace HTH.Campaign
 
             SlideTo(_openedY, _expandEase);
             IsOpen = true;
+            IsClosing = false;
         }
 
         /// <summary>
@@ -353,16 +369,20 @@ namespace HTH.Campaign
         {
             if (!IsOpen) return;
             IsOpen = false;
+            IsClosing = true;
 
             if (_isBackFaceShowing)
             {
-                // 뒷면 → 앞면 회전 후 슬라이드다운
                 FlipToFrontThenSlideDown();
             }
             else
             {
-                // 앞면 → 바로 슬라이드다운
-                SlideTo(_closedY, _collapseEase);
+                // 앞면 → 슬라이드다운 완료 시 IsClosing 해제
+                _slideTween?.Kill();
+                _slideTween = _rect
+                    .DOAnchorPosY(_closedY, _animDuration)
+                    .SetEase(_collapseEase)
+                    .OnComplete(() => IsClosing = false);
             }
         }
 
@@ -593,6 +613,8 @@ namespace HTH.Campaign
                     _isTrackingFlip = false;
 
                     SlideTo(_closedY, _collapseEase);
+                    // 슬라이드다운 완료 후 IsClosing 해제
+                    _slideTween?.OnComplete(() => IsClosing = false);
                 });
         }
 

@@ -1,4 +1,5 @@
 ﻿using DG.Tweening;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -71,6 +72,27 @@ namespace HTH.Campaign
         private Tweener _rotTween;
         private Tweener _hoverTween;
 
+        /// <summary>
+        /// 슬롯 인덱스 → ProfileClueId 매핑.
+        /// LoadHintTexts()에서 채워지며 핀 해제 시 사용합니다.
+        /// </summary>
+        private readonly Dictionary<int, string> _slotClueIds = new();
+
+        /// <summary>
+        /// 슬롯 인덱스 → 현재 핀 고정 여부.
+        /// </summary>
+        private readonly bool[] _slotPinned = new bool[5];
+
+        // ── 색상 ─────────────────────────────────────────────────────────
+
+        [Header("힌트 핀 색상")]
+        [Tooltip("핀 고정 중인 힌트 텍스트 색상")]
+        [SerializeField] private Color _pinnedColor = new Color(0.1f, 0.55f, 0.9f, 1f);
+        [Tooltip("기본(미핀) 힌트 텍스트 색상")]
+        [SerializeField] private Color _defaultColor = Color.black;
+        [Tooltip("최대 핀 초과 클릭 시 잠깐 표시할 색상")]
+        [SerializeField] private Color _overflowColor = new Color(0.8f, 0.4f, 0.1f, 1f);
+
         // ── Unity ────────────────────────────────────────────────────────
 
         private void Awake()
@@ -79,12 +101,22 @@ namespace HTH.Campaign
             ApplySmallStateInstant();
         }
 
+        private void Start()
+        {
+            // 조각 획득 시 → 해당 힌트 자동 핀 해제 + 선택 불가
+            if (_fragmentCollector != null)
+                _fragmentCollector.OnFragmentCollected += OnFragmentCollected;
+        }
+
         private void OnDestroy()
         {
             _posTween?.Kill();
             _sizeTween?.Kill();
             _rotTween?.Kill();
             _hoverTween?.Kill();
+
+            if (_fragmentCollector != null)
+                _fragmentCollector.OnFragmentCollected -= OnFragmentCollected;
         }
 
         // ── 공개 API ─────────────────────────────────────────────────────
@@ -92,8 +124,16 @@ namespace HTH.Campaign
         /// <summary>표시할 캐릭터를 설정합니다. CharacterRecordPanel.Open() 시 호출합니다.</summary>
         public void SetCharacter(int characterId)
         {
+            bool isSameCharacter = (_currentCharacterId == characterId);
             _currentCharacterId = characterId;
+
             if (_isExpanded) ApplySmallStateInstant();
+
+            // ★ 다른 캐릭터 카드로 전환할 때만 핀 초기화
+            // 같은 캐릭터 카드를 다시 열면 기존 핀 유지
+            if (!isSameCharacter)
+                UnpinAll();
+
             LoadHintTexts();
         }
 
@@ -117,8 +157,149 @@ namespace HTH.Campaign
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            if (_isExpanded) Collapse();
-            else Expand();
+            // ★ 확장 상태에서 힌트 텍스트 클릭 감지
+            if (_isExpanded)
+            {
+                int slotIdx = GetClickedHintSlot(eventData);
+                if (slotIdx >= 0)
+                {
+                    TogglePin(slotIdx);
+                    return; // 텍스트 클릭은 Collapse 안 함
+                }
+                Collapse();
+            }
+            else
+            {
+                Expand();
+            }
+        }
+
+        /// <summary>
+        /// 클릭 위치가 어떤 힌트 슬롯 위에 있는지 반환합니다.
+        /// 없으면 -1 반환.
+        /// </summary>
+        private int GetClickedHintSlot(PointerEventData eventData)
+        {
+            for (int i = 0; i < _hintTexts.Length; i++)
+            {
+                if (_hintTexts[i] == null) continue;
+                var rect = _hintTexts[i].GetComponent<RectTransform>();
+                if (rect == null) continue;
+                if (RectTransformUtility.RectangleContainsScreenPoint(
+                        rect, eventData.position, eventData.pressEventCamera))
+                    return i;
+            }
+            return -1;
+        }
+
+        /// <summary>
+        /// 슬롯 인덱스의 핀 고정/해제를 토글합니다.
+        /// 획득 완료된 조각은 선택 불가.
+        /// </summary>
+        private void TogglePin(int slotIdx)
+        {
+            if (!_slotClueIds.TryGetValue(slotIdx, out string clueId)) return;
+
+            // 이미 획득한 조각 → 선택 불가
+            bool isCollected = _fragmentCollector?.HasFragment(clueId) ?? false;
+            if (isCollected) return;
+
+            var panel = PinnedHintPanel.Instance;
+            if (panel == null) return;
+
+            string text = GetHintTextString(slotIdx);
+            if (string.IsNullOrEmpty(text)) return;
+
+            if (_slotPinned[slotIdx])
+            {
+                // 핀 해제
+                _slotPinned[slotIdx] = false;
+                _hintTexts[slotIdx].color = _defaultColor;
+                panel.Unpin(text);
+            }
+            else
+            {
+                // 핀 고정 시도
+                if (panel.PinCount >= PinnedHintPanel.MaxPins)
+                {
+                    // 최대 초과 피드백
+                    StartCoroutine(OverflowFeedback(slotIdx));
+                    return;
+                }
+                _slotPinned[slotIdx] = true;
+                _hintTexts[slotIdx].color = _pinnedColor;
+                panel.Pin(text);
+            }
+        }
+
+        private System.Collections.IEnumerator OverflowFeedback(int slotIdx)
+        {
+            if (_hintTexts[slotIdx] != null) _hintTexts[slotIdx].color = _overflowColor;
+            yield return new WaitForSecondsRealtime(0.4f);
+            if (_hintTexts[slotIdx] != null) _hintTexts[slotIdx].color = _defaultColor;
+        }
+
+        /// <summary>
+        /// 조각 획득 이벤트 콜백.
+        /// 획득된 조각에 해당하는 힌트가 핀 고정 중이면 자동 해제합니다.
+        /// </summary>
+        private void OnFragmentCollected(string profileClueId)
+        {
+            foreach (var kv in _slotClueIds)
+            {
+                if (kv.Value != profileClueId) continue;
+
+                int idx = kv.Key;
+                if (!_slotPinned[idx]) continue;
+
+                // 핀 해제
+                string text = GetHintTextString(idx);
+                _slotPinned[idx] = false;
+                PinnedHintPanel.Instance?.Unpin(text);
+
+                // 텍스트 갱신 (취소선 적용)
+                RefreshSingleSlot(idx);
+                break;
+            }
+        }
+
+        /// <summary>모든 핀을 해제합니다. SetCharacter() 시 호출합니다.</summary>
+        private void UnpinAll()
+        {
+            for (int i = 0; i < _slotPinned.Length; i++)
+            {
+                if (!_slotPinned[i]) continue;
+                string text = GetHintTextString(i);
+                _slotPinned[i] = false;
+                PinnedHintPanel.Instance?.Unpin(text);
+            }
+        }
+
+        /// <summary>슬롯 인덱스의 현재 표시 텍스트를 반환합니다.</summary>
+        private string GetHintTextString(int slotIdx)
+        {
+            if (slotIdx < 0 || slotIdx >= _hintTexts.Length) return "";
+            return _hintTexts[slotIdx]?.text ?? "";
+        }
+
+        /// <summary>단일 슬롯 텍스트를 최신 수집 상태로 갱신합니다.</summary>
+        private void RefreshSingleSlot(int slotIdx)
+        {
+            if (!_slotClueIds.TryGetValue(slotIdx, out string clueId)) return;
+            if (_fragmentData == null) return;
+
+            var entries = _fragmentData.GetByCharacter(_currentCharacterId);
+            if (slotIdx >= entries.Count) return;
+
+            var entry = entries[slotIdx];
+            string hint = !string.IsNullOrEmpty(entry.HintDescription)
+                ? entry.HintDescription : entry.HintText;
+
+            bool isCollected = _fragmentCollector?.HasFragment(clueId) ?? false;
+            _hintTexts[slotIdx].text = isCollected
+                ? $"<alpha=#88><s>{slotIdx + 1}. {hint}</s>"
+                : $"{slotIdx + 1}. {hint}";
+            _hintTexts[slotIdx].color = _defaultColor;
         }
 
         // ── Private — 확장/축소 ───────────────────────────────────────────
@@ -186,21 +367,27 @@ namespace HTH.Campaign
                 if (i >= entries.Count)
                 {
                     _hintTexts[i].text = "";
+                    _hintTexts[i].color = _defaultColor;
                     continue;
                 }
 
                 var entry = entries[i];
+                _slotClueIds[i] = entry.ProfileClueId;
+
                 string hint = !string.IsNullOrEmpty(entry.HintDescription)
                     ? entry.HintDescription
-                    : entry.HintText; // HintDescription 없으면 HintText 폴백
+                    : entry.HintText;
 
                 bool isCollected = _fragmentCollector?.HasFragment(entry.ProfileClueId) ?? false;
 
-                // 수집 완료: 취소선 + 반투명
-                // 미수집: 기본 텍스트
                 _hintTexts[i].text = isCollected
                     ? $"<alpha=#88><s>{i + 1}. {hint}</s>"
                     : $"{i + 1}. {hint}";
+
+                // ★ 핀 고정 중이면 핀 색상 복원, 획득 완료이면 기본 색상
+                _hintTexts[i].color = (!isCollected && _slotPinned[i])
+                    ? _pinnedColor
+                    : _defaultColor;
             }
         }
     }

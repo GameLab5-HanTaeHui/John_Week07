@@ -1,4 +1,6 @@
 ﻿using DG.Tweening;
+using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -45,6 +47,20 @@ namespace HTH.Tutorial
         private RectTransform _rect;
         private Tweener _posTween, _sizeTween, _rotTween, _hoverTween;
 
+        // ── 힌트 텍스트 + 핀 ─────────────────────────────────────────────
+
+        [Header("힌트 텍스트")]
+        [Tooltip("힌트 텍스트 TMP_Text 슬롯입니다. 튜토리얼은 임시 텍스트로 채워도 됩니다.")]
+        [SerializeField] private TMP_Text[] _hintTexts = new TMP_Text[5];
+
+        [Header("핀 색상")]
+        [SerializeField] private Color _pinnedColor = new Color(0.1f, 0.55f, 0.9f, 1f);
+        [SerializeField] private Color _defaultColor = Color.black;
+        [SerializeField] private Color _overflowColor = new Color(0.8f, 0.4f, 0.1f, 1f);
+
+        /// <summary>슬롯 인덱스 → 핀 고정 여부</summary>
+        private readonly bool[] _slotPinned = new bool[5];
+
         // ── Unity ────────────────────────────────────────────────────────
 
         private void Awake()
@@ -82,14 +98,89 @@ namespace HTH.Tutorial
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            // 🚨 [튜토리얼 방어선] 클릭 권한이 없으면 클릭을 무시합니다.
             if (TutorialManager.IsActive && !TutorialManager.Instance.IsInputAllowed(TutorialInputPermission.HintPostItToggle))
                 return;
 
             if (_isExpanded)
+            {
+                // ★ 확장 상태에서 힌트 텍스트 클릭 감지 → 핀 토글
+                int slotIdx = GetClickedHintSlot(eventData);
+                if (slotIdx >= 0)
+                {
+                    TogglePin(slotIdx);
+                    return;
+                }
                 Collapse();
+            }
             else
+            {
                 Expand();
+            }
+        }
+
+        // ── 핀 토글 ──────────────────────────────────────────────────────
+
+        private int GetClickedHintSlot(PointerEventData eventData)
+        {
+            for (int i = 0; i < _hintTexts.Length; i++)
+            {
+                if (_hintTexts[i] == null) continue;
+                var rect = _hintTexts[i].GetComponent<RectTransform>();
+                if (rect == null) continue;
+                if (RectTransformUtility.RectangleContainsScreenPoint(
+                        rect, eventData.position, eventData.pressEventCamera))
+                    return i;
+            }
+            return -1;
+        }
+
+        private void TogglePin(int slotIdx)
+        {
+            // 튜토리얼 권한 확인 — 핀 기능별 권한이 있으면 별도 체크 (없으면 기본 허용)
+            var panel = TutorialPinnedHintPanel.Instance;
+            if (panel == null) return;
+
+            if (_hintTexts[slotIdx] == null) return;
+            string text = _hintTexts[slotIdx].text;
+            if (string.IsNullOrEmpty(text)) return;
+
+            if (_slotPinned[slotIdx])
+            {
+                _slotPinned[slotIdx] = false;
+                _hintTexts[slotIdx].color = _defaultColor;
+                panel.Unpin(text);
+            }
+            else
+            {
+                if (panel.PinCount >= TutorialPinnedHintPanel.MaxPins)
+                {
+                    StartCoroutine(OverflowFeedback(slotIdx));
+                    return;
+                }
+                _slotPinned[slotIdx] = true;
+                _hintTexts[slotIdx].color = _pinnedColor;
+                panel.Pin(text);
+            }
+        }
+
+        private IEnumerator OverflowFeedback(int slotIdx)
+        {
+            if (_hintTexts[slotIdx] != null) _hintTexts[slotIdx].color = _overflowColor;
+            yield return new WaitForSecondsRealtime(0.4f);
+            if (_hintTexts[slotIdx] != null) _hintTexts[slotIdx].color = _defaultColor;
+        }
+
+        /// <summary>패널 닫힐 때 모든 핀 초기화</summary>
+        public void ClearAllPins()
+        {
+            for (int i = 0; i < _slotPinned.Length; i++)
+            {
+                if (!_slotPinned[i]) continue;
+                string text = _hintTexts[i]?.text ?? "";
+                _slotPinned[i] = false;
+                if (_hintTexts[i] != null) _hintTexts[i].color = _defaultColor;
+                TutorialPinnedHintPanel.Instance?.Unpin(text);
+            }
         }
 
         // ── Private — 확장/축소 연출 ──────────────────────────────────────────

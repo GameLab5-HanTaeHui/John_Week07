@@ -115,19 +115,35 @@ namespace HTH.Campaign
                 return;
             }
 
-            // 다른 패널이 열려있으면 먼저 닫기
+            // 다른 패널이 열려있으면 닫고 애니메이션 완료 후 열기
             if (_currentPanel != null && _currentPanel.IsOpen)
             {
-                _currentPanel.Close();
+                var prevPanel = _currentPanel;
+                _currentPanel = panel;
                 CampaignPanelManager.Instance?.UnregisterPanel(CloseCurrentPanel);
+
+                prevPanel.Close();
+                // ★ 이전 패널 닫힘 완료(IsClosing=false) 후 새 패널 열기
+                StartCoroutine(WaitAndOpen(prevPanel, panel, characterId));
+                return;
             }
 
             _currentPanel = panel;
             panel.Open(characterId);
-
-            // ★ CampaignPanelManager에 닫기 콜백 등록
             CampaignPanelManager.Instance?.RegisterPanel(CloseCurrentPanel);
+            Debug.Log($"[CharacterRecordPanelManager] 기록장 열림 — #{characterId}");
+        }
 
+        /// <summary>
+        /// 이전 패널의 닫힘 애니메이션이 완료될 때까지 대기한 후 새 패널을 엽니다.
+        /// </summary>
+        private IEnumerator WaitAndOpen(CharacterRecordPanel prevPanel, CharacterRecordPanel nextPanel, int characterId)
+        {
+            // IsClosing이 false가 될 때까지 대기 (뒤집기+슬라이드다운 완료)
+            yield return new WaitUntil(() => !prevPanel.IsClosing);
+
+            nextPanel.Open(characterId);
+            CampaignPanelManager.Instance?.RegisterPanel(CloseCurrentPanel);
             Debug.Log($"[CharacterRecordPanelManager] 기록장 열림 — #{characterId}");
         }
 
