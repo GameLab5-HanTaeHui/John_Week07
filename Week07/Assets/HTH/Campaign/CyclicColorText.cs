@@ -41,6 +41,11 @@ namespace HTH
         [Tooltip("취소선을 적용할 상태 인덱스 목록입니다.\n기본값: 상태 2(붉은색)에만 적용.")]
         [SerializeField] private List<int> _strikethroughStates = new() { 2 };
 
+        // ── 이벤트 ───────────────────────────────────────────────────────
+
+        /// <summary>상태가 변경될 때 발생합니다. (sender, newState)</summary>
+        public event System.Action<CyclicColorText, int> OnStateChanged;
+
         // ── 내부 ─────────────────────────────────────────────────────────
 
         private TMP_Text _text;
@@ -70,6 +75,7 @@ namespace HTH
                 return;
 
             ApplyState();
+            OnStateChanged?.Invoke(this, _state); // ★ 클릭 시 저장 트리거
         }
 
         // ── Public API ───────────────────────────────────────────────────

@@ -34,22 +34,22 @@ namespace HTH.Campaign.Lobby
         }
 
         /// <summary>
-        /// 새로운 캠페인을 시작합니다. 
+        /// 새로운 로비를 시작합니다. 
         /// 기존 세이브를 삭제하고 씬 이동을 위한 초기 데이터를 세팅합니다.
         /// </summary>
         public void StartNewCampaign()
         {
             if (_config == null) return;
 
-            // 1. 기존 데이터 삭제
-            CampaignSaveManager.Instance?.Delete(_config.CampaignStageId);
+            // ★ JSON 파일 삭제 금지 — 초기화는 LobbyPage01Manager에서
+            //   CampaignSaveManager.ResetFull / ResetPartial 호출 후 이 메서드가 호출됨
             TurnHistoryRepository.Instance?.ClearAll();
 
-            // 2. 인게임 씬으로 넘길 초기 데이터(시드, 강제 모드 등) 세팅
+            // 인게임 씬으로 넘길 초기 데이터(시드, 강제 모드 등) 세팅
             PrepareGameSessionData(forcePhase2: false);
 
-            // 3. 씬 이동
-            SceneManager.LoadScene(_config.CampaignSceneName);
+            // 씬 이동
+            SceneManager.LoadScene(_config.LobbySceneName);
         }
 
         /// <summary>

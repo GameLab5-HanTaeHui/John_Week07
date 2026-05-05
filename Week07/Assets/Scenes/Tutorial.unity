@@ -12195,6 +12195,18 @@ MonoBehaviour:
   - {fileID: 1621726814}
   - {fileID: 876883088}
   - {fileID: 355823020}
+  _trueCyclicTexts:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  _falseCyclicTexts:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   _mixedFragmentSlots:
   - {fileID: 618243831}
   - {fileID: 2066583801}
@@ -12312,6 +12324,18 @@ MonoBehaviour:
   - {fileID: 658110429}
   - {fileID: 865433085}
   - {fileID: 1991055253}
+  _trueCyclicTexts:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  _falseCyclicTexts:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   _mixedFragmentSlots:
   - {fileID: 820952952}
   - {fileID: 911084271}
@@ -21344,7 +21368,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 858687444}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -28394,6 +28418,18 @@ MonoBehaviour:
   - {fileID: 1578819669}
   - {fileID: 646820013}
   - {fileID: 1521377741}
+  _trueCyclicTexts:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  _falseCyclicTexts:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   _mixedFragmentSlots:
   - {fileID: 691874941}
   - {fileID: 347577029}
@@ -33292,6 +33328,18 @@ MonoBehaviour:
   - {fileID: 183370540}
   - {fileID: 1972956396}
   - {fileID: 1824730862}
+  _trueCyclicTexts:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  _falseCyclicTexts:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   _mixedFragmentSlots:
   - {fileID: 865865689}
   - {fileID: 237551381}
@@ -33409,6 +33457,18 @@ MonoBehaviour:
   - {fileID: 120956259}
   - {fileID: 115573062}
   - {fileID: 346963148}
+  _trueCyclicTexts:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  _falseCyclicTexts:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   _mixedFragmentSlots:
   - {fileID: 2090523592}
   - {fileID: 658492949}
@@ -34152,6 +34212,18 @@ MonoBehaviour:
   - {fileID: 1251267867}
   - {fileID: 802323829}
   - {fileID: 562043533}
+  _trueCyclicTexts:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  _falseCyclicTexts:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   _mixedFragmentSlots:
   - {fileID: 587869294}
   - {fileID: 617574306}
@@ -43174,12 +43246,12 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1616809377}
-  - {fileID: 2097532617}
-  - {fileID: 858687445}
   - {fileID: 1273171412}
   - {fileID: 1359191511}
-  - {fileID: 1099970905}
   - {fileID: 537248862}
+  - {fileID: 2097532617}
+  - {fileID: 858687445}
+  - {fileID: 1099970905}
   - {fileID: 403636102}
   - {fileID: 931349647}
   - {fileID: 492755952}
@@ -51136,6 +51208,18 @@ MonoBehaviour:
   - {fileID: 1738544263}
   - {fileID: 72841877}
   - {fileID: 273025347}
+  _trueCyclicTexts:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  _falseCyclicTexts:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   _mixedFragmentSlots:
   - {fileID: 682343523}
   - {fileID: 1811049926}

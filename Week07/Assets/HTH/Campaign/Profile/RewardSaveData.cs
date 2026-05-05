@@ -166,8 +166,8 @@ namespace HTH.Campaign
         }
 
         /// <summary>
-        /// 보상 기록 초기화 시 호출합니다.
-        /// CampaignSaveManager.Delete()와 함께 사용합니다.
+        /// 메모리 상태만 초기화합니다.
+        /// JSON 파일 조작은 CampaignSaveManager.ResetFull / ResetPartial에서 처리합니다.
         /// </summary>
         public void Clear()
         {
@@ -175,10 +175,7 @@ namespace HTH.Campaign
             _unlockedEpilogues.Clear();
             _characterNames.Clear();
             _isLoaded = false;
-
-            // JSON 파일 삭제는 CampaignSaveManager에서 처리
-            CampaignSaveManager.Instance?.Delete(_stageId);
-            Debug.Log($"[RewardSaveData] 보상 기록 초기화 — {_stageId}");
+            Debug.Log($"[RewardSaveData] 메모리 초기화 — {_stageId}");
         }
 
         // ── ScriptableObject 재사용 시 런타임 상태 초기화 ─────────────────

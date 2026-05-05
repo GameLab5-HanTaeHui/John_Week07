@@ -69,16 +69,29 @@ namespace HTH.Campaign
         /// </summary>
         public List<int> unlockedEpilogues = new();
 
-        /// <summary>
-        /// 튜토리얼 플레이 조건입니다
-        /// </summary>
+        // ── 튜토리얼 ──────────────────────────────────────────────────────
+
+        /// <summary>튜토리얼 클리어 여부입니다.</summary>
         public bool isTutorialCleared = false;
+
+        /// <summary>
+        /// 튜토리얼 클리어 알림 팝업을 이미 표시했는지 여부입니다.
+        /// true이면 로비 재진입 시 팝업을 다시 표시하지 않습니다.
+        /// </summary>
+        public bool isTutorialPopupShown = false;
+
+        // ── 슬롯 색상 상태 ────────────────────────────────────────────────
+
+        /// <summary>
+        /// 캐릭터별 슬롯 색상 상태 목록입니다.
+        /// CharacterRecordPanel CyclicColorText 상태(0/1/2)를 저장합니다.
+        /// 슬롯 키 형식: "true_0" ~ "true_4" / "false_0" ~ "false_4"
+        /// </summary>
+        public List<SlotColorStateEntry> slotColorStates = new();
 
         // ── 최종 대화 ─────────────────────────────────────────────────────
 
-        /// <summary>
-        /// 캐릭터별 최종 대화 결과 목록입니다.
-        /// </summary>
+        /// <summary>캐릭터별 최종 대화 결과 목록입니다.</summary>
         public List<FinalTalkRecord> finalTalkRecords = new();
 
         // ── 유틸 ──────────────────────────────────────────────────────────
@@ -93,6 +106,8 @@ namespace HTH.Campaign
             finalTalkRecords.Count > 0;
     }
 
+    // ── 보조 클래스 (네임스페이스 레벨 — 외부에서 직접 접근 가능) ─────────
+
     /// <summary>수집된 캐릭터 이름 1개 항목입니다.</summary>
     [Serializable]
     public class CollectedNameEntry
@@ -102,8 +117,23 @@ namespace HTH.Campaign
     }
 
     /// <summary>
-    /// 캐릭터 1명의 최종 대화 결과입니다.
+    /// 캐릭터 슬롯 1개의 CyclicColorText 색상 상태입니다.
+    /// CharacterRecordPanel에서 저장/복원에 사용합니다.
     /// </summary>
+    [Serializable]
+    public class SlotColorStateEntry
+    {
+        /// <summary>캐릭터 ID (1~7)</summary>
+        public int characterId;
+
+        /// <summary>슬롯 키 — "true_0"~"true_4" / "false_0"~"false_4"</summary>
+        public string slotKey;
+
+        /// <summary>CyclicColorText 상태 (0=기본 / 1=초록 / 2=빨강+취소선)</summary>
+        public int state;
+    }
+
+    /// <summary>캐릭터 1명의 최종 대화 결과입니다.</summary>
     [Serializable]
     public class FinalTalkRecord
     {

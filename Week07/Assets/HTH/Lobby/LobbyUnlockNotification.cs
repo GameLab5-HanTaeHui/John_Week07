@@ -48,10 +48,6 @@ namespace HTH.Campaign.Lobby
         [Header("설정")]
         [SerializeField] private float _fadeDuration = 0.5f;
 
-        // 세션당 1회 표시 플래그
-        private static bool _shownTutorialPopupThisSession = false;
-        private static bool _shownCollectionPopupThisSession = false;
-
         private Coroutine _autoCloseCoroutine;
 
         // ── Unity ────────────────────────────────────────────────────────
@@ -98,6 +94,7 @@ namespace HTH.Campaign.Lobby
             var saveData = mgr.CurrentSave ?? mgr.Load(StageId);
 
             bool isTutorialCleared = saveData?.isTutorialCleared ?? false;
+            bool popupAlreadyShown = saveData?.isTutorialPopupShown ?? false;
             int epilogueCount = saveData?.unlockedEpilogues?.Count ?? 0;
 
             // 버튼 표시/숨김
@@ -107,31 +104,45 @@ namespace HTH.Campaign.Lobby
             _nextChapterButton?.SetActive(epilogueCount > 0);
 
             Debug.Log($"[LobbyUnlockNotification] 로드 완료 — " +
-                      $"튜토리얼:{isTutorialCleared}, 에필로그:{epilogueCount}개");
+                      $"튜토리얼:{isTutorialCleared}, 팝업표시됨:{popupAlreadyShown}, 에필로그:{epilogueCount}개");
 
-            // 알림 팝업 (세션당 1회)
-            yield return ShowUnlockNotification(isTutorialCleared, epilogueCount);
+            // 알림 팝업 — JSON 기록 기준으로 1회만 표시
+            yield return ShowUnlockNotification(saveData, mgr, isTutorialCleared, popupAlreadyShown, epilogueCount);
         }
 
         // ── 알림 팝업 ────────────────────────────────────────────────────
 
-        private IEnumerator ShowUnlockNotification(bool isTutorialCleared, int epilogueCount)
+        private IEnumerator ShowUnlockNotification(
+            CampaignSaveData saveData,
+            CampaignSaveManager mgr,
+            bool isTutorialCleared,
+            bool popupAlreadyShown,
+            int epilogueCount)
         {
-            if (isTutorialCleared && !_shownTutorialPopupThisSession)
+            // ★ 튜토리얼 클리어 팝업 — JSON에 기록되지 않은 경우에만 1회 표시
+            if (isTutorialCleared && !popupAlreadyShown)
             {
-                _shownTutorialPopupThisSession = true;
+                // 팝업 표시 전에 JSON에 기록 (이후 로비 재진입 시 표시 안 함)
+                if (saveData != null)
+                {
+                    saveData.isTutorialPopupShown = true;
+                    mgr.Save(saveData);
+                }
+
                 ShowNotification("튜토리얼 클리어!\n<color=#FFD700>[캠페인 모드]</color>가 해금되었습니다.");
                 yield break;
             }
 
-            if (epilogueCount > 0 && !_shownCollectionPopupThisSession)
+            // 에필로그 팝업은 기존 로직 유지 (별도 팝업 플래그가 필요하면 동일 방식으로 추가)
+            if (epilogueCount > 0)
             {
-                _shownCollectionPopupThisSession = true;
                 string msg = epilogueCount == 1
                     ? "캠페인 클리어!\n<color=#FFD700>다음장</color>이 해금되었습니다."
                     : $"새로운 시점 완결문 해금!\n현재 총 <color=#FFD700>{epilogueCount}</color>개가 열렸습니다.";
                 ShowNotification(msg);
             }
+
+            yield break;
         }
 
         // ── 팝업 표시/숨김 ───────────────────────────────────────────────

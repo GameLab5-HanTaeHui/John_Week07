@@ -26,6 +26,9 @@ namespace HTH.Campaign
         menuName = "HTH/Campaign/LobbyConfig")]
     public class LobbyConfig : ScriptableObject
     {
+        [Header("로비")]
+        [Tooltip("로비로 되돌아갑니다")]
+        public string LobbySceneName = "LobbyScene";
         [Header("씬 이름")]
         [Tooltip("캠페인 인게임 씬 이름입니다.")]
         public string CampaignSceneName = "Stage_1";

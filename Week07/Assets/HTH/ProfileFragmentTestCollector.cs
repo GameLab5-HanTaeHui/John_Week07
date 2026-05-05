@@ -148,7 +148,7 @@ namespace HTH.Campaign
         {
             if (_fragmentCollector == null) return;
 
-            _fragmentCollector.Clear(_stageId);
+            _fragmentCollector.Clear();
             _fragmentCollector.Initialize(_stageId);
             _nextFragmentIndex = 1;
 

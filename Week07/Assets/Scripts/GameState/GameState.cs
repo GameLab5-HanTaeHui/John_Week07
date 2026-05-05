@@ -175,8 +175,9 @@ public class GameState : IGameState
             var character = GetCharacterInternal(record.TargetCharacterId);
             if (character == null || !character.IsAlive) continue;
 
-            // 대리자 패시브: 살인자/광신도에 의한 사망만 대리 가능
-            bool isDeputyEligibleCause = record.CauseRole == RoleType.Murderer || record.CauseRole == RoleType.Fanatic;
+            // 대리자 패시브: 살인자/배회자/복수자에 의한 사망만 대리 가능
+            bool isDeputyEligibleCause = record.CauseRole == RoleType.Murderer || record.CauseRole == RoleType.Fanatic
+                || record.CauseRole == RoleType.Variable;
             if (!deputySubstituted && deputyId != -1 && record.TargetCharacterId != deputyId && isDeputyEligibleCause)
             {
                 var deputy = GetCharacterInternal(deputyId);

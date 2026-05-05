@@ -178,6 +178,8 @@ namespace HTH.Campaign
             if (_isForcedExit)
                 _snapshot = CaptureGameState();
 
+            RandomTextPanel.Instance.DisplayRandomText();
+
             Debug.Log($"[DTM] TurnEnd 진입 — 강제퇴고:{_isForcedExit}");
         }
 

@@ -40,6 +40,9 @@ namespace HTH.Campaign
         [Tooltip("조각 수집 상태를 확인하기 위한 참조입니다.")]
         [SerializeField] private FragmentCollector _fragmentCollector;
 
+        [Tooltip("HintPanel 확장 시 배경 클릭 우선권을 위해 CharacterRecordPanel 콜백을 잠시 해제합니다.")]
+        [SerializeField] private CharacterRecordPanelManager _recordPanelManager;
+
         [Header("UI 참조")]
         [Tooltip("힌트 텍스트 TMP_Text 5개입니다.")]
         [SerializeField] private TMP_Text[] _hintTexts = new TMP_Text[5];
@@ -117,6 +120,9 @@ namespace HTH.Campaign
 
             if (_fragmentCollector != null)
                 _fragmentCollector.OnFragmentCollected -= OnFragmentCollected;
+
+            // 씬 종료 시 등록 해제
+            CampaignPanelManager.Instance?.UnregisterPanel(Collapse);
         }
 
         // ── 공개 API ─────────────────────────────────────────────────────
@@ -135,6 +141,21 @@ namespace HTH.Campaign
                 UnpinAll();
 
             LoadHintTexts();
+        }
+
+        // ── 공개 상태 ────────────────────────────────────────────────────
+
+        /// <summary>현재 확장 상태인지 여부입니다.</summary>
+        public bool IsExpanded => _isExpanded;
+
+        /// <summary>
+        /// 외부(CharacterRecordPanel 등)에서 HintPanel을 닫을 때 호출합니다.
+        /// 확장 상태일 때만 동작합니다.
+        /// </summary>
+        public void CollapseExternal()
+        {
+            if (!_isExpanded) return;
+            Collapse();
         }
 
         // ── 포인터 이벤트 ─────────────────────────────────────────────────
@@ -207,28 +228,46 @@ namespace HTH.Campaign
             var panel = PinnedHintPanel.Instance;
             if (panel == null) return;
 
-            string text = GetHintTextString(slotIdx);
-            if (string.IsNullOrEmpty(text)) return;
+            // ★ 고정핀에는 순수 힌트 텍스트 (TMP 태그/번호 없이)
+            string pinText = GetPinText(slotIdx);
+            if (string.IsNullOrEmpty(pinText)) return;
 
             if (_slotPinned[slotIdx])
             {
                 // 핀 해제
                 _slotPinned[slotIdx] = false;
                 _hintTexts[slotIdx].color = _defaultColor;
-                panel.Unpin(text);
+                panel.Unpin(pinText, this);
             }
             else
             {
                 // 핀 고정 시도
                 if (panel.PinCount >= PinnedHintPanel.MaxPins)
                 {
-                    // 최대 초과 피드백
                     StartCoroutine(OverflowFeedback(slotIdx));
                     return;
                 }
                 _slotPinned[slotIdx] = true;
                 _hintTexts[slotIdx].color = _pinnedColor;
-                panel.Pin(text);
+                panel.Pin(pinText, _currentCharacterId, this);
+            }
+        }
+
+        /// <summary>
+        /// PinnedHintPanel에서 텍스트로 핀을 해제할 때 호출합니다.
+        /// 해당 슬롯의 _slotPinned를 false로 하고 색상을 기본으로 복원합니다.
+        /// </summary>
+        public void UnpinByText(string pinText)
+        {
+            for (int i = 0; i < _slotPinned.Length; i++)
+            {
+                if (!_slotPinned[i]) continue;
+                if (GetPinText(i) != pinText) continue;
+
+                _slotPinned[i] = false;
+                if (i < _hintTexts.Length && _hintTexts[i] != null)
+                    _hintTexts[i].color = _defaultColor;
+                break;
             }
         }
 
@@ -253,9 +292,9 @@ namespace HTH.Campaign
                 if (!_slotPinned[idx]) continue;
 
                 // 핀 해제
-                string text = GetHintTextString(idx);
+                string pinText = GetPinText(idx);
                 _slotPinned[idx] = false;
-                PinnedHintPanel.Instance?.Unpin(text);
+                PinnedHintPanel.Instance?.Unpin(pinText, this);
 
                 // 텍스트 갱신 (취소선 적용)
                 RefreshSingleSlot(idx);
@@ -269,9 +308,9 @@ namespace HTH.Campaign
             for (int i = 0; i < _slotPinned.Length; i++)
             {
                 if (!_slotPinned[i]) continue;
-                string text = GetHintTextString(i);
+                string pinText = GetPinText(i);
                 _slotPinned[i] = false;
-                PinnedHintPanel.Instance?.Unpin(text);
+                PinnedHintPanel.Instance?.Unpin(pinText, this);
             }
         }
 
@@ -280,6 +319,21 @@ namespace HTH.Campaign
         {
             if (slotIdx < 0 || slotIdx >= _hintTexts.Length) return "";
             return _hintTexts[slotIdx]?.text ?? "";
+        }
+
+        /// <summary>
+        /// 슬롯 인덱스의 순수 힌트 텍스트를 반환합니다. (PinnedHintPanel 등록용)
+        /// HintDescription 우선, 없으면 HintText. TMP 태그/번호 없음.
+        /// </summary>
+        private string GetPinText(int slotIdx)
+        {
+            if (_fragmentData == null || _currentCharacterId < 0) return "";
+            var entries = _fragmentData.GetByCharacter(_currentCharacterId);
+            if (slotIdx >= entries.Count) return "";
+            var entry = entries[slotIdx];
+            return !string.IsNullOrEmpty(entry.HintDescription)
+                ? entry.HintDescription
+                : entry.HintText;
         }
 
         /// <summary>단일 슬롯 텍스트를 최신 수집 상태로 갱신합니다.</summary>
@@ -318,6 +372,12 @@ namespace HTH.Campaign
 
             _rotTween?.Kill();
             _rotTween = _rect.DOLocalRotate(Vector3.zero, _expandDuration).SetEase(_expandEase);
+
+            // ★ 확장 시 HintPanel이 배경 클릭 우선권을 가짐
+            // CharacterRecordPanel 콜백을 잠시 해제하고 HintPanel Collapse만 등록
+            if (_recordPanelManager != null)
+                CampaignPanelManager.Instance?.UnregisterPanel(_recordPanelManager.CloseCurrentPanel);
+            CampaignPanelManager.Instance?.RegisterPanel(Collapse);
         }
 
         private void Collapse()
@@ -334,6 +394,11 @@ namespace HTH.Campaign
             _rotTween?.Kill();
             _rotTween = _rect.DOLocalRotate(new Vector3(0f, 0f, _smallRotationZ), _expandDuration)
                             .SetEase(_collapseEase);
+
+            // ★ HintPanel 닫힐 때 — HintPanel 해제 후 CharacterRecordPanel 콜백 복원
+            CampaignPanelManager.Instance?.UnregisterPanel(Collapse);
+            if (_recordPanelManager != null)
+                CampaignPanelManager.Instance?.RegisterPanel(_recordPanelManager.CloseCurrentPanel);
         }
 
         private void ApplySmallStateInstant()

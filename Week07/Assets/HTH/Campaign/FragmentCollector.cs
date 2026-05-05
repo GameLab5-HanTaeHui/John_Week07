@@ -118,11 +118,23 @@ namespace HTH.Campaign
             HashSet<int> deadCharacters)
         {
             // 1. Combo — 지정 캐릭터 전원이 anchorZone에 생존
+            //            + Zone에 Combo 외의 캐릭터가 없어야 함 (엄격한 조합 일치)
+            //
+            // Combo 미지정(빈 배열) → 조합 조건 없음 (누구와 있어도 가능)
+            // Combo 지정 → Zone 캐릭터 집합 == Combo 집합 이어야 함
+            //              Combo 외 캐릭터가 Zone에 있으면 → 조건 불충족
             if (entry.Combo != null && entry.Combo.Count > 0)
             {
+                var comboSet = new HashSet<int>(entry.Combo);
                 var zoneSet = new HashSet<int>(charactersInZone);
-                foreach (int id in entry.Combo)
+
+                // Combo 캐릭터 전원이 Zone에 있는지
+                foreach (int id in comboSet)
                     if (!zoneSet.Contains(id)) return false;
+
+                // ★ Zone에 Combo 외 캐릭터가 있으면 불충족
+                foreach (int id in zoneSet)
+                    if (!comboSet.Contains(id)) return false;
             }
 
             // 2. PlaceName — 장소 일치
@@ -205,11 +217,14 @@ namespace HTH.Campaign
             CampaignSaveManager.Instance.Save(saveData);
         }
 
-        public void Clear(string stageId)
+        /// <summary>
+        /// 메모리 상태만 초기화합니다.
+        /// JSON 파일 조작은 CampaignSaveManager.ResetFull / ResetPartial에서 처리합니다.
+        /// </summary>
+        public void Clear()
         {
             _collectedIds.Clear();
             _countPerChar.Clear();
-            CampaignSaveManager.Instance?.Delete(stageId);
         }
 
         // ── Private ──────────────────────────────────────────────────────

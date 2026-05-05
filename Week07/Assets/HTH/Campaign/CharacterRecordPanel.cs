@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace HTH.Campaign
@@ -56,7 +57,7 @@ namespace HTH.Campaign
     /// </summary>
     [DisallowMultipleComponent]
     [RequireComponent(typeof(RectTransform))]
-    public class CharacterRecordPanel : MonoBehaviour
+    public class CharacterRecordPanel : MonoBehaviour, IPointerClickHandler
     {
         // ── Inspector ────────────────────────────────────────────────────
 
@@ -245,12 +246,25 @@ namespace HTH.Campaign
         }
 
         /// <summary>트윈과 버튼 리스너를 정리합니다.</summary>
+        // ── 포인터 이벤트 ─────────────────────────────────────────────────
+
+        /// <summary>
+        /// CharacterRecordPanel 클릭 시 HintPanel이 열려있으면 닫습니다.
+        /// HintPanel이 닫힌 상태에서는 아무 동작 없음.
+        /// </summary>
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            if (_hintPanel != null && _hintPanel.IsExpanded)
+                _hintPanel.CollapseExternal();
+        }
+
         private void OnDestroy()
         {
             _slideTween?.Kill();
             _flipTween?.Kill();
             _flipToBackButton?.onClick.RemoveListener(FlipToBack);
             _flipToFrontButton?.onClick.RemoveListener(FlipToFront);
+            UnsubscribeCyclicColorEvents();
         }
         /// <summary>
         /// 매 프레임 FlipRoot의 Y 회전값을 감지해
@@ -304,6 +318,7 @@ namespace HTH.Campaign
 
             ShowFrontFaceInstant();
             RefreshAll();
+            SubscribeCyclicColorEvents(); // ★ 열릴 때 이벤트 구독
 
             _hintPanel?.SetCharacter(characterId);
 
@@ -370,6 +385,7 @@ namespace HTH.Campaign
             if (!IsOpen) return;
             IsOpen = false;
             IsClosing = true;
+            UnsubscribeCyclicColorEvents(); // ★ 닫힐 때 이벤트 해제
 
             if (_isBackFaceShowing)
             {
@@ -491,6 +507,12 @@ namespace HTH.Campaign
                 string pid = clue?.ProfileClueId ?? "";
                 string text = clue?.ClueText ?? "";
                 RefreshSlot(_trueFragmentSlots[i], pid, text);
+
+                // ★ CyclicColorText 상태 복원 — 수집된 슬롯만
+                bool collected = !string.IsNullOrEmpty(pid) &&
+                                 (_fragmentCollector?.HasFragment(pid) ?? false);
+                if (collected)
+                    RestoreCyclicState(_trueFragmentSlots[i], $"true_{i}");
             }
 
             for (int i = 0; i < _falseFragmentSlots.Length; i++)
@@ -500,7 +522,32 @@ namespace HTH.Campaign
                 string pid = clue?.ProfileClueId ?? "";
                 string text = clue?.HintText ?? "";
                 RefreshSlot(_falseFragmentSlots[i], pid, text);
+
+                // ★ CyclicColorText 상태 복원 — 수집된 슬롯만
+                bool collected = !string.IsNullOrEmpty(pid) &&
+                                 (_fragmentCollector?.HasFragment(pid) ?? false);
+                if (collected)
+                    RestoreCyclicState(_falseFragmentSlots[i], $"false_{i}");
             }
+        }
+
+        /// <summary>
+        /// 슬롯 TMP에 붙은 CyclicColorText의 상태를 SaveData에서 복원합니다.
+        /// RefreshSlot()이 색상을 덮어쓰기 전에 CyclicColorText가 관리하도록 합니다.
+        /// </summary>
+        private void RestoreCyclicState(TMP_Text slot, string slotKey)
+        {
+            if (slot == null) return;
+            var cyclic = slot.GetComponent<CyclicColorText>();
+            if (cyclic == null) return;
+
+            var saveData = CampaignSaveManager.Instance?.CurrentSave;
+            if (saveData == null) return;
+
+            var entry = saveData.slotColorStates?.Find(
+                e => e.characterId == _currentCharacterId && e.slotKey == slotKey);
+            int savedState = entry?.state ?? 0;
+            cyclic.SetState(savedState);
         }
 
         /// <summary>혼합 모드 — 섞인 슬롯 10개를 갱신합니다.</summary>
@@ -548,7 +595,12 @@ namespace HTH.Campaign
             {
                 // 수집됨 → hintText 파라미터가 실제 CLUE/HINT 텍스트이므로 그대로 표시
                 slot.text = hintText;
-                slot.color = _collectedColor;
+                // ★ CyclicColorText가 붙어있으면 색상은 CyclicColorText가 관리
+                // 직접 color를 덮어쓰면 CyclicColorText 상태(초록/빨강)가 초기화됨
+                var cyclic = slot.GetComponent<CyclicColorText>();
+                if (cyclic == null)
+                    slot.color = _collectedColor;
+                // CyclicColorText 상태 복원은 RefreshSeparatedSlots에서 별도 처리
             }
             else
             {
@@ -556,6 +608,78 @@ namespace HTH.Campaign
                 slot.text = ApplyGlitch(hintText);
                 slot.color = _hintColor;
             }
+        }
+
+        // ── CyclicColorText 이벤트 구독/저장 ────────────────────────────────
+
+        private void SubscribeCyclicColorEvents()
+        {
+            foreach (var slot in _trueFragmentSlots)
+                SubscribeSlot(slot, true);
+            foreach (var slot in _falseFragmentSlots)
+                SubscribeSlot(slot, false);
+        }
+
+        private void UnsubscribeCyclicColorEvents()
+        {
+            foreach (var slot in _trueFragmentSlots)
+                UnsubscribeSlot(slot);
+            foreach (var slot in _falseFragmentSlots)
+                UnsubscribeSlot(slot);
+        }
+
+        private void SubscribeSlot(TMP_Text slot, bool isTrue)
+        {
+            if (slot == null) return;
+            var cyclic = slot.GetComponent<CyclicColorText>();
+            if (cyclic == null) return;
+            cyclic.OnStateChanged -= OnCyclicStateChanged;
+            cyclic.OnStateChanged += OnCyclicStateChanged;
+        }
+
+        private void UnsubscribeSlot(TMP_Text slot)
+        {
+            if (slot == null) return;
+            var cyclic = slot.GetComponent<CyclicColorText>();
+            if (cyclic == null) return;
+            cyclic.OnStateChanged -= OnCyclicStateChanged;
+        }
+
+        private void OnCyclicStateChanged(CyclicColorText sender, int state)
+        {
+            // 어느 슬롯인지 찾아서 slotKey 결정
+            for (int i = 0; i < _trueFragmentSlots.Length; i++)
+            {
+                if (_trueFragmentSlots[i] == null) continue;
+                var cyclic = _trueFragmentSlots[i].GetComponent<CyclicColorText>();
+                if (cyclic == sender) { SaveSlotState($"true_{i}", state); return; }
+            }
+            for (int i = 0; i < _falseFragmentSlots.Length; i++)
+            {
+                if (_falseFragmentSlots[i] == null) continue;
+                var cyclic = _falseFragmentSlots[i].GetComponent<CyclicColorText>();
+                if (cyclic == sender) { SaveSlotState($"false_{i}", state); return; }
+            }
+        }
+
+        private void SaveSlotState(string slotKey, int state)
+        {
+            var saveData = CampaignSaveManager.Instance?.CurrentSave;
+            if (saveData == null) return;
+
+            var entry = saveData.slotColorStates?.Find(
+                e => e.characterId == _currentCharacterId && e.slotKey == slotKey);
+            if (entry != null)
+            {
+                entry.state = state;
+            }
+            else
+            {
+                saveData.slotColorStates ??= new System.Collections.Generic.List<SlotColorStateEntry>();
+                saveData.slotColorStates.Add(new SlotColorStateEntry
+                { characterId = _currentCharacterId, slotKey = slotKey, state = state });
+            }
+            CampaignSaveManager.Instance.Save(saveData);
         }
 
         // ── Private — 카드 뒤집기 ─────────────────────────────────────────

@@ -38,9 +38,6 @@ namespace HTH.Tutorial
         [SerializeField] private Ease _collapseEase = Ease.InBack;
         [SerializeField] private Ease _hoverEase = Ease.OutQuad;
 
-        // 튜토리얼에서는 실제 힌트 데이터를 불러오지 않고 UI 연출만 처리하므로 
-        // 데이터(SO) 연결 부분은 제거하여 가볍게 만들었습니다.
-
         // ── 내부 상태 ─────────────────────────────────────────────────────
 
         private bool _isExpanded;
@@ -80,12 +77,14 @@ namespace HTH.Tutorial
         {
             if (_isExpanded) return;
 
-            // 🚨 [튜토리얼 방어선] 호버 권한이 없으면 올라오지 않습니다.
-            if (TutorialManager.IsActive && !TutorialManager.Instance.IsInputAllowed(TutorialInputPermission.HintPostItToggle))
+            // 호버: HintPostItToggle 권한 필요
+            if (TutorialManager.IsActive &&
+                !TutorialManager.Instance.IsInputAllowed(TutorialInputPermission.HintPostItToggle))
                 return;
 
             _hoverTween?.Kill();
-            _hoverTween = _rect.DOAnchorPosY(_smallPos.y + _hoverOffsetY, _hoverDuration).SetEase(_hoverEase);
+            _hoverTween = _rect.DOAnchorPosY(_smallPos.y + _hoverOffsetY, _hoverDuration)
+                              .SetEase(_hoverEase);
         }
 
         public void OnPointerExit(PointerEventData eventData)
@@ -93,27 +92,43 @@ namespace HTH.Tutorial
             if (_isExpanded) return;
 
             _hoverTween?.Kill();
-            _hoverTween = _rect.DOAnchorPosY(_smallPos.y, _hoverDuration).SetEase(_hoverEase);
+            _hoverTween = _rect.DOAnchorPosY(_smallPos.y, _hoverDuration)
+                              .SetEase(_hoverEase);
         }
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            if (TutorialManager.IsActive && !TutorialManager.Instance.IsInputAllowed(TutorialInputPermission.HintPostItToggle))
-                return;
-
             if (_isExpanded)
             {
-                // ★ 확장 상태에서 힌트 텍스트 클릭 감지 → 핀 토글
+                // ── 확장 상태 클릭 ────────────────────────────────────────
                 int slotIdx = GetClickedHintSlot(eventData);
                 if (slotIdx >= 0)
                 {
-                    TogglePin(slotIdx);
-                    return;
+                    // 힌트 텍스트 클릭 → 핀 토글
+                    // ★ HintPin 권한 OR HintPostItToggle 권한이 있으면 핀 가능
+                    bool canPin = !TutorialManager.IsActive ||
+                                  TutorialManager.Instance.IsInputAllowed(TutorialInputPermission.HintPin) ||
+                                  TutorialManager.Instance.IsInputAllowed(TutorialInputPermission.HintPostItToggle);
+                    if (canPin)
+                        TogglePin(slotIdx);
+                    return; // 핀 권한 없어도 텍스트 클릭은 Collapse 안 함
                 }
-                Collapse();
+
+                // 패널 영역 클릭 → 닫기
+                // ★ HintPostItToggle 권한이 있을 때만 닫기 허용
+                // HintPin만 있는 단계에서는 실수로 닫히는 것 방지
+                bool canClose = !TutorialManager.IsActive ||
+                                TutorialManager.Instance.IsInputAllowed(TutorialInputPermission.HintPostItToggle);
+                if (canClose)
+                    Collapse();
             }
             else
             {
+                // ── 축소 상태 클릭 → 열기 ────────────────────────────────
+                if (TutorialManager.IsActive &&
+                    !TutorialManager.Instance.IsInputAllowed(TutorialInputPermission.HintPostItToggle))
+                    return;
+
                 Expand();
             }
         }
@@ -136,7 +151,6 @@ namespace HTH.Tutorial
 
         private void TogglePin(int slotIdx)
         {
-            // 튜토리얼 권한 확인 — 핀 기능별 권한이 있으면 별도 체크 (없으면 기본 허용)
             var panel = TutorialPinnedHintPanel.Instance;
             if (panel == null) return;
 
@@ -160,6 +174,9 @@ namespace HTH.Tutorial
                 _slotPinned[slotIdx] = true;
                 _hintTexts[slotIdx].color = _pinnedColor;
                 panel.Pin(text);
+
+                // ★ 핀 고정 완료 → 매니저에게 보고
+                TutorialManager.Instance?.NotifyHintPinned();
             }
         }
 
@@ -183,7 +200,7 @@ namespace HTH.Tutorial
             }
         }
 
-        // ── Private — 확장/축소 연출 ──────────────────────────────────────────
+        // ── Private — 확장/축소 연출 ──────────────────────────────────────
 
         private void Expand()
         {
@@ -194,15 +211,13 @@ namespace HTH.Tutorial
             _posTween = _rect.DOAnchorPos(_largePos, _expandDuration).SetEase(_expandEase);
 
             _sizeTween?.Kill();
-            _sizeTween = DOTween.To(() => _rect.sizeDelta, size => _rect.sizeDelta = size, _largeSize, _expandDuration).SetEase(_expandEase);
+            _sizeTween = DOTween.To(
+                () => _rect.sizeDelta, s => _rect.sizeDelta = s,
+                _largeSize, _expandDuration).SetEase(_expandEase);
 
             _rotTween?.Kill();
             _rotTween = _rect.DOLocalRotate(Vector3.zero, _expandDuration).SetEase(_expandEase)
-                .OnComplete(() =>
-                {
-                    // 열기 연출 완료 후 매니저에게 다음 페이즈 진입을 보고합니다.
-                    TutorialManager.Instance?.NotifyHintPostItOpened();
-                });
+                .OnComplete(() => TutorialManager.Instance?.NotifyHintPostItOpened());
         }
 
         private void Collapse()
@@ -213,16 +228,18 @@ namespace HTH.Tutorial
             _posTween = _rect.DOAnchorPos(_smallPos, _expandDuration).SetEase(_collapseEase);
 
             _sizeTween?.Kill();
-            _sizeTween = DOTween.To(() => _rect.sizeDelta, size => _rect.sizeDelta = size, _smallSize, _expandDuration).SetEase(_collapseEase);
+            _sizeTween = DOTween.To(
+                () => _rect.sizeDelta, s => _rect.sizeDelta = s,
+                _smallSize, _expandDuration).SetEase(_collapseEase);
 
             _rotTween?.Kill();
-            _rotTween = _rect.DOLocalRotate(new Vector3(0f, 0f, _smallRotationZ), _expandDuration).SetEase(_collapseEase);
+            _rotTween = _rect.DOLocalRotate(
+                new Vector3(0f, 0f, _smallRotationZ), _expandDuration).SetEase(_collapseEase);
 
-            // [수정된 부분] 트윈의 OnComplete에 의존하지 않고, 지정된 시간 뒤에 무조건 실행되게 보장합니다!
             DOVirtual.DelayedCall(_expandDuration, () =>
             {
                 Debug.Log("[Tutorial] 포스트잇 닫기 연출 완료! 매니저에게 보고합니다.");
-                TutorialManager.Instance.NotifyHintPostItClosed();
+                TutorialManager.Instance?.NotifyHintPostItClosed();
             });
         }
 

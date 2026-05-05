@@ -199,6 +199,7 @@ namespace HTH.Campaign
 
                 // 튜토리얼 관련은 항상 유지
                 isTutorialCleared = current?.isTutorialCleared ?? false,
+                isTutorialPopupShown = current?.isTutorialPopupShown ?? false,
 
                 // 튜토리얼 보상 조각만 유지, 나머지 삭제
                 collectedFragmentIds = FilterTutorialIds(current?.collectedFragmentIds),
@@ -211,6 +212,9 @@ namespace HTH.Campaign
                 unlockedConceptCards = new(),
                 unlockedEpilogues = new(),
                 finalTalkRecords = new(),
+
+                // 튜토리얼 보상 조각(P01_01~05, P02_01)에 해당하는 슬롯 상태만 유지
+                slotColorStates = FilterTutorialSlotStates(current?.slotColorStates),
             };
 
             CurrentSave = reset;
@@ -241,6 +245,7 @@ namespace HTH.Campaign
 
                 // 조각·대화·튜토리얼 전부 유지
                 isTutorialCleared = current?.isTutorialCleared ?? false,
+                isTutorialPopupShown = current?.isTutorialPopupShown ?? false,
                 collectedFragmentIds = current?.collectedFragmentIds != null
                     ? new System.Collections.Generic.List<string>(current.collectedFragmentIds)
                     : new(),
@@ -253,6 +258,11 @@ namespace HTH.Campaign
                 unlockedConceptCards = new(),
                 unlockedEpilogues = new(),
                 finalTalkRecords = new(),
+
+                // 조각·대화 전부 유지되므로 슬롯 색상 상태도 전부 유지
+                slotColorStates = current?.slotColorStates != null
+                    ? new System.Collections.Generic.List<SlotColorStateEntry>(current.slotColorStates)
+                    : new(),
             };
 
             CurrentSave = reset;
@@ -270,6 +280,24 @@ namespace HTH.Campaign
             foreach (var id in source)
                 if (TutorialRewardIds.Contains(id))
                     result.Add(id);
+            return result;
+        }
+
+        /// <summary>
+        /// slotColorStates에서 튜토리얼 보상 조각 캐릭터(CharacterId=1·2)에 해당하는
+        /// 상태만 유지합니다. 완전 초기화 시 사용합니다.
+        /// P01_xx = CharacterId 1 (엔비), P02_01 = CharacterId 2 (메이 첫 조각)
+        /// </summary>
+        private static System.Collections.Generic.List<SlotColorStateEntry> FilterTutorialSlotStates(
+            System.Collections.Generic.List<SlotColorStateEntry> source)
+        {
+            // 튜토리얼 보상에 해당하는 CharacterId
+            var tutorialCharIds = new System.Collections.Generic.HashSet<int> { 1, 2 };
+            var result = new System.Collections.Generic.List<SlotColorStateEntry>();
+            if (source == null) return result;
+            foreach (var e in source)
+                if (tutorialCharIds.Contains(e.characterId))
+                    result.Add(e);
             return result;
         }
 
